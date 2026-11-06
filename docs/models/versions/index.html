@@ -48,7 +48,7 @@ binary. L2 (our classifier, <code>guardspec-classifier</code>) and L3 (the
 <code>multilingual-e5-small</code> embedder) are ONNX models that are never baked into
 an image or committed to git: they are downloaded, verified and mounted at
 <code>/models</code>.</p>
-<p><a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/models/manifest.yaml"><code>models/manifest.yaml</code></a> lists every model version
+<p><a href="https://github.com/guard-spec/guard-spec/blob/ca69dad29f022ada74388240df332069500d65ff/models/manifest.yaml"><code>models/manifest.yaml</code></a> lists every model version
 that can be pulled. The same file is built into the gateway and the <code>models</code>
 tool, so the binary always knows its recommended models.</p>
 <div class="table"><table>
@@ -239,7 +239,7 @@ no restart.</li>
 <h2 id="releasing-a-new-model-version">Releasing a new model version<a class="anchor" href="#releasing-a-new-model-version" aria-hidden="true">#</a></h2>
 <p>For maintainers. The example releases <code>guardspec-classifier</code> <code>v4</code>.</p>
 <ol>
-<li><strong>Train</strong> with <code>train/</code> (see <a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/train/MODEL_CARD.md">train/MODEL_CARD.md</a>).
+<li><strong>Train</strong> with <code>train/</code> (see <a href="https://github.com/guard-spec/guard-spec/blob/ca69dad29f022ada74388240df332069500d65ff/train/MODEL_CARD.md">train/MODEL_CARD.md</a>).
 Choose epochs, thresholds and calibration on the validation splits only.
 <code>eval/</code> is never used for tuning.</li>
 <li><strong>Calibrate</strong>: <code>go run -tags onnx ./cmd/calibrate fit -write</code> writes
@@ -268,7 +268,7 @@ version.</li>
 </ol>
 <p>The next software release then ships the manifest that recommends v4.</p>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/docs/models.md">docs/models.md</a> @ <code>a600c3eeb7fb</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/ca69dad29f022ada74388240df332069500d65ff/docs/models.md">docs/models.md</a> @ <code>ca69dad29f02</code></p>
   </main>
 </div>
 

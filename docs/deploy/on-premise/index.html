@@ -48,7 +48,7 @@
 Community-tested: not yet. If you deploy this, please open an
 <a href="https://github.com/guard-spec/guard-spec/issues/new/choose">issue</a> or a pull
 request with what worked and what did not. See
-<a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/CONTRIBUTING.md">CONTRIBUTING.md</a> and the <a href="/docs/deploy/">index</a>.</p>
+<a href="https://github.com/guard-spec/guard-spec/blob/ca69dad29f022ada74388240df332069500d65ff/CONTRIBUTING.md">CONTRIBUTING.md</a> and the <a href="/docs/deploy/">index</a>.</p>
 </blockquote>
 <p>Four setups:</p>
 <ol>
@@ -180,7 +180,7 @@ docker compose -f docker-compose.yml pull
 docker compose -f docker-compose.yml up -d         # migrate and db-roles run before the services
 curl -s localhost:8080/readyz | jq .detector
 </code></pre>
-<p>Read the <a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/CHANGELOG.md">CHANGELOG</a> first: before 1.0, minor versions can
+<p>Read the <a href="https://github.com/guard-spec/guard-spec/blob/ca69dad29f022ada74388240df332069500d65ff/CHANGELOG.md">CHANGELOG</a> first: before 1.0, minor versions can
 change the schema. To roll back, go back to the old tag and
 <code>GUARDSPEC_VERSION</code>, and restore <code>pre-upgrade.dump</code> if the new version
 migrated the schema. The <code>*.down.sql</code> files exist, but a restore is the
@@ -209,7 +209,7 @@ runs <code>CREATE ROLE guardspec_app</code>, and roles are cluster-wide in Postg
 use a server where that role does not exist yet, or one database server
 per installation.</li>
 <li>A checkout of the release tag: <code>git clone --branch v0.1.1 https://github.com/guard-spec/guard-spec.git</code>.
-See <a href="/docs/deploy/#known-gaps-in-the-helm-chart">Known gaps</a>.</li>
+See <a href="/docs/deploy/#the-helm-chart-on-main">The Helm chart on <code>main</code></a>.</li>
 </ul>
 <h3 id="step-1-namespace-and-secrets">Step 1: namespace and secrets<a class="anchor" href="#step-1-namespace-and-secrets" aria-hidden="true">#</a></h3>
 <pre><code class="language-bash">kubectl create namespace guard-spec
@@ -716,7 +716,7 @@ the audit log; <code>AUDIT_RETENTION_DAYS</code> matches your policy.</li>
 </tbody>
 </table></div>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/docs/deploy/on-premise.md">docs/deploy/on-premise.md</a> @ <code>a600c3eeb7fb</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/ca69dad29f022ada74388240df332069500d65ff/docs/deploy/on-premise.md">docs/deploy/on-premise.md</a> @ <code>ca69dad29f02</code></p>
   </main>
 </div>
 

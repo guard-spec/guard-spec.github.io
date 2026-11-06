@@ -49,7 +49,7 @@
 Community-tested: not yet. If you deploy this, please open an
 <a href="https://github.com/guard-spec/guard-spec/issues/new/choose">issue</a> or a pull
 request with what worked and what did not. See
-<a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+<a href="https://github.com/guard-spec/guard-spec/blob/ca69dad29f022ada74388240df332069500d65ff/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
 </blockquote>
 <div class="table"><table>
 <thead>
@@ -99,7 +99,7 @@ variable.</li>
 <li><a href="/docs/operations/">Operations</a>, in particular
 <a href="/docs/operations/#kubernetes">Kubernetes</a> and
 <a href="/docs/operations/#identity-sso-and-two-factor-authentication">Identity, SSO and two-factor authentication</a>.</li>
-<li><a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/README.md#security-model-and-limitations">Security model and limitations</a>.</li>
+<li><a href="https://github.com/guard-spec/guard-spec/blob/ca69dad29f022ada74388240df332069500d65ff/README.md#security-model-and-limitations">Security model and limitations</a>.</li>
 </ul>
 <h2 id="what-every-deployment-needs">What every deployment needs<a class="anchor" href="#what-every-deployment-needs" aria-hidden="true">#</a></h2>
 <div class="table"><table>
@@ -161,11 +161,11 @@ or WAF in front for abuse protection.</li>
 <li><strong>Streaming.</strong> <code>UPSTREAM_LLM_TIMEOUT</code> defaults to <code>5m</code> of silence. Load
 balancer idle or response timeouts shorter than your longest model answer
 cut streams; raise them.</li>
-<li><strong>Schema changes before 1.0.</strong> Read the <a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/CHANGELOG.md">CHANGELOG</a>
+<li><strong>Schema changes before 1.0.</strong> Read the <a href="https://github.com/guard-spec/guard-spec/blob/ca69dad29f022ada74388240df332069500d65ff/CHANGELOG.md">CHANGELOG</a>
 and snapshot the database before every upgrade.</li>
 </ul>
 <h2 id="the-helm-chart-on-main">The Helm chart on <code>main</code><a class="anchor" href="#the-helm-chart-on-main" aria-hidden="true">#</a></h2>
-<p>Chart 0.2.0 (see Unreleased in the <a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/CHANGELOG.md">CHANGELOG</a>) adds,
+<p>Chart 0.2.0 (see Unreleased in the <a href="https://github.com/guard-spec/guard-spec/blob/ca69dad29f022ada74388240df332069500d65ff/CHANGELOG.md">CHANGELOG</a>) adds,
 each off by default: a <strong>migration hook</strong> (<code>migrations.enabled</code>), a <strong>model
 pull init container</strong> (<code>models.pull</code>, into the claim or a per-pod
 <code>emptyDir</code>, so several replicas no longer need a ReadWriteMany volume),
@@ -173,7 +173,7 @@ pull init container</strong> (<code>models.pull</code>, into the claim or a per-
 <strong>topologySpreadConstraints</strong>, <strong>NetworkPolicies</strong> and a <strong>ServiceAccount</strong>
 with annotations for IRSA and Workload Identity. Reference values per
 platform are in
-<a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/deploy/helm/guard-spec/examples"><code>deploy/helm/guard-spec/examples/</code></a>
+<a href="https://github.com/guard-spec/guard-spec/blob/ca69dad29f022ada74388240df332069500d65ff/deploy/helm/guard-spec/examples"><code>deploy/helm/guard-spec/examples/</code></a>
 (EKS, AKS, GKE, OpenShift): rendered and schema-checked in CI, installed on
 kind by the <code>kind-e2e</code> job with its own values, not verified on the clouds.
 Where a guide below shows plain manifests for one of these, the chart's
@@ -184,7 +184,7 @@ verification, chart values, External Secrets). After installing,
 <code>kubectl exec deploy/&lt;release&gt;-guard-spec-gateway -c gateway -- ./doctor</code>
 (images released after 0.1.1) checks the database, migrations, models,
 layers, upstream and security settings.</p>
-<p>Since chart 0.1.1 (see the <a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/CHANGELOG.md">CHANGELOG</a>): <code>/models</code> is
+<p>Since chart 0.1.1 (see the <a href="https://github.com/guard-spec/guard-spec/blob/ca69dad29f022ada74388240df332069500d65ff/CHANGELOG.md">CHANGELOG</a>): <code>/models</code> is
 mounted only with a models claim (or <code>models.pull</code>), so
 <code>guard-spec-gateway-full</code> works with
 <code>models.persistence.enabled=false</code>; the gateway defaults to a 2Gi memory
@@ -202,11 +202,11 @@ run as ordinary Jobs, not before the services.</p>
 than a polished guide: platform and versions, what you changed from the
 guide, and what failed. Open an
 <a href="https://github.com/guard-spec/guard-spec/issues/new/choose">issue</a> or a pull
-request against <code>docs/deploy/</code> (see <a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/CONTRIBUTING.md">CONTRIBUTING.md</a>;
+request against <code>docs/deploy/</code> (see <a href="https://github.com/guard-spec/guard-spec/blob/ca69dad29f022ada74388240df332069500d65ff/CONTRIBUTING.md">CONTRIBUTING.md</a>;
 commits need a DCO sign-off). Security problems go through
 <a href="/docs/security/policy/">SECURITY.md</a>, never a public issue.</p>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/docs/deploy/README.md">docs/deploy/README.md</a> @ <code>a600c3eeb7fb</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/ca69dad29f022ada74388240df332069500d65ff/docs/deploy/README.md">docs/deploy/README.md</a> @ <code>ca69dad29f02</code></p>
   </main>
 </div>
 
