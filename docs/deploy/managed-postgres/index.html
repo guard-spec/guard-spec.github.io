@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Managed PostgreSQL · Guard Spec</title>
+<meta name="description" content="Status: reference, not yet verified by the maintainers on these providers. Community-tested: not yet. If you run Guard Spec on one of them, please open an ">
+<meta property="og:title" content="Managed PostgreSQL · Guard Spec">
+<meta property="og:description" content="Status: reference, not yet verified by the maintainers on these providers. Community-tested: not yet. If you run Guard Spec on one of them, please open an ">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/docs/deploy/managed-postgres/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/deploy/managed-postgres/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/docs/" class="on">Docs</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/deploy/managed-postgres/" class="on">EN</a><a href="/vi/docs/" class="">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Documentation</span></summary>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class="child"><a href="/docs/quickstart/integrations/">Integrations</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/production-compose/">Production compose</a></li><li class="child on"><a href="/docs/deploy/managed-postgres/">Managed PostgreSQL</a></li><li class="child"><a href="/docs/deploy/airgapped/">Air-gapped</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class="child"><a href="/docs/operations/sizing/">Sizing and layers</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class="child"><a href="/docs/quickstart/integrations/">Integrations</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/production-compose/">Production compose</a></li><li class="child on"><a href="/docs/deploy/managed-postgres/">Managed PostgreSQL</a></li><li class="child"><a href="/docs/deploy/airgapped/">Air-gapped</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class="child"><a href="/docs/operations/sizing/">Sizing and layers</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Managed PostgreSQL</h1>
+
+<blockquote>
+<p><strong>Status: reference, not yet verified by the maintainers on these
+providers.</strong> Community-tested: not yet. If you run Guard Spec on one of
+them, please open an
+<a href="https://github.com/guard-spec/guard-spec/issues/new/choose">issue</a> or a pull
+request with what worked and what did not; contributions are welcome. See
+<a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+</blockquote>
+<p>The compose files and CI use PostgreSQL 17; older versions have not been
+tested. Any provider should work if it gives you the roles and extensions
+below. This page
+covers what the migrations need, the connection string and TLS, and how to
+run the <a href="/docs/deploy/production-compose/">production compose</a> without
+its own <code>postgres</code> service. For Kubernetes the same database steps apply; see
+<a href="/docs/deploy/">docs/deploy/</a>.</p>
+<p><strong>What the maintainers checked</strong> (2026-11-06, locally, not on a provider):
+a PostgreSQL 17 container standing in for a managed one, where the owner role
+<code>gsowner</code> is <strong>not</strong> a superuser but has <code>CREATEROLE</code> and owns the database,
+as on RDS, Cloud SQL, Neon and Supabase. As that role, all migrations
+applied, <code>set-app-password.sh</code> worked, the production compose with
+<code>managed-postgres.yml</code> came up healthy, an injection was blocked and a benign
+prompt passed over HTTPS. A second database on the same server failed at
+migration 004 with <code>role &quot;guardspec_app&quot; already exists</code> (see below). TLS to
+the database was not part of that test.</p>
+<h2 id="what-the-database-needs">What the database needs<a class="anchor" href="#what-the-database-needs" aria-hidden="true">#</a></h2>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Need</th>
+  <th>Why</th>
+  <th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>An <strong>owner role</strong> that runs the migrations and owns every table</td>
+  <td>The services run as <code>guardspec_app</code>, which does not own the tables, so row-level security applies to it. A few <code>SECURITY DEFINER</code> functions (API key lookup, invites, alerts) run as the owner and must bypass RLS, which a table owner does.</td>
+  <td>The provider's admin user, or a role you create for Guard Spec. Not a superuser.</td>
+</tr>
+<tr>
+  <td><code>CREATEROLE</code> on the owner role</td>
+  <td>Migration 004 runs <code>CREATE ROLE guardspec_app LOGIN</code>; migration 005 and <code>set-app-password.sh</code> run <code>ALTER ROLE guardspec_app ...</code></td>
+  <td>On PostgreSQL 16 and newer, the role that created <code>guardspec_app</code> keeps the right to alter it.</td>
+</tr>
+<tr>
+  <td>Extensions <code>pgcrypto</code> and <code>pg_trgm</code></td>
+  <td>Migration 001 (<code>CREATE EXTENSION IF NOT EXISTS</code>)</td>
+  <td>Both are &quot;trusted&quot; extensions: the database owner may create them without being a superuser. All four providers offer them.</td>
+</tr>
+<tr>
+  <td>The <code>public</code> schema, writable by the owner</td>
+  <td>Tables, functions and <code>schema_migrations</code> live there</td>
+  <td>On PostgreSQL 15+, <code>public</code> is writable by the database owner only, which is what you want.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong><code>guardspec_app</code> is cluster-wide.</strong> Roles belong to the whole server
+(instance, cluster), not to one database, and migration 004 creates the
+role with a fixed name. So:</p>
+<ul>
+<li>one Guard Spec install per server: a second install on the same instance
+(a staging database next to production, say) fails at migration 004 with
+<code>role &quot;guardspec_app&quot; already exists</code>. Give staging its own instance, Neon
+project or Supabase project;</li>
+<li>restoring a dump into a new instance needs the role first (<code>pg_dump</code> of a
+database does not carry roles): <code>CREATE ROLE guardspec_app LOGIN;</code> as the
+owner role, then <code>pg_restore</code>. <code>scripts/restore.sh</code> does this for compose.</li>
+</ul>
+<h2 id="connection-strings-and-tls">Connection strings and TLS<a class="anchor" href="#connection-strings-and-tls" aria-hidden="true">#</a></h2>
+<p>The services read <code>DATABASE_URL</code> and take the password from <code>PGPASSWORD</code>
+(compose passes <code>GUARDSPEC_APP_PASSWORD</code>), so the URL holds no secret:</p>
+<pre><code class="language-text">DATABASE_URL=postgres://guardspec_app@&lt;host&gt;:5432/guardspec?sslmode=verify-full
+</code></pre>
+<p>The gateway and control plane use pgx, which takes the libpq parameters
+<code>sslmode</code> (<code>require</code>, <code>verify-ca</code>, <code>verify-full</code>), <code>sslrootcert</code>, <code>sslcert</code>
+and <code>sslkey</code>. With <code>verify-full</code> and no <code>sslrootcert</code>, the system's CA
+bundle is used: that works when the provider's certificate chains to a
+public CA (Neon, according to its documentation) and not when it uses its
+own CA (RDS, Cloud SQL, Supabase), whose CA file you then mount and name:</p>
+<pre><code class="language-yaml"># deploy/compose/production/managed-postgres.yml, under gateway and control-plane:
+    volumes:
+      - ./db-ca.pem:/etc/guardspec/db-ca.pem:ro
+# .env:
+# DATABASE_URL=postgres://guardspec_app@&lt;host&gt;:5432/guardspec?sslmode=verify-full&amp;sslrootcert=/etc/guardspec/db-ca.pem
+</code></pre>
+<p><code>sslmode=require</code> encrypts without checking the server's identity; use it
+only to get started.</p>
+<h2 id="provider-notes">Provider notes<a class="anchor" href="#provider-notes" aria-hidden="true">#</a></h2>
+<h3 id="amazon-rds-for-postgresql">Amazon RDS for PostgreSQL<a class="anchor" href="#amazon-rds-for-postgresql" aria-hidden="true">#</a></h3>
+<ul>
+<li>Owner: the master user (member of <code>rds_superuser</code>, has <code>CREATEROLE</code>), or
+a dedicated role it creates: <code>CREATE ROLE gsowner LOGIN CREATEROLE PASSWORD '...'; CREATE DATABASE guardspec OWNER gsowner;</code></li>
+<li>TLS: RDS for PostgreSQL 15 and newer sets <code>rds.force_ssl=1</code>. Download the
+region's CA bundle (<code>global-bundle.pem</code> from the RDS documentation) and use
+<code>sslmode=verify-full&amp;sslrootcert=...</code>.</li>
+<li>Host: the instance endpoint, <code>&lt;name&gt;.&lt;id&gt;.&lt;region&gt;.rds.amazonaws.com</code>.
+Through RDS Proxy, see &quot;Poolers&quot; below.</li>
+<li>More: <a href="/docs/deploy/aws/">docs/deploy/aws.md</a>.</li>
+</ul>
+<h3 id="google-cloud-sql-for-postgresql">Google Cloud SQL for PostgreSQL<a class="anchor" href="#google-cloud-sql-for-postgresql" aria-hidden="true">#</a></h3>
+<ul>
+<li>Owner: the <code>postgres</code> user (member of <code>cloudsqlsuperuser</code>, has
+<code>CREATEROLE</code>), or a user you create in the console or with
+<code>gcloud sql users create</code> and then make the database owner.</li>
+<li>TLS: either connect to the instance IP with the server CA certificate from
+the console (<code>sslmode=verify-ca</code> with that file: Cloud SQL's server
+certificates do not always carry the host name), or run the Cloud SQL Auth
+Proxy next to the services and connect to it with <code>sslmode=disable</code> (the
+proxy encrypts).</li>
+<li>More: <a href="/docs/deploy/gcp/">docs/deploy/gcp.md</a>.</li>
+</ul>
+<h3 id="neon">Neon<a class="anchor" href="#neon" aria-hidden="true">#</a></h3>
+<ul>
+<li>Owner: the role Neon creates with the project (member of
+<code>neon_superuser</code>, has <code>CREATEROLE</code>).</li>
+<li>TLS: required; certificates chain to a public CA, so <code>sslmode=verify-full</code>
+works without <code>sslrootcert</code>.</li>
+<li>Use the <strong>direct</strong> endpoint (host without <code>-pooler</code>) for migrations and
+for the services (see &quot;Poolers&quot;).</li>
+<li>Scale-to-zero: the first query after an idle period waits for the compute
+to start. For production, turn auto-suspend off or keep a minimum compute
+size, or the first requests after a quiet period are slow.</li>
+</ul>
+<h3 id="supabase">Supabase<a class="anchor" href="#supabase" aria-hidden="true">#</a></h3>
+<ul>
+<li>Owner: the <code>postgres</code> user (has <code>CREATEROLE</code>, is not a superuser).</li>
+<li><code>pgcrypto</code> is already installed (in the <code>extensions</code> schema); migration 001
+leaves it there and creates <code>pg_trgm</code>.</li>
+<li>Connection: the direct connection (<code>db.&lt;project&gt;.supabase.co:5432</code>) or the
+pooler in session mode (port 5432 on the pooler host); not transaction
+mode (port 6543), see &quot;Poolers&quot;. The direct host may be IPv6 only, which
+Docker networks often lack; the session pooler has IPv4.</li>
+<li>TLS: Supabase uses its own CA (download it from the project's database
+settings); <code>sslmode=verify-full&amp;sslrootcert=...</code>.</li>
+<li>Guard Spec only needs the database: the Supabase API, auth and storage stay
+unused. Do not expose Guard Spec's tables through the Supabase REST API:
+they belong to the owner role and live in <code>public</code>, which the API serves by
+default, so check the API's exposed schemas.</li>
+</ul>
+<h3 id="poolers">Poolers<a class="anchor" href="#poolers" aria-hidden="true">#</a></h3>
+<p>The services keep their own connection pools and use prepared statements
+and transactions that set <code>app.org_id</code> for row-level security. Connect them
+directly, or through a pooler in <strong>session</strong> mode. Transaction-mode pooling
+(PgBouncer <code>pool_mode=transaction</code>, Supabase port 6543, RDS Proxy pinning
+behaviour) has not been tested and is likely to break prepared statements or
+the per-transaction settings.</p>
+<h2 id="running-the-migrations">Running the migrations<a class="anchor" href="#running-the-migrations" aria-hidden="true">#</a></h2>
+<p>As the owner role, from a checkout of the release you deploy (the
+<code>migrations/</code> directory must match the images' version):</p>
+<pre><code class="language-bash">export DB_HOST=&lt;host&gt;
+export OWNER=&lt;owner role&gt;
+export PGPASSWORD=&lt;owner password&gt;
+export PARAMS='sslmode=verify-full'   # add &amp;sslrootcert=/ca/&lt;file&gt; with -v &quot;$PWD/&lt;file&gt;:/ca/&lt;file&gt;:ro&quot;
+
+docker run --rm -e PGPASSWORD -v &quot;$PWD/migrations:/migrations:ro&quot; \
+  migrate/migrate:v4.20.1 -path=/migrations \
+  -database &quot;postgres://$OWNER@$DB_HOST:5432/guardspec?$PARAMS&quot; up
+</code></pre>
+<p>Then set the application role's password (it has none after the migrations;
+run this again to rotate it):</p>
+<pre><code class="language-bash">export GUARDSPEC_APP_PASSWORD=&lt;openssl rand -hex 24&gt;
+docker run --rm -e PGHOST=&quot;$DB_HOST&quot; -e PGUSER=&quot;$OWNER&quot; -e PGDATABASE=guardspec \
+  -e PGPASSWORD -e PGSSLMODE=verify-full -e GUARDSPEC_APP_PASSWORD \
+  -v &quot;$PWD/deploy/postgres/set-app-password.sh:/set-app-password.sh:ro&quot; \
+  postgres:17.11-alpine sh /set-app-password.sh
+# guardspec_app password set
+</code></pre>
+<p><code>set-app-password.sh</code> refuses weak or default passwords (also for the owner,
+in <code>PGPASSWORD</code>). Run both steps again on every upgrade, before the new
+images start (<a href="/docs/upgrade/">docs/upgrade.md</a>); the migrate tool applies only
+what is new.</p>
+<h2 id="the-production-compose-without-its-database">The production compose without its database<a class="anchor" href="#the-production-compose-without-its-database" aria-hidden="true">#</a></h2>
+<p><a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/deploy/compose/production/managed-postgres.yml"><code>deploy/compose/production/managed-postgres.yml</code></a>
+moves the <code>postgres</code>, <code>migrate</code> and <code>db-roles</code> services behind a profile and
+points the gateway and control plane at <code>DATABASE_URL</code>:</p>
+<pre><code class="language-bash">cd deploy/compose/production
+# .env: DATABASE_URL=..., GUARDSPEC_APP_PASSWORD (the one set above), and
+# POSTGRES_PASSWORD set to any long value (unused, but required by the file)
+docker compose -f docker-compose.yml -f managed-postgres.yml up -d --wait
+</code></pre>
+<p>The gateway and control plane are on the <code>edge</code> network, which has a route
+out; the database must accept connections from the host's address
+(security group, authorized networks, IP allow list).</p>
+<h2 id="backups">Backups<a class="anchor" href="#backups" aria-hidden="true">#</a></h2>
+<p><code>scripts/backup.sh</code> dumps the compose <code>postgres</code> service and does not apply
+here. Use the provider's automated backups and point-in-time recovery, and
+keep <code>.env</code> (<code>MFA_ENC_KEY</code> above all: the 2FA secrets in the database are
+encrypted with it) with the same care. A logical dump as well:</p>
+<pre><code class="language-bash">docker run --rm -e PGPASSWORD postgres:17.11-alpine \
+  pg_dump -Fc &quot;postgres://$OWNER@$DB_HOST:5432/guardspec?$PARAMS&quot; &gt; guardspec.dump
+</code></pre>
+<p>Restoring a snapshot into a new instance brings the roles with it; restoring
+a dump does not (create <code>guardspec_app</code> first, as above, then run
+<code>set-app-password.sh</code>).</p>
+
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/docs/managed-postgres.md">docs/managed-postgres.md</a> @ <code>a600c3eeb7fb</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Security</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Created by <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,332 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sizing and layers · Guard Spec</title>
+<meta name="description" content="How much CPU, memory and disk Guard Spec needs, by detection layer. The gateway dominates: its memory is set by which models it loads, and its CPU by how m">
+<meta property="og:title" content="Sizing and layers · Guard Spec">
+<meta property="og:description" content="How much CPU, memory and disk Guard Spec needs, by detection layer. The gateway dominates: its memory is set by which models it loads, and its CPU by how m">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/docs/operations/sizing/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/operations/sizing/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/docs/" class="on">Docs</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/operations/sizing/" class="on">EN</a><a href="/vi/docs/" class="">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Documentation</span></summary>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class="child"><a href="/docs/quickstart/integrations/">Integrations</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/production-compose/">Production compose</a></li><li class="child"><a href="/docs/deploy/managed-postgres/">Managed PostgreSQL</a></li><li class="child"><a href="/docs/deploy/airgapped/">Air-gapped</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class="child on"><a href="/docs/operations/sizing/">Sizing and layers</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class="child"><a href="/docs/quickstart/integrations/">Integrations</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/production-compose/">Production compose</a></li><li class="child"><a href="/docs/deploy/managed-postgres/">Managed PostgreSQL</a></li><li class="child"><a href="/docs/deploy/airgapped/">Air-gapped</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class="child on"><a href="/docs/operations/sizing/">Sizing and layers</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Sizing and layers</h1>
+
+<p>How much CPU, memory and disk Guard Spec needs, by detection layer. The
+gateway dominates: its memory is set by which models it loads, and its CPU by
+how many prompts per second the model layers score. The control plane and
+Postgres are small next to it.</p>
+<h2 id="choosing-layers">Choosing layers<a class="anchor" href="#choosing-layers" aria-hidden="true">#</a></h2>
+<p><code>DETECTOR_LAYERS</code> picks the layers (one variable, in <code>.env</code>):</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Mode</th>
+  <th><code>DETECTOR_LAYERS</code></th>
+  <th>Models pulled</th>
+  <th>Use it when</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Full (default)</td>
+  <td><code>l1,l2,l3</code></td>
+  <td>classifier + e5 embedder, about 270 MB</td>
+  <td>Production with RAM to spare; L3 matches org-specific exemplars and adds recall on paraphrased attacks</td>
+</tr>
+<tr>
+  <td>Light</td>
+  <td><code>l1,l2</code></td>
+  <td>classifier only, about 135 MB</td>
+  <td>A laptop, a small VM, a personal setup; about half the memory and 2 to 3 times the throughput of full</td>
+</tr>
+<tr>
+  <td>Rules only</td>
+  <td><code>l1</code></td>
+  <td>none</td>
+  <td>Very small hosts, or when false positives cost more than missed attacks; much weaker on paraphrases</td>
+</tr>
+</tbody>
+</table></div>
+<pre><code class="language-bash"># quick start in light mode (writes DETECTOR_LAYERS=l1,l2 into the new .env)
+DETECTOR_LAYERS=l1,l2 scripts/quickstart.sh
+# an existing stack: set DETECTOR_LAYERS=l1,l2 in .env, then
+docker compose -f docker-compose.yml up -d
+</code></pre>
+<p><code>models-init</code> pulls only what the layers need, and <code>/readyz</code> shows the active
+layers (<code>&quot;layers&quot;:[&quot;l1&quot;,&quot;l2&quot;]</code>). What each layer detects and how they are
+fused: README, <a href="/docs/models/">Models</a> and
+<a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/README.md#benchmarks">Benchmarks</a>.</p>
+<h2 id="measured-resource-use">Measured resource use<a class="anchor" href="#measured-resource-use" aria-hidden="true">#</a></h2>
+<p><strong>Source.</strong> Measured on 2026-11-06 by the maintainers on one machine: an
+Apple M3 Max (arm64) MacBook Pro, Docker Desktop 28.4 with a Linux VM of
+14 vCPUs and 15.4 GiB, images <code>ghcr.io/guard-spec/guard-spec-gateway:0.1.0</code>
+(linux/arm64) and <code>-control-plane:0.1.0</code>, models <code>guardspec-classifier@v3b</code>
+and <code>multilingual-e5-small@614241f</code>. Memory and CPU are <code>docker stats</code>
+(sampled about once a second during the run; CPU 100% = one core). Load is
+ApacheBench, 8 concurrent clients, <code>POST /v1/chat/completions</code> with a
+system message and a 350-character user prompt, the stub upstream (no
+<code>UPSTREAM_LLM_URL</code>), so the numbers are the guard's own cost; every request
+also writes an audit row. Other hardware, x86-64 CPUs in particular, will
+differ: measure on yours (below) before you size a fleet.</p>
+<h3 id="unconstrained-quick-start-no-limits">Unconstrained (quick start, no limits)<a class="anchor" href="#unconstrained-quick-start-no-limits" aria-hidden="true">#</a></h3>
+<p>The gateway may use all 14 vCPUs; <code>INFERENCE_MAX_CONCURRENCY</code> defaults to the
+CPU count (14) and ORT uses 4 threads per run.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Layers</th>
+  <th>Gateway RAM idle</th>
+  <th>Gateway RAM peak</th>
+  <th>Gateway CPU under load (mean / peak)</th>
+  <th>Requests/s</th>
+  <th>Latency p50 / p95 / p99</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>L1</td>
+  <td>10 MiB</td>
+  <td>28 MiB</td>
+  <td>2.9 / 4.0 cores</td>
+  <td>1,784</td>
+  <td>3 / 6 / 13 ms</td>
+</tr>
+<tr>
+  <td>L1 + L2</td>
+  <td>483 MiB</td>
+  <td>511 MiB</td>
+  <td>9.3 / 10.1 cores</td>
+  <td>387</td>
+  <td>19 / 31 / 43 ms</td>
+</tr>
+<tr>
+  <td>L1 + L2 + L3</td>
+  <td>909 MiB</td>
+  <td>942 MiB</td>
+  <td>12.9 / 15.6 cores</td>
+  <td>137</td>
+  <td>53 / 103 / 152 ms</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="with-the-production-compose-limits">With the production compose limits<a class="anchor" href="#with-the-production-compose-limits" aria-hidden="true">#</a></h3>
+<p><a href="/docs/deploy/production-compose/"><code>deploy/compose/production</code></a>
+defaults: gateway limited to 2 CPUs and 2 GiB, <code>INFERENCE_MAX_CONCURRENCY=2</code>,
+<code>INFERENCE_INTRA_OP_THREADS=1</code>; load sent from inside the compose network
+straight to the gateway.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Layers</th>
+  <th>Gateway RAM idle</th>
+  <th>Gateway RAM peak</th>
+  <th>Gateway CPU under load</th>
+  <th>Requests/s</th>
+  <th>Latency p50 / p95 / p99</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>L1</td>
+  <td>11 MiB</td>
+  <td>22 MiB</td>
+  <td>1.5 cores</td>
+  <td>2,168</td>
+  <td>2 / 9 / 23 ms</td>
+</tr>
+<tr>
+  <td>L1 + L2</td>
+  <td>481 MiB</td>
+  <td>503 MiB</td>
+  <td>1.9 cores</td>
+  <td>118</td>
+  <td>68 / 74 / 79 ms</td>
+</tr>
+<tr>
+  <td>L1 + L2 + L3</td>
+  <td>904 MiB</td>
+  <td>909 MiB</td>
+  <td>1.9 cores</td>
+  <td>55</td>
+  <td>138 / 166 / 288 ms</td>
+</tr>
+</tbody>
+</table></div>
+<p>With 8 clients and 2 model runs at a time, most of that latency is queueing:
+one scan takes about 2 / throughput (17 ms light, 36 ms full on this CPU).</p>
+<h3 id="the-other-services">The other services<a class="anchor" href="#the-other-services" aria-hidden="true">#</a></h3>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Service</th>
+  <th>RAM</th>
+  <th>CPU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Control plane</td>
+  <td>about 10 MiB, idle and under gateway load</td>
+  <td>under 1%</td>
+</tr>
+<tr>
+  <td>Postgres</td>
+  <td>42 to 66 MiB idle, up to 100 MiB under the loads above</td>
+  <td>0.3 cores at 137 audit writes/s, 0.6 at 387, 1.8 at 1,784</td>
+</tr>
+<tr>
+  <td>Caddy (production compose)</td>
+  <td>up to 17 MiB</td>
+  <td>small</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="recommendations">Recommendations<a class="anchor" href="#recommendations" aria-hidden="true">#</a></h2>
+<p>Starting points, from the tables above plus headroom. Only the &quot;small team&quot;
+row matches a measured configuration; the others are extrapolated from it.
+Requests/s are the guard alone; your upstream LLM's latency comes on top and
+does not use the gateway's CPU while it waits.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Setup</th>
+  <th>Layers</th>
+  <th>Host</th>
+  <th>Gateway limit</th>
+  <th>Roughly handles</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Personal / laptop</td>
+  <td><code>l1,l2</code></td>
+  <td>2 vCPU, 2 GB RAM free</td>
+  <td>none</td>
+  <td>tens of requests/s</td>
+</tr>
+<tr>
+  <td>Small team, one VM</td>
+  <td><code>l1,l2</code></td>
+  <td>2 vCPU, 4 GB</td>
+  <td>2 CPUs, 1 GiB</td>
+  <td>about 100 requests/s</td>
+</tr>
+<tr>
+  <td>Startup production, one VM</td>
+  <td><code>l1,l2,l3</code></td>
+  <td>4 vCPU, 8 GB</td>
+  <td>2 to 3 CPUs, 2 GiB</td>
+  <td>about 50 to 80 requests/s</td>
+</tr>
+<tr>
+  <td>More traffic</td>
+  <td><code>l1,l2,l3</code></td>
+  <td>several gateway replicas (Kubernetes, Helm chart)</td>
+  <td>2 CPUs, 2 GiB each</td>
+  <td>add replicas; throughput scales with cores</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>Memory: give the gateway at least 1.5 x its measured peak (light 768 MiB,
+full 1.5 GiB); the model weights are loaded once per process, whatever the
+concurrency.</li>
+<li>CPU: throughput grows with cores up to <code>INFERENCE_MAX_CONCURRENCY</code> x
+<code>INFERENCE_INTRA_OP_THREADS</code>; set their product to the CPUs the gateway may
+use. More than that only adds contention.</li>
+<li><code>DETECTOR_CASCADE=true</code> skips L2 and L3 when L1 alone is decisive, which
+saves CPU on obvious traffic; it changes scores, so check it against your
+traffic first.</li>
+<li>Rate limits (<code>RATE_LIMIT_RPM</code>) and an upstream timeout keep a burst from
+queueing up behind the model layers.</li>
+<li>Kubernetes: the Helm chart's gateway defaults (500m CPU / 1Gi request, 2Gi
+memory limit) fit the full detector's measured peak; set
+<code>INFERENCE_MAX_CONCURRENCY</code> and <code>INFERENCE_INTRA_OP_THREADS</code> to the CPU
+limit as above (<code>gateway.env</code>), and scale with <code>gateway.autoscaling</code> (HPA). See
+<a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/deploy/helm/guard-spec/values.yaml"><code>values.yaml</code></a>, the per-cloud
+examples in
+<a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/deploy/helm/guard-spec/examples"><code>deploy/helm/guard-spec/examples/</code></a>
+and <a href="/docs/operations/#kubernetes">README, Kubernetes</a>.</li>
+</ul>
+<h2 id="disk">Disk<a class="anchor" href="#disk" aria-hidden="true">#</a></h2>
+<ul>
+<li>Models: about 135 MB (light) or 270 MB (full) per version kept, plus older
+versions you pulled for rollback.</li>
+<li>Images (unpacked, arm64): gateway 285 MB, control plane 46 MB, Postgres
+415 MB, Caddy 88 MB.</li>
+<li>Postgres: the audit table grows with every request. Measured on the stack
+above: 20,020 rows took 7.4 MB with indexes, about <strong>380 bytes per request</strong>
+with the default <code>AUDIT_STORE_CONTENT=false</code> (hashes and lengths only).
+1 million requests a day kept for the default 90 days
+(<code>AUDIT_RETENTION_DAYS</code>) is about 34 GB. Storing content adds the size of
+every prompt and response.</li>
+<li>Logs: the production compose keeps at most 50 MB per container.</li>
+</ul>
+<h2 id="measure-on-your-hardware">Measure on your hardware<a class="anchor" href="#measure-on-your-hardware" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash"># 1. a key (see the README quick start), then a body like your traffic
+cat &gt; body.json &lt;&lt;'EOF'
+{&quot;model&quot;:&quot;m&quot;,&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;&lt;a prompt of typical length&gt;&quot;}]}
+EOF
+# 2. load, while watching the containers
+ab -n 5000 -c 8 -p body.json -T application/json -H &quot;x-api-key: $KEY&quot; \
+  http://localhost:8080/v1/chat/completions
+docker stats    # in another terminal
+# 3. audit table size per row
+docker compose exec postgres psql -U ps -d guardspec -c \
+  &quot;SELECT count(*), pg_size_pretty(pg_total_relation_size('requests')) FROM requests&quot;
+</code></pre>
+<p>Run it without <code>UPSTREAM_LLM_URL</code> (stub answers) to see the guard alone, and
+once per <code>DETECTOR_LAYERS</code> value you consider. Reports with other hardware
+are welcome in an issue.</p>
+
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/docs/sizing.md">docs/sizing.md</a> @ <code>a600c3eeb7fb</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Security</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Created by <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

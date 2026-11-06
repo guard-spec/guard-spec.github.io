@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Upgrade · Guard Spec</title>
-<meta name="description" content="All notable changes to this project are documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning. ">
+<meta name="description" content="For the compose stacks: the quick start (docker-compose.yml at the repository root) and the production compose. Kubernetes: docs/deploy/on-premise.md. Thre">
 <meta property="og:title" content="Upgrade · Guard Spec">
-<meta property="og:description" content="All notable changes to this project are documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning. ">
+<meta property="og:description" content="For the compose stacks: the quick start (docker-compose.yml at the repository root) and the production compose. Kubernetes: docs/deploy/on-premise.md. Thre">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://guardspec.io/assets/og.png">
 <link rel="canonical" href="https://guardspec.io/docs/upgrade/">
@@ -35,210 +35,206 @@
 <div class="wrap docs">
   <details class="docs-menu">
     <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Documentation</span></summary>
-    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class="on"><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class="child"><a href="/docs/quickstart/integrations/">Integrations</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/production-compose/">Production compose</a></li><li class="child"><a href="/docs/deploy/managed-postgres/">Managed PostgreSQL</a></li><li class="child"><a href="/docs/deploy/airgapped/">Air-gapped</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class="child"><a href="/docs/operations/sizing/">Sizing and layers</a></li><li class="on"><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
   </details>
   <aside class="docs-side">
-    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class="on"><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class="child"><a href="/docs/quickstart/integrations/">Integrations</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/production-compose/">Production compose</a></li><li class="child"><a href="/docs/deploy/managed-postgres/">Managed PostgreSQL</a></li><li class="child"><a href="/docs/deploy/airgapped/">Air-gapped</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class="child"><a href="/docs/operations/sizing/">Sizing and layers</a></li><li class="on"><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
   </aside>
   <main class="doc">
     <h1>Upgrade</h1>
-<p class="doc-note">There is no separate upgrade guide yet. Before 1.0, minor versions can change the API and the schema: read the changes below, then follow <em>Upgrade and rollback</em> in your <a href="/docs/deploy/">deployment guide</a>.</p>
-<p>All notable changes to this project are documented in this file.</p>
-<p>The format is based on <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a>,
-and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.
-Before 1.0, minor versions may contain breaking changes; they are listed under
-&quot;Changed&quot; and in the upgrade notes.</p>
-<h2 id="unreleased"><a href="https://github.com/guard-spec/guard-spec/compare/v0.1.1...HEAD">Unreleased</a><a class="anchor" href="#unreleased" aria-hidden="true">#</a></h2>
-<h3 id="added">Added<a class="anchor" href="#added" aria-hidden="true">#</a></h3>
+
+<p>For the compose stacks: the quick start (<code>docker-compose.yml</code> at the
+repository root) and the
+<a href="/docs/deploy/production-compose/">production compose</a>. Kubernetes:
+<a href="/docs/deploy/on-premise/#upgrade-and-rollback-1">docs/deploy/on-premise.md</a>.</p>
+<p>Three things have versions, and each rolls back on its own:</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>What</th>
+  <th>Pinned by</th>
+  <th>Changes on upgrade</th>
+  <th>Rollback</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Images (gateway, control plane)</td>
+  <td><code>GUARDSPEC_VERSION</code> in <code>.env</code></td>
+  <td>Code</td>
+  <td>Previous tag</td>
+</tr>
+<tr>
+  <td>Database schema</td>
+  <td><code>migrations/</code> of the checkout; applied by the <code>migrate</code> job on every <code>up</code></td>
+  <td>Only forward</td>
+  <td>Restore the pre-upgrade backup</td>
+</tr>
+<tr>
+  <td>Models</td>
+  <td>Each image's <code>models/manifest.yaml</code>, or <code>L2_MODEL</code> / <code>L3_MODEL</code> in <code>.env</code></td>
+  <td>A release may recommend a newer model</td>
+  <td><code>L2_MODEL=name@old-version</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Before 1.0, a minor version can change the schema and the configuration:
+read the <a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/CHANGELOG.md">CHANGELOG</a> for every version you skip.</p>
+<h2 id="backups">Backups<a class="anchor" href="#backups" aria-hidden="true">#</a></h2>
+<p><code>scripts/backup.sh</code> saves what a restore needs, while the stack runs:</p>
+<pre><code class="language-bash">scripts/backup.sh                                                     # quick start
+scripts/backup.sh -f deploy/compose/production/docker-compose.yml    # production
+# backup: done: backups/guardspec-20261106T060839Z
+</code></pre>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>File</th>
+  <th>Contents</th>
+  <th>Why it matters</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>guardspec.dump</code></td>
+  <td><code>pg_dump -Fc</code> of the database: organizations, users, API keys (hashes), policies, upstreams, alert rules, audit rows, <code>schema_migrations</code></td>
+  <td>The data</td>
+</tr>
+<tr>
+  <td><code>guardspec.env</code></td>
+  <td>The <code>.env</code> the stack ran with</td>
+  <td><code>POSTGRES_PASSWORD</code> and <code>GUARDSPEC_APP_PASSWORD</code>; <code>JWT_SECRET</code> (without it every session is invalid; users log in again); <strong><code>MFA_ENC_KEY</code>, the only key that encrypts data at rest</strong> (TOTP 2FA secrets, AES-256-GCM): without it every user's 2FA must be reset; and the secrets the database names but does not hold: <code>UPSTREAM_KEY_*</code> / <code>UPSTREAM_LLM_KEY</code> (upstream <code>api_key_env</code>), <code>OIDC_SECRET_*</code> (SSO <code>client_secret_env</code>), alert channel secrets (<code>secret_env</code>), SMTP and bot tokens</td>
+</tr>
+<tr>
+  <td><code>caddy-data.tgz</code></td>
+  <td>Caddy's <code>/data</code> (production compose only)</td>
+  <td>Certificates, the ACME account, and with <code>CADDY_TLS=internal</code> the root CA your clients trust</td>
+</tr>
+<tr>
+  <td><code>MANIFEST</code></td>
+  <td>Time, images, migration version, row counts, SHA-256 of each file</td>
+  <td>What the backup is, and an integrity check for restore</td>
+</tr>
+</tbody>
+</table></div>
+<p>Not included, on purpose: models (pulled again and verified against the
+manifest, or pinned with <code>L2_MODEL</code>), images (pulled by tag), and secrets
+kept outside <code>.env</code> (a secret manager: back those up there).</p>
+<p>The directory is created with mode 700 and holds every secret: encrypt it
+(<code>age</code>, <code>gpg</code>, your backup tool's encryption) and keep it off the host.
+API keys are stored as SHA-256 hashes, so the backup cannot reveal them;
+password hashes are bcrypt.</p>
+<p>Schedule it with cron or a systemd timer, for example daily:</p>
+<pre><code class="language-cron">15 3 * * * cd /opt/guard-spec &amp;&amp; scripts/backup.sh -f deploy/compose/production/docker-compose.yml -o /var/backups/guardspec/$(date +\%F) &amp;&amp; find /var/backups/guardspec -mindepth 1 -maxdepth 1 -mtime +14 -exec rm -rf {} +
+</code></pre>
+<h3 id="restore">Restore<a class="anchor" href="#restore" aria-hidden="true">#</a></h3>
+<p>Into an empty database only (a new host, a new compose project, or after
+<code>docker compose down -v</code>); a database with tables is refused:</p>
+<pre><code class="language-bash">scripts/restore.sh -f deploy/compose/production/docker-compose.yml backups/guardspec-20261106T060839Z
+</code></pre>
+<p>It checks the dump's SHA-256, writes the backup's <code>.env</code> when there is none
+(and refuses a different <code>MFA_ENC_KEY</code> in an existing one), starts Postgres,
+creates the cluster-wide role <code>guardspec_app</code> (a database dump does not carry
+roles), runs <code>pg_restore</code>, puts Caddy's data back, then starts the stack:
+<code>migrate</code> applies any migrations newer than the dump and <code>db-roles</code> sets the
+<code>guardspec_app</code> password from <code>.env</code>. Logins, 2FA, API keys and the
+internal CA keep working.</p>
+<p><em>Checked</em> on 2026-11-06 (arm64, Docker Desktop): a backup of a production
+compose stack (1 organization, 1 user, 1 API key, 1 policy, 26,004 audit
+rows) restored into a separate compose project. Checksums of the
+organizations, users, API keys, policies and audit rows matched; the old
+admin password and API key worked; an injection was blocked and a benign
+prompt passed over HTTPS verified with the original Caddy root.</p>
+<p>Managed databases: <a href="/docs/deploy/managed-postgres/#backups">docs/managed-postgres.md</a>.</p>
+<h2 id="upgrading">Upgrading<a class="anchor" href="#upgrading" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash">scripts/backup.sh [-f ...]                          # 1. a backup to roll back to
+git fetch --tags &amp;&amp; git checkout v&lt;new-version&gt;     # 2. new migrations/ and compose files
+# 3. .env: GUARDSPEC_VERSION=&lt;new-version&gt;; compare .env.example for new settings
+docker compose [-f ...] pull                        # 4. images first, so the switch is short
+docker compose [-f ...] up -d --wait                # 5. migrate and db-roles run before the services
+curl -s localhost:8080/readyz | jq .detector        # 6. or https://&lt;GATEWAY_HOST&gt;/readyz
+</code></pre>
 <ul>
-<li><code>docs/security/</code>: documentation for security teams: architecture and trust
-boundaries, the data flow of a request, what is stored where and for how
-long (audit content off by default, retention per table), secrets and
-encryption at rest, and how to verify a release (cosign signatures pinned
-to the release tag, SBOMs, SLSA provenance) with the output for v0.1.0.</li>
-<li><code>deploy/terraform/aws/</code>: a Terraform reference for AWS (ECS on Fargate,
-RDS for PostgreSQL 17, Secrets Manager, two ALBs), with variables for the
-image tags or digests and the detection layers and models. Reference, not
-yet verified against a real account. CI runs <code>terraform fmt -check</code>,
-<code>validate</code> and <code>test</code> (a plan against a mocked provider).</li>
-<li>Documentation site at <a href="https://guardspec.io/docs/">https://guardspec.io/docs/</a>, built from this
-repository's Markdown; linked from the README.</li>
+<li>Step 2 matters: the <code>migrate</code> job applies the <code>migrations/</code> directory of
+your checkout, so checkout and <code>GUARDSPEC_VERSION</code> must be the same
+release. A release source archive works the same as a checkout.</li>
+<li>During step 5 the gateway restarts; requests in flight fail and clients
+retry. One host cannot avoid that; for no downtime, run several gateway
+replicas behind a load balancer (Kubernetes, Helm chart).</li>
+<li>Models: if the new image recommends a new model version, <code>models-init</code>
+pulls it before the gateway starts (with <code>DETECTOR_REQUIRE_ML=true</code>, the
+production default, a failed pull stops <code>up</code> before the new gateway
+starts). With <code>L2_MODEL</code> / <code>L3_MODEL</code> pinned, the gateway
+keeps the pinned version.</li>
+<li>New classifier version: to try it before switching, keep <code>L2_MODEL</code>
+pinned and set <code>SHADOW_L2_MODEL=guardspec-classifier@&lt;new&gt;</code>. It scores the
+same traffic without deciding; compare in the admin UI (<strong>Models</strong>). Then
+switch without a restart with <code>POST /admin/models/reload</code> and
+<code>{&quot;l2_model&quot;:&quot;guardspec-classifier@&lt;new&gt;&quot;,&quot;shadow_l2_model&quot;:&quot;off&quot;}</code>
+(<code>GATEWAY_ADMIN_TOKEN</code>), and set <code>L2_MODEL</code> in <code>.env</code> for the next start
+(or set it and <code>up -d gateway</code>, which restarts). A reload checks the
+files' SHA-256 and keeps the running model if anything fails; see
+<a href="/docs/operations/#shadow-mode-and-model-reload">README, Shadow mode and model reload</a>.</li>
+<li>Check after the upgrade: <code>/readyz</code> lists the layers you expect, the admin
+UI loads, a known injection is blocked
+(<a href="/docs/quickstart/">README quick start</a>).</li>
+<li>With images released after 0.1.1, also run <code>doctor</code> inside the gateway:
+<code>docker compose [-f ...] exec gateway /app/doctor</code>. It checks the database,
+that the migration version matches the image's <code>migrations/</code>, the model
+files against the manifest's SHA-256, which layers will load, the upstream
+and the security settings; exit code 1 means a check failed (<code>-strict</code>
+also fails on warnings, <code>-json</code> for scripts). See
+<a href="/docs/operations/#kubernetes">README, Kubernetes</a>.</li>
 </ul>
-<h2 id="011---2026-11-06"><a href="https://github.com/guard-spec/guard-spec/compare/v0.1.0...v0.1.1">0.1.1</a> - 2026-11-06<a class="anchor" href="#011---2026-11-06" aria-hidden="true">#</a></h2>
-<h3 id="added-1">Added<a class="anchor" href="#added-1" aria-hidden="true">#</a></h3>
+<h2 id="rolling-back">Rolling back<a class="anchor" href="#rolling-back" aria-hidden="true">#</a></h2>
+<h3 id="images-no-schema-change">Images, no schema change<a class="anchor" href="#images-no-schema-change" aria-hidden="true">#</a></h3>
+<p>When the release you leave added no migration (compare <code>migrations/</code> of the
+two tags, or <code>MANIFEST</code>'s migration version with the new one):</p>
+<pre><code class="language-bash">git checkout v&lt;old-version&gt;
+# .env: GUARDSPEC_VERSION=&lt;old-version&gt;
+docker compose [-f ...] up -d --wait
+</code></pre>
+<h3 id="images-and-schema">Images and schema<a class="anchor" href="#images-and-schema" aria-hidden="true">#</a></h3>
+<p>A newer schema with older code is not supported, and the <code>*.down.sql</code>
+migrations drop what the newer version added, data included; they are not
+the tested path. Restore the backup taken before the upgrade instead:</p>
+<pre><code class="language-bash">docker compose [-f ...] down -v      # removes the upgraded database: keep the backup safe first
+git checkout v&lt;old-version&gt;
+# .env: GUARDSPEC_VERSION=&lt;old-version&gt; (restore.sh keeps an existing .env)
+scripts/restore.sh [-f ...] backups/guardspec-&lt;before-upgrade&gt;
+</code></pre>
+<p>Audit rows written between the backup and the rollback are lost. To keep
+them, export them first (<code>GET /v1/organizations/{id}/requests</code>, or a
+<code>pg_dump -t requests</code>).</p>
+<p><code>down -v</code> also removes the models volume of the production compose (pulled
+again) and Caddy's data (restored from the backup).</p>
+<h3 id="models-only">Models only<a class="anchor" href="#models-only" aria-hidden="true">#</a></h3>
+<p>No image or schema change: pull the old version and pin it.</p>
+<pre><code class="language-bash">docker compose [-f ...] --profile models run --rm models-pull guardspec-classifier@&lt;old&gt;
+# .env: L2_MODEL=guardspec-classifier@&lt;old&gt;
+docker compose [-f ...] up -d gateway
+curl -s localhost:8080/readyz | jq .detector.l2_model
+</code></pre>
+<p>Without a restart: keep the pin in <code>.env</code> for the next start, and reload the
+running gateway with <code>POST /admin/models/reload</code> and
+<code>{&quot;l2_model&quot;:&quot;guardspec-classifier@&lt;old&gt;&quot;}</code> (needs <code>GATEWAY_ADMIN_TOKEN</code>).
+SIGHUP reloads the targets the gateway already has, not a changed <code>.env</code>.</p>
+<p>Details, the L3 embedder and air-gapped installs:
+<a href="/docs/models/versions/#rolling-back">docs/models.md</a>.</p>
+<h3 id="a-failed-upgrade">A failed upgrade<a class="anchor" href="#a-failed-upgrade" aria-hidden="true">#</a></h3>
 <ul>
-<li>Bench workflow (<code>.github/workflows/bench.yml</code>, manual only): detection
-latency with the released v3b and multilingual-e5-small models on
-GitHub-hosted <code>ubuntu-24.04</code> (amd64) and <code>ubuntu-24.04-arm</code> runners, as a
-markdown table in the job summary and an artifact. <code>cmd/eval</code> and
-<code>cmd/onnxbench</code> now also report p95.</li>
-<li><code>GET /v1/organizations/:orgId/dashboard</code>: request log aggregates over 24h,
-7d or 30d (totals, block rate, latency p50/p95/p99, an hourly or daily
-series, top detections, rules and projects), computed in Postgres. The
-admin UI dashboard uses it, with a period and a project filter, instead of
-sampling the latest 1,000 requests in the browser.</li>
-<li>Helm chart: <code>dbRoles.podSecurityContext</code> sets the pod securityContext of
-the <code>dbRoles</code> job.</li>
-<li>Helm chart: the control plane reads <code>MFA_ENC_KEY</code> from <code>existingSecret</code>
-when the key is there (optional; <code>controlPlane.extraEnvFrom</code> still works).</li>
-<li><code>GET /readyz</code>: <code>detector.required</code> reports <code>DETECTOR_REQUIRE_ML</code>.</li>
-<li>Go benchmarks for the input sanitizer, the output guard (whole answers and
-streams), CEL policy evaluation and the gateway's HTTP path end to end
-against a fake upstream. <code>make bench</code> runs them with L1 only; <code>make bench-onnx</code> adds L1+L2+L3 and L1+L2 (skipped without models).</li>
-</ul>
-<h3 id="changed">Changed<a class="anchor" href="#changed" aria-hidden="true">#</a></h3>
-<ul>
-<li><p>The gateway's <code>GET /health</code> and <code>GET /readyz</code> report the version the binary
-was built from instead of a fixed <code>0.1.0</code>.</p>
-</li>
-<li><p>Default image tag (<code>GUARDSPEC_VERSION</code>, chart <code>appVersion</code>) is <code>0.1.1</code>.</p>
-</li>
-<li><p><code>GET /readyz</code> answers 503, with <code>&quot;status&quot;:&quot;degraded&quot;</code> and the same detailed
-body, when a detection layer the configuration requires
-(<code>DETECTOR_REQUIRE_ML=true</code>) is missing. A gateway that runs on fewer
-layers without requiring them (the plain image without models) stays at
-200 with <code>&quot;degraded&quot;:true</code>. Outside <code>GUARD_ENV=dev</code> such a gateway already
-refused to start, so this shows mostly in dev mode.</p>
-</li>
-<li><p>Helm chart: the gateway mounts a volume at <code>/models</code> only with a models
-claim (<code>models.existingClaim</code>, or <code>models.persistence.enabled=true</code>, the
-default). With neither, nothing is mounted (before: an <code>emptyDir</code>), so
-<code>guard-spec-gateway-full</code> keeps the models inside its image and starts.</p>
-</li>
-<li><p>Helm chart: gateway resources default to a 500m CPU / 1Gi request and a
-2Gi memory limit (before: 250m / 256Mi and 1Gi); L1 + L2 + L3 use about
-900 MiB right after start.</p>
-</li>
-<li><p>Helm chart: the <code>dbRoles</code> job no longer forces <code>runAsUser: 70</code> on
-OpenShift (clusters serving <code>security.openshift.io/v1</code>), where the SCC
-assigns the UID; elsewhere it still defaults to 70 unless
-<code>dbRoles.podSecurityContext</code> sets one.</p>
-</li>
-</ul>
-<h3 id="security">Security<a class="anchor" href="#security" aria-hidden="true">#</a></h3>
-<ul>
-<li><code>github.com/go-jose/go-jose/v4</code> 4.1.4 → 4.1.9 (control plane, via the
-OIDC login): fixes a denial of service when parsing JWKs with RSA keys
-(GHSA-mgcc-cww5-fp2q, high) and panics in JSON parsing
-(GHSA-vvm8-gf78-28g4) and in CBC-HMAC processing (GHSA-4w3g-jfj2-cw2q).</li>
-<li><code>golang.org/x/crypto</code> 0.58.0 → v0.58.1-0.20261009181718-2f1f834330b2,
-which removes the unmaintained <code>openpgp</code> packages (GO-2026-5932). Guard
-Spec never imported them; <code>govulncheck</code> and OpenSSF Scorecard reported
-the module.</li>
-<li>Training tooling (<code>train/</code>, not shipped): torch 2.13.0, transformers
-5.10.2, onnx 1.22.0, protobuf 5.29.6, sentencepiece 0.2.1 and pyarrow
-23.0.1 fix the open advisories against the pinned versions. The scripts
-load the tokenizer with <code>PreTrainedTokenizerFast</code> so that an export keeps
-the base model's <code>tokenizer.json</code> unchanged under transformers 5, and
-<code>export.py</code> keeps the TorchScript ONNX exporter (<code>dynamo=False</code>).</li>
-<li>Admin UI build tooling (not shipped): npm overrides move <code>minimatch</code> to
-11.0.5 (GHSA-g3hv-75wg-m249) and <code>glob</code> to 14.0.4 (GHSA-3g3m-2fjr-6pw4)
-under typescript-eslint and the license checker.</li>
-</ul>
-<h3 id="documentation">Documentation<a class="anchor" href="#documentation" aria-hidden="true">#</a></h3>
-<ul>
-<li>README: the <code>kubectl create secret</code> example includes <code>MFA_ENC_KEY</code>.</li>
-<li>ADR 0002: input-side PII, toxicity and topic detection are decided against
-for now, with the reasons and what to use instead; README, ROADMAP and
-DESIGN point to it.</li>
-<li>README, &quot;Benchmarks&quot;: measured numbers for the new Go benchmarks (Apple M3
-Max), with the command and date.</li>
-<li>docs/deploy: the workarounds for the points above are gone; notes on
-Helm 4 post-renderers (plugins only) and on migration 004's
-<code>CREATE ROLE</code> on a Postgres server shared with other databases.</li>
-</ul>
-<h2 id="010---2026-11-06"><a href="https://github.com/guard-spec/guard-spec/releases/tag/v0.1.0">0.1.0</a> - 2026-11-06<a class="anchor" href="#010---2026-11-06" aria-hidden="true">#</a></h2>
-<p>First release.</p>
-<h3 id="added-2">Added<a class="anchor" href="#added-2" aria-hidden="true">#</a></h3>
-<p><strong>Gateway and detection</strong></p>
-<ul>
-<li>OpenAI-compatible gateway: <code>/v1/chat/completions</code> and <code>/v1/completions</code>,
-streaming included, in front of any OpenAI-compatible upstream.</li>
-<li>L0 sanitizer: UTF-8 validation, repeated NFKC, removal of invisible,
-tag-block, bidi, variation-selector and control characters, ANSI and HTML,
-entity unwrapping, a homoglyph signal and an anomaly score that blocks at
-0.6. Content that HTML hides from the reader is kept between <code>[hidden]</code>
-markers so that the detectors see it.</li>
-<li>L1 rules on a skeleton of the text (Vietnamese diacritics and teencode,
-leetspeak, homoglyphs, fullwidth and spelled-out letters), weighted per
-attack category, with suppressors for meta discussion, quotes and code.</li>
-<li>L2 classifier <code>guardspec-classifier-v3b</code>: multilingual-e5-small fine-tuned
-on English and Vietnamese, INT8 ONNX, run in process with ONNX Runtime
-(<code>-tags onnx</code>). The training pipeline is in <code>train/</code>, with a model card.</li>
-<li>L3 similarity to 520 built-in exemplars and to each organization's own.</li>
-<li>Calibrated fusion of the layers into one injection score, fitted outside
-<code>eval/</code>; optional cascade; L1-only fallback when models are absent.</li>
-<li>Indirect injection and MCP tool poisoning: tool results, documents and tool
-descriptions are scored one by one (<code>INDIRECT_BLOCK_THRESHOLD</code>), with MCP
-poisoning signals and optional spotlighting; <code>POST /guardrail/scan</code>,
-<code>/guardrail/scan/tools</code> and <code>/guardrail/sanitize</code>.</li>
-<li>Output guard: link and image allowlist, redaction of e-mail, Vietnamese
-phone, CCCD and card numbers (and optionally IPv4), a canary, reasoning
-fields and tool-call arguments, in whole responses and streams.</li>
-<li><code>GET /readyz</code> lists the active detection layers.</li>
-</ul>
-<p><strong>Policies and routing</strong></p>
-<ul>
-<li>CEL policies per organization and project, written as a condition tree or
-as text (<code>scores.l2 &gt; 0.8 &amp;&amp; injection.category == &quot;jailbreak&quot;</code>), compiled
-on the server, fail-closed: <code>allow</code>, <code>block</code>, <code>log</code> and <code>route</code>. A policy
-simulator and config as code (<code>GET</code>/<code>PUT .../config</code>, YAML, dry run).</li>
-<li>Named upstreams per organization (OpenAI, Azure OpenAI, Anthropic, Gemini,
-vLLM, Ollama) with defaults per org and project, allowed models, headers,
-limits, retries and a connection test. Keys stay in the gateway's
-environment (<code>UPSTREAM_KEY_*</code>, <code>UPSTREAM_KEY_ORGS</code>); private and metadata
-addresses are refused.</li>
-</ul>
-<p><strong>Control plane and administration</strong></p>
-<ul>
-<li>Organizations, projects, roles (viewer, member, admin, owner), invites,
-API keys with per-key rate limits; Postgres row-level security per
-organization.</li>
-<li>Sessions, TOTP two-factor authentication with recovery codes, OpenID
-Connect single sign-on (Google preset, Entra ID, Okta, Keycloak), an
-organization security policy (require 2FA, login methods, domain join,
-session lifetime), user management and an activity log.</li>
-<li>Real-time alerts: events for blocked and flagged requests, upstream
-failures and security changes; rules with conditions, thresholds,
-throttling, grouping and quiet hours; Telegram, Slack, Microsoft Teams,
-email, signed webhooks, A2A agents and an in-app bell; delivery with
-retries and a delivery log.</li>
-<li>Audit: one row per request with scores and the decision (content only on
-opt-in), retention in days.</li>
-<li>Admin UI at <code>/ui/</code>, English and Vietnamese, light and dark: dashboard,
-request flow with editable policy rules, simulator, providers, request log,
-alerts, members, security and my account.</li>
-</ul>
-<p><strong>Models, operations and supply chain</strong></p>
-<ul>
-<li>Versioned models: <code>models pull name@version</code>, SHA-256 verified, from
-Hugging Face with GitHub Release mirrors; <code>L2_MODEL</code> / <code>L3_MODEL</code> pick a
-version.</li>
-<li><code>scripts/quickstart.sh</code>, Docker Compose with the released images, a Helm
-chart, and the <code>gateway-full</code> image with the models built in.</li>
-<li>Images for linux/amd64 and arm64 signed with cosign, SBOMs and provenance;
-archives with signed checksums; <code>version</code> subcommand in every binary.</li>
-<li>Prometheus metrics and OpenTelemetry tracing.</li>
-<li>EN/VI eval set (2,176 rows) with a deterministic builder, <code>cmd/eval</code> and
-CI regression baselines.</li>
-<li>Community files: CONTRIBUTING (DCO), CODE_OF_CONDUCT, SECURITY, MAINTAINERS,
-ROADMAP, issue and pull request templates, Vietnamese README.</li>
-</ul>
-<h3 id="known-issues">Known issues<a class="anchor" href="#known-issues" aria-hidden="true">#</a></h3>
-<ul>
-<li>With L2 and L3, 1.4% of benign eval prompts are blocked; benign Vietnamese
-teencode is blocked 3.5% of the time. The Vietnamese eval and training data
-is synthetic.</li>
-<li>The plain release archives (<code>guard-spec_&lt;version&gt;_&lt;os&gt;_&lt;arch&gt;.tar.gz</code>) are
-built without <code>-tags onnx</code> and run L1 only; use the gateway image or the
-linux <code>_onnx</code> tarball for the model layers. There is no darwin ONNX build.</li>
-<li>The Helm chart has no autoscaling, PodDisruptionBudget, Ingress or
-migration job yet, and the models volume is ReadWriteOnce.</li>
-<li>List endpoints still answer the older <code>{&quot;data&quot;: [...]}</code> shape when called
-without <code>limit</code> and <code>cursor</code>; use the paginated form.</li>
+<li><code>migrate</code> exits non-zero: the services do not start (they wait for it).
+<code>docker compose logs migrate</code> names the migration. A failed migration
+leaves <code>schema_migrations.dirty = true</code>; fix the cause, then restore the
+backup rather than forcing the version.</li>
+<li><code>models-init</code> fails: offline, or a mirror is missing the new version. Set
+<code>MODELS_MIRROR</code>, or pin the previous <code>L2_MODEL</code> / <code>L3_MODEL</code>, and <code>up</code>
+again.</li>
+<li>The gateway is unhealthy: <code>docker compose logs gateway</code>; with
+<code>DETECTOR_REQUIRE_ML=true</code> a missing model stops it at start, by design.</li>
 </ul>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/CHANGELOG.md">CHANGELOG.md</a> @ <code>4448f51a3ca3</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/a600c3eeb7fbdfb1efb25e65732c0ffe469763e7/docs/upgrade.md">docs/upgrade.md</a> @ <code>a600c3eeb7fb</code></p>
   </main>
 </div>
 

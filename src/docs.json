@@ -1,7 +1,7 @@
 {
   "_comment": "Pages of guardspec.io/docs, built by build.py from the Markdown of the main repository at the pinned ref. Each language lists candidate sources: the first one that exists at the ref is used; a page with none is skipped (build.py prints it). A page without a Vietnamese source links to the English page in the Vietnamese navigation, labelled (tiếng Anh). To update the docs: set ref to a newer commit or tag of guard-spec/guard-spec, run build.py, commit.",
   "repo": "guard-spec/guard-spec",
-  "ref": "4448f51a3ca3507e15275506abddbb7f4ecd4e64",
+  "ref": "a600c3eeb7fbdfb1efb25e65732c0ffe469763e7",
   "pages": [
     {
       "slug": "quickstart",
@@ -10,9 +10,33 @@
       "vi": [{"file": "README.vi.md", "section": "Bắt đầu nhanh"}]
     },
     {
+      "slug": "quickstart/integrations",
+      "parent": "quickstart",
+      "title": {"en": "Integrations", "vi": "Tích hợp"},
+      "en": [{"file": "docs/integrations.md"}]
+    },
+    {
       "slug": "deploy",
       "title": {"en": "Deploy", "vi": "Triển khai"},
       "en": [{"file": "docs/deploy/README.md"}]
+    },
+    {
+      "slug": "deploy/production-compose",
+      "parent": "deploy",
+      "title": {"en": "Production compose", "vi": "Compose cho production"},
+      "en": [{"file": "deploy/compose/production/README.md"}]
+    },
+    {
+      "slug": "deploy/managed-postgres",
+      "parent": "deploy",
+      "title": {"en": "Managed PostgreSQL", "vi": "PostgreSQL được quản lý"},
+      "en": [{"file": "docs/managed-postgres.md"}]
+    },
+    {
+      "slug": "deploy/airgapped",
+      "parent": "deploy",
+      "title": {"en": "Air-gapped", "vi": "Mạng cô lập"},
+      "en": [{"file": "docs/airgapped.md"}]
     },
     {
       "slug": "deploy/aws",
@@ -37,18 +61,6 @@
       "parent": "deploy",
       "title": {"en": "On-premise", "vi": "Hạ tầng riêng"},
       "en": [{"file": "docs/deploy/on-premise.md"}]
-    },
-    {
-      "slug": "deploy/airgapped",
-      "parent": "deploy",
-      "title": {"en": "Air-gapped", "vi": "Mạng cô lập"},
-      "en": [{"file": "docs/airgapped.md"}]
-    },
-    {
-      "slug": "deploy/sizing",
-      "parent": "deploy",
-      "title": {"en": "Sizing", "vi": "Định cỡ"},
-      "en": [{"file": "docs/sizing.md"}]
     },
     {
       "slug": "configuration",
@@ -88,18 +100,15 @@
       "en": [{"file": "README.md", "section": "Admin UI"}]
     },
     {
-      "slug": "operations/integrations",
+      "slug": "operations/sizing",
       "parent": "operations",
-      "title": {"en": "Integrations", "vi": "Tích hợp"},
-      "en": [{"file": "docs/integrations.md"}]
+      "title": {"en": "Sizing and layers", "vi": "Định cỡ và chọn lớp"},
+      "en": [{"file": "docs/sizing.md"}]
     },
     {
       "slug": "upgrade",
       "title": {"en": "Upgrade", "vi": "Nâng cấp"},
-      "en": [
-        {"file": "docs/upgrade.md"},
-        {"file": "CHANGELOG.md", "note": "There is no separate upgrade guide yet. Before 1.0, minor versions can change the API and the schema: read the changes below, then follow <em>Upgrade and rollback</em> in your <a href=\"/docs/deploy/\">deployment guide</a>."}
-      ]
+      "en": [{"file": "docs/upgrade.md"}]
     },
     {
       "slug": "models",
@@ -151,11 +160,11 @@
       "english": "",
       "nav_label": "Documentation",
       "intro": {
-        "quickstart": "Run it with Docker Compose, then in production.",
-        "deploy": "AWS, Google Cloud, on-premise and Kubernetes guides.",
+        "quickstart": "Run it with Docker Compose and point your tools at it.",
+        "deploy": "Production compose, managed PostgreSQL, air-gapped, AWS, Google Cloud, Kubernetes.",
         "configuration": "Every environment variable, routing and the APIs.",
-        "operations": "Audit, retention, identity, alerts and the admin UI.",
-        "upgrade": "Moving to a new version and back.",
+        "operations": "Audit, retention, identity, alerts, sizing and the admin UI.",
+        "upgrade": "Upgrade, rollback and backups.",
         "models": "The L2 and L3 models: pulling, pinning, rollback.",
         "security": "Architecture, data, threat model, verifying releases."
       }
@@ -169,11 +178,11 @@
       "english": "(tiếng Anh)",
       "nav_label": "Tài liệu",
       "intro": {
-        "quickstart": "Chạy bằng Docker Compose, rồi lên production.",
-        "deploy": "Hướng dẫn cho AWS, Google Cloud, hạ tầng riêng và Kubernetes.",
+        "quickstart": "Chạy bằng Docker Compose và trỏ công cụ của bạn vào gateway.",
+        "deploy": "Compose cho production, PostgreSQL được quản lý, mạng cô lập, AWS, Google Cloud, Kubernetes.",
         "configuration": "Mọi biến môi trường, định tuyến và API.",
-        "operations": "Audit, lưu giữ dữ liệu, định danh, cảnh báo và giao diện quản trị.",
-        "upgrade": "Lên phiên bản mới và quay lui.",
+        "operations": "Audit, lưu giữ dữ liệu, định danh, cảnh báo, định cỡ và giao diện quản trị.",
+        "upgrade": "Nâng cấp, quay lui và sao lưu.",
         "models": "Model L2 và L3: tải, ghim phiên bản, quay lui.",
         "security": "Kiến trúc, dữ liệu, threat model, kiểm tra bản phát hành."
       }
