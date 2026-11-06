@@ -1,0 +1,320 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Air-gapped · Guard Spec</title>
+<meta name="description" content="How to run the Helm chart (deploy/helm/guard-spec) on a cluster that cannot reach ghcr.io, Docker Hub or Hugging Face: mirror the images with their signatu">
+<meta property="og:title" content="Air-gapped · Guard Spec">
+<meta property="og:description" content="How to run the Helm chart (deploy/helm/guard-spec) on a cluster that cannot reach ghcr.io, Docker Hub or Hugging Face: mirror the images with their signatu">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/docs/deploy/airgapped/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/deploy/airgapped/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/docs/" class="on">Docs</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/deploy/airgapped/" class="on">EN</a><a href="/vi/docs/" class="">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Documentation</span></summary>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class="child"><a href="/docs/quickstart/integrations/">Integrations</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/production-compose/">Production compose</a></li><li class="child"><a href="/docs/deploy/managed-postgres/">Managed PostgreSQL</a></li><li class="child on"><a href="/docs/deploy/airgapped/">Air-gapped</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class="child"><a href="/docs/operations/sizing/">Sizing and layers</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class="child"><a href="/docs/quickstart/integrations/">Integrations</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/production-compose/">Production compose</a></li><li class="child"><a href="/docs/deploy/managed-postgres/">Managed PostgreSQL</a></li><li class="child on"><a href="/docs/deploy/airgapped/">Air-gapped</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class="child"><a href="/docs/operations/sizing/">Sizing and layers</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Air-gapped</h1>
+
+<p>How to run the Helm chart (<code>deploy/helm/guard-spec</code>) on a cluster that cannot
+reach ghcr.io, Docker Hub or Hugging Face: mirror the images with their
+signatures and attestations, mirror the models, verify everything offline,
+and point the chart at the mirrors. The same steps work for a cluster that
+may only pull from an internal registry.</p>
+<blockquote>
+<p><strong>Status: reference, not yet verified by the maintainers on a disconnected
+cluster.</strong> The cosign commands below were run against the 0.1.0 images;
+the chart values are checked by CI (<code>helm lint</code>, <code>kubeconform</code>) and the
+kind e2e. Reports are welcome, see <a href="/docs/deploy/">docs/deploy/README.md</a>.</p>
+</blockquote>
+<p><a href="/docs/models/versions/#air-gapped-installs">docs/models.md</a> covers the models alone, and
+<a href="/docs/deploy/on-premise/">docs/deploy/on-premise.md</a> the compose path.</p>
+<h2 id="1-what-to-move">1. What to move<a class="anchor" href="#1-what-to-move" aria-hidden="true">#</a></h2>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>What</th>
+  <th>Source</th>
+  <th>Used by</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Gateway image</td>
+  <td><code>ghcr.io/guard-spec/guard-spec-gateway:&lt;version&gt;</code></td>
+  <td>gateway pods; also the <code>migrations</code> hook (it copies <code>/app/migrations</code>) and the <code>models.pull</code> init container</td>
+</tr>
+<tr>
+  <td>or gateway-full</td>
+  <td><code>ghcr.io/guard-spec/guard-spec-gateway-full:&lt;version&gt;</code></td>
+  <td>gateway with the L2/L3 models inside: no model mirror needed</td>
+</tr>
+<tr>
+  <td>Control plane image</td>
+  <td><code>ghcr.io/guard-spec/guard-spec-control-plane:&lt;version&gt;</code></td>
+  <td>control plane pods</td>
+</tr>
+<tr>
+  <td>golang-migrate</td>
+  <td><code>migrate/migrate:v4.20.1@sha256:76cc2074cb6642631f34a898ced71e6aeaa6b1a4d78c4daa743275a22e0c5be7</code></td>
+  <td><code>migrations.enabled</code></td>
+</tr>
+<tr>
+  <td>Postgres client</td>
+  <td><code>postgres:17.11-alpine@sha256:266d3c257594e195b309ae9d1805e54c788f1d7b375f56bf6c367aac6c917e7b</code></td>
+  <td><code>dbRoles.enabled</code></td>
+</tr>
+<tr>
+  <td>Models</td>
+  <td>the files of <code>models/manifest.yaml</code> (about 250 MB for the recommended L2 + L3)</td>
+  <td><code>models.pull</code></td>
+</tr>
+<tr>
+  <td>Chart</td>
+  <td><code>deploy/helm/guard-spec</code> of the release tag (also inside every release archive)</td>
+  <td><code>helm install</code></td>
+</tr>
+<tr>
+  <td>Sigstore trusted root</td>
+  <td><code>trusted_root.json</code></td>
+  <td>offline signature checks</td>
+</tr>
+</tbody>
+</table></div>
+<p>The Guard Spec images are signed with cosign (keyless, GitHub Actions OIDC)
+and carry an SPDX SBOM and SLSA provenance as BuildKit attestations inside
+the image index (<a href="/docs/security/policy/">SECURITY.md</a>). The two third-party images
+are not ours: pin them by digest, as above.</p>
+<h2 id="2-on-the-connected-side">2. On the connected side<a class="anchor" href="#2-on-the-connected-side" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash">V=0.1.1
+ID='^https://github.com/guard-spec/guard-spec/'
+ISSUER=https://token.actions.githubusercontent.com
+
+# The trusted root (Fulcio CA, Rekor and CT log keys) for offline checks.
+# cosign keeps the copy it fetched over TUF here after any online verify:
+cosign verify ghcr.io/guard-spec/guard-spec-gateway:$V \
+  --certificate-identity-regexp &quot;$ID&quot; --certificate-oidc-issuer &quot;$ISSUER&quot; &gt;/dev/null
+cp ~/.sigstore/root/tuf-repo-cdn.sigstore.dev/targets/trusted_root.json .
+
+# Each image with its signature and attestations, as an OCI layout on disk.
+for img in guard-spec-gateway guard-spec-control-plane; do   # + guard-spec-gateway-full
+  cosign save --dir &quot;out/$img&quot; &quot;ghcr.io/guard-spec/$img:$V&quot;
+done
+# Third-party images: every platform, digest unchanged.
+skopeo copy --all docker://migrate/migrate:v4.20.1@sha256:76cc2074cb6642631f34a898ced71e6aeaa6b1a4d78c4daa743275a22e0c5be7 oci:out/migrate:v4.20.1
+skopeo copy --all docker://postgres:17.11-alpine@sha256:266d3c257594e195b309ae9d1805e54c788f1d7b375f56bf6c367aac6c917e7b oci:out/postgres:17.11-alpine
+
+# Models: the recommended versions, every file checked against the manifest
+# (the release archive's models tool has the release's manifest built in;
+# it also holds the chart, under deploy/).
+./models pull -dir out/models
+./models verify -dir out/models
+</code></pre>
+<p><code>cosign save</code> writes the image index as it is, with its per-platform
+manifests, the BuildKit SBOM and provenance attestation manifests, and the
+cosign signature. <code>skopeo copy --all</code> (or <code>oras cp -r</code>, <code>crane copy</code>) keeps
+digests; <code>docker pull</code> + <code>docker push</code> keeps only one platform and changes
+the index digest.</p>
+<p>Carry <code>out/</code>, <code>trusted_root.json</code> and the release archive (or <code>helm package deploy/helm/guard-spec</code>) across.</p>
+<h2 id="3-verify-offline-then-load-into-the-registry">3. Verify offline, then load into the registry<a class="anchor" href="#3-verify-offline-then-load-into-the-registry" aria-hidden="true">#</a></h2>
+<p>No network is needed: the signature bundles carry the Rekor inclusion proof,
+and <code>trusted_root.json</code> replaces the TUF lookup.</p>
+<pre><code class="language-bash">for img in guard-spec-gateway guard-spec-control-plane; do
+  cosign verify --local-image &quot;out/$img&quot; --trusted-root trusted_root.json \
+    --certificate-identity-regexp &quot;$ID&quot; --certificate-oidc-issuer &quot;$ISSUER&quot;
+done
+
+REG=registry.internal/guard-spec
+for img in guard-spec-gateway guard-spec-control-plane; do
+  cosign load --dir &quot;out/$img&quot; &quot;$REG/$img:$V&quot;
+  # Again from the registry: the signature travelled with the image.
+  cosign verify &quot;$REG/$img:$V&quot; --trusted-root trusted_root.json \
+    --certificate-identity-regexp &quot;$ID&quot; --certificate-oidc-issuer &quot;$ISSUER&quot;
+done
+skopeo copy --all oci:out/migrate:v4.20.1 docker://$REG/migrate:v4.20.1
+skopeo copy --all oci:out/postgres:17.11-alpine docker://$REG/postgres:17.11-alpine
+
+# The SBOM and provenance stay readable from the mirror:
+docker buildx imagetools inspect &quot;$REG/guard-spec-gateway:$V&quot; --format '{{json .Provenance}}' | head
+</code></pre>
+<p>The release archives are checked the same way:
+<code>cosign verify-blob checksums.txt --bundle checksums.txt.sigstore.json --trusted-root trusted_root.json --certificate-identity-regexp &quot;$ID&quot; --certificate-oidc-issuer &quot;$ISSUER&quot;</code>,
+then <code>sha256sum --ignore-missing -c checksums.txt</code>.</p>
+<p>To enforce signatures at admission, give the cluster's policy engine
+(Sigstore policy-controller, Kyverno <code>verifyImages</code>) the same identity, issuer
+and trusted root.</p>
+<h2 id="4-mirror-the-models">4. Mirror the models<a class="anchor" href="#4-mirror-the-models" aria-hidden="true">#</a></h2>
+<p><code>models pull</code> reads <code>&lt;mirror&gt;/&lt;name&gt;/&lt;version&gt;/&lt;file&gt;</code>, which is the layout
+of <code>out/models</code> (<code>models/cache</code>). Serve that directory from any static HTTP
+server inside the network (nginx, an S3, GCS or Azure Blob bucket, Artifactory
+generic repository). The mirror does not need to be trusted: every file is
+checked against the SHA-256 in the image's own <code>manifest.yaml</code>, and a mismatch
+is refused.</p>
+<pre><code class="language-bash">aws s3 sync out/models s3://models-internal/guard-spec/   # for example
+</code></pre>
+<p>Alternatively use <code>guard-spec-gateway-full</code> and skip the model mirror.</p>
+<h2 id="5-point-the-chart-at-the-mirrors">5. Point the chart at the mirrors<a class="anchor" href="#5-point-the-chart-at-the-mirrors" aria-hidden="true">#</a></h2>
+<pre><code class="language-yaml"># values-airgapped.yaml
+imagePullSecrets:
+  - name: registry-internal
+gateway:
+  image:
+    repository: registry.internal/guard-spec/guard-spec-gateway
+    tag: &quot;0.1.1&quot;          # or &quot;0.1.1@sha256:&lt;index digest&gt;&quot; to pin the digest
+controlPlane:
+  image:
+    repository: registry.internal/guard-spec/guard-spec-control-plane
+    tag: &quot;0.1.1&quot;
+migrations:
+  enabled: true
+  image:
+    repository: registry.internal/guard-spec/migrate
+    tag: v4.20.1
+    # Same digest as Docker Hub when copied with skopeo --all; else empty it.
+    digest: sha256:76cc2074cb6642631f34a898ced71e6aeaa6b1a4d78c4daa743275a22e0c5be7
+dbRoles:
+  enabled: true
+  image:
+    repository: registry.internal/guard-spec/postgres
+    tag: 17.11-alpine
+models:
+  persistence:
+    enabled: false       # each pod pulls into its own emptyDir; or keep a claim
+  pull:
+    enabled: true
+    required: true       # a model that cannot be pulled stops the pod
+    mirror: https://models.internal/guard-spec
+networkPolicy:
+  enabled: true
+  egress:
+    restrict: true
+    gateway:
+      - to: [{ipBlock: {cidr: 10.20.0.0/16}}]   # the models mirror and the LLM endpoint
+        ports: [{port: 443, protocol: TCP}]
+</code></pre>
+<p>With gateway-full instead: <code>gateway.image.repository=.../guard-spec-gateway-full</code>,
+<code>models.persistence.enabled=false</code> and no <code>models.pull</code>.</p>
+<p>Then, as in the README (&quot;Kubernetes&quot;):</p>
+<pre><code class="language-bash">helm install gs ./guard-spec-0.2.0.tgz -n guard-spec -f values-airgapped.yaml
+kubectl -n guard-spec exec deploy/gs-guard-spec-gateway -c gateway -- ./doctor
+</code></pre>
+<p><code>doctor</code> (in the images released after 0.1.1) checks the database and migration version, the model files against
+the manifest's SHA-256, which detection layers will load, the upstream and the
+security settings; exit code 1 means a check failed.</p>
+<h2 id="6-secrets-from-an-external-store-external-secrets-operator">6. Secrets from an external store (External Secrets Operator)<a class="anchor" href="#6-secrets-from-an-external-store-external-secrets-operator" aria-hidden="true">#</a></h2>
+<p>The chart reads every secret from <code>existingSecret</code> (default
+<code>guard-spec-secrets</code>) and never stores one in values. With the
+<a href="https://external-secrets.io">External Secrets Operator</a> that Secret is
+created and refreshed from a store such as HashiCorp Vault, which usually
+runs inside the disconnected network. The keys are those of <code>values.yaml</code>:</p>
+<pre><code class="language-yaml">apiVersion: external-secrets.io/v1
+kind: SecretStore
+metadata:
+  name: vault
+  namespace: guard-spec
+spec:
+  provider:
+    vault:
+      server: https://vault.internal:8200
+      path: secret
+      version: v2
+      caProvider: {type: ConfigMap, name: internal-ca, key: ca.crt}
+      auth:
+        kubernetes:
+          mountPath: kubernetes
+          role: guard-spec
+          serviceAccountRef: {name: guard-spec-eso}
+---
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: guard-spec-secrets
+  namespace: guard-spec
+spec:
+  refreshInterval: 1h
+  secretStoreRef: {kind: SecretStore, name: vault}
+  target:
+    name: guard-spec-secrets        # = existingSecret
+    creationPolicy: Owner
+  data:
+    - {secretKey: POSTGRES_PASSWORD,      remoteRef: {key: guard-spec/db, property: owner_password}}
+    - {secretKey: GUARDSPEC_APP_PASSWORD, remoteRef: {key: guard-spec/db, property: app_password}}
+    - {secretKey: JWT_SECRET,             remoteRef: {key: guard-spec/control-plane, property: jwt_secret}}
+    - {secretKey: MFA_ENC_KEY,            remoteRef: {key: guard-spec/control-plane, property: mfa_enc_key}}
+    - {secretKey: ADMIN_PASSWORD,         remoteRef: {key: guard-spec/control-plane, property: admin_password}}
+---
+# Upstream keys for the gateway: gateway.extraEnvFrom: [{secretRef: {name: guard-spec-upstream}}]
+apiVersion: external-secrets.io/v1
+kind: ExternalSecret
+metadata:
+  name: guard-spec-upstream
+  namespace: guard-spec
+spec:
+  refreshInterval: 1h
+  secretStoreRef: {kind: SecretStore, name: vault}
+  target: {name: guard-spec-upstream}
+  data:
+    - {secretKey: UPSTREAM_LLM_KEY, remoteRef: {key: guard-spec/upstream, property: api_key}}
+</code></pre>
+<p>Notes:</p>
+<ul>
+<li>The services read secrets at start. After a rotation, restart them
+(<code>kubectl rollout restart deployment -l app.kubernetes.io/instance=gs</code>), and
+run <code>helm upgrade</code> (or the <code>dbRoles</code> job) after rotating
+<code>GUARDSPEC_APP_PASSWORD</code> so that the database role gets the new password.</li>
+<li><code>MFA_ENC_KEY</code> must stay the one that encrypted the users' TOTP secrets: back
+it up with the database and never let the store generate a new one.</li>
+<li>The chart's own service account (<code>serviceAccount.create</code>) is for the
+services, which never call the Kubernetes API; give the operator its own
+account (<code>guard-spec-eso</code> above) for the Vault Kubernetes login. With a
+cloud store, swap the provider (AWS Secrets Manager with IRSA, GCP Secret
+Manager or Azure Key Vault with Workload Identity); the <code>ExternalSecret</code>
+stays the same.</li>
+</ul>
+
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/ca69dad29f022ada74388240df332069500d65ff/docs/airgapped.md">docs/airgapped.md</a> @ <code>ca69dad29f02</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Security</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Created by <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

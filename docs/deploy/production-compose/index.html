@@ -1,0 +1,272 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Production compose · Guard Spec</title>
+<meta name="description" content="One host, Docker Compose, HTTPS. For a startup or a team that wants Guard Spec on a single VM without Kubernetes. The quick start (docker-compose.yml at th">
+<meta property="og:title" content="Production compose · Guard Spec">
+<meta property="og:description" content="One host, Docker Compose, HTTPS. For a startup or a team that wants Guard Spec on a single VM without Kubernetes. The quick start (docker-compose.yml at th">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/docs/deploy/production-compose/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/deploy/production-compose/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/docs/" class="on">Docs</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/deploy/production-compose/" class="on">EN</a><a href="/vi/docs/" class="">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Documentation</span></summary>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class="child"><a href="/docs/quickstart/integrations/">Integrations</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child on"><a href="/docs/deploy/production-compose/">Production compose</a></li><li class="child"><a href="/docs/deploy/managed-postgres/">Managed PostgreSQL</a></li><li class="child"><a href="/docs/deploy/airgapped/">Air-gapped</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class="child"><a href="/docs/operations/sizing/">Sizing and layers</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class="child"><a href="/docs/quickstart/integrations/">Integrations</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child on"><a href="/docs/deploy/production-compose/">Production compose</a></li><li class="child"><a href="/docs/deploy/managed-postgres/">Managed PostgreSQL</a></li><li class="child"><a href="/docs/deploy/airgapped/">Air-gapped</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class="child"><a href="/docs/operations/sizing/">Sizing and layers</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Production compose</h1>
+
+<p>One host, Docker Compose, HTTPS. For a startup or a team that wants Guard Spec
+on a single VM without Kubernetes. The quick start
+(<a href="https://github.com/guard-spec/guard-spec/blob/ca69dad29f022ada74388240df332069500d65ff/docker-compose.yml"><code>docker-compose.yml</code></a> at the repository root)
+publishes every port over plain HTTP; this stack does not.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th></th>
+  <th>Quick start (root)</th>
+  <th>This stack</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Published ports</td>
+  <td>8080, 9090, 18081, 9091 (plain HTTP)</td>
+  <td>80 and 443 (Caddy) only</td>
+</tr>
+<tr>
+  <td>TLS</td>
+  <td>none</td>
+  <td>Caddy: automatic HTTPS (Let's Encrypt, ZeroSSL) or its internal CA</td>
+</tr>
+<tr>
+  <td>Limits</td>
+  <td>none</td>
+  <td>CPU and memory per service, sized from <a href="/docs/operations/sizing/">docs/sizing.md</a></td>
+</tr>
+<tr>
+  <td>Logs</td>
+  <td>Docker defaults (unbounded)</td>
+  <td>json-file, 10 MB x 5 per container</td>
+</tr>
+<tr>
+  <td>Restart</td>
+  <td>none</td>
+  <td><code>unless-stopped</code></td>
+</tr>
+<tr>
+  <td>Health checks</td>
+  <td>gateway</td>
+  <td>every long-running service; Caddy starts after the gateway and control plane are healthy</td>
+</tr>
+<tr>
+  <td>Missing models</td>
+  <td>warn, run on L1</td>
+  <td>refuse to start (<code>DETECTOR_REQUIRE_ML=true</code>)</td>
+</tr>
+<tr>
+  <td>Postgres</td>
+  <td>default network</td>
+  <td>internal network, no route outside</td>
+</tr>
+</tbody>
+</table></div>
+<pre><code class="language-text">internet ──443──&gt; caddy ──&gt; gateway:8080        (GATEWAY_HOST)
+                        └─&gt; control-plane:8081  (ADMIN_HOST: admin UI at /ui/, API at /v1)
+                   edge network                  backend network (internal)
+                   gateway, control-plane ─────&gt; postgres
+</code></pre>
+<h2 id="start">Start<a class="anchor" href="#start" aria-hidden="true">#</a></h2>
+<p>You need a host with Docker and Compose v2, this repository (or a release
+source archive: the stack uses <code>migrations/</code> and
+<code>deploy/postgres/set-app-password.sh</code> from it), and two DNS names pointing at
+the host, with ports 80 and 443 open.</p>
+<pre><code class="language-bash">cd deploy/compose/production
+cp .env.example .env &amp;&amp; chmod 600 .env
+# Fill in .env: GATEWAY_HOST, ADMIN_HOST, CADDY_TLS=&lt;your email&gt;, and every
+# secret (openssl rand -hex 24 for passwords, openssl rand -hex 32 for
+# JWT_SECRET, openssl rand -base64 32 for MFA_ENC_KEY), ADMIN_EMAIL and
+# ADMIN_PASSWORD.
+docker compose up -d --wait
+</code></pre>
+<p>The first start pulls the images and the models (about 270 MB; 135 MB with
+<code>DETECTOR_LAYERS=l1,l2</code>), runs the migrations, and Caddy gets certificates for
+both names. Then:</p>
+<pre><code class="language-bash">curl -s https://$GATEWAY_HOST/readyz      # &quot;layers&quot;:[&quot;l1&quot;,&quot;l2&quot;,&quot;l3&quot;]
+open https://$ADMIN_HOST/ui/              # log in with ADMIN_EMAIL / ADMIN_PASSWORD
+</code></pre>
+<p>Create an API key in the admin UI (or with the API, as in the
+<a href="/docs/quickstart/">README quick start</a>, with
+<code>https://$ADMIN_HOST/v1</code> instead of <code>http://localhost:18081/v1</code>), and point
+your applications at <code>https://$GATEWAY_HOST/v1</code>
+(<a href="/docs/quickstart/integrations/">docs/integrations.md</a>).</p>
+<h2 id="testing-with-caddys-internal-ca">Testing with Caddy's internal CA<a class="anchor" href="#testing-with-caddys-internal-ca" aria-hidden="true">#</a></h2>
+<p>Without public DNS (a laptop, a private network, CI), let Caddy issue
+certificates from its own CA:</p>
+<pre><code class="language-bash"># .env
+GATEWAY_HOST=gw.localhost
+ADMIN_HOST=admin.localhost
+CADDY_TLS=internal
+HTTPS_PORT=8443        # if 443 is taken
+HTTP_PORT=8480
+</code></pre>
+<pre><code class="language-bash">docker compose up -d --wait
+# Either skip verification ...
+curl -sk --resolve gw.localhost:8443:127.0.0.1 https://gw.localhost:8443/readyz
+# ... or trust Caddy's root certificate.
+docker compose cp caddy:/data/caddy/pki/authorities/local/root.crt ./caddy-root.crt
+curl -s --cacert caddy-root.crt --resolve gw.localhost:8443:127.0.0.1 https://gw.localhost:8443/readyz
+</code></pre>
+<p>Clients then need <code>caddy-root.crt</code> (Python: <code>SSL_CERT_FILE</code> or
+<code>REQUESTS_CA_BUNDLE</code>; Node: <code>NODE_EXTRA_CA_CERTS</code>). The root lives in the
+<code>caddy_data</code> volume and is kept by <code>scripts/backup.sh</code>. With a port other
+than 443, Caddy's HTTP-to-HTTPS redirect points at port 443; use the HTTPS
+port directly.</p>
+<h2 id="settings">Settings<a class="anchor" href="#settings" aria-hidden="true">#</a></h2>
+<p>Everything is in <code>.env</code> (<a href="https://github.com/guard-spec/guard-spec/blob/ca69dad29f022ada74388240df332069500d65ff/deploy/compose/production/.env.example"><code>.env.example</code></a> lists it):</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Default</th>
+  <th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>GATEWAY_HOST</code>, <code>ADMIN_HOST</code></td>
+  <td>required</td>
+  <td>Two names; the control plane is not served on the gateway's name</td>
+</tr>
+<tr>
+  <td><code>CADDY_TLS</code></td>
+  <td>required</td>
+  <td>Your email (ACME) or <code>internal</code></td>
+</tr>
+<tr>
+  <td><code>ADMIN_ALLOW</code></td>
+  <td><code>0.0.0.0/0 ::/0</code></td>
+  <td>Client ranges allowed on <code>ADMIN_HOST</code>, such as your VPN. Needs Docker to pass real client addresses (Linux default; not Docker Desktop)</td>
+</tr>
+<tr>
+  <td><code>DETECTOR_LAYERS</code></td>
+  <td><code>l1,l2,l3</code></td>
+  <td><code>l1,l2</code> is light mode (<a href="/docs/operations/sizing/">docs/sizing.md</a>)</td>
+</tr>
+<tr>
+  <td><code>GATEWAY_CPUS</code>, <code>GATEWAY_MEMORY</code></td>
+  <td><code>2</code>, <code>2g</code></td>
+  <td>Measured peaks: full detector 0.9 GiB, light 0.5 GiB</td>
+</tr>
+<tr>
+  <td><code>INFERENCE_MAX_CONCURRENCY</code>, <code>INFERENCE_INTRA_OP_THREADS</code></td>
+  <td><code>2</code>, <code>1</code></td>
+  <td>Model runs at once x threads each; keep the product at or below <code>GATEWAY_CPUS</code></td>
+</tr>
+<tr>
+  <td><code>CONTROL_PLANE_CPUS</code>, <code>CONTROL_PLANE_MEMORY</code></td>
+  <td><code>1</code>, <code>256m</code></td>
+  <td></td>
+</tr>
+<tr>
+  <td><code>POSTGRES_CPUS</code>, <code>POSTGRES_MEMORY</code></td>
+  <td><code>2</code>, <code>1g</code></td>
+  <td></td>
+</tr>
+<tr>
+  <td><code>CADDY_CPUS</code>, <code>CADDY_MEMORY</code></td>
+  <td><code>1</code>, <code>256m</code></td>
+  <td></td>
+</tr>
+<tr>
+  <td><code>LOG_MAX_SIZE</code>, <code>LOG_MAX_FILE</code></td>
+  <td><code>10m</code>, <code>5</code></td>
+  <td>Per container</td>
+</tr>
+<tr>
+  <td><code>EDGE_SUBNET</code></td>
+  <td><code>172.30.89.0/24</code></td>
+  <td>The control plane trusts <code>X-Forwarded-For</code> from it (Caddy); change it if it collides with your networks</td>
+</tr>
+<tr>
+  <td><code>GUARDSPEC_VERSION</code></td>
+  <td><code>0.1.1</code></td>
+  <td>Image tag (<a href="/docs/upgrade/">docs/upgrade.md</a>)</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>UPSTREAM_KEY_ORGS</code> has no default here (the quick start lets every org use
+<code>UPSTREAM_KEY_MAIN</code>), and <code>UPSTREAM_ALLOW_PRIVATE</code> is <code>false</code>: set them
+deliberately, as the <a href="/docs/configuration/routing/">README's Routing section</a>
+explains.</p>
+<p>Metrics (gateway <code>:9090</code>, control plane <code>:9091</code>) are not published. Run
+Prometheus on the <code>edge</code> network (<code>&lt;project&gt;_edge</code>) and scrape
+<code>gateway:9090</code> and <code>control-plane:9091</code>.</p>
+<h2 id="operations">Operations<a class="anchor" href="#operations" aria-hidden="true">#</a></h2>
+<ul>
+<li>Backups: <code>scripts/backup.sh -f deploy/compose/production/docker-compose.yml</code>
+from the repository root, restore with <code>scripts/restore.sh</code>
+(<a href="/docs/upgrade/#backups">docs/upgrade.md</a>).</li>
+<li>Upgrades and rollback: <a href="/docs/upgrade/">docs/upgrade.md</a>.</li>
+<li>Sizing: <a href="/docs/operations/sizing/">docs/sizing.md</a>.</li>
+<li>A managed database instead of the <code>postgres</code> service:
+<a href="/docs/deploy/managed-postgres/">docs/managed-postgres.md</a>.</li>
+<li>Logs: <code>docker compose logs -f gateway</code>; Caddy logs one JSON line per
+request (no bodies).</li>
+</ul>
+<h2 id="what-was-checked">What was checked<a class="anchor" href="#what-was-checked" aria-hidden="true">#</a></h2>
+<p>On an Apple Silicon (arm64) Mac with Docker Desktop, with <code>CADDY_TLS=internal</code>:
+the stack starts healthy with only Caddy publishing ports; <code>/readyz</code> reports
+<code>l1,l2,l3</code> over HTTPS, verified against Caddy's exported root; a benign prompt
+passes (200), an injection is blocked (400), the admin UI loads; a backup
+restored into a fresh compose project keeps the organization, users, API keys,
+policies, audit rows and Caddy's CA. Automatic HTTPS with a public ACME CA
+was not exercised (it needs public DNS); the Caddyfile adapts to an ACME
+policy for both names (<code>caddy adapt</code>).</p>
+
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/ca69dad29f022ada74388240df332069500d65ff/deploy/compose/production/README.md">deploy/compose/production/README.md</a> @ <code>ca69dad29f02</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Security</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Created by <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>
