@@ -1,0 +1,182 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Routing · Guard Spec</title>
+<meta name="description" content="An organization defines named upstreams (OpenAI-compatible APIs). For a request the guard allowed, the gateway picks one in this order: the route_target of">
+<meta property="og:title" content="Routing · Guard Spec">
+<meta property="og:description" content="An organization defines named upstreams (OpenAI-compatible APIs). For a request the guard allowed, the gateway picks one in this order: the route_target of">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/docs/configuration/routing/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/configuration/routing/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/docs/" class="on">Docs</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/configuration/routing/" class="on">EN</a><a href="/vi/docs/" class="">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Documentation</span></summary>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child on"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child on"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Routing</h1>
+
+<p>An organization defines named <strong>upstreams</strong> (OpenAI-compatible APIs). For a
+request the guard allowed, the gateway picks one in this order:</p>
+<ol>
+<li>the <code>route_target</code> of the <code>route</code> rule that decided the request;</li>
+<li>the default upstream of the API key's project;</li>
+<li>the default upstream of the organization;</li>
+<li><code>UPSTREAM_LLM_URL</code>;</li>
+<li>the stub answer.</li>
+</ol>
+<p>A target or default that is missing, disabled, or whose key variable is not
+set or not allowed for the org fails the request closed with 502
+(<code>route_unavailable</code>); the gateway never falls back to another upstream. The
+audit row records the upstream's name in <code>route_target</code> (null for
+<code>UPSTREAM_LLM_URL</code> and the stub), the action <code>route</code> when a route rule
+decided, and in <code>model</code> the model actually sent upstream (the upstream's
+<code>model</code> when it rewrote the request; policies still see the requested one).
+Upstreams are read per request in the same transaction as the policies, so a
+change applies to the next request.</p>
+<p>An upstream is <code>{&quot;name&quot;, &quot;base_url&quot;, &quot;model&quot;, &quot;api_key_env&quot;, &quot;timeout_ms&quot;, &quot;enabled&quot;}</code>. <code>name</code> is lowercase letters, digits and dashes, unique per org.
+When <code>model</code> is set, the gateway replaces the request's <code>model</code> with it.
+<code>timeout_ms</code> defaults to 300000. No secret is stored: <code>api_key_env</code> names a
+gateway environment variable (<code>UPSTREAM_KEY_[A-Z0-9_]{1,64}</code>) that holds the
+key, so set it in the gateway's environment (compose: add it under
+<code>gateway.environment</code>).</p>
+<p><strong>Which org may use which key</strong> is the operator's decision, in
+<code>UPSTREAM_KEY_ORGS</code> on both services:</p>
+<pre><code>UPSTREAM_KEY_ORGS=UPSTREAM_KEY_MAIN=*;UPSTREAM_KEY_ACME=&lt;org-uuid&gt;,&lt;org-uuid&gt;
+</code></pre>
+<p><code>*</code> means every organization and has to be written out; the default is
+empty, so no org can name any key variable. Without this, any user could
+create an org, point an upstream at a host they control with
+<code>api_key_env: UPSTREAM_KEY_MAIN</code>, and receive your key. The control plane
+refuses an upstream or config file that names a variable not allowed for the
+org (400, or 422 for the file), and the gateway checks again on every
+request, so rows saved before you narrowed the list fail closed (502).</p>
+<p><strong>Addresses.</strong> <code>base_url</code> must be http(s) without credentials, a query or a
+fragment. Link-local, multicast and unspecified addresses and the cloud
+metadata addresses (<code>169.254.0.0/16</code>, <code>fd00:ec2::254</code>, <code>100.100.100.200</code>,
+<code>192.0.0.192</code>, <code>metadata.google.internal</code>) are always refused, also after
+DNS when the gateway connects. Loopback, RFC 1918, unique local (fc00::/7)
+and CGNAT (100.64.0.0/10) addresses are refused at connect time unless
+<code>UPSTREAM_ALLOW_PRIVATE=true</code>. The trade-off: with <code>true</code>, org admins can
+reach anything on the gateway's network (an Ollama next to it, but also
+internal services); with <code>false</code>, org upstreams must be public. Your own
+<code>UPSTREAM_LLM_URL</code> is never restricted. Compose sets <code>true</code> so that Ollama on
+the host works.</p>
+<pre><code class="language-bash"># An upstream, the org default, and a rule that sends suspicious requests to a local model
+curl -s $CP/organizations/$ORG/upstreams -H &quot;$AUTH&quot; -H 'Content-Type: application/json' \
+  -d '{&quot;name&quot;:&quot;safe-model&quot;,&quot;base_url&quot;:&quot;http://ollama:11434/v1&quot;,&quot;model&quot;:&quot;qwen3:4b&quot;}'
+curl -s -X PUT $CP/organizations/$ORG/default-upstream -H &quot;$AUTH&quot; -H 'Content-Type: application/json' \
+  -d '{&quot;upstream_id&quot;:&quot;&lt;id of another upstream&gt;&quot;}'
+TREE=$(curl -s $CP/policy/parse -H &quot;$AUTH&quot; -H 'Content-Type: application/json' \
+  -d '{&quot;text&quot;:&quot;injection.score &gt; 0.5&quot;}' | jq .condition)
+curl -s $CP/organizations/$ORG/policies -H &quot;$AUTH&quot; -H 'Content-Type: application/json' \
+  -d &quot;{\&quot;name\&quot;:\&quot;routing\&quot;,\&quot;rules\&quot;:[{\&quot;name\&quot;:\&quot;suspicious\&quot;,\&quot;action\&quot;:\&quot;route\&quot;,\&quot;route_target\&quot;:\&quot;safe-model\&quot;,\&quot;condition\&quot;:$TREE}]}&quot;
+
+# What would happen: every rule's outcome, the decision and the upstream
+curl -s $CP/organizations/$ORG/policies/simulate -H &quot;$AUTH&quot; -H 'Content-Type: application/json' \
+  -d '{&quot;vars&quot;:{&quot;injection.score&quot;:0.7,&quot;request.model&quot;:&quot;gpt-4o&quot;}}' | jq .
+</code></pre>
+<p>Deleting an upstream that a rule or a default still uses returns 409 with the
+users in <code>references</code>; so does renaming one that a rule names.</p>
+<p><strong>Simulator.</strong> <code>POST /organizations/:orgId/policies/simulate</code> takes
+<code>{&quot;policy_id&quot;, &quot;rules&quot;, &quot;project_id&quot;, &quot;vars&quot;}</code>: <code>rules</code> (an unsaved rule list)
+or <code>policy_id</code> (one policy, even disabled) or neither (the enabled policies the
+gateway would run for a key of <code>project_id</code>, in its order). <code>vars</code> sets any
+schema field; fields not given are zero. It returns <code>trace</code> (every rule, with
+<code>matched</code> and <code>error</code>), <code>decision</code> (<code>action</code> is <code>error</code> when the gateway would
+answer 503, for example a rule that does not compile) and <code>upstream</code>
+(<code>source</code> is <code>rule</code>, <code>project</code>, <code>org</code>, <code>env</code> or <code>stub</code>; <code>error</code> is set when the
+gateway would answer 502). Nothing is stored or sent upstream.</p>
+<p><strong>Config as code.</strong> <code>GET /organizations/:orgId/config</code> returns the org's
+upstreams, defaults and policies as YAML; <code>PUT</code> applies such a file in one
+transaction, and <code>?dry_run=true</code> only reports the changes:</p>
+<pre><code class="language-yaml">version: 1
+default_upstream: main
+project_defaults:          # project slug: upstream
+  web: safe-model
+upstreams:
+  - name: main
+    base_url: https://api.openai.com/v1
+    api_key_env: UPSTREAM_KEY_MAIN
+  - name: safe-model
+    base_url: http://ollama:11434/v1
+    model: qwen3:4b
+policies:
+  - name: block-injection
+    project: null            # or a project slug
+    enabled: true
+    rules:
+      - name: high l2
+        when: scores.l2 &gt; 0.9 &amp;&amp; injection.category != &quot;benign&quot;
+        action: block
+      - name: suspicious to safe model
+        when: injection.score &gt; 0.5
+        action: route
+        route_target: safe-model
+</code></pre>
+<p>The file is the whole truth: upstreams and policies it does not list are
+deleted, and defaults it does not set are cleared (projects themselves are not
+created or deleted). Objects are matched by name; a rule keeps its ID when its
+name is unchanged inside the same policy, so audit rows keep naming it. The
+order of policies in the file is their evaluation order. Every <code>when</code> is
+parsed like <code>/policy/parse</code> and validated like a saved rule; a <code>when</code> that
+starts with <code>!</code> must be quoted, since YAML reads <code>!</code> as a tag. Errors come back
+as 422 <code>{&quot;errors&quot;:[{&quot;path&quot;:&quot;policies[0].rules[1].when&quot;,&quot;message&quot;:&quot;...&quot;}]}</code> and
+nothing is written; success is <code>{&quot;applied&quot;:true,&quot;changes&quot;:[{&quot;kind&quot;,&quot;name&quot;,&quot;op&quot;}]}</code>.</p>
+<p><code>GET</code> refuses with 409 when the stored config would not apply again: two
+policies with the same name (the file names policies by name), or rules that
+no longer validate, such as rules naming a removed field. The body lists each
+problem with the policy's id and the policy API call that fixes it
+(<code>{&quot;error&quot;, &quot;problems&quot;: [{&quot;policy_id&quot;, &quot;policy&quot;, &quot;message&quot;, &quot;fix&quot;}]}</code>).
+Policy names are unique per org: creating a policy, or renaming one, onto a
+name another policy has returns 409.</p>
+<pre><code class="language-bash">curl -s $CP/organizations/$ORG/config -H &quot;$AUTH&quot; &gt; guard.yaml
+curl -s -X PUT &quot;$CP/organizations/$ORG/config?dry_run=true&quot; -H &quot;$AUTH&quot; -H 'Content-Type: text/yaml' --data-binary @guard.yaml
+</code></pre>
+
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/README.md#routing">README.md#routing</a> @ <code>4448f51a3ca3</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Security</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Created by <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,38 @@
+name: Check
+
+# The committed pages must be what build.py makes from src/ and from the main
+# repository's Markdown at the ref pinned in src/docs.json, and no link or
+# asset in them may be broken.
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  build:
+    name: Build and link check
+    runs-on: ubuntu-24.04
+    steps:
+      - uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+        with:
+          persist-credentials: false
+      # The runner's Python 3.12; mistune pinned by version and hash.
+      - name: Install mistune
+        run: |
+          python3 -m venv .venv
+          .venv/bin/pip install --require-hashes --no-deps -r requirements.txt
+      - name: Build
+        run: .venv/bin/python build.py
+      - name: Committed output is up to date
+        run: |
+          if [ -n "$(git status --porcelain)" ]; then
+            git status --porcelain
+            echo "::error::The committed pages differ from what build.py makes: run it and commit the result."
+            exit 1
+          fi
+      - name: Links and assets
+        run: python3 check_site.py --external

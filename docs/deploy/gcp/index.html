@@ -1,0 +1,585 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Google Cloud · Guard Spec</title>
+<meta name="description" content="Status: reference template, not yet verified by the maintainers. Community-tested: not yet. If you deploy this, please open an issue or a pull request with">
+<meta property="og:title" content="Google Cloud · Guard Spec">
+<meta property="og:description" content="Status: reference template, not yet verified by the maintainers. Community-tested: not yet. If you deploy this, please open an issue or a pull request with">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/docs/deploy/gcp/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/deploy/gcp/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/docs/" class="on">Docs</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/deploy/gcp/" class="on">EN</a><a href="/vi/docs/" class="">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Documentation</span></summary>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child on"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child on"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Google Cloud</h1>
+
+<blockquote>
+<p><strong>Status: reference template, not yet verified by the maintainers.</strong>
+Community-tested: not yet. If you deploy this, please open an
+<a href="https://github.com/guard-spec/guard-spec/issues/new/choose">issue</a> or a pull
+request with what worked and what did not. See
+<a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/CONTRIBUTING.md">CONTRIBUTING.md</a> and the <a href="/docs/deploy/">index</a>.</p>
+</blockquote>
+<p>Two ways to run the services, same database and secrets:</p>
+<ul>
+<li><strong>A. GKE Autopilot</strong>: the Helm chart in <code>deploy/helm/guard-spec</code>, following
+the <a href="/docs/deploy/on-premise/#2-kubernetes">Kubernetes steps</a> with Google Cloud pieces
+swapped in.</li>
+<li><strong>B. Cloud Run</strong>: no cluster. Uses the <code>gateway-full</code> image, so no shared
+model volume.</li>
+</ul>
+<p>The commands and YAML below are templates: placeholders such as
+<code>&lt;project-id&gt;</code>, <code>&lt;region&gt;</code> and <code>&lt;your-db-host&gt;</code> must be filled in, and nothing
+here was run against a real Google Cloud project.</p>
+<h2 id="architecture">Architecture<a class="anchor" href="#architecture" aria-hidden="true">#</a></h2>
+<pre class="mermaid">flowchart LR
+  apps[Your applications] --&gt;|HTTPS 443| lb[External Application Load Balancer&lt;br/&gt;Google-managed certificate]
+  admins[Admins via VPN or IAP] --&gt;|HTTPS| ilb[Internal load balancer or IAP]
+  subgraph vpc[VPC]
+    lb --&gt;|HTTP 8080, /readyz| gw[gateway pods or Cloud Run service&lt;br/&gt;guard-spec-gateway-full]
+    ilb --&gt;|HTTP 8081, /health| cp[control-plane pod or Cloud Run service]
+    gw --&gt;|private IP, TLS| sql[(Cloud SQL for PostgreSQL 17)]
+    cp --&gt;|private IP, TLS| sql
+  end
+  gw --&gt;|HTTPS via Cloud NAT| llm[Upstream LLM API]
+  sm[Secret Manager] -. injected at start .-&gt; gw
+  sm -. injected at start .-&gt; cp
+  gw -. stdout JSON logs .-&gt; logging[Cloud Logging]
+  cp -. stdout JSON logs .-&gt; logging
+</pre>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Need</th>
+  <th>Google Cloud service</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Compute</td>
+  <td>GKE Autopilot, or Cloud Run</td>
+</tr>
+<tr>
+  <td>Database</td>
+  <td>Cloud SQL for PostgreSQL 17, private IP only, SSL required</td>
+</tr>
+<tr>
+  <td>Secrets</td>
+  <td>Secret Manager</td>
+</tr>
+<tr>
+  <td>TLS and routing</td>
+  <td>External Application Load Balancer with a Google-managed certificate (GKE Ingress, or a serverless NEG for Cloud Run)</td>
+</tr>
+<tr>
+  <td>Logs</td>
+  <td>Cloud Logging (collected from stdout on both platforms)</td>
+</tr>
+<tr>
+  <td>Metrics and traces</td>
+  <td>Prometheus endpoints on 9090/9091 (Managed Service for Prometheus on GKE); traces over OTLP/HTTP to an OpenTelemetry collector</td>
+</tr>
+<tr>
+  <td>Images</td>
+  <td><code>ghcr.io</code> directly (GKE), or a copy in Artifact Registry (needed for Cloud Run)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="prerequisites">Prerequisites<a class="anchor" href="#prerequisites" aria-hidden="true">#</a></h2>
+<ul>
+<li>A project with billing, the <code>gcloud</code> CLI, <code>docker</code>, <code>openssl</code>, <code>jq</code>.</li>
+<li>A VPC with Private Services Access configured (for Cloud SQL private IP)
+and Cloud NAT for the upstream LLM and image pulls.</li>
+<li>A domain for the gateway (<code>&lt;gateway-host&gt;</code>) and one for the admin UI
+(<code>&lt;admin-host&gt;</code>).</li>
+<li>A VM inside the VPC with Docker for one-off tasks (migrations, app
+password), reached with IAP TCP forwarding, or a CI runner in the VPC.</li>
+<li>A checkout of the release tag on that VM:
+<code>git clone --branch v0.1.1 https://github.com/guard-spec/guard-spec.git</code>.</li>
+</ul>
+<h2 id="sizing">Sizing<a class="anchor" href="#sizing" aria-hidden="true">#</a></h2>
+<p>The README has no server benchmarks. Measure under your traffic. Starting
+points:</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Service</th>
+  <th>Size</th>
+  <th>Basis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>gateway (L1 + L2 + L3)</td>
+  <td>1 vCPU, 2 GiB, 2 replicas or minimum instances</td>
+  <td>About 900 MiB of memory right after start in a local check of <code>gateway-full:0.1.0</code>; the chart's default is a 1Gi request and a 2Gi limit</td>
+</tr>
+<tr>
+  <td>gateway (L1 only)</td>
+  <td>0.5 vCPU, 1 GiB</td>
+  <td>Measure</td>
+</tr>
+<tr>
+  <td>control plane</td>
+  <td>0.25 to 1 vCPU, 512 MiB, 1 replica</td>
+  <td>Chart defaults: 100m CPU, 64Mi request, 256Mi limit; Cloud Run has its own minimums</td>
+</tr>
+<tr>
+  <td>Cloud SQL</td>
+  <td>Enterprise edition, <code>db-custom-1-3840</code>, 20 GB SSD</td>
+  <td>Measure: the audit table grows with every request, bounded by <code>AUDIT_RETENTION_DAYS</code></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="step-1-database">Step 1: database<a class="anchor" href="#step-1-database" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash"># Template.
+gcloud sql instances create guard-spec \
+  --database-version=POSTGRES_17 --edition=ENTERPRISE \
+  --tier=db-custom-1-3840 --region=&lt;region&gt; \
+  --network=projects/&lt;project-id&gt;/global/networks/&lt;vpc&gt; --no-assign-ip \
+  --ssl-mode=ENCRYPTED_ONLY \
+  --backup-start-time=03:00 --enable-point-in-time-recovery \
+  --deletion-protection
+
+gcloud sql databases create guardspec --instance=guard-spec
+gcloud sql users create gsowner --instance=guard-spec --password='&lt;owner-password&gt;'
+</code></pre>
+<ul>
+<li><code>--edition=ENTERPRISE</code> is set because newer PostgreSQL versions default to
+Enterprise Plus, which needs other tiers.</li>
+<li><code>gsowner</code> (a built-in user, member of <code>cloudsqlsuperuser</code>) runs the
+migrations. They create the <code>pgcrypto</code> and <code>pg_trgm</code> extensions and the
+<code>guardspec_app</code> role. The services never use <code>gsowner</code>.</li>
+<li><code>--ssl-mode=ENCRYPTED_ONLY</code> refuses unencrypted connections; use
+<code>sslmode=require</code> in every URL below. The private IP is <code>&lt;your-db-host&gt;</code>
+(<code>gcloud sql instances describe guard-spec --format='value(ipAddresses[0].ipAddress)'</code>).</li>
+<li>Store the owner password in Secret Manager too (<code>guard-spec-owner-password</code>).</li>
+</ul>
+<h3 id="migrations-and-the-application-password">Migrations and the application password<a class="anchor" href="#migrations-and-the-application-password" aria-hidden="true">#</a></h3>
+<p>From the VM inside the VPC, in the checkout of the release tag:</p>
+<pre><code class="language-bash">DB_HOST=&lt;your-db-host&gt;
+export PGPASSWORD=&quot;$(gcloud secrets versions access latest --secret=guard-spec-owner-password)&quot;
+
+docker run --rm -e PGPASSWORD -v &quot;$PWD/migrations:/migrations:ro&quot; migrate/migrate:v4.20.1 \
+  -path=/migrations -database &quot;postgres://gsowner@$DB_HOST:5432/guardspec?sslmode=require&quot; up
+</code></pre>
+<p>After creating the secrets (step 2), apply the application password:</p>
+<pre><code class="language-bash">export GUARDSPEC_APP_PASSWORD=&quot;$(gcloud secrets versions access latest --secret=guard-spec-app-password)&quot;
+
+docker run --rm -e PGPASSWORD -e GUARDSPEC_APP_PASSWORD \
+  -e PGHOST=&quot;$DB_HOST&quot; -e PGUSER=gsowner -e PGDATABASE=guardspec -e PGSSLMODE=require \
+  -v &quot;$PWD/deploy/postgres/set-app-password.sh:/set-app-password.sh:ro&quot; \
+  --entrypoint /bin/sh postgres:17.11-alpine /set-app-password.sh
+# guardspec_app password set
+</code></pre>
+<p>Run both again after every upgrade and every rotation of the app password.</p>
+<h2 id="step-2-secrets">Step 2: secrets<a class="anchor" href="#step-2-secrets" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash">openssl rand -hex 32    | tr -d '\n' | gcloud secrets create guard-spec-app-password   --data-file=-
+openssl rand -hex 32    | tr -d '\n' | gcloud secrets create guard-spec-jwt-secret     --data-file=-
+openssl rand -base64 32 | tr -d '\n' | gcloud secrets create guard-spec-mfa-enc-key    --data-file=-
+openssl rand -hex 16    | tr -d '\n' | gcloud secrets create guard-spec-admin-password --data-file=-
+printf '%s' '&lt;your-upstream-key&gt;'    | gcloud secrets create guard-spec-upstream-llm-key --data-file=-
+</code></pre>
+<p><strong><code>MFA_ENC_KEY</code> is not recoverable.</strong> It encrypts every user's TOTP secret.
+Keep a copy outside this project (an offline vault), and keep it with your
+Cloud SQL backups: a backup restored without the matching key locks out every
+user with 2FA. Never destroy old versions of <code>guard-spec-mfa-enc-key</code>; the
+control plane has no re-encryption step.</p>
+<p>Give each runtime service account <code>roles/secretmanager.secretAccessor</code> on the
+secrets it needs only (not on the project).</p>
+<h2 id="option-a-gke-autopilot">Option A: GKE Autopilot<a class="anchor" href="#option-a-gke-autopilot" aria-hidden="true">#</a></h2>
+<p>Create a private Autopilot cluster in the same VPC, then follow
+<a href="/docs/deploy/on-premise/#2-kubernetes">Kubernetes</a> in the on-premise guide. The Google
+Cloud specific parts:</p>
+<ul>
+<li><p><strong>Images.</strong> Autopilot nodes pull <code>ghcr.io</code> images through Cloud NAT.
+Optionally copy them to Artifact Registry (see Option B) and set
+<code>gateway.image.repository</code> and <code>controlPlane.image.repository</code>.</p>
+</li>
+<li><p><strong>Security context.</strong> The chart's settings (non-root UID 65532, read-only
+root filesystem, all capabilities dropped, RuntimeDefault seccomp) are
+accepted by Autopilot as they are.</p>
+</li>
+<li><p><strong>Secrets.</strong> Sync the Secret Manager values into the Kubernetes Secrets the
+chart expects (<code>guard-spec-secrets</code> with <code>POSTGRES_PASSWORD</code>,
+<code>GUARDSPEC_APP_PASSWORD</code>, <code>JWT_SECRET</code>, <code>ADMIN_PASSWORD</code>, <code>MFA_ENC_KEY</code>)
+with the External
+Secrets Operator or the Secret Manager add-on, or create them with
+<code>kubectl create secret</code> from a trusted machine.</p>
+</li>
+<li><p><strong>Models.</strong> The default storage class (<code>standard-rwo</code>) is ReadWriteOnce, so
+two gateway replicas on different nodes cannot share the chart's PVC. Use
+a ReadWriteMany claim backed by Filestore (<code>models.existingClaim</code>), filled
+by the <a href="/docs/deploy/on-premise/#step-3-models">models Job</a>; or keep
+<code>gateway.replicaCount=1</code>; or use <code>gateway-full</code> with no models volume
+(<a href="/docs/deploy/on-premise/#gateway-full-with-the-helm-chart">gateway-full with the Helm chart</a>).</p>
+</li>
+<li><p><strong>Migrations.</strong> The <a href="/docs/deploy/on-premise/#step-2-migrations-no-chart-job-yet">migration Job</a>
+works as is, with the Cloud SQL private IP as host and <code>gsowner</code> as owner.
+<code>dbRoles.enabled=true</code> sets the app password.</p>
+</li>
+<li><p><strong>Resources.</strong> Autopilot bills by requests. Set <code>gateway.resources.requests</code>
+to what the gateway really needs (see <a href="#sizing">Sizing</a>); a request lower
+than the limit can be raised by Autopilot.</p>
+</li>
+<li><p><strong>Ingress.</strong> Template for GKE Ingress with a Google-managed certificate. The
+chart's Service has no annotations value, so annotate it after install to
+attach the BackendConfig (longer timeout for streamed answers):</p>
+<pre><code class="language-yaml">apiVersion: networking.gke.io/v1
+kind: ManagedCertificate
+metadata:
+  name: guard-spec-gateway
+spec:
+  domains: [&lt;gateway-host&gt;]
+---
+apiVersion: cloud.google.com/v1
+kind: BackendConfig
+metadata:
+  name: guard-spec-gateway
+spec:
+  timeoutSec: 300
+  healthCheck:
+    type: HTTP
+    requestPath: /readyz
+    port: 8080
+---
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: guard-spec-gateway
+  annotations:
+    kubernetes.io/ingress.class: gce
+    kubernetes.io/ingress.global-static-ip-name: &lt;static-ip-name&gt;
+    networking.gke.io/managed-certificates: guard-spec-gateway
+spec:
+  defaultBackend:
+    service: {name: gs-guard-spec-gateway, port: {number: 8080}}
+</code></pre>
+<pre><code class="language-bash">kubectl annotate service gs-guard-spec-gateway \
+  cloud.google.com/backend-config='{&quot;default&quot;: &quot;guard-spec-gateway&quot;}'
+</code></pre>
+<p>For the control plane, use an internal Ingress
+(<code>kubernetes.io/ingress.class: gce-internal</code>, which needs a proxy-only
+subnet) or <code>kubectl port-forward</code>, never the external one.</p>
+</li>
+<li><p><strong>Metrics.</strong> Managed Service for Prometheus can scrape the <code>*-metrics</code>
+Services with a <code>PodMonitoring</code> resource on port <code>metrics</code>.</p>
+</li>
+</ul>
+<h2 id="option-b-cloud-run">Option B: Cloud Run<a class="anchor" href="#option-b-cloud-run" aria-hidden="true">#</a></h2>
+<h3 id="images">Images<a class="anchor" href="#images" aria-hidden="true">#</a></h3>
+<p>Cloud Run deploys from Artifact Registry (and Docker Hub), not from
+<code>ghcr.io</code>. Copy the images, after verifying their signatures
+(<a href="/docs/security/policy/#verifying-releases">SECURITY.md</a>), or create an Artifact
+Registry remote repository that proxies <code>ghcr.io</code>:</p>
+<pre><code class="language-bash">gcloud artifacts repositories create guard-spec --repository-format=docker --location=&lt;region&gt;
+gcloud auth configure-docker &lt;region&gt;-docker.pkg.dev
+crane copy ghcr.io/guard-spec/guard-spec-gateway-full:0.1.1 \
+  &lt;region&gt;-docker.pkg.dev/&lt;project-id&gt;/guard-spec/guard-spec-gateway-full:0.1.1
+crane copy ghcr.io/guard-spec/guard-spec-control-plane:0.1.1 \
+  &lt;region&gt;-docker.pkg.dev/&lt;project-id&gt;/guard-spec/guard-spec-control-plane:0.1.1
+</code></pre>
+<h3 id="models">Models<a class="anchor" href="#models" aria-hidden="true">#</a></h3>
+<p>Use <code>guard-spec-gateway-full</code>: the models are in the image, every instance
+starts with L1 + L2 + L3, and <code>DETECTOR_REQUIRE_ML=true</code> stops an instance
+that cannot load them instead of running on L1 alone.</p>
+<h3 id="things-specific-to-cloud-run">Things specific to Cloud Run<a class="anchor" href="#things-specific-to-cloud-run" aria-hidden="true">#</a></h3>
+<ul>
+<li><strong>Authentication.</strong> The gateway checks its own API keys in the
+<code>Authorization: Bearer gs_...</code> header, which conflicts with Cloud Run's IAM
+check on the same header. Allow unauthenticated invocations on the gateway
+and restrict ingress to the load balancer instead.</li>
+<li><strong>CPU always allocated.</strong> Both services do work outside requests (audit
+writes, the control plane's retention job, alert delivery, session checks).
+Set <code>run.googleapis.com/cpu-throttling: &quot;false&quot;</code> and keep at least one
+instance.</li>
+<li><strong>One port.</strong> Cloud Run routes to one container port. The metrics
+listeners (9090, 9091) are not reachable from outside the instance; scrape
+them with a collector sidecar, or set <code>METRICS_ADDR=off</code>.</li>
+<li><strong>Request timeout.</strong> <code>timeoutSeconds</code> bounds each request, including
+streamed answers. 300 matches the default <code>UPSTREAM_LLM_TIMEOUT</code>; raise both
+for very long answers (the Cloud Run maximum is 3600).</li>
+</ul>
+<h3 id="gateway-service">Gateway service<a class="anchor" href="#gateway-service" aria-hidden="true">#</a></h3>
+<pre><code class="language-yaml"># gateway.yaml (template): gcloud run services replace gateway.yaml --region=&lt;region&gt;
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: guard-spec-gateway
+  annotations:
+    run.googleapis.com/ingress: internal-and-cloud-load-balancing
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: &quot;1&quot;
+        autoscaling.knative.dev/maxScale: &quot;10&quot;
+        run.googleapis.com/cpu-throttling: &quot;false&quot;
+        run.googleapis.com/execution-environment: gen2
+        run.googleapis.com/network-interfaces: '[{&quot;network&quot;:&quot;&lt;vpc&gt;&quot;,&quot;subnetwork&quot;:&quot;&lt;subnet&gt;&quot;}]'
+        run.googleapis.com/vpc-access-egress: private-ranges-only
+    spec:
+      serviceAccountName: guard-spec-gateway@&lt;project-id&gt;.iam.gserviceaccount.com
+      timeoutSeconds: 300
+      containers:
+        - image: &lt;region&gt;-docker.pkg.dev/&lt;project-id&gt;/guard-spec/guard-spec-gateway-full:0.1.1
+          ports:
+            - containerPort: 8080
+          resources:
+            limits: {cpu: &quot;1&quot;, memory: 2Gi}
+          env:
+            - name: DATABASE_URL
+              value: postgres://guardspec_app@&lt;your-db-host&gt;:5432/guardspec?sslmode=require
+            - name: UPSTREAM_LLM_URL
+              value: &lt;your-upstream-url&gt;
+            - name: UPSTREAM_ALLOW_PRIVATE
+              value: &quot;false&quot;
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef: {name: guard-spec-app-password, key: &quot;1&quot;}
+            - name: UPSTREAM_LLM_KEY
+              valueFrom:
+                secretKeyRef: {name: guard-spec-upstream-llm-key, key: &quot;1&quot;}
+          startupProbe:
+            httpGet: {path: /readyz, port: 8080}
+            periodSeconds: 5
+            failureThreshold: 24
+          livenessProbe:
+            httpGet: {path: /health, port: 8080}
+            periodSeconds: 10
+</code></pre>
+<pre><code class="language-bash">gcloud run services replace gateway.yaml --region=&lt;region&gt;
+gcloud run services add-iam-policy-binding guard-spec-gateway --region=&lt;region&gt; \
+  --member=allUsers --role=roles/run.invoker
+</code></pre>
+<p><code>key: &quot;1&quot;</code> pins the secret version; bump it on rotation instead of using
+<code>latest</code>, so that a rotation is a deliberate redeploy.</p>
+<h3 id="control-plane-service">Control plane service<a class="anchor" href="#control-plane-service" aria-hidden="true">#</a></h3>
+<p>Same shape, with <code>ingress: internal</code> so that only the VPC (and your VPN)
+reaches it:</p>
+<pre><code class="language-yaml"># control-plane.yaml (template)
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: guard-spec-control-plane
+  annotations:
+    run.googleapis.com/ingress: internal
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: &quot;1&quot;
+        run.googleapis.com/cpu-throttling: &quot;false&quot;
+        run.googleapis.com/network-interfaces: '[{&quot;network&quot;:&quot;&lt;vpc&gt;&quot;,&quot;subnetwork&quot;:&quot;&lt;subnet&gt;&quot;}]'
+        run.googleapis.com/vpc-access-egress: private-ranges-only
+    spec:
+      serviceAccountName: guard-spec-control-plane@&lt;project-id&gt;.iam.gserviceaccount.com
+      containers:
+        - image: &lt;region&gt;-docker.pkg.dev/&lt;project-id&gt;/guard-spec/guard-spec-control-plane:0.1.1
+          ports:
+            - containerPort: 8081
+          resources:
+            limits: {cpu: &quot;1&quot;, memory: 512Mi}
+          env:
+            - {name: DATABASE_URL, value: &quot;postgres://guardspec_app@&lt;your-db-host&gt;:5432/guardspec?sslmode=require&quot;}
+            - {name: ADMIN_EMAIL, value: &lt;admin-email&gt;}
+            - {name: PUBLIC_BASE_URL, value: &quot;https://&lt;admin-host&gt;&quot;}
+            - {name: AUDIT_RETENTION_DAYS, value: &quot;90&quot;}
+            - name: PGPASSWORD
+              valueFrom: {secretKeyRef: {name: guard-spec-app-password, key: &quot;1&quot;}}
+            - name: JWT_SECRET
+              valueFrom: {secretKeyRef: {name: guard-spec-jwt-secret, key: &quot;1&quot;}}
+            - name: MFA_ENC_KEY
+              valueFrom: {secretKeyRef: {name: guard-spec-mfa-enc-key, key: &quot;1&quot;}}
+            - name: ADMIN_PASSWORD
+              valueFrom: {secretKeyRef: {name: guard-spec-admin-password, key: &quot;1&quot;}}
+          startupProbe:
+            httpGet: {path: /health, port: 8081}
+          livenessProbe:
+            httpGet: {path: /health, port: 8081}
+            periodSeconds: 10
+</code></pre>
+<p>Admin access goes through an internal Application Load Balancer with a
+serverless NEG, reached over your VPN, or an external one protected by
+Identity-Aware Proxy. Set <code>TRUSTED_PROXIES</code> to the load balancer's
+proxy-only subnet if you put one in front; leave it empty otherwise.</p>
+<h3 id="load-balancer-for-the-gateway">Load balancer for the gateway<a class="anchor" href="#load-balancer-for-the-gateway" aria-hidden="true">#</a></h3>
+<p>A global external Application Load Balancer with a serverless NEG pointing at
+<code>guard-spec-gateway</code> and a Google-managed certificate for <code>&lt;gateway-host&gt;</code>.
+With a serverless NEG the backend service timeout does not apply; the Cloud
+Run <code>timeoutSeconds</code> does.</p>
+<pre><code class="language-bash">gcloud compute network-endpoint-groups create guard-spec-gateway-neg \
+  --region=&lt;region&gt; --network-endpoint-type=serverless --cloud-run-service=guard-spec-gateway
+gcloud compute backend-services create guard-spec-gateway \
+  --global --load-balancing-scheme=EXTERNAL_MANAGED
+gcloud compute backend-services add-backend guard-spec-gateway --global \
+  --network-endpoint-group=guard-spec-gateway-neg --network-endpoint-group-region=&lt;region&gt;
+gcloud compute url-maps create guard-spec-gateway --default-service=guard-spec-gateway
+gcloud compute ssl-certificates create guard-spec-gateway --domains=&lt;gateway-host&gt; --global
+gcloud compute target-https-proxies create guard-spec-gateway \
+  --url-map=guard-spec-gateway --ssl-certificates=guard-spec-gateway
+gcloud compute forwarding-rules create guard-spec-gateway --global \
+  --load-balancing-scheme=EXTERNAL_MANAGED --target-https-proxy=guard-spec-gateway --ports=443
+</code></pre>
+<h3 id="check">Check<a class="anchor" href="#check" aria-hidden="true">#</a></h3>
+<pre><code class="language-bash">curl -s https://&lt;gateway-host&gt;/readyz | jq .detector
+# {&quot;layers&quot;:[&quot;l1&quot;,&quot;l2&quot;,&quot;l3&quot;],&quot;degraded&quot;:false,&quot;onnx&quot;:true,...}
+</code></pre>
+<p>Then log in to <code>https://&lt;admin-host&gt;/ui/</code> as <code>&lt;admin-email&gt;</code> with the
+<code>guard-spec-admin-password</code> secret, turn on 2FA, and create the first API key
+as in the README's <a href="/docs/quickstart/">Quick start</a>.</p>
+<h2 id="observability">Observability<a class="anchor" href="#observability" aria-hidden="true">#</a></h2>
+<ul>
+<li><strong>Logs.</strong> Both services log JSON lines to stdout; Cloud Logging collects
+them on GKE and Cloud Run. Filter with <code>jsonPayload.level=&quot;ERROR&quot;</code>.</li>
+<li><strong>Metrics.</strong> Prometheus format at <code>/metrics</code> on 9090 (gateway) and 9091
+(control plane); names in the README's <a href="/docs/operations/#metrics">Metrics</a>.</li>
+<li><strong>Traces.</strong> OTLP over HTTP only (no gRPC). Run an OpenTelemetry collector
+(a sidecar on Cloud Run, a Deployment on GKE) that exports to Cloud Trace,
+and set <code>OTEL_EXPORTER_OTLP_ENDPOINT</code> on the gateway to its <code>:4318</code>
+address.</li>
+<li><strong>Alerts worth having.</strong> Load balancer 5xx rate; the gateway's
+<code>requests_total{decision=&quot;error&quot;}</code> and <code>upstream_errors_total</code>;
+<code>policy_eval_errors_total</code> (requests fail closed with 503); Cloud SQL disk
+use.</li>
+</ul>
+<h2 id="hardening-checklist">Hardening checklist<a class="anchor" href="#hardening-checklist" aria-hidden="true">#</a></h2>
+<p>No extra cost:</p>
+<ul>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Cloud SQL: private IP only, <code>ENCRYPTED_ONLY</code>, deletion protection,
+backups and point-in-time recovery on.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Control plane not on the external load balancer; Cloud Run ingress
+<code>internal</code>, or an internal GKE Ingress.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Gateway Cloud Run ingress <code>internal-and-cloud-load-balancing</code>, so the
+<code>run.app</code> URL cannot bypass the load balancer.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>One service account per service, <code>secretAccessor</code> on its own secrets
+only.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>MFA_ENC_KEY</code> copied to an offline vault; old secret versions kept.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Secret versions pinned (<code>key: &quot;1&quot;</code>), images pinned to a version or
+digest, signatures verified before copying.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>UPSTREAM_ALLOW_PRIVATE=false</code> and <code>UPSTREAM_KEY_ORGS</code> without <code>*</code> if
+untrusted users can create organizations.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Metrics ports not exposed outside the cluster or instance.</li>
+</ul>
+<p>Costs money but worth considering: Cloud Armor in front of the gateway (its
+rate limits are per instance and in memory), a regional (HA) Cloud SQL
+instance.</p>
+<h2 id="upgrade-and-rollback">Upgrade and rollback<a class="anchor" href="#upgrade-and-rollback" aria-hidden="true">#</a></h2>
+<ol>
+<li>Read the <a href="/docs/upgrade/">CHANGELOG</a>. Before 1.0, minor versions can
+change the schema.</li>
+<li>Take an on-demand Cloud SQL backup.</li>
+<li>On the VM, check out the new tag and run the
+<a href="#migrations-and-the-application-password">migrations and the app password</a>
+again.</li>
+<li>Cloud Run: change the image tag and <code>gcloud run services replace</code> each
+service; a new revision gets traffic once its startup probe passes. GKE:
+follow the <a href="/docs/deploy/on-premise/#upgrade-and-rollback-1">Kubernetes upgrade steps</a>.</li>
+<li>Check <code>/readyz</code> and the logs.</li>
+</ol>
+<p>Rolling back the images: route traffic to the previous Cloud Run revision
+(<code>gcloud run services update-traffic guard-spec-gateway --to-revisions=&lt;revision&gt;=100</code>)
+or <code>helm rollback</code>. That does not undo migrations: if the new version changed
+the schema, restore the backup (with the <code>MFA_ENC_KEY</code> that matches it).</p>
+<h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-hidden="true">#</a></h2>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Symptom</th>
+  <th>Likely cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Revision fails to start, log names a variable</td>
+  <td>A secret is missing, a default or too short</td>
+</tr>
+<tr>
+  <td><code>Permission denied on secret</code></td>
+  <td>The service account lacks <code>secretAccessor</code> on that secret</td>
+</tr>
+<tr>
+  <td><code>db connect</code> and exit</td>
+  <td>No VPC egress to the private IP, <code>sslmode</code> missing (<code>ENCRYPTED_ONLY</code>), or <code>guardspec_app</code> has no password yet</td>
+</tr>
+<tr>
+  <td>Migration fails on <code>CREATE ROLE guardspec_app</code></td>
+  <td>The role exists on this instance from another database; use a separate instance</td>
+</tr>
+<tr>
+  <td>Cloud Run returns 403 before reaching the gateway</td>
+  <td>IAM invoker check is on; allow unauthenticated invocations (the gateway checks API keys itself). If an organization policy forbids <code>allUsers</code>, turn off the invoker check on the service instead</td>
+</tr>
+<tr>
+  <td>Image cannot be deployed to Cloud Run</td>
+  <td>The image is still on <code>ghcr.io</code>; copy it to Artifact Registry</td>
+</tr>
+<tr>
+  <td>Gateway instance stops with a model error</td>
+  <td>Not enough memory, or <code>gateway-full</code> with a volume over <code>/models</code></td>
+</tr>
+<tr>
+  <td><code>/readyz</code> shows <code>&quot;layers&quot;:[&quot;l1&quot;]</code></td>
+  <td>Plain gateway image without models</td>
+</tr>
+<tr>
+  <td>Streams stop after 30 seconds on GKE</td>
+  <td>The BackendConfig is not attached; check the Service annotation</td>
+</tr>
+<tr>
+  <td>Logins all come from one address in the activity log</td>
+  <td><code>TRUSTED_PROXIES</code> not set to the load balancer's range</td>
+</tr>
+</tbody>
+</table></div>
+
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/docs/deploy/gcp.md">docs/deploy/gcp.md</a> @ <code>4448f51a3ca3</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Security</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Created by <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.17.2/dist/mermaid.min.js" integrity="sha384-EOXBFmc3gx5mb+vn0vPvvGqACToJD24hhacX5Yx+8NUUQrHIle/Qi5Bg9o3zKwW2" crossorigin="anonymous"></script>
+<script>mermaid.initialize({startOnLoad: true, securityLevel: "strict", theme: matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "neutral"});</script>
+</body>
+</html>

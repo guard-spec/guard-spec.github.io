@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Risks and hardening · Guard Spec</title>
+<meta name="description" content="Tiếng Việt: security-risks.vi.md. This page is for the people who deploy and operate Guard Spec. It lists the risks that remain when Guard Spec is in front">
+<meta property="og:title" content="Risks and hardening · Guard Spec">
+<meta property="og:description" content="Tiếng Việt: security-risks.vi.md. This page is for the people who deploy and operate Guard Spec. It lists the risks that remain when Guard Spec is in front">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/docs/security/risks/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/security/risks/">
+<link rel="alternate" hreflang="vi" href="https://guardspec.io/vi/docs/security/risks/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/docs/" class="on">Docs</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/security/risks/" class="on">EN</a><a href="/vi/docs/security/risks/" class="">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Documentation</span></summary>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child on"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child on"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Risks and hardening</h1>
+
+<blockquote>
+<p>Tiếng Việt: <a href="/vi/docs/security/risks/">security-risks.vi.md</a>.</p>
+</blockquote>
+<p>This page is for the people who deploy and operate Guard Spec. It lists the
+risks that remain when Guard Spec is in front of your LLM, and what you can do
+about each. For what the gateway does and does not protect against, read
+<a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/README.md#security-model-and-limitations">Security model and limitations</a>
+first. To report a vulnerability, follow <a href="/docs/security/policy/">SECURITY.md</a>.</p>
+<p>Guard Spec is one layer of defence. It lowers the chance that an injected
+instruction reaches the model and limits what the answer can leak. It does not
+make an LLM application safe on its own.</p>
+<h2 id="contents">Contents<a class="anchor" href="#contents" aria-hidden="true">#</a></h2>
+<ul>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#detection-risks">Detection risks</a></li>
+<li><a href="#application-and-agent-risks">Application and agent risks</a></li>
+<li><a href="#deployment-risks">Deployment risks</a></li>
+<li><a href="#identity-and-access-risks">Identity and access risks</a></li>
+<li><a href="#data-and-privacy-risks">Data and privacy risks</a></li>
+<li><a href="#supply-chain-risks">Supply chain risks</a></li>
+<li><a href="#operational-risks">Operational risks</a></li>
+<li><a href="#hardening-checklist">Hardening checklist</a></li>
+</ul>
+<h2 id="summary">Summary<a class="anchor" href="#summary" aria-hidden="true">#</a></h2>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>#</th>
+  <th>Risk</th>
+  <th>Impact</th>
+  <th>What reduces it</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>D1</td>
+  <td>An attack is not detected</td>
+  <td>Injected instructions reach the model</td>
+  <td>Least-privilege tools, human confirmation, output guard, exemplars</td>
+</tr>
+<tr>
+  <td>D2</td>
+  <td>A benign request is blocked</td>
+  <td>Users are refused</td>
+  <td>Measure on your traffic, allow exemplars, <code>DETECTOR_LAYERS</code></td>
+</tr>
+<tr>
+  <td>D3</td>
+  <td>Model layers silently missing</td>
+  <td>Only L1 runs; recall drops</td>
+  <td><code>DETECTOR_REQUIRE_ML=true</code>, alert on <code>/readyz</code> <code>degraded</code></td>
+</tr>
+<tr>
+  <td>D4</td>
+  <td>Indirect injection in content you do not scan</td>
+  <td>Tool results or system prompts are not checked</td>
+  <td><code>SCAN_ROLES</code>, per-org <code>scan_roles</code>, <code>SPOTLIGHT</code></td>
+</tr>
+<tr>
+  <td>A1</td>
+  <td>The agent misuses a tool</td>
+  <td>Data loss, unwanted actions</td>
+  <td>Authorisation in your app, egress control, confirmations</td>
+</tr>
+<tr>
+  <td>A2</td>
+  <td>Exfiltration through links the guard keeps</td>
+  <td>Data leaves through the answer</td>
+  <td>Short host allowlist, disable auto-linking in your UI</td>
+</tr>
+<tr>
+  <td>P1</td>
+  <td>Services exposed without TLS</td>
+  <td>Credentials and prompts readable on the network</td>
+  <td>TLS at a reverse proxy or load balancer</td>
+</tr>
+<tr>
+  <td>P2</td>
+  <td>Control plane or metrics reachable from the internet</td>
+  <td>Admin login attacks, information leaks</td>
+  <td>Private network, VPN or SSO in front</td>
+</tr>
+<tr>
+  <td>P3</td>
+  <td>Org upstreams point at internal hosts or receive your keys</td>
+  <td>SSRF, key leakage</td>
+  <td><code>UPSTREAM_ALLOW_PRIVATE=false</code>, <code>UPSTREAM_KEY_ORGS</code></td>
+</tr>
+<tr>
+  <td>P4</td>
+  <td>Rate limits bypassed by volume</td>
+  <td>Cost, denial of service</td>
+  <td>WAF or rate limiter in front; limits are per replica</td>
+</tr>
+<tr>
+  <td>I1</td>
+  <td>Weak or leaked secrets</td>
+  <td>Full takeover</td>
+  <td>Strong secrets in a secret manager, rotation</td>
+</tr>
+<tr>
+  <td>I2</td>
+  <td>Lost <code>MFA_ENC_KEY</code></td>
+  <td>Everyone's 2FA stops working</td>
+  <td>Back it up with the database</td>
+</tr>
+<tr>
+  <td>I3</td>
+  <td>Any user can create an organization</td>
+  <td>Untrusted admins choose upstreams</td>
+  <td>P3 settings, restrict who can sign up</td>
+</tr>
+<tr>
+  <td>I4</td>
+  <td>2FA enrolment is trust on first use</td>
+  <td>An attacker with a password enrols first</td>
+  <td>Require 2FA early; reset 2FA when in doubt</td>
+</tr>
+<tr>
+  <td>I5</td>
+  <td>Wrong <code>TRUSTED_PROXIES</code></td>
+  <td>Spoofed client IPs in limits and logs</td>
+  <td>List only your proxies</td>
+</tr>
+<tr>
+  <td>R1</td>
+  <td>Prompt content stored in audit rows</td>
+  <td>Personal data at rest</td>
+  <td>Keep <code>AUDIT_STORE_CONTENT</code> off, retention</td>
+</tr>
+<tr>
+  <td>R2</td>
+  <td>Personal data passes the redactor</td>
+  <td>Leaks in answers</td>
+  <td>Redaction is regex-based; add your own checks</td>
+</tr>
+<tr>
+  <td>R3</td>
+  <td>Trace IDs or metric labels leak tenant data</td>
+  <td>Cross-tenant information</td>
+  <td>Defaults are safe; review before changing them</td>
+</tr>
+<tr>
+  <td>S1</td>
+  <td>Tampered image, binary or model</td>
+  <td>Arbitrary code or a weakened detector</td>
+  <td>cosign verify, SHA-256 pinned models, digests</td>
+</tr>
+<tr>
+  <td>S2</td>
+  <td>Known vulnerabilities in dependencies</td>
+  <td>Exploitable services</td>
+  <td>Update to the latest release; watch advisories</td>
+</tr>
+<tr>
+  <td>O1</td>
+  <td>Database or admin access misused</td>
+  <td>Policies changed, audit rows read</td>
+  <td>Least privilege, activity log, backups</td>
+</tr>
+<tr>
+  <td>O2</td>
+  <td>Fail-closed causes an outage</td>
+  <td>Requests refused (503)</td>
+  <td>Health checks, replicas, alerts</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="detection-risks">Detection risks<a class="anchor" href="#detection-risks" aria-hidden="true">#</a></h2>
+<h3 id="d1-an-attack-is-not-detected">D1. An attack is not detected<a class="anchor" href="#d1-an-attack-is-not-detected" aria-hidden="true">#</a></h3>
+<p>Detection is probabilistic. New phrasings, languages other than English and
+Vietnamese, encodings that L1 only partly decodes (such as base64) and
+multi-turn attacks that look harmless in each single message can pass. With
+the default model layers the eval set shows a true positive rate of about 0.93
+at the block threshold (see <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/README.md#benchmarks">Benchmarks</a>); the rest
+reach the model.</p>
+<p>What to do:</p>
+<ul>
+<li>Design your application as if some injections reach the model: give tools
+the least privilege they need and ask a person to confirm risky actions.</li>
+<li>Keep the output guard on; it limits what a successful injection can leak.</li>
+<li>Add attacks you see in your traffic as block exemplars for your organization
+(<a href="/docs/operations/#per-organization-exemplars">Per-organization exemplars</a>).</li>
+<li>Report bypasses privately (<a href="/docs/security/policy/">SECURITY.md</a>); they are in scope.</li>
+</ul>
+<h3 id="d2-a-benign-request-is-blocked">D2. A benign request is blocked<a class="anchor" href="#d2-a-benign-request-is-blocked" aria-hidden="true">#</a></h3>
+<p>With L2 and L3, about 1.4% of benign eval prompts are blocked, 3.5% of benign
+Vietnamese teencode and 1.7% of English. The Vietnamese eval and training data
+is synthetic, so your rate can differ.</p>
+<p>What to do:</p>
+<ul>
+<li>Run in front of a copy of your traffic first and read the <code>block</code> audit rows.</li>
+<li>Add allow exemplars for false positives you see.</li>
+<li>If a false block costs more than a missed attack for you, run
+<code>DETECTOR_LAYERS=l1</code> (about 0.1% false positives, lower recall).</li>
+</ul>
+<h3 id="d3-model-layers-silently-missing">D3. Model layers silently missing<a class="anchor" href="#d3-model-layers-silently-missing" aria-hidden="true">#</a></h3>
+<p>When the models are missing or fail to load, the gateway logs a warning and
+keeps running with L1 only. <code>/readyz</code> then shows <code>&quot;degraded&quot;:true</code>.</p>
+<p>What to do:</p>
+<ul>
+<li>Set <code>DETECTOR_REQUIRE_ML=true</code> so the gateway refuses to start without the
+model layers, or use the <code>gateway-full</code> image, which ships them.</li>
+<li>Alert on <code>degraded</code> in <code>/readyz</code> and on <code>guardspec_gateway_detector_errors_total</code>.</li>
+</ul>
+<h3 id="d4-indirect-injection-in-content-you-do-not-scan">D4. Indirect injection in content you do not scan<a class="anchor" href="#d4-indirect-injection-in-content-you-do-not-scan" aria-hidden="true">#</a></h3>
+<p>By default the gateway classifies user messages, tool results and MCP tool
+descriptions (<code>SCAN_ROLES=user,tool,tool_descriptions</code>). System prompts and
+the model's tool-call arguments are not classified unless you add them, and
+images, audio and other non-text parts are not inspected.</p>
+<p>What to do:</p>
+<ul>
+<li>If your system prompt contains user-controlled or retrieved text, add
+<code>system</code> to <code>SCAN_ROLES</code> or turn it on per organization (<code>scan_roles</code>).</li>
+<li>Send retrieved documents through <code>/guardrail/scan</code> with <code>documents[]</code> before
+you put them in a prompt.</li>
+<li>Turn on <code>SPOTLIGHT</code> (<code>delimit</code> or <code>datamark</code>) so the model can tell data from
+instructions.</li>
+</ul>
+<h2 id="application-and-agent-risks">Application and agent risks<a class="anchor" href="#application-and-agent-risks" aria-hidden="true">#</a></h2>
+<h3 id="a1-the-agent-misuses-a-tool">A1. The agent misuses a tool<a class="anchor" href="#a1-the-agent-misuses-a-tool" aria-hidden="true">#</a></h3>
+<p>The gateway sees tool-call arguments and guards their strings, but it does not
+execute or authorise tool calls and has no egress control. If the model is
+convinced to call a tool, the tool runs.</p>
+<p>What to do:</p>
+<ul>
+<li>Authorise every tool call in your application against the end user's
+permissions, not the model's request.</li>
+<li>Restrict network egress from the services that run tools.</li>
+<li>Require confirmation for actions that send data out, spend money or delete.</li>
+</ul>
+<h3 id="a2-exfiltration-through-links-the-guard-keeps">A2. Exfiltration through links the guard keeps<a class="anchor" href="#a2-exfiltration-through-links-the-guard-keeps" aria-hidden="true">#</a></h3>
+<p>The output guard removes images and links to hosts outside the allowlist, but
+keeps links to allowlisted hosts and plain-text URLs without a query string.
+If your UI turns bare URLs into links, it can still be used to leak data.</p>
+<p>What to do:</p>
+<ul>
+<li>Keep the link allowlist short; do not allow hosts where anyone can publish.</li>
+<li>Do not auto-link URLs in model output, and do not load remote images in it.</li>
+</ul>
+<h2 id="deployment-risks">Deployment risks<a class="anchor" href="#deployment-risks" aria-hidden="true">#</a></h2>
+<h3 id="p1-services-exposed-without-tls">P1. Services exposed without TLS<a class="anchor" href="#p1-services-exposed-without-tls" aria-hidden="true">#</a></h3>
+<p>The gateway and the control plane serve plain HTTP. API keys, session cookies
+and prompts cross the network in clear text unless something in front
+terminates TLS.</p>
+<p>What to do:</p>
+<ul>
+<li>Put a reverse proxy or load balancer with TLS in front of both services.</li>
+<li>Use <code>sslmode=require</code> or stronger in database URLs.</li>
+<li>Set <code>PUBLIC_BASE_URL</code> to the <code>https://</code> origin of the control plane.</li>
+</ul>
+<h3 id="p2-control-plane-or-metrics-reachable-from-the-internet">P2. Control plane or metrics reachable from the internet<a class="anchor" href="#p2-control-plane-or-metrics-reachable-from-the-internet" aria-hidden="true">#</a></h3>
+<p>The control plane holds the admin UI and API. <code>/metrics</code> is served on its own
+listener (<code>METRICS_ADDR</code>).</p>
+<p>What to do:</p>
+<ul>
+<li>Expose only the gateway to your applications. Keep the control plane on a
+private network, behind a VPN or an identity-aware proxy.</li>
+<li>Never route the metrics port through an ingress or public load balancer.</li>
+<li>Leave <code>ALLOWED_ORIGINS</code> empty unless another origin really needs the API.</li>
+</ul>
+<h3 id="p3-org-upstreams-point-at-internal-hosts-or-receive-your-keys">P3. Org upstreams point at internal hosts or receive your keys<a class="anchor" href="#p3-org-upstreams-point-at-internal-hosts-or-receive-your-keys" aria-hidden="true">#</a></h3>
+<p>An org admin chooses where its named upstreams point.</p>
+<p>What to do:</p>
+<ul>
+<li>Keep <code>UPSTREAM_ALLOW_PRIVATE=false</code> (the default) unless every org admin is
+trusted. Cloud metadata addresses are always refused.</li>
+<li>Keep <code>UPSTREAM_KEY_ORGS</code> narrow: it decides which org may use which
+<code>UPSTREAM_KEY_*</code> variable. The compose file sets both for a single-team
+setup; change them before letting untrusted users create organizations.</li>
+</ul>
+<h3 id="p4-rate-limits-bypassed-by-volume">P4. Rate limits bypassed by volume<a class="anchor" href="#p4-rate-limits-bypassed-by-volume" aria-hidden="true">#</a></h3>
+<p>Rate limits are kept in memory per gateway replica, so the effective limit
+grows with the number of replicas, and they do not stop a flood of
+connections.</p>
+<p>What to do: put a WAF or a shared rate limiter in front of the gateway, and
+set provider-side spending limits.</p>
+<h2 id="identity-and-access-risks">Identity and access risks<a class="anchor" href="#identity-and-access-risks" aria-hidden="true">#</a></h2>
+<h3 id="i1-weak-or-leaked-secrets">I1. Weak or leaked secrets<a class="anchor" href="#i1-weak-or-leaked-secrets" aria-hidden="true">#</a></h3>
+<p><code>POSTGRES_PASSWORD</code>, <code>GUARDSPEC_APP_PASSWORD</code>, <code>JWT_SECRET</code>, <code>MFA_ENC_KEY</code> and
+<code>ADMIN_PASSWORD</code> protect everything. Outside <code>GUARD_ENV=dev</code> the services
+refuse missing, default or short secrets, but they cannot tell whether a
+secret has leaked.</p>
+<p>What to do:</p>
+<ul>
+<li>Generate secrets randomly (<code>scripts/quickstart.sh</code> does) and keep them in a
+secret manager, not in Git or in Helm values.</li>
+<li>Never run production with <code>GUARD_ENV=dev</code>.</li>
+<li>Rotate <code>JWT_SECRET</code> (signs everyone out) and the database passwords if you
+suspect a leak. Revoke API keys you no longer use.</li>
+</ul>
+<h3 id="i2-lost-mfa_enc_key">I2. Lost <code>MFA_ENC_KEY</code><a class="anchor" href="#i2-lost-mfa_enc_key" aria-hidden="true">#</a></h3>
+<p>TOTP secrets are encrypted with <code>MFA_ENC_KEY</code>. Without the key, nobody's 2FA
+works, and the control plane refuses to start while users have 2FA.</p>
+<p>What to do: back the key up together with the database, in a different place
+from the database backup itself.</p>
+<h3 id="i3-any-user-can-create-an-organization">I3. Any user can create an organization<a class="anchor" href="#i3-any-user-can-create-an-organization" aria-hidden="true">#</a></h3>
+<p>Any signed-in user can create an organization and becomes its admin. See P3
+for what that admin can configure.</p>
+<p>What to do: if your control plane is reachable by people you do not trust,
+use SSO with <code>allowed_domains</code> and keep the P3 settings strict.</p>
+<h3 id="i4-2fa-enrolment-is-trust-on-first-use">I4. 2FA enrolment is trust on first use<a class="anchor" href="#i4-2fa-enrolment-is-trust-on-first-use" aria-hidden="true">#</a></h3>
+<p>When an organization starts requiring 2FA, a member without it enrols at the
+next login with only a password. Someone who already has that password can
+enrol their own authenticator first.</p>
+<p>What to do: require 2FA from the start, and reset a member's 2FA if in doubt.</p>
+<h3 id="i5-wrong-trusted_proxies">I5. Wrong <code>TRUSTED_PROXIES</code><a class="anchor" href="#i5-wrong-trusted_proxies" aria-hidden="true">#</a></h3>
+<p><code>TRUSTED_PROXIES</code> decides whose <code>X-Forwarded-For</code> is believed. Too broad a
+value lets clients choose the address used for rate limits, sessions and the
+activity log; an empty value behind a proxy makes every client look the same.</p>
+<p>What to do: list exactly the addresses or CIDRs of your proxies.</p>
+<h2 id="data-and-privacy-risks">Data and privacy risks<a class="anchor" href="#data-and-privacy-risks" aria-hidden="true">#</a></h2>
+<h3 id="r1-prompt-content-stored-in-audit-rows">R1. Prompt content stored in audit rows<a class="anchor" href="#r1-prompt-content-stored-in-audit-rows" aria-hidden="true">#</a></h3>
+<p>By default audit rows keep scores, the decision, and a SHA-256 and length of
+the body, not the content. <code>AUDIT_STORE_CONTENT=true</code>, or the per-org
+<code>audit_store_content</code> setting, stores prompts and buffered answers.</p>
+<p>What to do:</p>
+<ul>
+<li>Keep content storage off unless you need it, and tell your users if you
+turn it on.</li>
+<li>Set <code>AUDIT_RETENTION_DAYS</code>, encrypt the database at rest and limit who can
+read it.</li>
+</ul>
+<h3 id="r2-personal-data-passes-the-redactor">R2. Personal data passes the redactor<a class="anchor" href="#r2-personal-data-passes-the-redactor" aria-hidden="true">#</a></h3>
+<p>The output guard redacts e-mail addresses, Vietnamese phone, ID and card
+numbers and IPv4 addresses with patterns. Other formats, other countries and
+personal data written in words are not caught. Prompts going to the upstream
+are not redacted.</p>
+<p>What to do: if you must not send personal data to the LLM provider, remove it
+in your application before the request, or use a provider and contract that
+allow it.</p>
+<h3 id="r3-trace-ids-or-metric-labels-leak-tenant-data">R3. Trace IDs or metric labels leak tenant data<a class="anchor" href="#r3-trace-ids-or-metric-labels-leak-tenant-data" aria-hidden="true">#</a></h3>
+<p>Metric labels use fixed value sets, per-tenant labels are off
+(<code>METRICS_TENANT_LABELS=false</code>) and <code>traceparent</code> is not sent upstream
+(<code>OTEL_PROPAGATE_UPSTREAM=false</code>). Turning these on shares more with your
+monitoring system or the provider.</p>
+<p>What to do: change these defaults only when the receiving system is trusted.</p>
+<h2 id="supply-chain-risks">Supply chain risks<a class="anchor" href="#supply-chain-risks" aria-hidden="true">#</a></h2>
+<h3 id="s1-tampered-image-binary-or-model">S1. Tampered image, binary or model<a class="anchor" href="#s1-tampered-image-binary-or-model" aria-hidden="true">#</a></h3>
+<p>What to do:</p>
+<ul>
+<li>Verify images and archives with cosign before you deploy them
+(<a href="/docs/security/policy/#verifying-releases">Verifying releases</a>), and deploy by
+digest rather than by tag.</li>
+<li>Download models with <code>models pull</code>, which checks the SHA-256 pinned in
+<code>models/manifest.yaml</code>. In air-gapped installs, mirror only verified files.</li>
+</ul>
+<h3 id="s2-known-vulnerabilities-in-dependencies">S2. Known vulnerabilities in dependencies<a class="anchor" href="#s2-known-vulnerabilities-in-dependencies" aria-hidden="true">#</a></h3>
+<p>The project is pre-1.0; security fixes land in the next release only.</p>
+<p>What to do: follow the repository's releases and security advisories, upgrade
+to the latest <code>0.x</code>, and scan the images you run.</p>
+<h2 id="operational-risks">Operational risks<a class="anchor" href="#operational-risks" aria-hidden="true">#</a></h2>
+<h3 id="o1-database-or-admin-access-misused">O1. Database or admin access misused<a class="anchor" href="#o1-database-or-admin-access-misused" aria-hidden="true">#</a></h3>
+<p>Anyone with database or instance-admin access can change policies, read audit
+rows and create API keys.</p>
+<p>What to do: give the application role (<code>guardspec_app</code>) to the services only,
+keep the owner role for migrations, give people the lowest role they need, and
+review the activity log.</p>
+<h3 id="o2-fail-closed-causes-an-outage">O2. Fail-closed causes an outage<a class="anchor" href="#o2-fail-closed-causes-an-outage" aria-hidden="true">#</a></h3>
+<p>If policies, org settings or the detector cannot run, the gateway refuses the
+request (503) instead of passing it through. A database outage therefore stops
+LLM traffic.</p>
+<p>What to do: run more than one gateway replica, use a highly available
+Postgres, and alert on 503 rates and <code>/readyz</code>.</p>
+<h2 id="hardening-checklist">Hardening checklist<a class="anchor" href="#hardening-checklist" aria-hidden="true">#</a></h2>
+<ul>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>TLS in front of both services; database connections with <code>sslmode=require</code> or stronger</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Only the gateway is reachable by applications; the control plane and metrics ports are private</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>GUARD_ENV</code> is not <code>dev</code>; all secrets are random and kept in a secret manager</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>MFA_ENC_KEY</code> is backed up separately from the database backup</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>DETECTOR_REQUIRE_ML=true</code> or the <code>gateway-full</code> image; alerts on <code>degraded</code></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>UPSTREAM_ALLOW_PRIVATE=false</code> and a narrow <code>UPSTREAM_KEY_ORGS</code></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>TRUSTED_PROXIES</code> lists exactly your proxies</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>SCAN_ROLES</code> covers every place untrusted text enters your prompts</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>A short link allowlist; no auto-linking of model output in your UI</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Content storage off; <code>AUDIT_RETENTION_DAYS</code> set</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>SSO or required 2FA for everyone with admin access</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>A WAF or shared rate limiter in front of the gateway; provider spending limits</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Images and archives verified with cosign; deployed by digest</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Tools authorised in your application; risky actions confirmed by a person</li>
+</ul>
+
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/docs/security-risks.md">docs/security-risks.md</a> @ <code>4448f51a3ca3</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Security</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Created by <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

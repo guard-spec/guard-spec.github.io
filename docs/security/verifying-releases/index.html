@@ -1,0 +1,241 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Verifying a release · Guard Spec</title>
+<meta name="description" content="Every release is built by .github/workflows/release.yml on a v* tag, in GitHub Actions, and signed there with cosign keyless: the signing certificate is is">
+<meta property="og:title" content="Verifying a release · Guard Spec">
+<meta property="og:description" content="Every release is built by .github/workflows/release.yml on a v* tag, in GitHub Actions, and signed there with cosign keyless: the signing certificate is is">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/docs/security/verifying-releases/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/security/verifying-releases/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/docs/" class="on">Docs</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/security/verifying-releases/" class="on">EN</a><a href="/vi/docs/" class="">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Documentation</span></summary>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child on"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child on"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Verifying a release</h1>
+
+<p>Every release is built by <code>.github/workflows/release.yml</code> on a <code>v*</code> tag, in
+GitHub Actions, and signed there with cosign <strong>keyless</strong>: the signing
+certificate is issued by Sigstore's Fulcio to that workflow's GitHub OIDC
+identity and logged in the Rekor transparency log. No long-lived signing key
+exists. What you can check:</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Artifact</th>
+  <th>Signed</th>
+  <th>SBOM</th>
+  <th>Provenance</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>ghcr.io/guard-spec/guard-spec-gateway</code></td>
+  <td>cosign, the index and each platform image</td>
+  <td>SPDX 2.3 per platform (BuildKit attestation)</td>
+  <td>SLSA v1 per platform (BuildKit, <code>mode=max</code>)</td>
+</tr>
+<tr>
+  <td><code>ghcr.io/guard-spec/guard-spec-gateway-full</code></td>
+  <td>cosign, the index and each platform image</td>
+  <td>SPDX 2.3 per platform</td>
+  <td>SLSA v1 per platform (<code>mode=max</code>)</td>
+</tr>
+<tr>
+  <td><code>ghcr.io/guard-spec/guard-spec-control-plane</code></td>
+  <td>cosign (GoReleaser)</td>
+  <td>SPDX 2.3 per platform</td>
+  <td>SLSA v1 per platform, minimal (no builder id)</td>
+</tr>
+<tr>
+  <td>Release archives (<code>guard-spec_&lt;version&gt;_&lt;os&gt;_&lt;arch&gt;.tar.gz</code>)</td>
+  <td><code>checksums.txt</code> + <code>checksums.txt.sigstore.json</code></td>
+  <td><code>&lt;archive&gt;.sbom.json</code> (SPDX, syft)</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td>Linux <code>_onnx</code> archives</td>
+  <td><code>checksums-onnx.txt</code> + <code>checksums-onnx.txt.sigstore.json</code></td>
+  <td><code>&lt;archive&gt;.sbom.json</code></td>
+  <td>—</td>
+</tr>
+<tr>
+  <td>Models</td>
+  <td>SHA-256 pinned in <code>models/manifest.yaml</code> (and <code>build/gateway-full.l2.sha256</code> for the image)</td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>You need <a href="https://docs.sigstore.dev/cosign/system_config/installation/">cosign</a>
+2.4 or newer (the outputs below are from cosign v3.1.4), <code>docker buildx</code>
+for the attestations, <code>jq</code>, and <code>sha256sum</code> (<code>shasum -a 256</code> on macOS).</p>
+<h2 id="1-image-signatures">1. Image signatures<a class="anchor" href="#1-image-signatures" aria-hidden="true">#</a></h2>
+<p>Pin the identity to the release workflow <strong>at the tag you deploy</strong>. That
+proves the image was signed by this repository's release workflow running
+for that tag, not by a branch, a fork or another workflow:</p>
+<pre><code class="language-bash">VERSION=0.1.0
+for img in guard-spec-gateway guard-spec-gateway-full guard-spec-control-plane; do
+  cosign verify &quot;ghcr.io/guard-spec/$img:$VERSION&quot; \
+    --certificate-identity &quot;https://github.com/guard-spec/guard-spec/.github/workflows/release.yml@refs/tags/v$VERSION&quot; \
+    --certificate-oidc-issuer https://token.actions.githubusercontent.com \
+    | jq -r '.[0].critical.image.&quot;docker-manifest-digest&quot;'
+done
+</code></pre>
+<p>Output for v0.1.0 (run on 2026-11-06):</p>
+<pre><code class="language-text">Verification for ghcr.io/guard-spec/guard-spec-gateway:0.1.0 --
+The following checks were performed on each of these signatures:
+  - The cosign claims were validated
+  - Existence of the claims in the transparency log was verified offline
+  - The code-signing certificate was verified using trusted certificate authority certificates
+sha256:e765d231b541c6bcbc7f383611b11b8f741b909eaf3c6acd9537e71421fd0929
+
+Verification for ghcr.io/guard-spec/guard-spec-gateway-full:0.1.0 --
+  (same three checks)
+sha256:802516f061f9e8a23c3de6ec2613a73fa746b137a3d50fd53429057dd231b41d
+
+Verification for ghcr.io/guard-spec/guard-spec-control-plane:0.1.0 --
+  (same three checks)
+sha256:bba33e596f32fd7853d2b4f8dbf084b03364f8666d99fc5f8a50cdc160be510c
+</code></pre>
+<p>A wrong identity fails, which is what makes the check meaningful:</p>
+<pre><code class="language-text">$ cosign verify ghcr.io/guard-spec/guard-spec-gateway:0.1.0 \
+    --certificate-identity https://github.com/guard-spec/guard-spec/.github/workflows/release.yml@refs/heads/main \
+    --certificate-oidc-issuer https://token.actions.githubusercontent.com
+Error: no matching attestations: failed to verify certificate identity: no matching CertificateIdentity found, last error: expected SAN value &quot;https://github.com/guard-spec/guard-spec/.github/workflows/release.yml@refs/heads/main&quot;, got &quot;https://github.com/guard-spec/guard-spec/.github/workflows/release.yml@refs/tags/v0.1.0&quot;
+</code></pre>
+<p><a href="/docs/security/policy/#verifying-releases">SECURITY.md</a> shows a looser form,
+<code>--certificate-identity-regexp '^https://github.com/guard-spec/guard-spec/'</code>,
+which accepts any workflow of the repository. Prefer the exact identity.</p>
+<p><strong>Deploy by digest.</strong> A tag can be moved; a digest cannot. Use the digest
+printed above in your manifests
+(<code>image: ghcr.io/guard-spec/guard-spec-gateway-full@sha256:...</code>). With the
+Helm chart, set the tag to <code>0.1.0@sha256:...</code> (the chart renders
+<code>&lt;repository&gt;:&lt;tag&gt;</code>); the <a href="/docs/deploy/terraform-aws/">Terraform reference</a>
+has <code>*_image_digest</code> variables. In Kubernetes, an admission controller such as the Sigstore
+policy-controller or Kyverno can enforce the same identity on every pull.</p>
+<h2 id="2-sboms">2. SBOMs<a class="anchor" href="#2-sboms" aria-hidden="true">#</a></h2>
+<p>The image SBOMs are BuildKit attestations inside the image index, one per
+platform:</p>
+<pre><code class="language-bash">docker buildx imagetools inspect ghcr.io/guard-spec/guard-spec-gateway:0.1.0 \
+  --format '{{json .SBOM}}' &gt; gateway-sbom.json
+jq -r 'to_entries[] | &quot;\(.key) \(.value.SPDX.spdxVersion) packages=\(.value.SPDX.packages|length)&quot;' gateway-sbom.json
+</code></pre>
+<pre><code class="language-text">linux/amd64 SPDX-2.3 packages=169
+linux/arm64 SPDX-2.3 packages=169
+</code></pre>
+<p>The same for v0.1.0's other images: <code>guard-spec-gateway-full</code> 169 packages
+per platform, <code>guard-spec-control-plane</code> 65. Feed <code>.[&quot;linux/amd64&quot;].SPDX</code>
+to your scanner (for example <code>grype sbom:./sbom.spdx.json</code>). The archive
+SBOMs are files on the release, covered by the signed checksums below.</p>
+<h2 id="3-slsa-provenance">3. SLSA provenance<a class="anchor" href="#3-slsa-provenance" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash">docker buildx imagetools inspect ghcr.io/guard-spec/guard-spec-gateway:0.1.0 \
+  --format '{{json .Provenance}}' &gt; gateway-provenance.json
+jq -r 'to_entries[] | &quot;\(.key) builder=\(.value.SLSA.runDetails.builder.id) revision=\(.value.SLSA.buildDefinition.externalParameters.request.args[&quot;label:org.opencontainers.image.revision&quot;])&quot;' gateway-provenance.json
+git rev-list -n 1 v0.1.0     # in a clone of guard-spec/guard-spec
+</code></pre>
+<pre><code class="language-text">linux/amd64 builder=https://github.com/guard-spec/guard-spec/actions/runs/42084759045/attempts/1 revision=df7e89ef72ed2478eb7b14be8c159ddb337219d3
+linux/arm64 builder=https://github.com/guard-spec/guard-spec/actions/runs/42084759045/attempts/1 revision=df7e89ef72ed2478eb7b14be8c159ddb337219d3
+df7e89ef72ed2478eb7b14be8c159ddb337219d3
+</code></pre>
+<p>The provenance names the workflow run that built the image and the commit
+it built, which must be the commit of the tag. <code>guard-spec-gateway-full</code>
+gives the same run and revision. With <code>mode=max</code> it also lists the
+Dockerfile, build arguments and every base image by digest
+(<code>.buildDefinition.resolvedDependencies</code>).</p>
+<p>The control-plane image is built by GoReleaser with a minimal provenance
+(no builder id). Its signature (step 1) already binds it to the release
+workflow at the tag, and its labels name the commit:</p>
+<pre><code class="language-bash">docker buildx imagetools inspect ghcr.io/guard-spec/guard-spec-control-plane:0.1.0 \
+  --format '{{json .Image}}' | jq -r '.&quot;linux/amd64&quot;.config.Labels.&quot;org.opencontainers.image.revision&quot;'
+# df7e89ef72ed2478eb7b14be8c159ddb337219d3
+</code></pre>
+<p>These attestations are unsigned BuildKit documents stored next to the
+image; trust them because the image index that references them is the one
+whose signature you verified in step 1.</p>
+<h2 id="4-release-archives">4. Release archives<a class="anchor" href="#4-release-archives" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash">VERSION=0.1.0
+gh release download &quot;v$VERSION&quot; -R guard-spec/guard-spec \
+  -p 'checksums*' -p &quot;guard-spec_${VERSION}_linux_amd64*&quot;
+for f in checksums.txt checksums-onnx.txt; do
+  cosign verify-blob &quot;$f&quot; --bundle &quot;$f.sigstore.json&quot; \
+    --certificate-identity &quot;https://github.com/guard-spec/guard-spec/.github/workflows/release.yml@refs/tags/v$VERSION&quot; \
+    --certificate-oidc-issuer https://token.actions.githubusercontent.com
+done
+sha256sum --ignore-missing -c checksums.txt checksums-onnx.txt
+</code></pre>
+<pre><code class="language-text">Verified OK
+Verified OK
+guard-spec_0.1.0_linux_amd64.tar.gz: OK
+guard-spec_0.1.0_linux_amd64.tar.gz.sbom.json: OK
+guard-spec_0.1.0_linux_amd64_onnx.tar.gz: OK
+guard-spec_0.1.0_linux_amd64_onnx.tar.gz.sbom.json: OK
+</code></pre>
+<p><code>checksums.txt</code> covers the GoReleaser archives, their SBOMs and the source
+archive; <code>checksums-onnx.txt</code> covers the linux <code>_onnx</code> archives and their
+SBOMs.</p>
+<h2 id="5-models">5. Models<a class="anchor" href="#5-models" aria-hidden="true">#</a></h2>
+<p><code>models pull</code> checks every file against the SHA-256 in
+<code>models/manifest.yaml</code> of the release you run and refuses a mismatch; see
+<a href="/docs/models/versions/">docs/models.md</a>. The <code>gateway-full</code> image checks the L2 files
+against <code>build/gateway-full.l2.sha256</code> while it is built, and its signature
+covers the result.</p>
+<h2 id="what-this-does-not-prove">What this does not prove<a class="anchor" href="#what-this-does-not-prove" aria-hidden="true">#</a></h2>
+<ul>
+<li>That the source is free of vulnerabilities. Scan the SBOMs; CI runs
+<code>govulncheck</code>, CodeQL and OpenSSF Scorecard on the repository.</li>
+<li>That a build is reproducible bit for bit. Binaries are built with
+<code>-trimpath</code> and the commit timestamp, but nobody has published an
+independent rebuild yet.</li>
+<li>Anything about images you rebuilt or mirrored: verify before mirroring, and
+deploy the digest you verified.</li>
+</ul>
+
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/docs/security/verifying-releases.md">docs/security/verifying-releases.md</a> @ <code>4448f51a3ca3</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Security</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Created by <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -5,6 +5,7 @@
   "nav_how": "Cách hoạt động",
   "nav_benchmarks": "Đo lường",
   "nav_quickstart": "Bắt đầu",
+  "nav_docs": "Tài liệu",
   "hero_kicker": "Mã nguồn mở · Tự host",
   "hero_title": "Chặn prompt injection <em>trước khi</em> nó tới LLM của bạn",
   "hero_lead": "Guard Spec là gateway đặt giữa ứng dụng của bạn và mọi API tương thích OpenAI. Nó kiểm tra prompt, tài liệu truy xuất, kết quả tool và MCP tool ở chiều vào, và câu trả lời của model ở chiều ra. Prompt không bao giờ rời khỏi hạ tầng của bạn.",

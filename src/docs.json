@@ -1,0 +1,182 @@
+{
+  "_comment": "Pages of guardspec.io/docs, built by build.py from the Markdown of the main repository at the pinned ref. Each language lists candidate sources: the first one that exists at the ref is used; a page with none is skipped (build.py prints it). A page without a Vietnamese source links to the English page in the Vietnamese navigation, labelled (tiếng Anh). To update the docs: set ref to a newer commit or tag of guard-spec/guard-spec, run build.py, commit.",
+  "repo": "guard-spec/guard-spec",
+  "ref": "4448f51a3ca3507e15275506abddbb7f4ecd4e64",
+  "pages": [
+    {
+      "slug": "quickstart",
+      "title": {"en": "Quick start", "vi": "Bắt đầu nhanh"},
+      "en": [{"file": "README.md", "section": "Quick start"}],
+      "vi": [{"file": "README.vi.md", "section": "Bắt đầu nhanh"}]
+    },
+    {
+      "slug": "deploy",
+      "title": {"en": "Deploy", "vi": "Triển khai"},
+      "en": [{"file": "docs/deploy/README.md"}]
+    },
+    {
+      "slug": "deploy/aws",
+      "parent": "deploy",
+      "title": {"en": "AWS", "vi": "AWS"},
+      "en": [{"file": "docs/deploy/aws.md"}]
+    },
+    {
+      "slug": "deploy/terraform-aws",
+      "parent": "deploy",
+      "title": {"en": "Terraform for AWS", "vi": "Terraform cho AWS"},
+      "en": [{"file": "deploy/terraform/aws/README.md"}]
+    },
+    {
+      "slug": "deploy/gcp",
+      "parent": "deploy",
+      "title": {"en": "Google Cloud", "vi": "Google Cloud"},
+      "en": [{"file": "docs/deploy/gcp.md"}]
+    },
+    {
+      "slug": "deploy/on-premise",
+      "parent": "deploy",
+      "title": {"en": "On-premise", "vi": "Hạ tầng riêng"},
+      "en": [{"file": "docs/deploy/on-premise.md"}]
+    },
+    {
+      "slug": "deploy/airgapped",
+      "parent": "deploy",
+      "title": {"en": "Air-gapped", "vi": "Mạng cô lập"},
+      "en": [{"file": "docs/airgapped.md"}]
+    },
+    {
+      "slug": "deploy/sizing",
+      "parent": "deploy",
+      "title": {"en": "Sizing", "vi": "Định cỡ"},
+      "en": [{"file": "docs/sizing.md"}]
+    },
+    {
+      "slug": "configuration",
+      "title": {"en": "Configuration", "vi": "Cấu hình"},
+      "en": [{"file": "README.md", "section": "Configuration"}],
+      "vi": [{"file": "README.vi.md", "section": "Cấu hình"}]
+    },
+    {
+      "slug": "configuration/routing",
+      "parent": "configuration",
+      "title": {"en": "Routing", "vi": "Định tuyến"},
+      "en": [{"file": "README.md", "section": "Routing"}]
+    },
+    {
+      "slug": "configuration/apis",
+      "parent": "configuration",
+      "title": {"en": "APIs", "vi": "API"},
+      "en": [{"file": "README.md", "section": "APIs"}],
+      "vi": [{"file": "README.vi.md", "section": "API"}]
+    },
+    {
+      "slug": "operations",
+      "title": {"en": "Operations", "vi": "Vận hành"},
+      "en": [{"file": "README.md", "section": "Operations"}]
+    },
+    {
+      "slug": "operations/alerts",
+      "parent": "operations",
+      "title": {"en": "Alerts and notifications", "vi": "Cảnh báo và thông báo"},
+      "en": [{"file": "README.md", "section": "Alerts and notifications"}],
+      "vi": [{"file": "README.vi.md", "section": "Cảnh báo và thông báo"}]
+    },
+    {
+      "slug": "operations/admin-ui",
+      "parent": "operations",
+      "title": {"en": "Admin UI", "vi": "Giao diện quản trị"},
+      "en": [{"file": "README.md", "section": "Admin UI"}]
+    },
+    {
+      "slug": "operations/integrations",
+      "parent": "operations",
+      "title": {"en": "Integrations", "vi": "Tích hợp"},
+      "en": [{"file": "docs/integrations.md"}]
+    },
+    {
+      "slug": "upgrade",
+      "title": {"en": "Upgrade", "vi": "Nâng cấp"},
+      "en": [
+        {"file": "docs/upgrade.md"},
+        {"file": "CHANGELOG.md", "note": "There is no separate upgrade guide yet. Before 1.0, minor versions can change the API and the schema: read the changes below, then follow <em>Upgrade and rollback</em> in your <a href=\"/docs/deploy/\">deployment guide</a>."}
+      ]
+    },
+    {
+      "slug": "models",
+      "title": {"en": "Models", "vi": "Model"},
+      "en": [{"file": "README.md", "section": "Models"}],
+      "vi": [{"file": "README.vi.md", "section": "Model"}]
+    },
+    {
+      "slug": "models/versions",
+      "parent": "models",
+      "title": {"en": "Versions, pinning and rollback", "vi": "Phiên bản, ghim và quay lui"},
+      "en": [{"file": "docs/models.md"}]
+    },
+    {
+      "slug": "security",
+      "title": {"en": "Security", "vi": "Bảo mật"},
+      "en": [
+        {"file": "docs/security/README.md"},
+        {"file": "SECURITY.md"}
+      ]
+    },
+    {
+      "slug": "security/verifying-releases",
+      "parent": "security",
+      "title": {"en": "Verifying a release", "vi": "Kiểm tra bản phát hành"},
+      "en": [{"file": "docs/security/verifying-releases.md"}]
+    },
+    {
+      "slug": "security/risks",
+      "parent": "security",
+      "title": {"en": "Risks and hardening", "vi": "Rủi ro và gia cố"},
+      "en": [{"file": "docs/security-risks.md"}],
+      "vi": [{"file": "docs/security-risks.vi.md"}]
+    },
+    {
+      "slug": "security/policy",
+      "parent": "security",
+      "title": {"en": "Reporting a vulnerability", "vi": "Báo lỗ hổng"},
+      "en": [{"file": "SECURITY.md"}]
+    }
+  ],
+  "ui": {
+    "en": {
+      "docs": "Docs",
+      "home_title": "Guard Spec documentation",
+      "home_lead": "How to run, configure, operate and upgrade Guard Spec, and how to review it. Built from the Markdown in the guard-spec repository at",
+      "source": "Source",
+      "edit": "Edit on GitHub",
+      "english": "",
+      "nav_label": "Documentation",
+      "intro": {
+        "quickstart": "Run it with Docker Compose, then in production.",
+        "deploy": "AWS, Google Cloud, on-premise and Kubernetes guides.",
+        "configuration": "Every environment variable, routing and the APIs.",
+        "operations": "Audit, retention, identity, alerts and the admin UI.",
+        "upgrade": "Moving to a new version and back.",
+        "models": "The L2 and L3 models: pulling, pinning, rollback.",
+        "security": "Architecture, data, threat model, verifying releases."
+      }
+    },
+    "vi": {
+      "docs": "Tài liệu",
+      "home_title": "Tài liệu Guard Spec",
+      "home_lead": "Cách chạy, cấu hình, vận hành, nâng cấp và đánh giá bảo mật Guard Spec. Dựng từ Markdown của repo guard-spec tại",
+      "source": "Nguồn",
+      "edit": "Sửa trên GitHub",
+      "english": "(tiếng Anh)",
+      "nav_label": "Tài liệu",
+      "intro": {
+        "quickstart": "Chạy bằng Docker Compose, rồi lên production.",
+        "deploy": "Hướng dẫn cho AWS, Google Cloud, hạ tầng riêng và Kubernetes.",
+        "configuration": "Mọi biến môi trường, định tuyến và API.",
+        "operations": "Audit, lưu giữ dữ liệu, định danh, cảnh báo và giao diện quản trị.",
+        "upgrade": "Lên phiên bản mới và quay lui.",
+        "models": "Model L2 và L3: tải, ghim phiên bản, quay lui.",
+        "security": "Kiến trúc, dữ liệu, threat model, kiểm tra bản phát hành."
+      }
+    }
+  }
+}

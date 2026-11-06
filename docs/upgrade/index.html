@@ -1,0 +1,259 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Upgrade · Guard Spec</title>
+<meta name="description" content="All notable changes to this project are documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning. ">
+<meta property="og:title" content="Upgrade · Guard Spec">
+<meta property="og:description" content="All notable changes to this project are documented in this file. The format is based on Keep a Changelog, and this project adheres to Semantic Versioning. ">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/docs/upgrade/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/upgrade/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/docs/" class="on">Docs</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/upgrade/" class="on">EN</a><a href="/vi/docs/" class="">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Documentation</span></summary>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class="on"><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class="on"><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Upgrade</h1>
+<p class="doc-note">There is no separate upgrade guide yet. Before 1.0, minor versions can change the API and the schema: read the changes below, then follow <em>Upgrade and rollback</em> in your <a href="/docs/deploy/">deployment guide</a>.</p>
+<p>All notable changes to this project are documented in this file.</p>
+<p>The format is based on <a href="https://keepachangelog.com/en/1.1.0/">Keep a Changelog</a>,
+and this project adheres to <a href="https://semver.org/spec/v2.0.0.html">Semantic Versioning</a>.
+Before 1.0, minor versions may contain breaking changes; they are listed under
+&quot;Changed&quot; and in the upgrade notes.</p>
+<h2 id="unreleased"><a href="https://github.com/guard-spec/guard-spec/compare/v0.1.1...HEAD">Unreleased</a><a class="anchor" href="#unreleased" aria-hidden="true">#</a></h2>
+<h3 id="added">Added<a class="anchor" href="#added" aria-hidden="true">#</a></h3>
+<ul>
+<li><code>docs/security/</code>: documentation for security teams: architecture and trust
+boundaries, the data flow of a request, what is stored where and for how
+long (audit content off by default, retention per table), secrets and
+encryption at rest, and how to verify a release (cosign signatures pinned
+to the release tag, SBOMs, SLSA provenance) with the output for v0.1.0.</li>
+<li><code>deploy/terraform/aws/</code>: a Terraform reference for AWS (ECS on Fargate,
+RDS for PostgreSQL 17, Secrets Manager, two ALBs), with variables for the
+image tags or digests and the detection layers and models. Reference, not
+yet verified against a real account. CI runs <code>terraform fmt -check</code>,
+<code>validate</code> and <code>test</code> (a plan against a mocked provider).</li>
+<li>Documentation site at <a href="https://guardspec.io/docs/">https://guardspec.io/docs/</a>, built from this
+repository's Markdown; linked from the README.</li>
+</ul>
+<h2 id="011---2026-11-06"><a href="https://github.com/guard-spec/guard-spec/compare/v0.1.0...v0.1.1">0.1.1</a> - 2026-11-06<a class="anchor" href="#011---2026-11-06" aria-hidden="true">#</a></h2>
+<h3 id="added-1">Added<a class="anchor" href="#added-1" aria-hidden="true">#</a></h3>
+<ul>
+<li>Bench workflow (<code>.github/workflows/bench.yml</code>, manual only): detection
+latency with the released v3b and multilingual-e5-small models on
+GitHub-hosted <code>ubuntu-24.04</code> (amd64) and <code>ubuntu-24.04-arm</code> runners, as a
+markdown table in the job summary and an artifact. <code>cmd/eval</code> and
+<code>cmd/onnxbench</code> now also report p95.</li>
+<li><code>GET /v1/organizations/:orgId/dashboard</code>: request log aggregates over 24h,
+7d or 30d (totals, block rate, latency p50/p95/p99, an hourly or daily
+series, top detections, rules and projects), computed in Postgres. The
+admin UI dashboard uses it, with a period and a project filter, instead of
+sampling the latest 1,000 requests in the browser.</li>
+<li>Helm chart: <code>dbRoles.podSecurityContext</code> sets the pod securityContext of
+the <code>dbRoles</code> job.</li>
+<li>Helm chart: the control plane reads <code>MFA_ENC_KEY</code> from <code>existingSecret</code>
+when the key is there (optional; <code>controlPlane.extraEnvFrom</code> still works).</li>
+<li><code>GET /readyz</code>: <code>detector.required</code> reports <code>DETECTOR_REQUIRE_ML</code>.</li>
+<li>Go benchmarks for the input sanitizer, the output guard (whole answers and
+streams), CEL policy evaluation and the gateway's HTTP path end to end
+against a fake upstream. <code>make bench</code> runs them with L1 only; <code>make bench-onnx</code> adds L1+L2+L3 and L1+L2 (skipped without models).</li>
+</ul>
+<h3 id="changed">Changed<a class="anchor" href="#changed" aria-hidden="true">#</a></h3>
+<ul>
+<li><p>The gateway's <code>GET /health</code> and <code>GET /readyz</code> report the version the binary
+was built from instead of a fixed <code>0.1.0</code>.</p>
+</li>
+<li><p>Default image tag (<code>GUARDSPEC_VERSION</code>, chart <code>appVersion</code>) is <code>0.1.1</code>.</p>
+</li>
+<li><p><code>GET /readyz</code> answers 503, with <code>&quot;status&quot;:&quot;degraded&quot;</code> and the same detailed
+body, when a detection layer the configuration requires
+(<code>DETECTOR_REQUIRE_ML=true</code>) is missing. A gateway that runs on fewer
+layers without requiring them (the plain image without models) stays at
+200 with <code>&quot;degraded&quot;:true</code>. Outside <code>GUARD_ENV=dev</code> such a gateway already
+refused to start, so this shows mostly in dev mode.</p>
+</li>
+<li><p>Helm chart: the gateway mounts a volume at <code>/models</code> only with a models
+claim (<code>models.existingClaim</code>, or <code>models.persistence.enabled=true</code>, the
+default). With neither, nothing is mounted (before: an <code>emptyDir</code>), so
+<code>guard-spec-gateway-full</code> keeps the models inside its image and starts.</p>
+</li>
+<li><p>Helm chart: gateway resources default to a 500m CPU / 1Gi request and a
+2Gi memory limit (before: 250m / 256Mi and 1Gi); L1 + L2 + L3 use about
+900 MiB right after start.</p>
+</li>
+<li><p>Helm chart: the <code>dbRoles</code> job no longer forces <code>runAsUser: 70</code> on
+OpenShift (clusters serving <code>security.openshift.io/v1</code>), where the SCC
+assigns the UID; elsewhere it still defaults to 70 unless
+<code>dbRoles.podSecurityContext</code> sets one.</p>
+</li>
+</ul>
+<h3 id="security">Security<a class="anchor" href="#security" aria-hidden="true">#</a></h3>
+<ul>
+<li><code>github.com/go-jose/go-jose/v4</code> 4.1.4 → 4.1.9 (control plane, via the
+OIDC login): fixes a denial of service when parsing JWKs with RSA keys
+(GHSA-mgcc-cww5-fp2q, high) and panics in JSON parsing
+(GHSA-vvm8-gf78-28g4) and in CBC-HMAC processing (GHSA-4w3g-jfj2-cw2q).</li>
+<li><code>golang.org/x/crypto</code> 0.58.0 → v0.58.1-0.20261009181718-2f1f834330b2,
+which removes the unmaintained <code>openpgp</code> packages (GO-2026-5932). Guard
+Spec never imported them; <code>govulncheck</code> and OpenSSF Scorecard reported
+the module.</li>
+<li>Training tooling (<code>train/</code>, not shipped): torch 2.13.0, transformers
+5.10.2, onnx 1.22.0, protobuf 5.29.6, sentencepiece 0.2.1 and pyarrow
+23.0.1 fix the open advisories against the pinned versions. The scripts
+load the tokenizer with <code>PreTrainedTokenizerFast</code> so that an export keeps
+the base model's <code>tokenizer.json</code> unchanged under transformers 5, and
+<code>export.py</code> keeps the TorchScript ONNX exporter (<code>dynamo=False</code>).</li>
+<li>Admin UI build tooling (not shipped): npm overrides move <code>minimatch</code> to
+11.0.5 (GHSA-g3hv-75wg-m249) and <code>glob</code> to 14.0.4 (GHSA-3g3m-2fjr-6pw4)
+under typescript-eslint and the license checker.</li>
+</ul>
+<h3 id="documentation">Documentation<a class="anchor" href="#documentation" aria-hidden="true">#</a></h3>
+<ul>
+<li>README: the <code>kubectl create secret</code> example includes <code>MFA_ENC_KEY</code>.</li>
+<li>ADR 0002: input-side PII, toxicity and topic detection are decided against
+for now, with the reasons and what to use instead; README, ROADMAP and
+DESIGN point to it.</li>
+<li>README, &quot;Benchmarks&quot;: measured numbers for the new Go benchmarks (Apple M3
+Max), with the command and date.</li>
+<li>docs/deploy: the workarounds for the points above are gone; notes on
+Helm 4 post-renderers (plugins only) and on migration 004's
+<code>CREATE ROLE</code> on a Postgres server shared with other databases.</li>
+</ul>
+<h2 id="010---2026-11-06"><a href="https://github.com/guard-spec/guard-spec/releases/tag/v0.1.0">0.1.0</a> - 2026-11-06<a class="anchor" href="#010---2026-11-06" aria-hidden="true">#</a></h2>
+<p>First release.</p>
+<h3 id="added-2">Added<a class="anchor" href="#added-2" aria-hidden="true">#</a></h3>
+<p><strong>Gateway and detection</strong></p>
+<ul>
+<li>OpenAI-compatible gateway: <code>/v1/chat/completions</code> and <code>/v1/completions</code>,
+streaming included, in front of any OpenAI-compatible upstream.</li>
+<li>L0 sanitizer: UTF-8 validation, repeated NFKC, removal of invisible,
+tag-block, bidi, variation-selector and control characters, ANSI and HTML,
+entity unwrapping, a homoglyph signal and an anomaly score that blocks at
+0.6. Content that HTML hides from the reader is kept between <code>[hidden]</code>
+markers so that the detectors see it.</li>
+<li>L1 rules on a skeleton of the text (Vietnamese diacritics and teencode,
+leetspeak, homoglyphs, fullwidth and spelled-out letters), weighted per
+attack category, with suppressors for meta discussion, quotes and code.</li>
+<li>L2 classifier <code>guardspec-classifier-v3b</code>: multilingual-e5-small fine-tuned
+on English and Vietnamese, INT8 ONNX, run in process with ONNX Runtime
+(<code>-tags onnx</code>). The training pipeline is in <code>train/</code>, with a model card.</li>
+<li>L3 similarity to 520 built-in exemplars and to each organization's own.</li>
+<li>Calibrated fusion of the layers into one injection score, fitted outside
+<code>eval/</code>; optional cascade; L1-only fallback when models are absent.</li>
+<li>Indirect injection and MCP tool poisoning: tool results, documents and tool
+descriptions are scored one by one (<code>INDIRECT_BLOCK_THRESHOLD</code>), with MCP
+poisoning signals and optional spotlighting; <code>POST /guardrail/scan</code>,
+<code>/guardrail/scan/tools</code> and <code>/guardrail/sanitize</code>.</li>
+<li>Output guard: link and image allowlist, redaction of e-mail, Vietnamese
+phone, CCCD and card numbers (and optionally IPv4), a canary, reasoning
+fields and tool-call arguments, in whole responses and streams.</li>
+<li><code>GET /readyz</code> lists the active detection layers.</li>
+</ul>
+<p><strong>Policies and routing</strong></p>
+<ul>
+<li>CEL policies per organization and project, written as a condition tree or
+as text (<code>scores.l2 &gt; 0.8 &amp;&amp; injection.category == &quot;jailbreak&quot;</code>), compiled
+on the server, fail-closed: <code>allow</code>, <code>block</code>, <code>log</code> and <code>route</code>. A policy
+simulator and config as code (<code>GET</code>/<code>PUT .../config</code>, YAML, dry run).</li>
+<li>Named upstreams per organization (OpenAI, Azure OpenAI, Anthropic, Gemini,
+vLLM, Ollama) with defaults per org and project, allowed models, headers,
+limits, retries and a connection test. Keys stay in the gateway's
+environment (<code>UPSTREAM_KEY_*</code>, <code>UPSTREAM_KEY_ORGS</code>); private and metadata
+addresses are refused.</li>
+</ul>
+<p><strong>Control plane and administration</strong></p>
+<ul>
+<li>Organizations, projects, roles (viewer, member, admin, owner), invites,
+API keys with per-key rate limits; Postgres row-level security per
+organization.</li>
+<li>Sessions, TOTP two-factor authentication with recovery codes, OpenID
+Connect single sign-on (Google preset, Entra ID, Okta, Keycloak), an
+organization security policy (require 2FA, login methods, domain join,
+session lifetime), user management and an activity log.</li>
+<li>Real-time alerts: events for blocked and flagged requests, upstream
+failures and security changes; rules with conditions, thresholds,
+throttling, grouping and quiet hours; Telegram, Slack, Microsoft Teams,
+email, signed webhooks, A2A agents and an in-app bell; delivery with
+retries and a delivery log.</li>
+<li>Audit: one row per request with scores and the decision (content only on
+opt-in), retention in days.</li>
+<li>Admin UI at <code>/ui/</code>, English and Vietnamese, light and dark: dashboard,
+request flow with editable policy rules, simulator, providers, request log,
+alerts, members, security and my account.</li>
+</ul>
+<p><strong>Models, operations and supply chain</strong></p>
+<ul>
+<li>Versioned models: <code>models pull name@version</code>, SHA-256 verified, from
+Hugging Face with GitHub Release mirrors; <code>L2_MODEL</code> / <code>L3_MODEL</code> pick a
+version.</li>
+<li><code>scripts/quickstart.sh</code>, Docker Compose with the released images, a Helm
+chart, and the <code>gateway-full</code> image with the models built in.</li>
+<li>Images for linux/amd64 and arm64 signed with cosign, SBOMs and provenance;
+archives with signed checksums; <code>version</code> subcommand in every binary.</li>
+<li>Prometheus metrics and OpenTelemetry tracing.</li>
+<li>EN/VI eval set (2,176 rows) with a deterministic builder, <code>cmd/eval</code> and
+CI regression baselines.</li>
+<li>Community files: CONTRIBUTING (DCO), CODE_OF_CONDUCT, SECURITY, MAINTAINERS,
+ROADMAP, issue and pull request templates, Vietnamese README.</li>
+</ul>
+<h3 id="known-issues">Known issues<a class="anchor" href="#known-issues" aria-hidden="true">#</a></h3>
+<ul>
+<li>With L2 and L3, 1.4% of benign eval prompts are blocked; benign Vietnamese
+teencode is blocked 3.5% of the time. The Vietnamese eval and training data
+is synthetic.</li>
+<li>The plain release archives (<code>guard-spec_&lt;version&gt;_&lt;os&gt;_&lt;arch&gt;.tar.gz</code>) are
+built without <code>-tags onnx</code> and run L1 only; use the gateway image or the
+linux <code>_onnx</code> tarball for the model layers. There is no darwin ONNX build.</li>
+<li>The Helm chart has no autoscaling, PodDisruptionBudget, Ingress or
+migration job yet, and the models volume is ReadWriteOnce.</li>
+<li>List endpoints still answer the older <code>{&quot;data&quot;: [...]}</code> shape when called
+without <code>limit</code> and <code>cursor</code>; use the paginated form.</li>
+</ul>
+
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/CHANGELOG.md">CHANGELOG.md</a> @ <code>4448f51a3ca3</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Security</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Created by <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

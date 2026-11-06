@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Versions, pinning and rollback · Guard Spec</title>
+<meta name="description" content="The gateway&#x27;s detector has three layers. L1 (rules) is built into the binary. L2 (our classifier, guardspec-classifier) and L3 (the multilingual-e5-small e">
+<meta property="og:title" content="Versions, pinning and rollback · Guard Spec">
+<meta property="og:description" content="The gateway&#x27;s detector has three layers. L1 (rules) is built into the binary. L2 (our classifier, guardspec-classifier) and L3 (the multilingual-e5-small e">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/docs/models/versions/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/models/versions/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/docs/" class="on">Docs</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/models/versions/" class="on">EN</a><a href="/vi/docs/" class="">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Documentation</span></summary>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child on"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child on"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Versions, pinning and rollback</h1>
+
+<p>The gateway's detector has three layers. L1 (rules) is built into the
+binary. L2 (our classifier, <code>guardspec-classifier</code>) and L3 (the
+<code>multilingual-e5-small</code> embedder) are ONNX models that are never baked into
+an image or committed to git: they are downloaded, verified and mounted at
+<code>/models</code>.</p>
+<p><a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/models/manifest.yaml"><code>models/manifest.yaml</code></a> lists every model version
+that can be pulled. The same file is built into the gateway and the <code>models</code>
+tool, so the binary always knows its recommended models.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Model</th>
+  <th>Version</th>
+  <th>Layer</th>
+  <th>Recommended</th>
+  <th>Source</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>guardspec-classifier</code></td>
+  <td><code>v3b</code></td>
+  <td>L2</td>
+  <td>yes</td>
+  <td>Hugging Face (not published yet), then the GitHub Release <code>model-guardspec-classifier-v3b</code></td>
+</tr>
+<tr>
+  <td><code>multilingual-e5-small</code></td>
+  <td><code>614241f</code></td>
+  <td>L3</td>
+  <td>yes</td>
+  <td>Hugging Face <code>intfloat/multilingual-e5-small</code></td>
+</tr>
+<tr>
+  <td><code>protectai-deberta-v3-small-pi-v2</code></td>
+  <td><code>d7c8842</code></td>
+  <td>baseline</td>
+  <td>optional, gated</td>
+  <td>Hugging Face</td>
+</tr>
+<tr>
+  <td><code>protectai-deberta-v3-base-pi-v2</code></td>
+  <td><code>90c9989</code></td>
+  <td>baseline</td>
+  <td>optional</td>
+  <td>Hugging Face</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>models list --available</code> prints the current list. Version names of models
+we did not train are the first 7 characters of their pinned Hugging Face
+revision.</p>
+<h2 id="layout">Layout<a class="anchor" href="#layout" aria-hidden="true">#</a></h2>
+<p>A version is installed in <code>&lt;dir&gt;/&lt;name&gt;/&lt;version&gt;/</code>; with compose,
+<code>&lt;dir&gt;</code> is <code>./models/cache</code>:</p>
+<pre><code>models/cache/
+  guardspec-classifier/v3b/     model_int8.onnx tokenizer.json config.json thresholds.json calibration.json
+  multilingual-e5-small/614241f/  model.onnx tokenizer.json config.json
+</code></pre>
+<p>Several versions of one model can sit side by side; that is what makes a
+rollback a restart.</p>
+<h2 id="pulling">Pulling<a class="anchor" href="#pulling" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash"># Docker: models-init does this before the gateway starts, on every `up`
+docker compose --profile models run --rm models-pull                           # recommended versions
+docker compose --profile models run --rm models-pull guardspec-classifier@v3b  # one version
+
+# Without Docker
+go run ./cmd/models pull                              # recommended version of every non-optional model
+go run ./cmd/models pull guardspec-classifier@v3b     # one version
+go run ./cmd/models pull -models a,b@v1               # the older flag form still works
+go run ./cmd/models list                              # what is installed
+go run ./cmd/models list --available                  # what the manifest offers
+go run ./cmd/models verify                            # re-check the SHA-256 of installed files
+</code></pre>
+<p>What <code>pull</code> guarantees:</p>
+<ul>
+<li><strong>Verified.</strong> Every file is checked against the size and SHA-256 pinned in
+the manifest, whichever source it came from. A mismatch is refused.</li>
+<li><strong>Atomic.</strong> A version is assembled in a hidden temporary directory next to
+it and renamed into place only when every file verified. A failed or
+interrupted pull leaves the previous state as it was.</li>
+<li><strong>Idempotent.</strong> When a version is present and verifies, nothing is
+downloaded. Files from the layout before versions
+(<code>models/cache/multilingual-e5-small/model.onnx</code>) are reused, not
+downloaded again.</li>
+<li><strong>Fallback.</strong> Sources are tried in order: <code>-mirror</code> / <code>MODELS_MIRROR</code>
+when set, Hugging Face at the pinned commit, then the manifest's <code>mirrors</code>
+(our GitHub Release assets). While a model is not on Hugging Face its
+revision is the all-zero placeholder and Hugging Face is skipped.
+<code>HF_TOKEN</code> is only ever sent to Hugging Face.</li>
+</ul>
+<p><code>MODELS_MIRROR</code> is a base URL serving <code>&lt;mirror&gt;/&lt;name&gt;/&lt;version&gt;/&lt;file&gt;</code>, for
+an internal mirror or a proxy-restricted network. Any static file server
+over a copy of <code>models/cache</code> works, for example
+<code>python3 -m http.server -d models/cache 8000</code> and
+<code>MODELS_MIRROR=http://host.docker.internal:8000</code>.</p>
+<h2 id="choosing-a-version-in-the-gateway">Choosing a version in the gateway<a class="anchor" href="#choosing-a-version-in-the-gateway" aria-hidden="true">#</a></h2>
+<p>The gateway resolves each model layer in this order:</p>
+<ol>
+<li><code>L2_MODEL_DIR</code> / <code>L3_MODEL_DIR</code>: that directory, as is (the older
+variables; they win when set);</li>
+<li><code>L2_MODEL</code> / <code>L3_MODEL</code> = <code>name@version</code>: <code>$MODEL_DIR/cache/&lt;name&gt;/&lt;version&gt;</code>.
+A bare name means its recommended version;</li>
+<li>nothing set: the manifest's recommended model, when installed;</li>
+<li>the directories from before versions: <code>$MODEL_DIR/local/guardspec-classifier-v3b</code>
+(then <code>-v2</code>, <code>-v1</code>, <code>-v0</code>) for L2 and <code>$MODEL_DIR/cache/multilingual-e5-small</code>
+for L3.</li>
+</ol>
+<p>An explicit choice (1 or 2) that is not installed is not replaced by another
+model: the layer stays off and <code>/readyz</code> says why. <code>MODEL_DIR</code> is <code>/models</code>
+in the image and <code>./models</code> otherwise.</p>
+<p><code>GET /readyz</code> shows what loaded:</p>
+<pre><code class="language-json">{&quot;detector&quot;:{&quot;layers&quot;:[&quot;l1&quot;,&quot;l2&quot;,&quot;l3&quot;],&quot;degraded&quot;:false,&quot;onnx&quot;:true,&quot;fusion&quot;:&quot;logreg&quot;,&quot;l2_model&quot;:&quot;guardspec-classifier-v3b&quot;},&quot;status&quot;:&quot;ready&quot;,&quot;version&quot;:&quot;0.1.0&quot;}
+</code></pre>
+<h2 id="pinning">Pinning<a class="anchor" href="#pinning" aria-hidden="true">#</a></h2>
+<ul>
+<li><strong>Images</strong> are pinned by <code>GUARDSPEC_VERSION</code> (default <code>0.1.0</code>). Each image
+contains the manifest of its release, so the models it recommends are
+pinned with it.</li>
+<li><strong>Models</strong> are pinned by <code>L2_MODEL=guardspec-classifier@v3b</code> (and
+<code>L3_MODEL</code>). Set them in <code>.env</code> to keep a version across image upgrades
+that recommend a newer one; models-init still pulls the new recommended
+version, but the gateway keeps loading the pinned one.</li>
+<li><strong>Files</strong> are pinned by SHA-256 in the manifest, and upstream models by
+their Hugging Face commit.</li>
+</ul>
+<h2 id="rolling-back">Rolling back<a class="anchor" href="#rolling-back" aria-hidden="true">#</a></h2>
+<ol>
+<li>Make sure the older version is installed:
+<code>docker compose --profile models run --rm models-pull guardspec-classifier@&lt;old&gt;</code>
+(<code>models list</code> shows what is there).</li>
+<li>Set <code>L2_MODEL=guardspec-classifier@&lt;old&gt;</code> in <code>.env</code>.</li>
+<li>Restart the gateway: <code>docker compose up -d gateway</code>.</li>
+<li>Check <code>/readyz</code> (<code>l2_model</code>) and the log line <code>L2 classifier loaded</code>.</li>
+</ol>
+<p>Undo by removing <code>L2_MODEL</code> and restarting. Calibration travels with the
+model (<code>calibration.json</code> in the version directory), so the fusion weights
+always match the classifier that is loaded.</p>
+<h2 id="air-gapped-installs">Air-gapped installs<a class="anchor" href="#air-gapped-installs" aria-hidden="true">#</a></h2>
+<p>Two options:</p>
+<ul>
+<li><strong>The <code>gateway-full</code> image</strong>, which contains the recommended models of its
+release (built from <code>build/gateway-full.Dockerfile</code>). Move it with
+<code>docker save</code> / <code>docker load</code>. It needs no models-init download; set
+<code>MODEL_DIR</code> as its documentation says.</li>
+<li><strong>A copy of <code>models/cache</code>.</strong> On a connected machine run <code>models pull</code>,
+copy the directory, and on the target run <code>models verify</code> before
+starting. models-init then finds the files present and verified and does
+nothing. Alternatively, serve the copy from an internal file server and set
+<code>MODELS_MIRROR</code>.</li>
+</ul>
+<p>Without network and without models, models-init warns and the gateway runs
+on L1 only (<code>/readyz</code> lists the missing layers), unless
+<code>DETECTOR_REQUIRE_ML=true</code>, which stops the stack instead.</p>
+<h2 id="false-positives-fix-them-now-with-exemplars">False positives: fix them now with exemplars<a class="anchor" href="#false-positives-fix-them-now-with-exemplars" aria-hidden="true">#</a></h2>
+<p>A new model version takes a training run, an eval and a release. The fix
+for a false positive today is the <strong>Exemplars</strong> page of the admin UI
+(<code>/ui/</code>, or <code>POST /v1/organizations/:orgId/exemplars</code>):</p>
+<ul>
+<li>add the wrongly blocked text as an <strong>allow</strong> exemplar: it lowers the L3
+score of similar requests for that organization; a <strong>block</strong> exemplar does
+the opposite and puts a floor under the fused score;</li>
+<li>check the request's <code>scores</code> in the request log first: an allow exemplar
+acts on L3 only, so when L2 alone drives the score it lowers the fused
+score only partly. Report such texts (without customer data) so that the
+next model version learns from them;</li>
+<li>exemplars need the L3 model and take effect within about 5 seconds, with
+no restart.</li>
+</ul>
+<h2 id="releasing-a-new-model-version">Releasing a new model version<a class="anchor" href="#releasing-a-new-model-version" aria-hidden="true">#</a></h2>
+<p>For maintainers. The example releases <code>guardspec-classifier</code> <code>v4</code>.</p>
+<ol>
+<li><strong>Train</strong> with <code>train/</code> (see <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/train/MODEL_CARD.md">train/MODEL_CARD.md</a>).
+Choose epochs, thresholds and calibration on the validation splits only.
+<code>eval/</code> is never used for tuning.</li>
+<li><strong>Calibrate</strong>: <code>go run -tags onnx ./cmd/calibrate fit -write</code> writes
+<code>calibration.json</code> next to the model; add the values to
+<code>BuiltinCalibrations</code> in <code>internal/inference/ml/calibration.go</code> as well.</li>
+<li><strong>Evaluate once</strong> on <code>eval/</code> with the final model and record the numbers
+in the model card. Do not go back to step 1 because of them; a model
+that fails the eval set is not released (as with v3).</li>
+<li><strong>Hash</strong> the files: <code>shasum -a 256 model_int8.onnx tokenizer.json config.json thresholds.json calibration.json</code>
+and note the sizes.</li>
+<li><strong>Upload</strong> the same files to Hugging Face (the repo in the manifest) and
+note the commit sha; then attach them as assets of a GitHub Release
+tagged <code>model-guardspec-classifier-v4</code> (a model release, not a <code>v*</code>
+software release).</li>
+<li><strong>Bump the manifest</strong>: add an entry with <code>version: v4</code>, the Hugging Face
+<code>revision</code>, the mirror
+<code>https://github.com/guard-spec/guard-spec/releases/download/model-guardspec-classifier-v4/{file}</code>
+and every file's <code>size</code> and <code>sha256</code>. Move <code>recommended: true</code> from the
+old entry to the new one, and keep the old entry so that rollback works.</li>
+<li><strong>Check</strong>: <code>go test ./internal/onnx ./internal/inference/ml</code>, then pull
+into an empty directory (<code>go run ./cmd/models pull -dir /tmp/m guardspec-classifier@v4</code>)
+to prove both sources serve the pinned files.</li>
+<li><strong>CHANGELOG</strong>: add a &quot;Model&quot; section under Unreleased with the version,
+what changed in the data, and the eval numbers against the previous
+version.</li>
+</ol>
+<p>The next software release then ships the manifest that recommends v4.</p>
+
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/docs/models.md">docs/models.md</a> @ <code>4448f51a3ca3</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Security</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Created by <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

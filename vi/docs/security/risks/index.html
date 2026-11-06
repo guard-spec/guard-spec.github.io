@@ -1,0 +1,434 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Rủi ro và gia cố · Guard Spec</title>
+<meta name="description" content="English: security-risks.md. Trang này dành cho người triển khai và vận hành Guard Spec. Nó liệt kê những rủi ro vẫn còn khi Guard Spec đứng trước LLM của b">
+<meta property="og:title" content="Rủi ro và gia cố · Guard Spec">
+<meta property="og:description" content="English: security-risks.md. Trang này dành cho người triển khai và vận hành Guard Spec. Nó liệt kê những rủi ro vẫn còn khi Guard Spec đứng trước LLM của b">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/vi/docs/security/risks/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/security/risks/">
+<link rel="alternate" hreflang="vi" href="https://guardspec.io/vi/docs/security/risks/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/vi/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/vi/docs/" class="on">Tài liệu</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/security/risks/" class="">EN</a><a href="/vi/docs/security/risks/" class="on">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Tài liệu</span></summary>
+    <nav class="docs-nav" aria-label="Tài liệu"><ul><li class=""><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a></li><li class=""><a href="/docs/deploy/">Triển khai <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/aws/">AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform cho AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/on-premise/">Hạ tầng riêng <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/configuration/">Cấu hình</a></li><li class="child"><a href="/docs/configuration/routing/">Định tuyến <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/configuration/apis/">API</a></li><li class=""><a href="/docs/operations/">Vận hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/alerts/">Cảnh báo và thông báo</a></li><li class="child"><a href="/docs/operations/admin-ui/">Giao diện quản trị <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/docs/upgrade/">Nâng cấp <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/models/">Model</a></li><li class="child"><a href="/docs/models/versions/">Phiên bản, ghim và quay lui <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/docs/security/">Bảo mật <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/security/verifying-releases/">Kiểm tra bản phát hành <span class="en">(tiếng Anh)</span></a></li><li class="child on"><a href="/vi/docs/security/risks/">Rủi ro và gia cố</a></li><li class="child"><a href="/docs/security/policy/">Báo lỗ hổng <span class="en">(tiếng Anh)</span></a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Tài liệu"><ul><li class=""><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a></li><li class=""><a href="/docs/deploy/">Triển khai <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/aws/">AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform cho AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/on-premise/">Hạ tầng riêng <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/configuration/">Cấu hình</a></li><li class="child"><a href="/docs/configuration/routing/">Định tuyến <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/configuration/apis/">API</a></li><li class=""><a href="/docs/operations/">Vận hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/alerts/">Cảnh báo và thông báo</a></li><li class="child"><a href="/docs/operations/admin-ui/">Giao diện quản trị <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/docs/upgrade/">Nâng cấp <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/models/">Model</a></li><li class="child"><a href="/docs/models/versions/">Phiên bản, ghim và quay lui <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/docs/security/">Bảo mật <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/security/verifying-releases/">Kiểm tra bản phát hành <span class="en">(tiếng Anh)</span></a></li><li class="child on"><a href="/vi/docs/security/risks/">Rủi ro và gia cố</a></li><li class="child"><a href="/docs/security/policy/">Báo lỗ hổng <span class="en">(tiếng Anh)</span></a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Rủi ro và gia cố</h1>
+
+<blockquote>
+<p>English: <a href="/docs/security/risks/">security-risks.md</a>.</p>
+</blockquote>
+<p>Trang này dành cho người triển khai và vận hành Guard Spec. Nó liệt kê những
+rủi ro vẫn còn khi Guard Spec đứng trước LLM của bạn và cách giảm từng rủi ro.
+Để biết gateway bảo vệ được gì và không bảo vệ được gì, hãy đọc
+<a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/README.vi.md#m%C3%B4-h%C3%ACnh-b%E1%BA%A3o-m%E1%BA%ADt-v%C3%A0-gi%E1%BB%9Bi-h%E1%BA%A1n">Mô hình bảo mật và giới hạn</a> trước. Báo lỗ hổng theo
+<a href="/docs/security/policy/">SECURITY.md</a>.</p>
+<p>Guard Spec là một lớp phòng thủ. Nó giảm khả năng chỉ dẫn bị chèn đến được
+model và hạn chế những gì câu trả lời có thể làm lộ. Riêng nó không làm một ứng
+dụng LLM trở nên an toàn.</p>
+<h2 id="mục-lục">Mục lục<a class="anchor" href="#mục-lục" aria-hidden="true">#</a></h2>
+<ul>
+<li><a href="#tóm-tắt">Tóm tắt</a></li>
+<li><a href="#rủi-ro-phát-hiện">Rủi ro phát hiện</a></li>
+<li><a href="#rủi-ro-ở-ứng-dụng-và-agent">Rủi ro ở ứng dụng và agent</a></li>
+<li><a href="#rủi-ro-triển-khai">Rủi ro triển khai</a></li>
+<li><a href="#rủi-ro-danh-tính-và-quyền-truy-cập">Rủi ro danh tính và quyền truy cập</a></li>
+<li><a href="#rủi-ro-dữ-liệu-và-quyền-riêng-tư">Rủi ro dữ liệu và quyền riêng tư</a></li>
+<li><a href="#rủi-ro-chuỗi-cung-ứng">Rủi ro chuỗi cung ứng</a></li>
+<li><a href="#rủi-ro-vận-hành">Rủi ro vận hành</a></li>
+<li><a href="#checklist-gia-cố">Checklist gia cố</a></li>
+</ul>
+<h2 id="tóm-tắt">Tóm tắt<a class="anchor" href="#tóm-tắt" aria-hidden="true">#</a></h2>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>#</th>
+  <th>Rủi ro</th>
+  <th>Hậu quả</th>
+  <th>Cách giảm</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>D1</td>
+  <td>Không phát hiện được tấn công</td>
+  <td>Chỉ dẫn bị chèn đến được model</td>
+  <td>Tool quyền tối thiểu, người xác nhận, output guard, exemplar</td>
+</tr>
+<tr>
+  <td>D2</td>
+  <td>Chặn nhầm request vô hại</td>
+  <td>Người dùng bị từ chối</td>
+  <td>Đo trên lưu lượng thật, allow exemplar, <code>DETECTOR_LAYERS</code></td>
+</tr>
+<tr>
+  <td>D3</td>
+  <td>Lớp model thiếu mà không ai biết</td>
+  <td>Chỉ chạy L1, tỷ lệ bắt giảm</td>
+  <td><code>DETECTOR_REQUIRE_ML=true</code>, cảnh báo khi <code>/readyz</code> báo <code>degraded</code></td>
+</tr>
+<tr>
+  <td>D4</td>
+  <td>Injection gián tiếp trong phần không quét</td>
+  <td>Kết quả tool hoặc system prompt không được kiểm</td>
+  <td><code>SCAN_ROLES</code>, <code>scan_roles</code> theo org, <code>SPOTLIGHT</code></td>
+</tr>
+<tr>
+  <td>A1</td>
+  <td>Agent dùng tool sai mục đích</td>
+  <td>Mất dữ liệu, hành động ngoài ý muốn</td>
+  <td>Phân quyền trong ứng dụng, kiểm soát egress, xác nhận</td>
+</tr>
+<tr>
+  <td>A2</td>
+  <td>Rò dữ liệu qua link được giữ lại</td>
+  <td>Dữ liệu ra ngoài qua câu trả lời</td>
+  <td>Allowlist host ngắn, tắt tự tạo link trong UI</td>
+</tr>
+<tr>
+  <td>P1</td>
+  <td>Dịch vụ chạy không có TLS</td>
+  <td>Lộ thông tin đăng nhập và prompt trên mạng</td>
+  <td>TLS ở reverse proxy hoặc load balancer</td>
+</tr>
+<tr>
+  <td>P2</td>
+  <td>Control plane hoặc metrics ra Internet</td>
+  <td>Tấn công đăng nhập admin, lộ thông tin</td>
+  <td>Mạng riêng, VPN hoặc SSO đứng trước</td>
+</tr>
+<tr>
+  <td>P3</td>
+  <td>Upstream của org trỏ vào host nội bộ hoặc nhận key của bạn</td>
+  <td>SSRF, lộ key</td>
+  <td><code>UPSTREAM_ALLOW_PRIVATE=false</code>, <code>UPSTREAM_KEY_ORGS</code></td>
+</tr>
+<tr>
+  <td>P4</td>
+  <td>Vượt rate limit bằng số lượng lớn</td>
+  <td>Tốn chi phí, từ chối dịch vụ</td>
+  <td>WAF hoặc rate limiter phía trước; giới hạn tính theo replica</td>
+</tr>
+<tr>
+  <td>I1</td>
+  <td>Secret yếu hoặc bị lộ</td>
+  <td>Bị chiếm toàn bộ</td>
+  <td>Secret mạnh trong secret manager, xoay vòng</td>
+</tr>
+<tr>
+  <td>I2</td>
+  <td>Mất <code>MFA_ENC_KEY</code></td>
+  <td>2FA của mọi người ngừng hoạt động</td>
+  <td>Sao lưu cùng database</td>
+</tr>
+<tr>
+  <td>I3</td>
+  <td>Ai cũng tạo được tổ chức</td>
+  <td>Admin không tin cậy chọn upstream</td>
+  <td>Thiết lập ở P3, giới hạn người đăng ký</td>
+</tr>
+<tr>
+  <td>I4</td>
+  <td>Đăng ký 2FA tin ở lần đầu</td>
+  <td>Kẻ có mật khẩu đăng ký trước</td>
+  <td>Bắt buộc 2FA sớm; reset 2FA khi nghi ngờ</td>
+</tr>
+<tr>
+  <td>I5</td>
+  <td><code>TRUSTED_PROXIES</code> sai</td>
+  <td>Giả mạo IP trong rate limit và log</td>
+  <td>Chỉ liệt kê proxy của bạn</td>
+</tr>
+<tr>
+  <td>R1</td>
+  <td>Lưu nội dung prompt trong audit</td>
+  <td>Dữ liệu cá nhân lưu trữ lâu dài</td>
+  <td>Để tắt <code>AUDIT_STORE_CONTENT</code>, đặt thời hạn lưu</td>
+</tr>
+<tr>
+  <td>R2</td>
+  <td>Dữ liệu cá nhân lọt qua bộ che</td>
+  <td>Lộ trong câu trả lời</td>
+  <td>Bộ che dựa trên regex; tự kiểm thêm</td>
+</tr>
+<tr>
+  <td>R3</td>
+  <td>Trace ID hoặc nhãn metric lộ dữ liệu tenant</td>
+  <td>Lộ thông tin giữa các tenant</td>
+  <td>Mặc định an toàn; xem kỹ trước khi đổi</td>
+</tr>
+<tr>
+  <td>S1</td>
+  <td>Image, binary hoặc model bị sửa</td>
+  <td>Chạy mã tuỳ ý hoặc bộ phát hiện yếu đi</td>
+  <td>cosign verify, model ghim SHA-256, digest</td>
+</tr>
+<tr>
+  <td>S2</td>
+  <td>Lỗ hổng đã biết trong thư viện</td>
+  <td>Dịch vụ bị khai thác</td>
+  <td>Cập nhật bản mới nhất; theo dõi advisory</td>
+</tr>
+<tr>
+  <td>O1</td>
+  <td>Lạm dụng quyền database hoặc admin</td>
+  <td>Đổi policy, đọc audit</td>
+  <td>Quyền tối thiểu, activity log, sao lưu</td>
+</tr>
+<tr>
+  <td>O2</td>
+  <td>Fail-closed gây gián đoạn</td>
+  <td>Request bị từ chối (503)</td>
+  <td>Health check, nhiều replica, cảnh báo</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="rủi-ro-phát-hiện">Rủi ro phát hiện<a class="anchor" href="#rủi-ro-phát-hiện" aria-hidden="true">#</a></h2>
+<h3 id="d1-không-phát-hiện-được-tấn-công">D1. Không phát hiện được tấn công<a class="anchor" href="#d1-không-phát-hiện-được-tấn-công" aria-hidden="true">#</a></h3>
+<p>Phát hiện mang tính xác suất. Cách diễn đạt mới, ngôn ngữ khác ngoài tiếng Anh
+và tiếng Việt, kiểu mã hoá mà L1 chỉ giải được một phần (như base64) và tấn
+công nhiều lượt mà từng tin nhắn trông vô hại đều có thể lọt. Với các lớp model
+mặc định, bộ eval cho tỷ lệ bắt khoảng 0,93 ở ngưỡng chặn (xem
+<a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/README.vi.md#benchmark">Benchmark</a>); phần còn lại đến được model.</p>
+<p>Nên làm:</p>
+<ul>
+<li>Thiết kế ứng dụng như thể một số injection sẽ đến được model: cấp cho tool
+quyền tối thiểu và để người xác nhận các hành động rủi ro.</li>
+<li>Giữ output guard bật; nó hạn chế những gì một injection thành công có thể làm lộ.</li>
+<li>Thêm các tấn công thấy trong lưu lượng thật làm block exemplar cho tổ chức.</li>
+<li>Báo các cách vượt qua một cách riêng tư (<a href="/docs/security/policy/">SECURITY.md</a>); chúng
+thuộc phạm vi nhận báo cáo.</li>
+</ul>
+<h3 id="d2-chặn-nhầm-request-vô-hại">D2. Chặn nhầm request vô hại<a class="anchor" href="#d2-chặn-nhầm-request-vô-hại" aria-hidden="true">#</a></h3>
+<p>Với L2 và L3, khoảng 1,4% prompt vô hại trong bộ eval bị chặn; teencode tiếng
+Việt vô hại là 3,5%, tiếng Anh là 1,7%. Dữ liệu eval và huấn luyện tiếng Việt là
+dữ liệu tổng hợp, nên tỷ lệ của bạn có thể khác.</p>
+<p>Nên làm:</p>
+<ul>
+<li>Chạy trước trên bản sao lưu lượng thật và đọc các audit có <code>block</code>.</li>
+<li>Thêm allow exemplar cho các trường hợp chặn nhầm.</li>
+<li>Nếu chặn nhầm tốn kém hơn bỏ sót, chạy <code>DETECTOR_LAYERS=l1</code> (khoảng 0,1% chặn
+nhầm, tỷ lệ bắt thấp hơn).</li>
+</ul>
+<h3 id="d3-lớp-model-thiếu-mà-không-ai-biết">D3. Lớp model thiếu mà không ai biết<a class="anchor" href="#d3-lớp-model-thiếu-mà-không-ai-biết" aria-hidden="true">#</a></h3>
+<p>Khi thiếu model hoặc model nạp lỗi, gateway ghi cảnh báo và tiếp tục chạy chỉ
+với L1. Khi đó <code>/readyz</code> báo <code>&quot;degraded&quot;:true</code>.</p>
+<p>Nên làm:</p>
+<ul>
+<li>Đặt <code>DETECTOR_REQUIRE_ML=true</code> để gateway từ chối khởi động khi thiếu lớp
+model, hoặc dùng image <code>gateway-full</code> có sẵn model.</li>
+<li>Cảnh báo khi <code>/readyz</code> báo <code>degraded</code> và theo <code>guardspec_gateway_detector_errors_total</code>.</li>
+</ul>
+<h3 id="d4-injection-gián-tiếp-trong-phần-không-quét">D4. Injection gián tiếp trong phần không quét<a class="anchor" href="#d4-injection-gián-tiếp-trong-phần-không-quét" aria-hidden="true">#</a></h3>
+<p>Mặc định gateway phân loại tin nhắn người dùng, kết quả tool và mô tả tool MCP
+(<code>SCAN_ROLES=user,tool,tool_descriptions</code>). System prompt và tham số tool call
+của model không được phân loại nếu bạn không thêm vào; ảnh, âm thanh và các
+phần không phải văn bản không được kiểm.</p>
+<p>Nên làm:</p>
+<ul>
+<li>Nếu system prompt chứa văn bản do người dùng nhập hoặc lấy từ nguồn ngoài,
+thêm <code>system</code> vào <code>SCAN_ROLES</code> hoặc bật theo tổ chức (<code>scan_roles</code>).</li>
+<li>Gửi tài liệu truy xuất qua <code>/guardrail/scan</code> với <code>documents[]</code> trước khi đưa
+vào prompt.</li>
+<li>Bật <code>SPOTLIGHT</code> (<code>delimit</code> hoặc <code>datamark</code>) để model phân biệt dữ liệu với chỉ dẫn.</li>
+</ul>
+<h2 id="rủi-ro-ở-ứng-dụng-và-agent">Rủi ro ở ứng dụng và agent<a class="anchor" href="#rủi-ro-ở-ứng-dụng-và-agent" aria-hidden="true">#</a></h2>
+<h3 id="a1-agent-dùng-tool-sai-mục-đích">A1. Agent dùng tool sai mục đích<a class="anchor" href="#a1-agent-dùng-tool-sai-mục-đích" aria-hidden="true">#</a></h3>
+<p>Gateway thấy tham số tool call và kiểm các chuỗi trong đó, nhưng không thực thi
+hay cấp quyền cho tool call và không kiểm soát egress. Nếu model bị thuyết phục
+gọi tool, tool sẽ chạy.</p>
+<p>Nên làm:</p>
+<ul>
+<li>Kiểm quyền mọi tool call trong ứng dụng theo quyền của người dùng cuối, không
+theo yêu cầu của model.</li>
+<li>Hạn chế kết nối ra ngoài từ các dịch vụ chạy tool.</li>
+<li>Yêu cầu xác nhận cho hành động gửi dữ liệu ra ngoài, tiêu tiền hoặc xoá.</li>
+</ul>
+<h3 id="a2-rò-dữ-liệu-qua-link-được-giữ-lại">A2. Rò dữ liệu qua link được giữ lại<a class="anchor" href="#a2-rò-dữ-liệu-qua-link-được-giữ-lại" aria-hidden="true">#</a></h3>
+<p>Output guard gỡ ảnh và link tới host ngoài allowlist, nhưng giữ link tới host
+trong allowlist và URL dạng văn bản không có query string. Nếu UI của bạn tự
+biến URL thành link, kênh này vẫn có thể bị dùng để làm lộ dữ liệu.</p>
+<p>Nên làm:</p>
+<ul>
+<li>Giữ allowlist ngắn; không cho các host mà ai cũng đăng nội dung được.</li>
+<li>Không tự tạo link từ URL trong câu trả lời, không tải ảnh từ xa trong đó.</li>
+</ul>
+<h2 id="rủi-ro-triển-khai">Rủi ro triển khai<a class="anchor" href="#rủi-ro-triển-khai" aria-hidden="true">#</a></h2>
+<h3 id="p1-dịch-vụ-chạy-không-có-tls">P1. Dịch vụ chạy không có TLS<a class="anchor" href="#p1-dịch-vụ-chạy-không-có-tls" aria-hidden="true">#</a></h3>
+<p>Gateway và control plane phục vụ HTTP thường. API key, cookie phiên và prompt
+đi qua mạng dạng rõ nếu không có thành phần nào phía trước kết thúc TLS.</p>
+<p>Nên làm:</p>
+<ul>
+<li>Đặt reverse proxy hoặc load balancer có TLS trước cả hai dịch vụ.</li>
+<li>Dùng <code>sslmode=require</code> hoặc mạnh hơn trong URL database.</li>
+<li>Đặt <code>PUBLIC_BASE_URL</code> là địa chỉ <code>https://</code> của control plane.</li>
+</ul>
+<h3 id="p2-control-plane-hoặc-metrics-ra-internet">P2. Control plane hoặc metrics ra Internet<a class="anchor" href="#p2-control-plane-hoặc-metrics-ra-internet" aria-hidden="true">#</a></h3>
+<p>Control plane chứa admin UI và API quản trị. <code>/metrics</code> chạy trên listener riêng
+(<code>METRICS_ADDR</code>).</p>
+<p>Nên làm:</p>
+<ul>
+<li>Chỉ mở gateway cho ứng dụng. Để control plane trong mạng riêng, sau VPN hoặc
+proxy xác thực danh tính.</li>
+<li>Không bao giờ cho cổng metrics đi qua ingress hay load balancer công khai.</li>
+<li>Để trống <code>ALLOWED_ORIGINS</code> trừ khi một origin khác thật sự cần gọi API.</li>
+</ul>
+<h3 id="p3-upstream-của-org-trỏ-vào-host-nội-bộ-hoặc-nhận-key-của-bạn">P3. Upstream của org trỏ vào host nội bộ hoặc nhận key của bạn<a class="anchor" href="#p3-upstream-của-org-trỏ-vào-host-nội-bộ-hoặc-nhận-key-của-bạn" aria-hidden="true">#</a></h3>
+<p>Admin của một org tự chọn nơi các upstream có tên trỏ tới.</p>
+<p>Nên làm:</p>
+<ul>
+<li>Giữ <code>UPSTREAM_ALLOW_PRIVATE=false</code> (mặc định) trừ khi mọi admin org đều tin
+cậy được. Địa chỉ metadata của cloud luôn bị từ chối.</li>
+<li>Giữ <code>UPSTREAM_KEY_ORGS</code> hẹp: nó quyết định org nào được dùng biến
+<code>UPSTREAM_KEY_*</code> nào. File compose đặt cả hai cho một nhóm dùng riêng; hãy
+đổi trước khi cho người không tin cậy tạo tổ chức.</li>
+</ul>
+<h3 id="p4-vượt-rate-limit-bằng-số-lượng-lớn">P4. Vượt rate limit bằng số lượng lớn<a class="anchor" href="#p4-vượt-rate-limit-bằng-số-lượng-lớn" aria-hidden="true">#</a></h3>
+<p>Rate limit lưu trong bộ nhớ từng replica gateway, nên giới hạn thực tế tăng
+theo số replica, và nó không chặn được một đợt tràn kết nối.</p>
+<p>Nên làm: đặt WAF hoặc rate limiter dùng chung trước gateway, và đặt giới hạn chi
+tiêu ở nhà cung cấp LLM.</p>
+<h2 id="rủi-ro-danh-tính-và-quyền-truy-cập">Rủi ro danh tính và quyền truy cập<a class="anchor" href="#rủi-ro-danh-tính-và-quyền-truy-cập" aria-hidden="true">#</a></h2>
+<h3 id="i1-secret-yếu-hoặc-bị-lộ">I1. Secret yếu hoặc bị lộ<a class="anchor" href="#i1-secret-yếu-hoặc-bị-lộ" aria-hidden="true">#</a></h3>
+<p><code>POSTGRES_PASSWORD</code>, <code>GUARDSPEC_APP_PASSWORD</code>, <code>JWT_SECRET</code>, <code>MFA_ENC_KEY</code> và
+<code>ADMIN_PASSWORD</code> bảo vệ mọi thứ. Ngoài <code>GUARD_ENV=dev</code>, các dịch vụ từ chối
+secret thiếu, mặc định hoặc quá ngắn, nhưng không biết được secret đã bị lộ hay chưa.</p>
+<p>Nên làm:</p>
+<ul>
+<li>Sinh secret ngẫu nhiên (<code>scripts/quickstart.sh</code> làm việc này) và giữ trong
+secret manager, không để trong Git hay Helm values.</li>
+<li>Không bao giờ chạy production với <code>GUARD_ENV=dev</code>.</li>
+<li>Đổi <code>JWT_SECRET</code> (mọi người bị đăng xuất) và mật khẩu database khi nghi bị lộ.
+Thu hồi API key không còn dùng.</li>
+</ul>
+<h3 id="i2-mất-mfa_enc_key">I2. Mất <code>MFA_ENC_KEY</code><a class="anchor" href="#i2-mất-mfa_enc_key" aria-hidden="true">#</a></h3>
+<p>Secret TOTP được mã hoá bằng <code>MFA_ENC_KEY</code>. Mất key thì 2FA của mọi người không
+dùng được, và control plane từ chối khởi động khi đã có người dùng bật 2FA.</p>
+<p>Nên làm: sao lưu key cùng với database, nhưng cất ở nơi khác với bản sao lưu database.</p>
+<h3 id="i3-ai-cũng-tạo-được-tổ-chức">I3. Ai cũng tạo được tổ chức<a class="anchor" href="#i3-ai-cũng-tạo-được-tổ-chức" aria-hidden="true">#</a></h3>
+<p>Người dùng đã đăng nhập nào cũng tạo được tổ chức và trở thành admin của nó.
+Xem P3 để biết admin đó cấu hình được những gì.</p>
+<p>Nên làm: nếu người không tin cậy truy cập được control plane, dùng SSO với
+<code>allowed_domains</code> và giữ chặt các thiết lập ở P3.</p>
+<h3 id="i4-đăng-ký-2fa-tin-ở-lần-đầu">I4. Đăng ký 2FA tin ở lần đầu<a class="anchor" href="#i4-đăng-ký-2fa-tin-ở-lần-đầu" aria-hidden="true">#</a></h3>
+<p>Khi một tổ chức bắt đầu bắt buộc 2FA, thành viên chưa có 2FA sẽ đăng ký ở lần
+đăng nhập tiếp theo chỉ với mật khẩu. Ai đã có mật khẩu đó có thể đăng ký
+authenticator của họ trước.</p>
+<p>Nên làm: bắt buộc 2FA ngay từ đầu, và reset 2FA của thành viên khi nghi ngờ.</p>
+<h3 id="i5-trusted_proxies-sai">I5. <code>TRUSTED_PROXIES</code> sai<a class="anchor" href="#i5-trusted_proxies-sai" aria-hidden="true">#</a></h3>
+<p><code>TRUSTED_PROXIES</code> quyết định tin <code>X-Forwarded-For</code> của ai. Đặt quá rộng thì
+client tự chọn được địa chỉ dùng cho rate limit, phiên và activity log; để
+trống khi đứng sau proxy thì mọi client trông như một.</p>
+<p>Nên làm: liệt kê đúng địa chỉ hoặc CIDR của các proxy của bạn.</p>
+<h2 id="rủi-ro-dữ-liệu-và-quyền-riêng-tư">Rủi ro dữ liệu và quyền riêng tư<a class="anchor" href="#rủi-ro-dữ-liệu-và-quyền-riêng-tư" aria-hidden="true">#</a></h2>
+<h3 id="r1-lưu-nội-dung-prompt-trong-audit">R1. Lưu nội dung prompt trong audit<a class="anchor" href="#r1-lưu-nội-dung-prompt-trong-audit" aria-hidden="true">#</a></h3>
+<p>Mặc định audit lưu điểm, quyết định, SHA-256 và độ dài của body, không lưu nội
+dung. <code>AUDIT_STORE_CONTENT=true</code> hoặc thiết lập <code>audit_store_content</code> theo org
+sẽ lưu prompt và câu trả lời được đệm.</p>
+<p>Nên làm:</p>
+<ul>
+<li>Để tắt lưu nội dung nếu không cần, và báo cho người dùng nếu bật.</li>
+<li>Đặt <code>AUDIT_RETENTION_DAYS</code>, mã hoá database khi lưu trữ và hạn chế người đọc được.</li>
+</ul>
+<h3 id="r2-dữ-liệu-cá-nhân-lọt-qua-bộ-che">R2. Dữ liệu cá nhân lọt qua bộ che<a class="anchor" href="#r2-dữ-liệu-cá-nhân-lọt-qua-bộ-che" aria-hidden="true">#</a></h3>
+<p>Output guard che email, số điện thoại, CCCD, số thẻ Việt Nam và địa chỉ IPv4
+bằng mẫu regex. Định dạng khác, của nước khác, hay dữ liệu cá nhân viết bằng
+chữ đều không bị bắt. Prompt gửi lên upstream không được che.</p>
+<p>Nên làm: nếu không được gửi dữ liệu cá nhân cho nhà cung cấp LLM, hãy loại bỏ nó
+trong ứng dụng trước khi gửi, hoặc dùng nhà cung cấp và hợp đồng cho phép điều đó.</p>
+<h3 id="r3-trace-id-hoặc-nhãn-metric-lộ-dữ-liệu-tenant">R3. Trace ID hoặc nhãn metric lộ dữ liệu tenant<a class="anchor" href="#r3-trace-id-hoặc-nhãn-metric-lộ-dữ-liệu-tenant" aria-hidden="true">#</a></h3>
+<p>Nhãn metric chỉ nhận giá trị trong tập cố định, nhãn theo tenant tắt
+(<code>METRICS_TENANT_LABELS=false</code>) và <code>traceparent</code> không gửi lên upstream
+(<code>OTEL_PROPAGATE_UPSTREAM=false</code>). Bật các mục này là chia sẻ nhiều hơn với hệ
+thống giám sát hoặc nhà cung cấp.</p>
+<p>Nên làm: chỉ đổi các mặc định này khi hệ thống nhận là tin cậy được.</p>
+<h2 id="rủi-ro-chuỗi-cung-ứng">Rủi ro chuỗi cung ứng<a class="anchor" href="#rủi-ro-chuỗi-cung-ứng" aria-hidden="true">#</a></h2>
+<h3 id="s1-image-binary-hoặc-model-bị-sửa">S1. Image, binary hoặc model bị sửa<a class="anchor" href="#s1-image-binary-hoặc-model-bị-sửa" aria-hidden="true">#</a></h3>
+<p>Nên làm:</p>
+<ul>
+<li>Kiểm image và archive bằng cosign trước khi triển khai
+(<a href="/docs/security/policy/#verifying-releases">Verifying releases</a>), và triển khai theo
+digest thay vì tag.</li>
+<li>Tải model bằng <code>models pull</code>, lệnh này kiểm SHA-256 đã ghim trong
+<code>models/manifest.yaml</code>. Với môi trường không có Internet, chỉ mirror các file đã kiểm.</li>
+</ul>
+<h3 id="s2-lỗ-hổng-đã-biết-trong-thư-viện">S2. Lỗ hổng đã biết trong thư viện<a class="anchor" href="#s2-lỗ-hổng-đã-biết-trong-thư-viện" aria-hidden="true">#</a></h3>
+<p>Dự án chưa tới 1.0; bản vá bảo mật chỉ có trong bản phát hành kế tiếp.</p>
+<p>Nên làm: theo dõi release và security advisory của repo, nâng lên bản <code>0.x</code> mới
+nhất, và quét các image bạn chạy.</p>
+<h2 id="rủi-ro-vận-hành">Rủi ro vận hành<a class="anchor" href="#rủi-ro-vận-hành" aria-hidden="true">#</a></h2>
+<h3 id="o1-lạm-dụng-quyền-database-hoặc-admin">O1. Lạm dụng quyền database hoặc admin<a class="anchor" href="#o1-lạm-dụng-quyền-database-hoặc-admin" aria-hidden="true">#</a></h3>
+<p>Ai có quyền database hoặc instance admin đều đổi được policy, đọc audit và tạo API key.</p>
+<p>Nên làm: chỉ cấp role ứng dụng (<code>guardspec_app</code>) cho các dịch vụ, giữ role owner
+cho migration, cấp cho người dùng vai trò thấp nhất đủ dùng, và xem activity log.</p>
+<h3 id="o2-fail-closed-gây-gián-đoạn">O2. Fail-closed gây gián đoạn<a class="anchor" href="#o2-fail-closed-gây-gián-đoạn" aria-hidden="true">#</a></h3>
+<p>Nếu policy, thiết lập org hoặc bộ phát hiện không chạy được, gateway từ chối
+request (503) thay vì cho qua. Vì vậy database gặp sự cố sẽ làm dừng lưu lượng LLM.</p>
+<p>Nên làm: chạy nhiều hơn một replica gateway, dùng Postgres có tính sẵn sàng cao,
+và cảnh báo theo tỷ lệ 503 và <code>/readyz</code>.</p>
+<h2 id="checklist-gia-cố">Checklist gia cố<a class="anchor" href="#checklist-gia-cố" aria-hidden="true">#</a></h2>
+<ul>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>TLS trước cả hai dịch vụ; kết nối database với <code>sslmode=require</code> hoặc mạnh hơn</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Ứng dụng chỉ truy cập được gateway; cổng control plane và metrics ở mạng riêng</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>GUARD_ENV</code> không phải <code>dev</code>; mọi secret ngẫu nhiên và nằm trong secret manager</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>MFA_ENC_KEY</code> được sao lưu tách khỏi bản sao lưu database</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>DETECTOR_REQUIRE_ML=true</code> hoặc image <code>gateway-full</code>; có cảnh báo khi <code>degraded</code></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>UPSTREAM_ALLOW_PRIVATE=false</code> và <code>UPSTREAM_KEY_ORGS</code> hẹp</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>TRUSTED_PROXIES</code> liệt kê đúng các proxy</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>SCAN_ROLES</code> bao mọi chỗ văn bản không tin cậy đi vào prompt</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Allowlist link ngắn; UI không tự tạo link từ câu trả lời của model</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Tắt lưu nội dung; đã đặt <code>AUDIT_RETENTION_DAYS</code></li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>SSO hoặc bắt buộc 2FA cho mọi người có quyền admin</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>WAF hoặc rate limiter dùng chung trước gateway; giới hạn chi tiêu ở nhà cung cấp</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Image và archive đã kiểm bằng cosign; triển khai theo digest</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Tool được kiểm quyền trong ứng dụng; hành động rủi ro có người xác nhận</li>
+</ul>
+
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/docs/security-risks.vi.md">docs/security-risks.vi.md</a> @ <code>4448f51a3ca3</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Bảo mật</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Đóng góp</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Tác giả: <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

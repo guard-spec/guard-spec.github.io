@@ -1,0 +1,737 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>On-premise · Guard Spec</title>
+<meta name="description" content="Status: reference template, not yet verified by the maintainers. Community-tested: not yet. If you deploy this, please open an issue or a pull request with">
+<meta property="og:title" content="On-premise · Guard Spec">
+<meta property="og:description" content="Status: reference template, not yet verified by the maintainers. Community-tested: not yet. If you deploy this, please open an issue or a pull request with">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/docs/deploy/on-premise/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/deploy/on-premise/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/docs/" class="on">Docs</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/deploy/on-premise/" class="on">EN</a><a href="/vi/docs/" class="">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Documentation</span></summary>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child on"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child on"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>On-premise</h1>
+
+<blockquote>
+<p><strong>Status: reference template, not yet verified by the maintainers.</strong>
+Community-tested: not yet. If you deploy this, please open an
+<a href="https://github.com/guard-spec/guard-spec/issues/new/choose">issue</a> or a pull
+request with what worked and what did not. See
+<a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/CONTRIBUTING.md">CONTRIBUTING.md</a> and the <a href="/docs/deploy/">index</a>.</p>
+</blockquote>
+<p>Four setups:</p>
+<ol>
+<li><a href="#1-one-vm-with-docker-compose">One VM with Docker Compose</a>: the setup the
+README documents. Simplest; one host is a single point of failure.</li>
+<li><a href="#2-kubernetes">Kubernetes</a> (vanilla) and <a href="#3-openshift">OpenShift</a> with
+the Helm chart in <code>deploy/helm/guard-spec</code>.</li>
+<li><a href="#4-air-gapped-installs">Air-gapped</a>: no access to ghcr.io or Hugging Face.</li>
+<li><a href="#5-reverse-proxy-and-tls">A reverse proxy for TLS</a> in front of any of them.</li>
+</ol>
+<p>Examples use version <code>0.1.1</code> and placeholders such as <code>&lt;your-db-host&gt;</code>.</p>
+<h2 id="1-one-vm-with-docker-compose">1. One VM with Docker Compose<a class="anchor" href="#1-one-vm-with-docker-compose" aria-hidden="true">#</a></h2>
+<pre><code>                 Internet / LAN
+                       |
+             +---------+----------+
+             |  Caddy or nginx    |  TLS, :443
+             +---+------------+---+
+                 |            |  (admin site: internal clients only)
+       127.0.0.1:8080   127.0.0.1:18081
+          gateway        control-plane  -- /ui/
+                 \            /
+                  +----------+
+                  | postgres |  volume pgdata
+                  +----------+
+       ./models (read-only in the gateway, filled by models-init)
+</code></pre>
+<h3 id="prerequisites">Prerequisites<a class="anchor" href="#prerequisites" aria-hidden="true">#</a></h3>
+<ul>
+<li>Linux host with Docker Engine and Compose v2, <code>curl</code>, <code>jq</code>, <code>openssl</code>.</li>
+<li>Starting point for the host: measure under your traffic. In a local check
+the <code>gateway-full</code> container used about 900 MiB of memory right after
+start with L1 + L2 + L3 loaded. Plan for at least 2 GiB for the gateway
+(the chart's default limit), plus Postgres. L1 only needs much less.</li>
+<li>About 300 MB of disk for the models and space for the audit table.</li>
+</ul>
+<h3 id="steps">Steps<a class="anchor" href="#steps" aria-hidden="true">#</a></h3>
+<pre><code class="language-bash">git clone --branch v0.1.1 https://github.com/guard-spec/guard-spec.git
+cd guard-spec
+scripts/quickstart.sh
+</code></pre>
+<p><code>scripts/quickstart.sh</code> writes <code>.env</code> with random secrets (mode 600), starts
+<code>docker-compose.yml</code> alone (never the dev override), pulls the models and
+waits for <code>/readyz</code>. To fill <code>.env</code> yourself instead: <code>cp .env.example .env</code>,
+generate each secret (<code>openssl rand -hex 32</code>; <code>MFA_ENC_KEY</code> with
+<code>openssl rand -base64 32</code>), then <code>docker compose -f docker-compose.yml up -d</code>.</p>
+<p>Always pass <code>-f docker-compose.yml</code>. A plain <code>docker compose up</code> also loads
+<code>docker-compose.override.yml</code>, which sets <code>GUARD_ENV=dev</code> and well-known
+credentials.</p>
+<h3 id="production-notes-for-compose">Production notes for compose<a class="anchor" href="#production-notes-for-compose" aria-hidden="true">#</a></h3>
+<p>Edit <code>.env</code>, then <code>docker compose -f docker-compose.yml up -d</code> again.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Setting</th>
+  <th>Compose default</th>
+  <th>For production</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>UPSTREAM_KEY_ORGS</code></td>
+  <td><code>UPSTREAM_KEY_MAIN=*</code></td>
+  <td>List the org ids that may use each key, if users you do not trust can create organizations</td>
+</tr>
+<tr>
+  <td><code>UPSTREAM_ALLOW_PRIVATE</code></td>
+  <td><code>true</code> (for Ollama on the host)</td>
+  <td><code>false</code>, unless your upstream is on a private address and org admins are trusted</td>
+</tr>
+<tr>
+  <td><code>ALLOWED_ORIGINS</code></td>
+  <td><code>http://localhost:3000</code></td>
+  <td>Empty. The UI at <code>/ui/</code> is same-origin and needs no CORS</td>
+</tr>
+<tr>
+  <td><code>ADMIN_EMAIL</code></td>
+  <td><code>admin@example.com</code> in <code>.env.example</code></td>
+  <td>A real mailbox</td>
+</tr>
+<tr>
+  <td><code>PUBLIC_BASE_URL</code></td>
+  <td>empty</td>
+  <td><code>https://&lt;admin-host&gt;</code>, needed for SSO</td>
+</tr>
+<tr>
+  <td><code>TRUSTED_PROXIES</code></td>
+  <td>empty</td>
+  <td>The address range your reverse proxy connects from (below)</td>
+</tr>
+<tr>
+  <td><code>GATEWAY_PORT</code> and the other ports</td>
+  <td>published on all interfaces</td>
+  <td>Bind to loopback behind a proxy (below)</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong>Ports.</strong> Compose publishes 8080, 9090, 18081 and 9091 on every interface,
+and Docker's published ports bypass host firewalls such as <code>ufw</code>. Behind a
+reverse proxy on the same host, bind them to loopback. The port variables are
+used as <code>&quot;${GATEWAY_PORT:-8080}:8080&quot;</code>, so a host address can go in front:</p>
+<pre><code class="language-bash"># .env
+GATEWAY_PORT=127.0.0.1:8080
+METRICS_PORT=127.0.0.1:9090
+CONTROL_PLANE_PORT=127.0.0.1:18081
+CONTROL_PLANE_METRICS_PORT=127.0.0.1:9091
+</code></pre>
+<p><strong><code>TRUSTED_PROXIES</code>.</strong> A proxy on the host reaches the control plane through
+the compose network, so the control plane sees an address of that network.
+Find its subnet and set it:</p>
+<pre><code class="language-bash">docker network inspect guard-spec_default --format '{{(index .IPAM.Config 0).Subnet}}'
+# .env: TRUSTED_PROXIES=&lt;that subnet&gt;
+</code></pre>
+<p>Without it, the control plane ignores <code>X-Forwarded-For</code> and every client
+looks like the proxy (one rate-limit bucket for logins, one address in the
+activity log).</p>
+<h3 id="backups">Backups<a class="anchor" href="#backups" aria-hidden="true">#</a></h3>
+<p>Back up the database and <code>.env</code> together; <code>MFA_ENC_KEY</code> in <code>.env</code> must match
+the database it encrypts.</p>
+<pre><code class="language-bash">set -a; . ./.env; set +a
+docker compose -f docker-compose.yml exec -T postgres \
+  pg_dump -U ps -Fc &quot;${POSTGRES_DB:-guardspec}&quot; &gt; guardspec-$(date +%F).dump
+cp .env env-$(date +%F).backup    # store it as a secret, not next to the dump
+</code></pre>
+<h3 id="upgrade-and-rollback">Upgrade and rollback<a class="anchor" href="#upgrade-and-rollback" aria-hidden="true">#</a></h3>
+<pre><code class="language-bash">docker compose -f docker-compose.yml exec -T postgres pg_dump -U ps -Fc guardspec &gt; pre-upgrade.dump
+git fetch --tags &amp;&amp; git checkout v&lt;new-version&gt;    # new migrations/ and docker-compose.yml
+# .env: GUARDSPEC_VERSION=&lt;new-version&gt;
+docker compose -f docker-compose.yml pull
+docker compose -f docker-compose.yml up -d         # migrate and db-roles run before the services
+curl -s localhost:8080/readyz | jq .detector
+</code></pre>
+<p>Read the <a href="/docs/upgrade/">CHANGELOG</a> first: before 1.0, minor versions can
+change the schema. To roll back, go back to the old tag and
+<code>GUARDSPEC_VERSION</code>, and restore <code>pre-upgrade.dump</code> if the new version
+migrated the schema. The <code>*.down.sql</code> files exist, but a restore is the
+tested path for data you care about. Model rollback is separate and covered
+in <a href="/docs/models/versions/#rolling-back">docs/models.md</a>.</p>
+<h2 id="2-kubernetes">2. Kubernetes<a class="anchor" href="#2-kubernetes" aria-hidden="true">#</a></h2>
+<p>The chart deploys the gateway and the control plane against an external
+Postgres. It does not run migrations, and it has no Ingress, autoscaling or
+PodDisruptionBudget yet. The steps below fill those gaps with plain
+manifests. Release name <code>gs</code> gives the Services <code>gs-guard-spec-gateway</code> and
+<code>gs-guard-spec-control-plane</code>.</p>
+<pre><code>   clients --&gt; Ingress (TLS) --&gt; Service gs-guard-spec-gateway:8080 --&gt; gateway pods (2)
+                                                                           |  /models (PVC, read-only)
+   admins (VPN) --&gt; internal Ingress or port-forward
+                     --&gt; Service gs-guard-spec-control-plane:8081 --&gt; control-plane pod
+                                                                           |
+                                                    external PostgreSQL 17 &lt;+
+</code></pre>
+<h3 id="prerequisites-1">Prerequisites<a class="anchor" href="#prerequisites-1" aria-hidden="true">#</a></h3>
+<ul>
+<li>Kubernetes 1.27 or newer (an assumption: the chart uses only stable APIs),
+Helm 3 or 4, <code>kubectl</code>.</li>
+<li>PostgreSQL 17 reachable from the cluster, with an owner role that can
+create roles and the <code>pgcrypto</code> and <code>pg_trgm</code> extensions. Migration 004
+runs <code>CREATE ROLE guardspec_app</code>, and roles are cluster-wide in Postgres:
+use a server where that role does not exist yet, or one database server
+per installation.</li>
+<li>A checkout of the release tag: <code>git clone --branch v0.1.1 https://github.com/guard-spec/guard-spec.git</code>.
+See <a href="/docs/deploy/#known-gaps-in-the-helm-chart">Known gaps</a>.</li>
+</ul>
+<h3 id="step-1-namespace-and-secrets">Step 1: namespace and secrets<a class="anchor" href="#step-1-namespace-and-secrets" aria-hidden="true">#</a></h3>
+<pre><code class="language-bash">kubectl create namespace guard-spec
+kubectl config set-context --current --namespace guard-spec
+
+kubectl create secret generic guard-spec-secrets \
+  --from-literal=POSTGRES_PASSWORD='&lt;owner-password&gt;' \
+  --from-literal=GUARDSPEC_APP_PASSWORD=&quot;$(openssl rand -hex 32)&quot; \
+  --from-literal=JWT_SECRET=&quot;$(openssl rand -hex 32)&quot; \
+  --from-literal=ADMIN_PASSWORD=&quot;$(openssl rand -hex 16)&quot; \
+  --from-literal=MFA_ENC_KEY=&quot;$(openssl rand -base64 32)&quot;
+
+# Gateway-only secrets (the upstream's key), passed with gateway.extraEnvFrom.
+kubectl create secret generic guard-spec-gateway-extra \
+  --from-literal=UPSTREAM_LLM_KEY='&lt;your-upstream-key&gt;'
+</code></pre>
+<p><strong>Back up <code>MFA_ENC_KEY</code> now</strong>, outside the cluster, next to your database
+backups: <code>kubectl get secret guard-spec-secrets -o jsonpath='{.data.MFA_ENC_KEY}' | base64 -d</code>.
+Read <code>ADMIN_PASSWORD</code> the same way for the first login.</p>
+<h3 id="step-2-migrations-no-chart-job-yet">Step 2: migrations (no chart job yet)<a class="anchor" href="#step-2-migrations-no-chart-job-yet" aria-hidden="true">#</a></h3>
+<p>Run <code>migrate</code> as a one-off Job, with <code>migrations/</code> from the release tag in a
+ConfigMap (about 160 KB, under the 1 MiB ConfigMap limit). The password comes
+from <code>PGPASSWORD</code>, as in compose, so the URL carries none.</p>
+<pre><code class="language-bash">kubectl create configmap guard-spec-migrations-0-1-1 --from-file=migrations/
+kubectl apply -f - &lt;&lt;'EOF'
+# Template: adjust host, owner user and sslmode.
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: guard-spec-migrate-0-1-1
+spec:
+  backoffLimit: 0
+  template:
+    spec:
+      restartPolicy: Never
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: migrate
+          image: migrate/migrate:v4.20.1
+          args:
+            - -path=/migrations
+            - -database=postgres://&lt;owner-user&gt;@&lt;your-db-host&gt;:5432/guardspec?sslmode=require
+            - up
+          env:
+            - name: PGPASSWORD
+              valueFrom:
+                secretKeyRef: {name: guard-spec-secrets, key: POSTGRES_PASSWORD}
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          volumeMounts:
+            - {name: migrations, mountPath: /migrations, readOnly: true}
+      volumes:
+        - name: migrations
+          configMap: {name: guard-spec-migrations-0-1-1}
+EOF
+kubectl wait --for=condition=complete job/guard-spec-migrate-0-1-1 --timeout=5m
+kubectl logs job/guard-spec-migrate-0-1-1
+</code></pre>
+<p>The <code>guardspec_app</code> password is set by the chart's <code>dbRoles</code> hook in step 4
+(<code>dbRoles.enabled=true</code>). Without it, run
+<code>GUARDSPEC_APP_PASSWORD=... sh deploy/postgres/set-app-password.sh</code> with the
+owner's credentials in <code>PGHOST</code>, <code>PGUSER</code>, <code>PGDATABASE</code> and <code>PGPASSWORD</code>.</p>
+<h3 id="step-3-models">Step 3: models<a class="anchor" href="#step-3-models" aria-hidden="true">#</a></h3>
+<p>The gateway reads the models from a PVC mounted read-only at <code>/models</code>. The
+chart's PVC is ReadWriteOnce by default, so with two gateway replicas on
+different nodes only one can mount it. Options:</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Option</th>
+  <th>How</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>A ReadWriteMany storage class (NFS, CephFS, ...)</td>
+  <td>Create the PVC yourself (below) and pass <code>models.existingClaim</code></td>
+</tr>
+<tr>
+  <td>ReadWriteOnce</td>
+  <td><code>gateway.replicaCount=1</code>, or pin the replicas to one node with <code>gateway.affinity</code></td>
+</tr>
+<tr>
+  <td>No volume</td>
+  <td><code>gateway-full</code>, see <a href="#gateway-full-with-the-helm-chart">gateway-full with the Helm chart</a></td>
+</tr>
+</tbody>
+</table></div>
+<p>Create and fill the PVC before installing, so the gateway starts with its
+models:</p>
+<pre><code class="language-bash">kubectl apply -f - &lt;&lt;'EOF'
+# Template: pick a storage class that offers ReadWriteMany.
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: guard-spec-models
+spec:
+  accessModes: [ReadWriteMany]
+  storageClassName: &lt;your-rwx-storage-class&gt;
+  resources:
+    requests: {storage: 5Gi}
+---
+apiVersion: batch/v1
+kind: Job
+metadata:
+  name: guard-spec-models-pull-0-1-1
+spec:
+  backoffLimit: 2
+  template:
+    spec:
+      restartPolicy: Never
+      automountServiceAccountToken: false
+      securityContext:
+        runAsNonRoot: true
+        runAsUser: 65532
+        runAsGroup: 65532
+        fsGroup: 65532
+        seccompProfile: {type: RuntimeDefault}
+      containers:
+        - name: models
+          image: ghcr.io/guard-spec/guard-spec-gateway:0.1.1
+          command: [&quot;./models&quot;, &quot;pull&quot;, &quot;-manifest&quot;, &quot;manifest.yaml&quot;, &quot;-dir&quot;, &quot;/models/cache&quot;]
+          env:
+            - {name: MODELS_MIRROR, value: &quot;&quot;}   # optional internal mirror
+          securityContext:
+            allowPrivilegeEscalation: false
+            readOnlyRootFilesystem: true
+            capabilities: {drop: [ALL]}
+          volumeMounts:
+            - {name: models, mountPath: /models}
+            - {name: tmp, mountPath: /tmp}
+      volumes:
+        - name: models
+          persistentVolumeClaim: {claimName: guard-spec-models}
+        - name: tmp
+          emptyDir: {}
+EOF
+kubectl wait --for=condition=complete job/guard-spec-models-pull-0-1-1 --timeout=15m
+</code></pre>
+<p>The same command with a model reference (<code>... /models/cache guardspec-classifier@&lt;version&gt;</code>)
+installs another version for a rollback (<a href="/docs/models/versions/">docs/models.md</a>).</p>
+<h3 id="step-4-install-the-chart">Step 4: install the chart<a class="anchor" href="#step-4-install-the-chart" aria-hidden="true">#</a></h3>
+<pre><code class="language-bash">cat &gt; values-prod.yaml &lt;&lt;'EOF'
+# Template. See deploy/helm/guard-spec/values.yaml for every key.
+externalDatabase:
+  url: postgres://guardspec_app@&lt;your-db-host&gt;:5432/guardspec?sslmode=require
+  host: &lt;your-db-host&gt;
+  ownerUser: &lt;owner-user&gt;
+  sslmode: require
+dbRoles:
+  enabled: true
+models:
+  existingClaim: guard-spec-models
+gateway:
+  replicaCount: 2
+  # The default resources (request 500m CPU / 1Gi, limit 2Gi) fit
+  # L1 + L2 + L3; measure under your traffic and adjust gateway.resources.
+  env:
+    UPSTREAM_LLM_URL: &lt;your-upstream-url&gt;   # e.g. https://api.openai.com/v1
+    UPSTREAM_ALLOW_PRIVATE: &quot;false&quot;
+  extraEnvFrom:
+    - secretRef: {name: guard-spec-gateway-extra}
+controlPlane:
+  adminEmail: &lt;admin-email&gt;
+  env:
+    PUBLIC_BASE_URL: https://&lt;admin-host&gt;
+    TRUSTED_PROXIES: &lt;ingress-controller-pod-cidr&gt;
+EOF
+
+helm install gs deploy/helm/guard-spec -f values-prod.yaml
+kubectl rollout status deploy/gs-guard-spec-gateway
+kubectl port-forward svc/gs-guard-spec-gateway 8080:8080 &amp;
+curl -s localhost:8080/readyz | jq .detector    # expect &quot;layers&quot;:[&quot;l1&quot;,&quot;l2&quot;,&quot;l3&quot;], &quot;degraded&quot;:false
+</code></pre>
+<h3 id="step-5-ingress-poddisruptionbudget-networkpolicy">Step 5: Ingress, PodDisruptionBudget, NetworkPolicy<a class="anchor" href="#step-5-ingress-poddisruptionbudget-networkpolicy" aria-hidden="true">#</a></h3>
+<p>Not in the chart yet. Templates for ingress-nginx; adapt to your controller.</p>
+<pre><code class="language-yaml"># Template: public Ingress for the gateway only.
+apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: guard-spec-gateway
+  annotations:
+    nginx.ingress.kubernetes.io/proxy-read-timeout: &quot;300&quot;   # long or streamed answers
+    nginx.ingress.kubernetes.io/proxy-buffering: &quot;off&quot;
+    nginx.ingress.kubernetes.io/proxy-body-size: &quot;8m&quot;
+spec:
+  ingressClassName: nginx
+  tls:
+    - hosts: [&lt;gateway-host&gt;]
+      secretName: guard-spec-gateway-tls
+  rules:
+    - host: &lt;gateway-host&gt;
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service: {name: gs-guard-spec-gateway, port: {number: 8080}}
+---
+apiVersion: policy/v1
+kind: PodDisruptionBudget
+metadata:
+  name: guard-spec-gateway
+spec:
+  minAvailable: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/instance: gs
+      app.kubernetes.io/component: gateway
+---
+# Only the ingress controller may reach the gateway's API port; nothing
+# outside the namespace reaches the control plane. Add rules for in-cluster
+# clients of the gateway and for your Prometheus (ports 9090 and 9091).
+apiVersion: networking.k8s.io/v1
+kind: NetworkPolicy
+metadata:
+  name: guard-spec-ingress
+spec:
+  podSelector:
+    matchLabels: {app.kubernetes.io/instance: gs}
+  policyTypes: [Ingress]
+  ingress:
+    - from:
+        - namespaceSelector:
+            matchLabels: {kubernetes.io/metadata.name: ingress-nginx}
+      ports:
+        - {port: 8080, protocol: TCP}
+</code></pre>
+<p>Reach the control plane with <code>kubectl port-forward svc/gs-guard-spec-control-plane 8081:8081</code>
+(admin UI at <code>http://localhost:8081/ui/</code>), or with a second Ingress on an
+internal-only controller. Do not publish it on the public Ingress.</p>
+<p>There is no HorizontalPodAutoscaler in the chart. A plain
+<code>autoscaling/v2</code> HPA on <code>deploy/gs-guard-spec-gateway</code> works like for any
+Deployment; remember that rate limits are per replica, so scaling out raises
+the effective limit.</p>
+<h3 id="gateway-full-with-the-helm-chart">gateway-full with the Helm chart<a class="anchor" href="#gateway-full-with-the-helm-chart" aria-hidden="true">#</a></h3>
+<p><code>guard-spec-gateway-full</code> has the models inside the image, so it needs no
+PVC and no models Job (skip step 3). Without a models claim the chart mounts
+nothing at <code>/models</code>, and the image's models stay visible:</p>
+<pre><code class="language-bash">helm install gs deploy/helm/guard-spec -f values-prod.yaml \
+  --set models.existingClaim= --set models.persistence.enabled=false \
+  --set gateway.image.repository=ghcr.io/guard-spec/guard-spec-gateway-full
+</code></pre>
+<p>The image sets <code>DETECTOR_REQUIRE_ML=true</code>: if a volume is mounted over
+<code>/models</code> anyway, it refuses to start rather than run on L1 only.</p>
+<h3 id="upgrade-and-rollback-1">Upgrade and rollback<a class="anchor" href="#upgrade-and-rollback-1" aria-hidden="true">#</a></h3>
+<ol>
+<li>Read the CHANGELOG. Snapshot or <code>pg_dump</code> the database.</li>
+<li>Check out the new tag, create a ConfigMap and Job with the new
+<code>migrations/</code> (new names, such as <code>guard-spec-migrate-0-2-0</code>), wait for
+completion.</li>
+<li><code>helm upgrade gs deploy/helm/guard-spec -f values-prod.yaml</code>. The
+<code>dbRoles</code> hook runs again (<code>pre-upgrade</code>).</li>
+<li>Check <code>/readyz</code>.</li>
+</ol>
+<p><code>helm rollback gs</code> restores the previous images; it does not undo
+migrations. Restore the database snapshot if the new version changed the
+schema.</p>
+<h2 id="3-openshift">3. OpenShift<a class="anchor" href="#3-openshift" aria-hidden="true">#</a></h2>
+<p>Everything in <a href="#2-kubernetes">Kubernetes</a> applies, with these changes.</p>
+<p><strong>Random UIDs.</strong> The chart sets <code>runAsUser: 65532</code>, <code>runAsGroup</code> and
+<code>fsGroup</code> in <code>podSecurityContext</code>, which the <code>restricted-v2</code> SCC rejects
+unless they are in the namespace's range. Remove them and let OpenShift pick
+the UID:</p>
+<pre><code class="language-bash">helm install gs deploy/helm/guard-spec -f values-prod.yaml \
+  --set podSecurityContext.runAsUser=null \
+  --set podSecurityContext.runAsGroup=null \
+  --set podSecurityContext.fsGroup=null
+</code></pre>
+<p>The images do not depend on a fixed UID: their files are world-readable,
+nothing is written outside <code>/tmp</code> (an <code>emptyDir</code> in the chart), and the
+<code>gateway-full</code> models are <code>a=rX</code>. In a local check,
+<code>guard-spec-gateway-full:0.1.1</code> and <code>guard-spec-control-plane:0.1.1</code> started
+and loaded L1 + L2 + L3 as UID 1000770000, group 0, with a read-only root
+filesystem. Not yet run on an OpenShift cluster.</p>
+<p><strong>dbRoles.</strong> The job's pod securityContext comes from
+<code>dbRoles.podSecurityContext</code> (<code>runAsNonRoot</code> and RuntimeDefault seccomp). The
+chart adds <code>runAsUser: 70</code> only when the cluster does not serve
+<code>security.openshift.io/v1</code>, so on OpenShift the SCC picks the UID and
+<code>dbRoles.enabled=true</code> works as in step 4. With <code>helm template</code> (GitOps),
+pass <code>--api-versions security.openshift.io/v1</code>. Remove <code>runAsUser</code>,
+<code>runAsGroup</code> and <code>fsGroup</code> from the migration and model Jobs above as well.</p>
+<p><strong>Routes instead of Ingress.</strong></p>
+<pre><code class="language-bash">oc create route edge guard-spec-gateway --service=gs-guard-spec-gateway \
+  --hostname=&lt;gateway-host&gt; --port=http
+oc annotate route guard-spec-gateway haproxy.router.openshift.io/timeout=300s
+</code></pre>
+<p>Do not create a route for the control plane unless it is on an internal
+router shard.</p>
+<h2 id="4-air-gapped-installs">4. Air-gapped installs<a class="anchor" href="#4-air-gapped-installs" aria-hidden="true">#</a></h2>
+<p>You need, inside the network: the images, the models, and the repository at
+the release tag (for <code>migrations/</code>, <code>docker-compose.yml</code> and the chart).</p>
+<h3 id="images">Images<a class="anchor" href="#images" aria-hidden="true">#</a></h3>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Image</th>
+  <th>Needed for</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>ghcr.io/guard-spec/guard-spec-gateway:0.1.1</code></td>
+  <td>gateway, <code>models-init</code>, <code>models-pull</code></td>
+</tr>
+<tr>
+  <td><code>ghcr.io/guard-spec/guard-spec-gateway-full:0.1.1</code></td>
+  <td>gateway with models inside (instead of the one above)</td>
+</tr>
+<tr>
+  <td><code>ghcr.io/guard-spec/guard-spec-control-plane:0.1.1</code></td>
+  <td>control plane</td>
+</tr>
+<tr>
+  <td><code>migrate/migrate:v4.20.1</code></td>
+  <td>migrations</td>
+</tr>
+<tr>
+  <td><code>postgres:17.11-alpine</code></td>
+  <td>Postgres in compose, <code>db-roles</code>, the chart's <code>dbRoles</code> job</td>
+</tr>
+</tbody>
+</table></div>
+<p>Copy them to an internal registry with all platforms, for example with
+<code>crane copy</code> or <code>skopeo copy --all</code>, and verify the signatures before you do
+(<a href="/docs/security/policy/#verifying-releases">SECURITY.md</a>):</p>
+<pre><code class="language-bash">crane copy ghcr.io/guard-spec/guard-spec-gateway-full:0.1.1 &lt;your-registry&gt;/guard-spec/guard-spec-gateway-full:0.1.1
+</code></pre>
+<p>With compose, point the services at the mirror with a second file instead of
+editing <code>docker-compose.yml</code>:</p>
+<pre><code class="language-yaml"># docker-compose.airgap.yml (template)
+services:
+  gateway:       {image: &lt;your-registry&gt;/guard-spec/guard-spec-gateway:0.1.1}
+  models-init:   {image: &lt;your-registry&gt;/guard-spec/guard-spec-gateway:0.1.1}
+  models-pull:   {image: &lt;your-registry&gt;/guard-spec/guard-spec-gateway:0.1.1}
+  control-plane: {image: &lt;your-registry&gt;/guard-spec/guard-spec-control-plane:0.1.1}
+  migrate:       {image: &lt;your-registry&gt;/migrate/migrate:v4.20.1}
+  db-roles:      {image: &lt;your-registry&gt;/library/postgres:17.11-alpine}
+  postgres:      {image: &lt;your-registry&gt;/library/postgres:17.11-alpine}
+</code></pre>
+<pre><code class="language-bash">docker compose -f docker-compose.yml -f docker-compose.airgap.yml up -d
+</code></pre>
+<p>With Helm: <code>gateway.image.repository</code>, <code>controlPlane.image.repository</code>,
+<code>dbRoles.image.repository</code> and <code>imagePullSecrets</code>.</p>
+<h3 id="models">Models<a class="anchor" href="#models" aria-hidden="true">#</a></h3>
+<p>Three ways, from simplest:</p>
+<ol>
+<li><p><strong><code>gateway-full</code>.</strong> The models are in the image; nothing to download. With
+compose, the <code>./models:/models:ro</code> mount in <code>docker-compose.yml</code> hides
+them, so use the plain gateway image there (option 2), or remove the mount
+in your override with <code>volumes: !reset []</code> (needs a Compose version that
+supports <code>!reset</code>). With Helm, see
+<a href="#gateway-full-with-the-helm-chart">gateway-full with the Helm chart</a>.</p>
+</li>
+<li><p><strong>Copy <code>models/cache</code>.</strong> On a connected machine:</p>
+<pre><code class="language-bash">docker run --rm -v &quot;$PWD/models:/models&quot; --entrypoint ./models \
+  ghcr.io/guard-spec/guard-spec-gateway:0.1.1 pull -manifest manifest.yaml -dir /models/cache
+tar czf guard-spec-models-0.1.0.tgz models/cache
+</code></pre>
+<p>On the target, unpack into the checkout and verify:</p>
+<pre><code class="language-bash">tar xzf guard-spec-models-0.1.0.tgz
+docker run --rm -v &quot;$PWD/models:/models:ro&quot; --entrypoint ./models \
+  &lt;your-registry&gt;/guard-spec/guard-spec-gateway:0.1.1 verify -manifest manifest.yaml -dir /models/cache
+</code></pre>
+<p><code>models-init</code> then finds the files present and verified and downloads
+nothing.</p>
+</li>
+<li><p><strong>An internal mirror.</strong> Serve a copy of <code>models/cache</code> from any static file
+server; <code>MODELS_MIRROR=&lt;url&gt;</code> makes <code>models pull</code> try
+<code>&lt;url&gt;/&lt;name&gt;/&lt;version&gt;/&lt;file&gt;</code> first (<a href="/docs/models/versions/#pulling">docs/models.md</a>).
+Every file is still checked against the SHA-256 in the manifest.</p>
+</li>
+</ol>
+<p>Set <code>DETECTOR_REQUIRE_ML=true</code> so that a missing model stops the stack instead
+of falling back to L1 without anyone noticing.</p>
+<h2 id="5-reverse-proxy-and-tls">5. Reverse proxy and TLS<a class="anchor" href="#5-reverse-proxy-and-tls" aria-hidden="true">#</a></h2>
+<p>The services speak plain HTTP. Put a proxy in front that terminates TLS,
+passes streamed answers through without buffering, and keeps the control
+plane off the public side.</p>
+<h3 id="caddy">Caddy<a class="anchor" href="#caddy" aria-hidden="true">#</a></h3>
+<pre><code class="language-caddyfile"># Template. Caddy gets certificates automatically for public names.
+&lt;gateway-host&gt; {
+	reverse_proxy 127.0.0.1:8080 {
+		flush_interval -1            # stream answers as they arrive
+		transport http {
+			read_timeout 5m          # matches UPSTREAM_LLM_TIMEOUT
+		}
+	}
+}
+
+&lt;admin-host&gt; {
+	@outside not remote_ip 10.0.0.0/8 172.16.0.0/12 192.168.0.0/16
+	respond @outside 403
+	reverse_proxy 127.0.0.1:18081
+}
+</code></pre>
+<h3 id="nginx">nginx<a class="anchor" href="#nginx" aria-hidden="true">#</a></h3>
+<pre><code class="language-nginx"># Template.
+server {
+    listen 443 ssl;
+    server_name &lt;gateway-host&gt;;
+    ssl_certificate     /etc/ssl/&lt;gateway-host&gt;.crt;
+    ssl_certificate_key /etc/ssl/&lt;gateway-host&gt;.key;
+    client_max_body_size 8m;
+
+    location / {
+        proxy_pass http://127.0.0.1:8080;
+        proxy_http_version 1.1;
+        proxy_set_header Connection &quot;&quot;;
+        proxy_buffering off;           # streamed answers
+        proxy_read_timeout 300s;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+
+server {
+    listen 443 ssl;
+    server_name &lt;admin-host&gt;;
+    ssl_certificate     /etc/ssl/&lt;admin-host&gt;.crt;
+    ssl_certificate_key /etc/ssl/&lt;admin-host&gt;.key;
+    allow 10.0.0.0/8;
+    deny all;
+
+    location / {
+        proxy_pass http://127.0.0.1:18081;
+        proxy_set_header Host $host;
+        proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+        proxy_set_header X-Forwarded-Proto $scheme;
+    }
+}
+</code></pre>
+<p>Then set <code>PUBLIC_BASE_URL=https://&lt;admin-host&gt;</code> and <code>TRUSTED_PROXIES</code> on the
+control plane. The gateway does not read <code>X-Forwarded-For</code>; its rate limits
+are per API key.</p>
+<h2 id="hardening-checklist">Hardening checklist<a class="anchor" href="#hardening-checklist" aria-hidden="true">#</a></h2>
+<p>None of these cost money.</p>
+<ul>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>GUARD_ENV</code> is empty; the dev override is never loaded.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>MFA_ENC_KEY</code> is set and backed up with the database backups.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Control plane and both metrics ports are not reachable from the
+internet.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>UPSTREAM_KEY_ORGS</code> lists org ids, not <code>*</code>, if untrusted users can
+create organizations; <code>UPSTREAM_ALLOW_PRIVATE=false</code> unless needed.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Postgres is not published; connections use TLS
+(<code>sslmode=require</code> or stronger) when it is on another host.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>DETECTOR_REQUIRE_ML=true</code> if you rely on the model layers.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>The first admin changed the bootstrap password, and 2FA is required for
+admins (<code>PUT /v1/organizations/:orgId/security</code>).</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>AUDIT_STORE_CONTENT</code> stays <code>false</code> unless you need prompt content in
+the audit log; <code>AUDIT_RETENTION_DAYS</code> matches your policy.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Image signatures are verified before mirroring
+(<a href="/docs/security/policy/#verifying-releases">SECURITY.md</a>).</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>A WAF or rate limiter in front of the gateway for volume abuse.</li>
+</ul>
+<h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-hidden="true">#</a></h2>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Symptom</th>
+  <th>Likely cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>A service exits at start naming a variable</td>
+  <td>A secret is missing, a default or too short. Set the named variable</td>
+</tr>
+<tr>
+  <td><code>db connect</code> in the gateway log and exit</td>
+  <td>Wrong <code>DATABASE_URL</code>, <code>PGPASSWORD</code> not set, or <code>guardspec_app</code> has no password yet (run <code>set-app-password.sh</code> after migrating)</td>
+</tr>
+<tr>
+  <td><code>password authentication failed for user &quot;guardspec_app&quot;</code></td>
+  <td><code>GUARDSPEC_APP_PASSWORD</code> changed but was not applied: run <code>db-roles</code> / <code>set-app-password.sh</code> again</td>
+</tr>
+<tr>
+  <td><code>/readyz</code> shows <code>&quot;layers&quot;:[&quot;l1&quot;]</code>, <code>&quot;degraded&quot;:true</code></td>
+  <td>No models at <code>/models</code>. See <code>detector.problems</code>; fill the volume and restart</td>
+</tr>
+<tr>
+  <td><code>gateway-full</code> refuses to start</td>
+  <td>A volume is mounted over <code>/models</code>; with the chart, set <code>models.persistence.enabled=false</code> and leave <code>models.existingClaim</code> empty</td>
+</tr>
+<tr>
+  <td>Migration <code>004</code> fails with &quot;role already exists&quot;</td>
+  <td><code>guardspec_app</code> exists on this Postgres server from another database</td>
+</tr>
+<tr>
+  <td>Streams stop after 30 to 60 seconds</td>
+  <td>Proxy or load balancer read timeout; raise it and turn off buffering</td>
+</tr>
+<tr>
+  <td>2FA users cannot log in after a restore</td>
+  <td><code>MFA_ENC_KEY</code> does not match the restored database</td>
+</tr>
+</tbody>
+</table></div>
+
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/docs/deploy/on-premise.md">docs/deploy/on-premise.md</a> @ <code>4448f51a3ca3</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Security</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Created by <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

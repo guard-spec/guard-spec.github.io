@@ -29,6 +29,7 @@
       <a href="#how">{{nav_how}}</a>
       <a href="#benchmarks">{{nav_benchmarks}}</a>
       <a href="#quickstart">{{nav_quickstart}}</a>
+      <a href="{{root}}{{lang_path}}docs/">{{nav_docs}}</a>
     </nav>
     <div class="nav-end">
       <div class="lang"><a href="{{root}}" class="{{en_active}}">EN</a><a href="{{root}}vi/" class="{{vi_active}}">VI</a></div>
@@ -184,7 +185,7 @@ client = OpenAI(
       <h2>{{qs_title}}</h2>
       <p class="sub">{{qs_lead}}</p>
       <div class="ctas">
-        <a class="btn btn-primary" href="https://github.com/guard-spec/guard-spec#quick-start">{{qs_docs}}{{icon:book-open}}</a>
+        <a class="btn btn-primary" href="{{root}}{{lang_path}}docs/quickstart/">{{qs_docs}}{{icon:book-open}}</a>
       </div>
     </div>
     <div class="win">
@@ -216,7 +217,8 @@ client = OpenAI(
     <div class="brand"><img src="{{root}}assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
     <nav>
       <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
-      <a href="https://github.com/guard-spec/guard-spec/blob/main/SECURITY.md">{{foot_security}}</a>
+      <a href="{{root}}{{lang_path}}docs/">{{nav_docs}}</a>
+      <a href="{{root}}docs/security/">{{foot_security}}</a>
       <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">{{foot_contrib}}</a>
       <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
     </nav>

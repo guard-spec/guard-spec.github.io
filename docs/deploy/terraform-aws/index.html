@@ -1,0 +1,250 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Terraform for AWS · Guard Spec</title>
+<meta name="description" content="Status: reference, not yet verified; community contributions welcome. CI runs terraform fmt -check, terraform validate and terraform test (a plan against a">
+<meta property="og:title" content="Terraform for AWS · Guard Spec">
+<meta property="og:description" content="Status: reference, not yet verified; community contributions welcome. CI runs terraform fmt -check, terraform validate and terraform test (a plan against a">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/docs/deploy/terraform-aws/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/deploy/terraform-aws/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/docs/" class="on">Docs</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/deploy/terraform-aws/" class="on">EN</a><a href="/vi/docs/" class="">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Documentation</span></summary>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child on"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child on"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Terraform for AWS</h1>
+
+<blockquote>
+<p><strong>Status: reference, not yet verified; community contributions welcome.</strong>
+CI runs <code>terraform fmt -check</code>, <code>terraform validate</code> and <code>terraform test</code>
+(a plan against a mocked AWS provider). Nobody has run <code>terraform apply</code>
+with it against a real AWS account yet. If you do, please open an
+<a href="https://github.com/guard-spec/guard-spec/issues/new/choose">issue</a> or a
+pull request with what worked and what did not. See
+<a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+</blockquote>
+<p>This is the <a href="/docs/deploy/aws/">AWS guide</a>, option A, as
+Terraform: the same architecture, security groups, task definitions and
+hardening, so read the guide first. The guide explains the choices; this
+file only explains how to use the module.</p>
+<h2 id="why-ecs-on-fargate-not-eks">Why ECS on Fargate, not EKS<a class="anchor" href="#why-ecs-on-fargate-not-eks" aria-hidden="true">#</a></h2>
+<ul>
+<li><strong>Nothing to run below the tasks.</strong> No cluster nodes, AMIs or Kubernetes
+upgrades to keep up with; a security team reviews task definitions, two
+ALBs and RDS.</li>
+<li><strong>No model volume.</strong> The <code>guard-spec-gateway-full</code> image carries the L2 and
+L3 models, so every task starts with L1 + L2 + L3 and there is no EFS.</li>
+<li><strong>EKS users already have a path.</strong> The <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/deploy/helm/guard-spec">Helm chart</a>
+covers Kubernetes, including EKS (guide, option B). A Terraform module for
+EKS would mostly wrap that chart.</li>
+</ul>
+<h2 id="what-it-creates">What it creates<a class="anchor" href="#what-it-creates" aria-hidden="true">#</a></h2>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Resource</th>
+  <th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>RDS for PostgreSQL 17</td>
+  <td>Private, encrypted (<code>storage_encrypted</code>), <code>rds.force_ssl=1</code>, automated backups, deletion protection, owner password kept by RDS in Secrets Manager (<code>manage_master_user_password</code>)</td>
+</tr>
+<tr>
+  <td>Secrets Manager secrets</td>
+  <td><code>&lt;name&gt;/app-password</code>, <code>jwt-secret</code>, <code>mfa-enc-key</code>, <code>admin-password</code>, and <code>upstream-llm-key</code> when <code>upstream_llm_url</code> is set. <strong>Created empty</strong>: Terraform never sees the values, so they are not in the state</td>
+</tr>
+<tr>
+  <td>ECS cluster, two services</td>
+  <td>Gateway (default 2 tasks) and control plane (1 task), private subnets, no public IP, read-only root filesystem, all capabilities dropped, deployment circuit breaker with rollback</td>
+</tr>
+<tr>
+  <td>Two ALBs</td>
+  <td>Internet-facing for the gateway (TLS 1.3/1.2 policy, idle timeout 300 s for streams, invalid headers dropped); internal for the control plane. No listener for the metrics ports</td>
+</tr>
+<tr>
+  <td>Security groups</td>
+  <td>As in the guide: ALB to task port only, tasks to RDS only, metrics only from <code>metrics_ingress_cidrs</code></td>
+</tr>
+<tr>
+  <td>IAM</td>
+  <td>One task execution role per service, each reading only its own secrets and writing only its own log group. No task role: the containers call no AWS API</td>
+</tr>
+<tr>
+  <td>CloudWatch log groups</td>
+  <td><code>/&lt;name&gt;/gateway</code>, <code>/&lt;name&gt;/control-plane</code>, retention <code>log_retention_days</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>It does <strong>not</strong> create the VPC, subnets, NAT gateway, ACM certificates, DNS
+records, a WAF or a state backend. Bring your own and pass their IDs.</p>
+<h2 id="variables-you-will-set">Variables you will set<a class="anchor" href="#variables-you-will-set" aria-hidden="true">#</a></h2>
+<p>The full list with descriptions is in <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/deploy/terraform/aws/variables.tf">variables.tf</a>; a filled
+example is <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/deploy/terraform/aws/terraform.tfvars.example">terraform.tfvars.example</a>.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Default</th>
+  <th>What it chooses</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>image_tag</code></td>
+  <td><code>0.1.0</code></td>
+  <td>Release of both images</td>
+</tr>
+<tr>
+  <td><code>gateway_image_digest</code>, <code>control_plane_image_digest</code></td>
+  <td>empty</td>
+  <td>Pin by digest instead of tag (take the digest from <code>cosign verify</code>, see <a href="/docs/security/#verifying-a-release">docs/security</a>)</td>
+</tr>
+<tr>
+  <td><code>gateway_image</code></td>
+  <td><code>ghcr.io/guard-spec/guard-spec-gateway-full</code></td>
+  <td><code>-full</code> has the models; the plain <code>guard-spec-gateway</code> has none and can only run <code>detector_layers = &quot;l1&quot;</code> here</td>
+</tr>
+<tr>
+  <td><code>detector_layers</code></td>
+  <td><code>l1,l2,l3</code></td>
+  <td><code>DETECTOR_LAYERS</code>. <code>l1</code> is rules only, with fewer false positives (README, Models)</td>
+</tr>
+<tr>
+  <td><code>l2_model</code>, <code>l3_model</code></td>
+  <td>empty (the image's recommended versions)</td>
+  <td><code>L2_MODEL</code> / <code>L3_MODEL</code> as <code>name@version</code>; must be in the image</td>
+</tr>
+<tr>
+  <td><code>upstream_llm_url</code></td>
+  <td>empty (stub answers)</td>
+  <td><code>UPSTREAM_LLM_URL</code>; setting it adds the <code>upstream-llm-key</code> secret</td>
+</tr>
+<tr>
+  <td><code>audit_store_content</code></td>
+  <td><code>false</code></td>
+  <td><code>AUDIT_STORE_CONTENT</code>. Leave off unless you need prompt text in audit rows</td>
+</tr>
+<tr>
+  <td><code>audit_retention_days</code></td>
+  <td><code>90</code></td>
+  <td><code>AUDIT_RETENTION_DAYS</code></td>
+</tr>
+<tr>
+  <td><code>kms_key_arn</code></td>
+  <td>empty</td>
+  <td>A customer managed key for RDS, Secrets Manager and the log groups (its key policy must allow CloudWatch Logs)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="use">Use<a class="anchor" href="#use" aria-hidden="true">#</a></h2>
+<p>You need Terraform 1.6 or newer and AWS credentials for the target account.
+Configure a backend first (S3 with locking); the state holds no secret
+values but does hold your network layout.</p>
+<p><strong>1. First apply, no tasks.</strong></p>
+<pre><code class="language-bash">cd deploy/terraform/aws
+cp terraform.tfvars.example terraform.tfvars   # fill in; keep both desired counts at 0
+terraform init
+terraform plan -out tfplan
+terraform apply tfplan
+</code></pre>
+<p><strong>2. Put the secret values in</strong> (from a shell with access to the account):</p>
+<pre><code class="language-bash">put() { aws secretsmanager put-secret-value --secret-id &quot;guard-spec/$1&quot; --secret-string &quot;$2&quot; &gt;/dev/null; }
+put app-password   &quot;$(openssl rand -hex 32)&quot;
+put jwt-secret     &quot;$(openssl rand -hex 32)&quot;
+put mfa-enc-key    &quot;$(openssl rand -base64 32)&quot;
+put admin-password &quot;$(openssl rand -hex 16)&quot;
+put upstream-llm-key '&lt;your-upstream-key&gt;'        # only with upstream_llm_url
+</code></pre>
+<p>Copy <code>mfa-enc-key</code> to an offline vault now and keep it with your RDS
+snapshots: without it nobody with 2FA can log in, and there is no
+re-encryption step, so never rotate it automatically.</p>
+<p><strong>3. Migrations and the application password.</strong> Terraform does not run
+them. From a host inside the VPC with Docker and a checkout of the release
+tag, follow
+<a href="/docs/deploy/aws/#migrations-and-the-application-password">Migrations and the application password</a>,
+with <code>DB_HOST</code> and <code>OWNER_SECRET_ARN</code> from <code>terraform output db_address</code> and
+<code>terraform output db_owner_secret_arn</code>. Give that host's security group in
+<code>migration_host_security_group_id</code> (or add the rule yourself).</p>
+<p><strong>4. Start the services.</strong> Set <code>gateway_desired_count</code> and
+<code>control_plane_desired_count</code> (for example 2 and 1) and apply again. Then
+point DNS at the outputs <code>gateway_alb_dns_name</code> and
+<code>control_plane_alb_dns_name</code> (a private zone for the admin host) and check:</p>
+<pre><code class="language-bash">curl -s https://&lt;gateway-host&gt;/readyz | jq .detector
+# {&quot;layers&quot;:[&quot;l1&quot;,&quot;l2&quot;,&quot;l3&quot;],&quot;degraded&quot;:false,&quot;onnx&quot;:true,...}
+</code></pre>
+<h2 id="upgrade">Upgrade<a class="anchor" href="#upgrade" aria-hidden="true">#</a></h2>
+<p>Take an RDS snapshot, run the migrations of the new tag (step 3), then set
+<code>image_tag</code> (or the digests) and apply. A failing deployment rolls back to
+the previous task definition by itself; a schema change does not roll back,
+so restore the snapshot (with its <code>mfa-enc-key</code>) if you must go back. See
+the guide's <a href="/docs/deploy/aws/#upgrade-and-rollback">Upgrade and rollback</a>.</p>
+<h2 id="known-gaps">Known gaps<a class="anchor" href="#known-gaps" aria-hidden="true">#</a></h2>
+<ul>
+<li>Not applied against a real account yet (see the status above).</li>
+<li>No migration task: migrations run from a host in the VPC, as in the guide.</li>
+<li>No metrics collector, alarms, WAF, ALB access logs or VPC endpoints. The
+guide's <a href="/docs/deploy/aws/#observability">Observability</a> and
+<a href="/docs/deploy/aws/#hardening-checklist">Hardening checklist</a> list
+what to add.</li>
+<li>No SSO (<code>OIDC_SECRET_*</code>), named upstream (<code>UPSTREAM_KEY_*</code>) or alert
+channel secrets. Add a secret per value and extend <code>gateway_secrets</code> /
+<code>control_plane_secrets</code> in <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/deploy/terraform/aws/ecs.tf">ecs.tf</a> and the execution role
+policies in <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/deploy/terraform/aws/iam.tf">iam.tf</a>.</li>
+</ul>
+<h2 id="checks">Checks<a class="anchor" href="#checks" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash">terraform fmt -check -recursive
+terraform init -backend=false
+terraform validate
+terraform test     # plans against a mocked AWS provider; no credentials needed
+</code></pre>
+
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/deploy/terraform/aws/README.md">deploy/terraform/aws/README.md</a> @ <code>4448f51a3ca3</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Security</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Created by <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

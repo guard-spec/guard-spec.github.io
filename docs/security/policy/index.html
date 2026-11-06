@@ -1,0 +1,186 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reporting a vulnerability · Guard Spec</title>
+<meta name="description" content="Guard Spec is a security component: it sits in front of LLMs and decides what reaches them. We treat bypasses of its guardrails as vulnerabilities, not onl">
+<meta property="og:title" content="Reporting a vulnerability · Guard Spec">
+<meta property="og:description" content="Guard Spec is a security component: it sits in front of LLMs and decides what reaches them. We treat bypasses of its guardrails as vulnerabilities, not onl">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/docs/security/policy/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/security/policy/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/docs/" class="on">Docs</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/security/policy/" class="on">EN</a><a href="/vi/docs/" class="">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Documentation</span></summary>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child on"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child on"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Reporting a vulnerability</h1>
+
+<p>Guard Spec is a security component: it sits in front of LLMs and decides what
+reaches them. We treat bypasses of its guardrails as vulnerabilities, not only
+classic memory-safety or authentication bugs.</p>
+<h2 id="reporting-a-vulnerability">Reporting a vulnerability<a class="anchor" href="#reporting-a-vulnerability" aria-hidden="true">#</a></h2>
+<p><strong>Please do not open a public issue, discussion or pull request for a
+security problem.</strong></p>
+<p>Report it privately through GitHub Security Advisories:</p>
+<ol>
+<li>Go to the repository's <strong>Security</strong> tab.</li>
+<li>Click <strong>Report a vulnerability</strong>
+(direct link: <code>https://github.com/guard-spec/guard-spec/security/advisories/new</code>).</li>
+<li>Describe the issue, the affected version or commit, and how to reproduce it.
+A minimal request body or proof of concept helps most.</li>
+</ol>
+<p>If you cannot use GitHub, email <strong>security@guardspec.io</strong> with the same
+details. Please do not put details in a public issue.</p>
+<h3 id="what-we-consider-in-scope">What we consider in scope<a class="anchor" href="#what-we-consider-in-scope" aria-hidden="true">#</a></h3>
+<ul>
+<li>Bypassing the sanitizer, classifier thresholds or policy engine so that text
+the gateway should block or clean reaches the upstream model.</li>
+<li>Cross-tenant access: reading or changing another organization's data,
+including through row-level security gaps.</li>
+<li>Authentication or authorization flaws in the control plane or gateway
+(API keys, JWTs, roles).</li>
+<li>Leaks of prompts, responses, API keys or other secrets, including through
+logs or audit rows.</li>
+<li>Insecure defaults that survive outside development mode (<code>GUARD_ENV=dev</code>).</li>
+<li>Vulnerabilities in our container images or release artifacts.</li>
+</ul>
+<p>Out of scope: findings that require <code>GUARD_ENV=dev</code> or the development compose
+override, model accuracy without a concrete bypass, denial of service by
+volume alone, and issues in upstream LLMs.</p>
+<h2 id="hardening">Hardening<a class="anchor" href="#hardening" aria-hidden="true">#</a></h2>
+<p>For the risks that remain when you run Guard Spec and how to reduce them, see
+<a href="/docs/security/risks/">docs/security-risks.md</a>.</p>
+<p>For a security review of a deployment (architecture, data flow, what is
+stored where and for how long, secrets and encryption), see
+<a href="/docs/security/">docs/security/</a>.</p>
+<h2 id="supported-versions">Supported versions<a class="anchor" href="#supported-versions" aria-hidden="true">#</a></h2>
+<p>The project is pre-1.0. Security fixes land on <code>main</code> and in the next release.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Version</th>
+  <th>Supported</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>main</code></td>
+  <td>Yes</td>
+</tr>
+<tr>
+  <td>latest <code>0.x</code></td>
+  <td>Yes</td>
+</tr>
+<tr>
+  <td>older <code>0.x</code></td>
+  <td>No, please upgrade</td>
+</tr>
+</tbody>
+</table></div>
+<p>After 1.0 the latest minor release and the one before it will receive fixes.</p>
+<h2 id="response-targets">Response targets<a class="anchor" href="#response-targets" aria-hidden="true">#</a></h2>
+<p>These are targets, not guarantees, for a small volunteer team:</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Step</th>
+  <th>Target</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Acknowledge the report</td>
+  <td>3 business days</td>
+</tr>
+<tr>
+  <td>Initial assessment and severity</td>
+  <td>7 days</td>
+</tr>
+<tr>
+  <td>Fix for critical or high severity</td>
+  <td>30 days</td>
+</tr>
+<tr>
+  <td>Fix for medium or low severity</td>
+  <td>90 days</td>
+</tr>
+<tr>
+  <td>Public advisory</td>
+  <td>when the fix is released</td>
+</tr>
+</tbody>
+</table></div>
+<p>We will keep you informed while we work on it, credit you in the advisory
+unless you prefer otherwise, and request a CVE where it applies. Please give us
+the time above before disclosing publicly; we will agree a date with you if a
+fix needs longer.</p>
+<h2 id="verifying-releases">Verifying releases<a class="anchor" href="#verifying-releases" aria-hidden="true">#</a></h2>
+<p><a href="/docs/security/verifying-releases/">docs/security/verifying-releases.md</a>
+has the full procedure (signatures pinned to the release tag, SBOMs, SLSA
+provenance) with its output for v0.1.0. In short:</p>
+<p>Release container images are signed with cosign (keyless, through GitHub
+Actions OIDC) and come with an SPDX SBOM and SLSA provenance (BuildKit
+attestations; <code>docker buildx imagetools inspect &lt;image&gt; --format '{{json .SBOM}}'</code>).
+The gateway and gateway-full images are built by <code>.github/workflows/release.yml</code>,
+the control-plane image by GoReleaser; all are verified the same way (replace
+<code>guard-spec-gateway</code> with <code>guard-spec-gateway-full</code> or <code>guard-spec-control-plane</code>):</p>
+<pre><code class="language-bash">cosign verify ghcr.io/guard-spec/guard-spec-gateway:&lt;version&gt; \
+  --certificate-identity-regexp '^https://github.com/guard-spec/guard-spec/' \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com
+</code></pre>
+<p>Archives are covered by <code>checksums.txt</code> (GoReleaser, L1-only binaries) and
+<code>checksums-onnx.txt</code> (the linux <code>_onnx</code> tarballs), each signed with a cosign
+bundle next to it:</p>
+<pre><code class="language-bash">cosign verify-blob checksums-onnx.txt --bundle checksums-onnx.txt.sigstore.json \
+  --certificate-identity-regexp '^https://github.com/guard-spec/guard-spec/' \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com
+sha256sum --ignore-missing -c checksums-onnx.txt
+</code></pre>
+
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/SECURITY.md">SECURITY.md</a> @ <code>4448f51a3ca3</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Security</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Created by <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

@@ -1,0 +1,63 @@
+<!doctype html>
+<html lang="{{lang}}">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{{title}} · Guard Spec</title>
+<meta name="description" content="{{description}}">
+<meta property="og:title" content="{{title}} · Guard Spec">
+<meta property="og:description" content="{{description}}">
+<meta property="og:type" content="article">
+<meta property="og:image" content="{{site_url}}/assets/og.png">
+<link rel="canonical" href="{{site_url}}{{path}}">
+{{alternates}}
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="{{home}}"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="{{docs_home}}" class="on">{{docs_label}}</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="{{en_href}}" class="{{en_active}}">EN</a><a href="{{vi_href}}" class="{{vi_active}}">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec">{{icon:github}}<span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary>{{icon:menu}}<span>{{nav_label}}</span></summary>
+    <nav class="docs-nav" aria-label="{{nav_label}}">{{sidebar}}</nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="{{nav_label}}">{{sidebar}}</nav>
+  </aside>
+  <main class="doc">
+    {{content}}
+    <p class="doc-source">{{source}}</p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">{{foot_security}}</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">{{foot_contrib}}</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>{{foot_credit}}</p>
+  </div>
+</footer>
+{{scripts}}
+</body>
+</html>

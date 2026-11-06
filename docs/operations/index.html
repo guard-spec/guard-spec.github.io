@@ -1,0 +1,441 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Operations · Guard Spec</title>
+<meta name="description" content="Audit privacy# Audit rows (requests) store scores, the decision, and a SHA-256 and the length of the request body and of a buffered upstream response. They">
+<meta property="og:title" content="Operations · Guard Spec">
+<meta property="og:description" content="Audit privacy# Audit rows (requests) store scores, the decision, and a SHA-256 and the length of the request body and of a buffered upstream response. They">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/docs/operations/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/operations/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/docs/" class="on">Docs</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/operations/" class="on">EN</a><a href="/vi/docs/" class="">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Documentation</span></summary>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class="on"><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class="on"><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Operations</h1>
+
+<h2 id="audit-privacy">Audit privacy<a class="anchor" href="#audit-privacy" aria-hidden="true">#</a></h2>
+<p>Audit rows (<code>requests</code>) store scores, the decision, and a SHA-256 and the
+length of the request body and of a buffered upstream response. They store no
+prompt or response content unless content storage is enabled, either for every
+organization with <code>AUDIT_STORE_CONTENT=true</code> on the gateway, or for one
+organization with <code>PATCH /v1/organizations/{id}</code> and
+<code>{&quot;audit_store_content&quot;: true}</code> (admin role). Streamed responses are not
+buffered, so their response columns stay empty.</p>
+<p>Each request gets one audit row. <code>action</code> is <code>allow</code>, <code>block</code>, <code>error</code> (the
+upstream failed or the client left before it answered) or <code>output_leak</code> (the
+canary showed up in the answer).</p>
+<h2 id="upstream-behaviour">Upstream behaviour<a class="anchor" href="#upstream-behaviour" aria-hidden="true">#</a></h2>
+<p><code>UPSTREAM_LLM_TIMEOUT</code> (default <code>5m</code>) is the longest wait for the first byte
+and for any later silence; a long stream is not cut off while data flows. If
+the client hangs up before the upstream answers, the upstream request is
+cancelled at once. A client that only half-closes its side
+(<code>shutdown(SHUT_WR)</code>) sends the same FIN as one that left, and the gateway
+cannot tell them apart without writing to the connection, so by default it
+cancels too. Set <code>CLIENT_HALF_CLOSE=wait</code> to serve such clients: the gateway
+then cancels only on a connection reset and otherwise relies on the timeout.</p>
+<h2 id="output-guard">Output guard<a class="anchor" href="#output-guard" aria-hidden="true">#</a></h2>
+<p>The gateway checks the model's answer before the client sees it. It rewrites
+<code>choices[].message.content</code> (and <code>choices[].text</code> for legacy completions) in
+whole responses. In streams it keeps a 256-character window per choice, so a
+pattern split across chunks is still caught, and rebuilds each chunk with its
+id, model and other fields unchanged. A stream therefore runs about 256
+characters behind the upstream. Held text is flushed at <code>finish_reason</code> and at
+<code>[DONE]</code>. An upstream body that is not JSON cannot be checked and gives 502.</p>
+<ul>
+<li><strong>Images and links.</strong> Markdown images, HTML <code>&lt;img&gt;</code> tags and reference
+definitions whose host is not on the allowlist are removed
+(<code>[REDACTED:image]</code>). Links to other hosts keep their text and lose the URL.
+Bare image URLs that carry a query string are replaced with
+<code>[REDACTED:url]</code>. With the default empty allowlist every image and link is
+removed. An <code>&lt;img&gt;</code> tag is kept only if every <code>src</code> and <code>srcset</code> URL is on
+the allowlist.</li>
+<li><strong>Personal data.</strong> Each match is replaced with <code>[REDACTED:&lt;type&gt;]</code>:
+<code>email</code>, <code>phone</code> (Vietnamese numbers in the +84, 84 and 0 forms, mobile and
+landline), <code>cccd</code> (12 digits starting with 0), <code>card</code> (13 to 19 digits that
+pass the Luhn check) and, when enabled, <code>ipv4</code>.</li>
+<li><strong>Canary.</strong> When enabled, the gateway puts a random token for each request
+in the system prompt (appended to a leading system message, or as a new
+one; legacy completions get none). If the model repeats it, the response is
+refused with 400 <code>content_filter</code> (in a stream, an error event that ends
+it), or the token is redacted. Either way the row's action is
+<code>output_leak</code>.</li>
+<li><strong>Reasoning.</strong> The <code>reasoning</code> and <code>reasoning_content</code> fields that Ollama
+and vLLM send are guarded like the answer, or dropped.</li>
+<li><strong>Refusals and tool calls.</strong> <code>refusal</code> is guarded like the answer. Tool-call
+arguments (<code>tool_calls[].function.arguments</code>, and the older
+<code>function_call</code>) are parsed as JSON and each string is guarded on its own,
+so they stay valid JSON. In a stream, each call's arguments are held whole
+and sent when its choice finishes. A canary in tool-call arguments refuses
+the response even in <code>redact</code> mode.</li>
+<li><strong>Content parts.</strong> Text parts are guarded. A part that is not text cannot
+be checked: a whole response gets 502, and a stream ends with an error
+event.</li>
+</ul>
+<p>The audit row counts what was removed per type in <code>pii_entities</code>, as
+<code>output:email=2</code>. It never stores the content. These settings apply to every
+organization; there are no per-org output settings yet.</p>
+<h2 id="indirect-injection-and-tool-poisoning">Indirect injection and tool poisoning<a class="anchor" href="#indirect-injection-and-tool-poisoning" aria-hidden="true">#</a></h2>
+<p>Text that reaches the model from a third party (tool results, retrieved
+documents, and the tool descriptions an MCP server supplies) is untrusted.
+The gateway scores it apart from the user's own text.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Part</th>
+  <th>Name in <code>SCAN_ROLES</code></th>
+  <th>Default</th>
+  <th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>user</code> messages, legacy <code>prompt</code> and <code>suffix</code></td>
+  <td><code>user</code></td>
+  <td>on</td>
+  <td>classified together</td>
+</tr>
+<tr>
+  <td><code>tool</code> (and <code>function</code>) messages</td>
+  <td><code>tool</code></td>
+  <td>on</td>
+  <td>each message classified on its own</td>
+</tr>
+<tr>
+  <td><code>tools[].function.description</code> and every <code>description</code> in <code>parameters</code> (also legacy <code>functions[]</code>)</td>
+  <td><code>tool_descriptions</code></td>
+  <td>on</td>
+  <td>detector plus the MCP poisoning signals</td>
+</tr>
+<tr>
+  <td><code>system</code> messages</td>
+  <td><code>system</code></td>
+  <td>off</td>
+  <td>classified with the user text, never rewritten</td>
+</tr>
+<tr>
+  <td>assistant <code>tool_calls[].function.arguments</code> from history</td>
+  <td><code>tool_calls</code></td>
+  <td>off</td>
+  <td>the string values of the JSON arguments, never rewritten</td>
+</tr>
+</tbody>
+</table></div>
+<p>User and tool text is sanitized whether or not it is classified. A key that
+differs from <code>tools</code> or <code>functions</code> only in case is refused with 400. While
+<code>tool_descriptions</code> is on, so is a <code>tools</code> field that is not a list, a name or
+description that is not a string, and a schema nested deeper than 32 levels.</p>
+<p><strong>Scoring.</strong> Each tool result and each tool definition gets its own score. An
+instruction found in a tool result is <code>indirect_injection</code>; anything flagged
+in a tool description is <code>tool_poisoning</code>. A tool description's score is the
+larger of the detector's and the MCP signals': a secret path (<code>~/.ssh</code>,
+<code>id_rsa</code>, <code>/etc/shadow</code>), <code>&lt;IMPORTANT&gt;</code>, &quot;do not mention this to the user&quot;,
+&quot;send all emails to&quot; or invisible characters reach 0.9 on their own; weaker
+signals (&quot;Before using this tool&quot;, <code>mcp.json</code>, a description over 1500 bytes,
+...) count 0.5 each and only block together. The request is blocked when the
+largest untrusted score reaches <code>INDIRECT_BLOCK_THRESHOLD</code>. The audit row's
+<code>injection_score</code> and <code>injection_label</code> hold the strongest finding, direct or
+not. Untrusted text is limited to 128 KiB per request (413 above).</p>
+<p><strong>Spotlighting</strong> applies to tool results only:</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th><code>SPOTLIGHT</code></th>
+  <th>Effect on tool results</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>off</code> (default)</td>
+  <td>forwarded as sanitized, without markers</td>
+</tr>
+<tr>
+  <td><code>delimit</code></td>
+  <td>wrapped in <code>&lt;&lt;untrusted-XXXX&gt;&gt;</code> ... <code>&lt;&lt;/untrusted-XXXX&gt;&gt;</code> with a random boundary per request, and a note in the system message telling the model that text inside is data</td>
+</tr>
+<tr>
+  <td><code>datamark</code></td>
+  <td>every space and tab replaced by <code>ˆ</code> (U+02C6), with a system note explaining the marker</td>
+</tr>
+</tbody>
+</table></div>
+<p>The sanitizer strips spoofed markers from client text and raises the anomaly
+score when it finds one, so a tool result cannot close the block it sits in.
+An org can override <code>scan_roles</code> and <code>spotlight</code> through
+<code>PUT /v1/organizations/:orgId/guard-settings</code>; the gateway reads them on every
+request and fails closed with 503 if it cannot.</p>
+<p><strong><code>POST /guardrail/scan</code></strong> takes <code>text</code>, <code>documents</code> (at most 64, 128 KiB in
+total; <code>source</code> is <code>web</code>, <code>email</code>, <code>file</code>, <code>tool</code> or <code>other</code>), or both. The
+response has <code>injection_score</code>, <code>injection_label</code>, <code>anomaly_score</code>,
+<code>had_tag_chars</code>, <code>had_bidi</code>, <code>bytes_removed</code>, <code>sanitized_text</code>, <code>blocked</code>,
+<code>verdict</code> and a <code>documents[]</code> entry per document with its own score,
+<code>category</code>, <code>detector_category</code>, <code>rules</code>, <code>blocked</code> and <code>verdict</code>. A document
+is blocked at <code>INDIRECT_BLOCK_THRESHOLD</code> or when its anomaly score reaches
+0.6. (<code>toxicity_score</code> is still in the response for compatibility and is
+always 0.)</p>
+<p><strong><code>POST /guardrail/scan/tools</code></strong> checks each tool's description and every
+<code>description</code> nested in <code>inputSchema</code> (at most 256 tools). Each tool gets
+<code>score</code>, <code>category</code>, <code>signals</code>, <code>blocked</code>, <code>verdict</code> and <code>fields</code> (the
+descriptions that scored at least 0.3 or carried a signal, by path).</p>
+<p><code>go run ./cmd/eval -path tool</code> scores the eval set through this
+untrusted-content path.</p>
+<h2 id="per-organization-exemplars">Per-organization exemplars<a class="anchor" href="#per-organization-exemplars" aria-hidden="true">#</a></h2>
+<p><code>/v1/organizations/:orgId/exemplars</code> stores <code>{&quot;label&quot;: &quot;block&quot;|&quot;allow&quot;, &quot;text&quot;: &quot;...&quot;, &quot;source&quot;: &quot;...&quot;}</code> (at most 1,000 per org, 4,000 characters
+each). A <code>block</code> text counts as an attack for that org's requests
+(<code>injection.category</code> <code>tenant_exemplar</code>), and its calibrated L3 score is a
+floor for the fused score; an <code>allow</code> text lowers L3 only. The gateway embeds
+each org's exemplars once and reloads them when they change (checked at most
+every 5 s). They need the L3 model. Tenant exemplars live in the database
+only, never in this repository.</p>
+<h2 id="metrics">Metrics<a class="anchor" href="#metrics" aria-hidden="true">#</a></h2>
+<p>Both services serve Prometheus metrics at <code>/metrics</code> on a listener of their
+own (<code>METRICS_ADDR</code>), so the endpoint is not reachable through the API port.
+Keep that port on the internal network.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Gateway metric (prefix <code>guardspec_gateway_</code>)</th>
+  <th>Labels</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>requests_total</code>, <code>request_duration_seconds</code></td>
+  <td><code>route</code>, <code>status</code>, <code>decision</code> (<code>allow</code>, <code>route</code>, <code>block</code>, <code>error</code>, <code>output_leak</code>; <code>none</code> before the guard ran)</td>
+</tr>
+<tr>
+  <td><code>route_selections_total</code></td>
+  <td><code>source</code> (<code>rule</code>, <code>project</code>, <code>org</code>, <code>env</code>, <code>stub</code>), <code>outcome</code> (<code>ok</code>, <code>failed</code>); the upstream's name is not a label</td>
+</tr>
+<tr>
+  <td><code>detector_duration_seconds</code>, <code>detector_errors_total</code></td>
+  <td><code>layer</code> (<code>l1</code>, <code>l2</code>, <code>l3</code>), per chunk</td>
+</tr>
+<tr>
+  <td><code>upstream_duration_seconds</code></td>
+  <td><code>path</code>, <code>outcome</code> (<code>ok</code>, <code>error</code>)</td>
+</tr>
+<tr>
+  <td><code>upstream_errors_total</code></td>
+  <td><code>path</code>, <code>code</code></td>
+</tr>
+<tr>
+  <td><code>policy_eval_errors_total</code></td>
+  <td><code>stage</code> (<code>load</code>, <code>eval</code>, <code>route</code>)</td>
+</tr>
+<tr>
+  <td><code>output_guard_actions_total</code></td>
+  <td><code>kind</code> (<code>image</code>, <code>link</code>, <code>url</code>, <code>canary</code>, <code>email</code>, <code>phone</code>, <code>cccd</code>, <code>card</code>, <code>ipv4</code>)</td>
+</tr>
+<tr>
+  <td><code>ratelimit_rejections_total</code></td>
+  <td><code>limit</code> (<code>requests</code>, <code>tokens</code>)</td>
+</tr>
+<tr>
+  <td><code>tenant_requests_total</code> (with <code>METRICS_TENANT_LABELS=true</code>)</td>
+  <td><code>org_id</code>, <code>decision</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>The control plane exports <code>guardspec_control_plane_requests_total</code>,
+<code>guardspec_control_plane_request_duration_seconds</code>,
+<code>guardspec_audit_retention_runs_total{result}</code> and
+<code>guardspec_audit_retention_deleted_rows_total</code>. Labels take values from fixed
+sets only; API key IDs are never a label.</p>
+<h2 id="tracing">Tracing<a class="anchor" href="#tracing" aria-hidden="true">#</a></h2>
+<p>OpenTelemetry tracing is off unless <code>OTEL_EXPORTER_OTLP_ENDPOINT</code> (or
+<code>OTEL_EXPORTER_OTLP_TRACES_ENDPOINT</code>) is set. Spans go over OTLP/HTTP; gRPC is
+not supported. The gateway continues a W3C <code>traceparent</code> from the client and
+creates a server span per request with children <code>sanitize</code>, <code>detect</code>,
+<code>policy</code>, <code>upstream</code>, <code>output_guard</code> and <code>output_guard.stream</code>.
+<code>OTEL_PROPAGATE_UPSTREAM=true</code> sends <code>traceparent</code> to the upstream; it is off
+by default because it tells the upstream the trace ID.</p>
+<h2 id="rate-limits">Rate limits<a class="anchor" href="#rate-limits" aria-hidden="true">#</a></h2>
+<p>Each API key gets two token buckets: requests per minute and, optionally,
+tokens per minute (estimated as body bytes / 4). A key's own <code>rpm_limit</code> and
+<code>tpm_limit</code> win; keys without one get <code>RATE_LIMIT_RPM</code> / <code>RATE_LIMIT_TPM</code>.
+Over the limit: 429 with <code>Retry-After</code> and
+<code>{&quot;error&quot;:{&quot;message&quot;:&quot;...&quot;,&quot;type&quot;:&quot;requests&quot;,&quot;code&quot;:&quot;rate_limit_exceeded&quot;}}</code>
+(<code>type</code> is <code>tokens</code> for the token limit); no audit row. Buckets are kept in
+memory <strong>per gateway replica</strong>, and a key's limits are cached for 30 seconds.</p>
+<pre><code class="language-bash">POST  /v1/organizations/{id}/api-keys           {&quot;alias&quot;:&quot;bot&quot;,&quot;rpm_limit&quot;:600,&quot;tpm_limit&quot;:200000}
+PATCH /v1/organizations/{id}/api-keys/{prefix}  {&quot;rpm_limit&quot;:null}   # back to RATE_LIMIT_RPM
+</code></pre>
+<h2 id="users-invites-and-projects">Users, invites and projects<a class="anchor" href="#users-invites-and-projects" aria-hidden="true">#</a></h2>
+<p>Admins invite people with <code>POST /v1/orgs/{id}/invites</code>
+<code>{&quot;email&quot;:&quot;a@example.com&quot;,&quot;role&quot;:&quot;member&quot;,&quot;ttl_hours&quot;:72}</code>. No e-mail is
+sent: the response carries a one-time <code>gsinv_...</code> token that the admin passes
+on, and <code>POST /v1/invites/accept</code> <code>{&quot;token&quot;:&quot;...&quot;,&quot;password&quot;:&quot;...&quot;,&quot;display_name&quot;:&quot;A&quot;}</code>
+creates the user (or adds the membership to an existing account whose
+password matches). Only the token's SHA-256 is stored. Nobody can invite with
+a role above their own.</p>
+<p>A project groups API keys inside an organization. A key or a policy created
+with a <code>project_id</code> belongs to that project; the gateway evaluates the
+project's policies first, then the org-wide ones.</p>
+<h2 id="identity-sso-and-two-factor-authentication">Identity, SSO and two-factor authentication<a class="anchor" href="#identity-sso-and-two-factor-authentication" aria-hidden="true">#</a></h2>
+<p><strong>Sessions.</strong> A login creates a row in <code>sessions</code>; the token (12 hours)
+carries its id as <code>sid</code>. Logout, <code>DELETE /v1/auth/sessions/:id</code>, a password
+change (other sessions), disabling a user and an admin's <code>revoke-sessions</code>
+end sessions at once on the replica that made the change and within 15
+seconds on the others. Tokens issued before migration 013 have no <code>sid</code> and
+are refused: everyone logs in again after the upgrade.</p>
+<p><strong>Two-factor authentication</strong> (TOTP, RFC 6238: SHA-1, 6 digits, 30 s, one
+step of skew). <code>POST /v1/auth/mfa/totp/setup</code> returns the secret and an
+<code>otpauth://</code> URL (the UI draws the QR code itself); <code>.../confirm {code}</code>
+turns it on and returns 10 recovery codes, shown once and stored as bcrypt
+hashes. Enrollment is trust on first use: whoever completes it at the first
+login after an org requires 2FA (the account's password holder) chooses the
+authenticator. A login of a user with 2FA returns
+<code>{&quot;mfa_required&quot;: true, &quot;mfa_token&quot;, &quot;methods&quot;: [&quot;totp&quot;,&quot;recovery&quot;]}</code>;
+<code>POST /v1/auth/mfa/verify {mfa_token, code}</code> finishes it. The <code>mfa_token</code> is a
+5-minute JWT allowing 5 attempts and one success; a TOTP code is refused for
+the step it was used in (and earlier ones), a recovery code works once. Ten
+wrong codes in a row lock the user's second factor for 15 minutes (doubling
+every 5 more, at most 24 hours; 429 <code>mfa_locked</code>, logged as <code>mfa.locked</code>),
+whatever the token or address. The secret is encrypted with <code>MFA_ENC_KEY</code>
+(AES-256-GCM, bound to the user id). Back the key up with the database:
+without it no user with 2FA can log in.</p>
+<p>A member's 2FA reset and session revocation act on the user everywhere, so
+they need an instance administrator or an owner of every organization the
+user belongs to (403 <code>not_sole_authority</code> otherwise).</p>
+<p><strong>Org security</strong> (<code>PUT /v1/organizations/:orgId/security</code>, owner):
+<code>require_mfa</code> makes members without 2FA enroll at their next login
+(<code>{&quot;mfa_enroll_required&quot;: true, &quot;mfa_token&quot;}</code>; that token can only call the 2FA
+setup endpoints) and refuses existing sessions without 2FA (403
+<code>mfa_required</code>); <code>sso_satisfies_mfa</code> lets SSO sessions pass;
+<code>allowed_login_methods</code> (<code>password</code>, <code>google</code>, <code>oidc:&lt;provider id&gt;</code>; unset
+allows all) refuses sessions of other methods (403
+<code>login_method_not_allowed</code>); <code>session_lifetime_hours</code> (1-12) shortens
+sessions for this org; <code>domain_join</code> adds SSO users of a verified email domain
+on first login, with a role up to admin. A domain can be joined only if the
+instance administrator listed it in the provider's <code>allowed_domains</code>.</p>
+<p><strong>SSO</strong> (OpenID Connect, Google as a preset). An instance administrator
+(<code>users.is_instance_admin</code>; the bootstrap admin, which is the earliest owner
+of the default org at migration 013) adds providers at <code>/v1/admin/identity-providers</code>
+<code>{&quot;type&quot;:&quot;google&quot;,&quot;client_id&quot;:&quot;...&quot;,&quot;client_secret_env&quot;:&quot;OIDC_SECRET_GOOGLE&quot;,&quot;allowed_domains&quot;:[&quot;example.com&quot;],&quot;auto_provision&quot;:true}</code>.
+Register <code>&lt;PUBLIC_BASE_URL&gt;/v1/auth/oidc/&lt;id&gt;/callback</code> as the redirect URI.
+The flow uses PKCE (S256), <code>state</code> and <code>nonce</code> (stored server-side for 10
+minutes); the state is also bound to the browser by an HttpOnly, SameSite=Lax
+cookie set at start (login CSRF), so the UI navigates to <code>.../start</code> rather
+than fetching it. The callback verifies the ID token through the provider's JWKS and requires
+<code>email_verified</code>; Google logins with <code>allowed_domains</code> must also carry a
+matching <code>hd</code> claim. The callback redirects to
+<code>/ui/#/auth/callback?code=&lt;60 s one-time code&gt;</code> (or <code>?error=&lt;code&gt;</code>), which
+<code>POST /v1/auth/oidc/exchange</code> turns into the same answer as a password
+login, so 2FA still applies. Identities match on (provider, subject). A new
+identity whose email matches an existing account links to it only when the
+provider has <code>trust_email_for_linking</code> (off by default) and the account has
+no password and no identity; otherwise the login is refused with
+<code>account_exists</code>, and the owner of the account links the identity from their
+profile: <code>POST /v1/auth/identities/:providerId/link/start</code> returns the
+provider's URL, the callback sends the browser to
+<code>/ui/#/account?link_code=&lt;60 s code&gt;</code>, and <code>POST /v1/auth/identities/link/complete {code}</code>
+with the same user's token binds it (a code is refused for anyone else, so a
+link URL sent to a victim links nothing). A manual link never runs
+<code>domain_join</code>. New users are created only with <code>auto_provision</code> and an
+allowed domain. Emails are stored lower-cased.</p>
+<p><strong>Activity log.</strong> Member, invite, API key, policy, upstream, security and
+config changes and 2FA resets are recorded per org
+(<code>GET /v1/organizations/:orgId/activity</code>); SSO provider and instance user
+changes, logins (success and failure) and the user's own 2FA events at
+<code>GET /v1/admin/activity</code>. Details never hold secrets; a failed login keeps
+the email masked (<code>a***@example.com</code>).</p>
+<p><strong>Bootstrap.</strong> <code>ADMIN_EMAIL</code>/<code>ADMIN_PASSWORD</code> create the first owner and
+instance administrator once. A later start does nothing if an instance
+administrator exists or the bootstrap ran before, so a deleted bootstrap admin
+stays deleted.</p>
+<h2 id="audit-retention">Audit retention<a class="anchor" href="#audit-retention" aria-hidden="true">#</a></h2>
+<p>The control plane deletes audit rows older than <code>AUDIT_RETENTION_DAYS</code> in
+batches, at start and then every <code>AUDIT_RETENTION_INTERVAL</code>. Every replica
+runs the job; a Postgres advisory lock lets one of them work at a time.</p>
+<h2 id="kubernetes">Kubernetes<a class="anchor" href="#kubernetes" aria-hidden="true">#</a></h2>
+<p>A minimal chart is in <code>deploy/helm/guard-spec</code>. It deploys the gateway and the
+control plane against an external Postgres; Postgres is not bundled, and the
+chart does not run the migrations.</p>
+<pre><code class="language-bash">kubectl create secret generic guard-spec-secrets \
+  --from-literal=POSTGRES_PASSWORD=... --from-literal=GUARDSPEC_APP_PASSWORD=... \
+  --from-literal=JWT_SECRET=... --from-literal=ADMIN_PASSWORD=... \
+  --from-literal=MFA_ENC_KEY=&quot;$(openssl rand -base64 32)&quot;   # back it up with the database
+# migrate first, as the owner role: migrate -path migrations -database &quot;postgres://ps:...@host/guardspec&quot; up
+helm install gs deploy/helm/guard-spec \
+  --set externalDatabase.url='postgres://guardspec_app@db.example:5432/guardspec?sslmode=require' \
+  --set externalDatabase.host=db.example --set dbRoles.enabled=true \
+  --set controlPlane.adminEmail=admin@example.com
+</code></pre>
+<ul>
+<li><strong>Secrets</strong> come from <code>existingSecret</code>. <code>GUARDSPEC_APP_PASSWORD</code> reaches both
+services as <code>PGPASSWORD</code>, so URLs carry no password. <code>POSTGRES_PASSWORD</code> is
+used only by the optional <code>dbRoles</code> hook job. <code>MFA_ENC_KEY</code> (see
+<a href="/docs/configuration/">Configuration</a>) is optional in that Secret; it can come
+from <code>controlPlane.extraEnvFrom</code> instead.</li>
+<li><strong>Metrics</strong> are served on separate ClusterIP Services (<code>*-metrics</code>), so
+exposing an API Service never exposes <code>/metrics</code>. <code>serviceMonitor.enabled=true</code>
+adds a Prometheus Operator ServiceMonitor.</li>
+<li><strong>Models</strong> come from a PVC mounted read-only at <code>/models</code> in the gateway
+(<code>models.existingClaim</code>, or the chart's own with
+<code>models.persistence.enabled=true</code>, the default). The release gateway image
+is built with <code>-tags onnx</code> and runs L1 + L2 + L3 when the models are there;
+with an empty PVC it runs L1 only. With <code>models.persistence.enabled=false</code>
+and no <code>existingClaim</code> nothing is mounted at <code>/models</code>: use that with
+<code>gateway.image.repository=ghcr.io/guard-spec/guard-spec-gateway-full</code>,
+which has the models inside. The readiness probe uses <code>/readyz</code>, which
+lists the active layers and answers 503 only when a layer the
+configuration requires (<code>DETECTOR_REQUIRE_ML=true</code>) is missing.</li>
+<li><strong>Resources:</strong> the gateway defaults (request 500m CPU / 1Gi, limit 2Gi)
+fit L1 + L2 + L3, which use about 900 MiB right after start.</li>
+<li><strong>Security:</strong> pods run as non-root with a read-only root filesystem, no
+capabilities and the RuntimeDefault seccomp profile. The <code>dbRoles</code> job runs
+as UID 70 (the postgres image's user) unless <code>dbRoles.podSecurityContext</code>
+sets one; on OpenShift it lets the SCC pick the UID.</li>
+<li><strong>Rate limits</strong> are per replica, so <code>gateway.replicaCount</code> multiplies the
+effective limit.</li>
+</ul>
+
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/README.md#operations">README.md#operations</a> @ <code>4448f51a3ca3</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Security</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Created by <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

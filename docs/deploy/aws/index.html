@@ -1,0 +1,633 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>AWS · Guard Spec</title>
+<meta name="description" content="Status: reference template, not yet verified by the maintainers. Community-tested: not yet. If you deploy this, please open an issue or a pull request with">
+<meta property="og:title" content="AWS · Guard Spec">
+<meta property="og:description" content="Status: reference template, not yet verified by the maintainers. Community-tested: not yet. If you deploy this, please open an issue or a pull request with">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/docs/deploy/aws/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/deploy/aws/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/docs/" class="on">Docs</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/deploy/aws/" class="on">EN</a><a href="/vi/docs/" class="">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Documentation</span></summary>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child on"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child on"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>AWS</h1>
+
+<blockquote>
+<p><strong>Status: reference template, not yet verified by the maintainers.</strong>
+Community-tested: not yet. If you deploy this, please open an
+<a href="https://github.com/guard-spec/guard-spec/issues/new/choose">issue</a> or a pull
+request with what worked and what did not. See
+<a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/CONTRIBUTING.md">CONTRIBUTING.md</a> and the <a href="/docs/deploy/">index</a>.</p>
+</blockquote>
+<p>Two ways to run the services, same database and secrets:</p>
+<ul>
+<li><strong>A. ECS on Fargate</strong>: no cluster to run. Uses the <code>gateway-full</code> image,
+so no shared model volume.</li>
+<li><strong>B. EKS</strong>: the Helm chart in <code>deploy/helm/guard-spec</code>, following the
+<a href="/docs/deploy/on-premise/#2-kubernetes">Kubernetes steps</a> with AWS pieces swapped in.</li>
+</ul>
+<p>The CLI and JSON below are templates: placeholders such as <code>&lt;your-db-host&gt;</code>,
+<code>&lt;region&gt;</code> and <code>&lt;account-id&gt;</code> must be filled in, and nothing here was run
+against a real AWS account.</p>
+<h2 id="architecture">Architecture<a class="anchor" href="#architecture" aria-hidden="true">#</a></h2>
+<pre class="mermaid">flowchart LR
+  apps[Your applications] --&gt;|HTTPS 443| palb[Public ALB&lt;br/&gt;ACM certificate]
+  admins[Admins via VPN or SSM] --&gt;|HTTPS| ialb[Internal ALB]
+  subgraph vpc[VPC, private subnets]
+    palb --&gt;|HTTP 8080, /readyz| gw[gateway tasks or pods&lt;br/&gt;guard-spec-gateway-full]
+    ialb --&gt;|HTTP 8081, /health| cp[control-plane task or pod]
+    gw --&gt; rds[(RDS for PostgreSQL 17)]
+    cp --&gt; rds
+    gw -. OTLP/HTTP 4318 .-&gt; otel[ADOT collector]
+  end
+  gw --&gt;|HTTPS via NAT| llm[Upstream LLM API]
+  sm[Secrets Manager] -. injected at start .-&gt; gw
+  sm -. injected at start .-&gt; cp
+  gw -. stdout JSON logs .-&gt; cw[CloudWatch Logs]
+  cp -. stdout JSON logs .-&gt; cw
+</pre>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Need</th>
+  <th>AWS service</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Compute</td>
+  <td>ECS on Fargate, or EKS</td>
+</tr>
+<tr>
+  <td>Database</td>
+  <td>RDS for PostgreSQL 17, private, encrypted, TLS enforced</td>
+</tr>
+<tr>
+  <td>Secrets</td>
+  <td>Secrets Manager</td>
+</tr>
+<tr>
+  <td>TLS and routing</td>
+  <td>Application Load Balancer with an ACM certificate; a second, internal ALB for the control plane</td>
+</tr>
+<tr>
+  <td>Logs</td>
+  <td>CloudWatch Logs (<code>awslogs</code> on ECS; the CloudWatch Observability add-on or Fluent Bit on EKS)</td>
+</tr>
+<tr>
+  <td>Metrics and traces</td>
+  <td>Prometheus endpoints on 9090/9091 (CloudWatch agent or Amazon Managed Service for Prometheus); traces over OTLP/HTTP to an AWS Distro for OpenTelemetry collector</td>
+</tr>
+<tr>
+  <td>Images</td>
+  <td><code>ghcr.io</code> directly through a NAT gateway, or an ECR mirror (optional)</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="prerequisites">Prerequisites<a class="anchor" href="#prerequisites" aria-hidden="true">#</a></h2>
+<ul>
+<li>An AWS account, the AWS CLI v2, <code>docker</code>, <code>openssl</code>, <code>jq</code>.</li>
+<li>A VPC with at least two private subnets (tasks, database) and two public
+subnets (public ALB), and a NAT gateway or ECR mirror for image pulls and
+the upstream LLM.</li>
+<li>A domain for the gateway (<code>&lt;gateway-host&gt;</code>) and one for the admin UI
+(<code>&lt;admin-host&gt;</code>), with ACM certificates for both.</li>
+<li>A host inside the VPC with Docker for one-off tasks (migrations, app
+password): an EC2 instance reached with SSM Session Manager, or a CI runner
+in the VPC.</li>
+<li>A checkout of the release tag on that host:
+<code>git clone --branch v0.1.1 https://github.com/guard-spec/guard-spec.git</code>.</li>
+</ul>
+<h2 id="sizing">Sizing<a class="anchor" href="#sizing" aria-hidden="true">#</a></h2>
+<p>The README has no server benchmarks. Measure under your traffic. Starting
+points:</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Service</th>
+  <th>Fargate task</th>
+  <th>Basis</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>gateway (L1 + L2 + L3)</td>
+  <td>1 vCPU, 2 GB, 2 tasks</td>
+  <td>About 900 MiB of memory right after start in a local check of <code>gateway-full:0.1.0</code>; the chart's default is a 1Gi request and a 2Gi limit</td>
+</tr>
+<tr>
+  <td>gateway (L1 only, <code>DETECTOR_LAYERS=l1</code>)</td>
+  <td>0.5 vCPU, 1 GB</td>
+  <td>Measure</td>
+</tr>
+<tr>
+  <td>control plane</td>
+  <td>0.25 vCPU, 0.5 GB, 1 task</td>
+  <td>Chart defaults: 100m CPU, 64Mi request, 256Mi limit</td>
+</tr>
+<tr>
+  <td>RDS</td>
+  <td><code>db.t4g.small</code>, 20 GB gp3</td>
+  <td>Measure: the audit table grows with every request, bounded by <code>AUDIT_RETENTION_DAYS</code></td>
+</tr>
+</tbody>
+</table></div>
+<p><code>INFERENCE_MAX_CONCURRENCY</code> defaults to the CPU count the process sees. On
+Fargate that is the task's vCPUs.</p>
+<h2 id="step-1-database">Step 1: database<a class="anchor" href="#step-1-database" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash"># Template. Security group &lt;db-sg&gt; allows 5432 only from the task or node security group.
+aws rds create-db-subnet-group --db-subnet-group-name guard-spec \
+  --db-subnet-group-description &quot;Guard Spec&quot; --subnet-ids &lt;private-subnet-1&gt; &lt;private-subnet-2&gt;
+
+aws rds create-db-instance \
+  --db-instance-identifier guard-spec \
+  --engine postgres --engine-version &lt;17.x&gt; \
+  --db-instance-class db.t4g.small --allocated-storage 20 --storage-type gp3 \
+  --master-username gsowner --manage-master-user-password \
+  --db-name guardspec \
+  --db-subnet-group-name guard-spec --vpc-security-group-ids &lt;db-sg&gt; \
+  --no-publicly-accessible --storage-encrypted \
+  --backup-retention-period 7 --deletion-protection
+</code></pre>
+<ul>
+<li><code>--manage-master-user-password</code> keeps the owner's password in Secrets
+Manager. The owner role (<code>gsowner</code>) runs the migrations; the services never
+use it.</li>
+<li>RDS for PostgreSQL 15 and newer sets <code>rds.force_ssl=1</code> by default. Use
+<code>sslmode=require</code> in every URL below.</li>
+<li>The migrations create the <code>pgcrypto</code> and <code>pg_trgm</code> extensions and the
+<code>guardspec_app</code> role. The RDS master user can do both.</li>
+</ul>
+<h3 id="migrations-and-the-application-password">Migrations and the application password<a class="anchor" href="#migrations-and-the-application-password" aria-hidden="true">#</a></h3>
+<p>From the host inside the VPC, in the checkout of the release tag. The owner
+password is read from the secret RDS created:</p>
+<pre><code class="language-bash">DB_HOST=&lt;your-db-host&gt;          # the RDS endpoint
+OWNER_SECRET_ARN=&lt;rds-master-secret-arn&gt;
+export PGPASSWORD=&quot;$(aws secretsmanager get-secret-value --secret-id &quot;$OWNER_SECRET_ARN&quot; \
+  --query SecretString --output text | jq -r .password)&quot;
+
+docker run --rm -e PGPASSWORD -v &quot;$PWD/migrations:/migrations:ro&quot; migrate/migrate:v4.20.1 \
+  -path=/migrations -database &quot;postgres://gsowner@$DB_HOST:5432/guardspec?sslmode=require&quot; up
+</code></pre>
+<p>Create the application password (step 2), then apply it:</p>
+<pre><code class="language-bash">export GUARDSPEC_APP_PASSWORD=&quot;$(aws secretsmanager get-secret-value \
+  --secret-id guard-spec/app-password --query SecretString --output text)&quot;
+
+docker run --rm -e PGPASSWORD -e GUARDSPEC_APP_PASSWORD \
+  -e PGHOST=&quot;$DB_HOST&quot; -e PGUSER=gsowner -e PGDATABASE=guardspec -e PGSSLMODE=require \
+  -v &quot;$PWD/deploy/postgres/set-app-password.sh:/set-app-password.sh:ro&quot; \
+  --entrypoint /bin/sh postgres:17.11-alpine /set-app-password.sh
+# guardspec_app password set
+</code></pre>
+<p>Run both again after every upgrade and every rotation of the app password.</p>
+<h2 id="step-2-secrets">Step 2: secrets<a class="anchor" href="#step-2-secrets" aria-hidden="true">#</a></h2>
+<p>One secret per value, as plain strings:</p>
+<pre><code class="language-bash">aws secretsmanager create-secret --name guard-spec/app-password   --secret-string &quot;$(openssl rand -hex 32)&quot;
+aws secretsmanager create-secret --name guard-spec/jwt-secret     --secret-string &quot;$(openssl rand -hex 32)&quot;
+aws secretsmanager create-secret --name guard-spec/mfa-enc-key    --secret-string &quot;$(openssl rand -base64 32)&quot;
+aws secretsmanager create-secret --name guard-spec/admin-password --secret-string &quot;$(openssl rand -hex 16)&quot;
+aws secretsmanager create-secret --name guard-spec/upstream-llm-key --secret-string '&lt;your-upstream-key&gt;'
+</code></pre>
+<p><strong><code>MFA_ENC_KEY</code> is not recoverable.</strong> It encrypts every user's TOTP secret.
+Keep a copy outside this account's Secrets Manager (an offline vault), and
+keep it with your RDS snapshots: a snapshot restored without the matching
+key locks out every user with 2FA. Do not rotate it with Secrets Manager
+rotation; the control plane has no re-encryption step.</p>
+<p>The ECS task execution role (or the EKS secret sync) needs
+<code>secretsmanager:GetSecretValue</code> on these ARNs only, and <code>kms:Decrypt</code> if you
+use a customer managed key.</p>
+<h2 id="option-a-ecs-on-fargate">Option A: ECS on Fargate<a class="anchor" href="#option-a-ecs-on-fargate" aria-hidden="true">#</a></h2>
+<h3 id="images">Images<a class="anchor" href="#images" aria-hidden="true">#</a></h3>
+<p>Fargate can pull the public <code>ghcr.io</code> images through the NAT gateway. To keep
+pulls inside AWS, copy them into ECR (or set up an ECR pull-through cache
+rule for <code>ghcr.io</code>, which needs a GitHub token in Secrets Manager):</p>
+<pre><code class="language-bash">aws ecr create-repository --repository-name guard-spec/guard-spec-gateway-full
+aws ecr create-repository --repository-name guard-spec/guard-spec-control-plane
+aws ecr get-login-password | docker login --username AWS --password-stdin &lt;account-id&gt;.dkr.ecr.&lt;region&gt;.amazonaws.com
+crane copy ghcr.io/guard-spec/guard-spec-gateway-full:0.1.1 &lt;account-id&gt;.dkr.ecr.&lt;region&gt;.amazonaws.com/guard-spec/guard-spec-gateway-full:0.1.1
+crane copy ghcr.io/guard-spec/guard-spec-control-plane:0.1.1 &lt;account-id&gt;.dkr.ecr.&lt;region&gt;.amazonaws.com/guard-spec/guard-spec-control-plane:0.1.1
+</code></pre>
+<p>Verify the signatures first (<a href="/docs/security/policy/#verifying-releases">SECURITY.md</a>).</p>
+<h3 id="models">Models<a class="anchor" href="#models" aria-hidden="true">#</a></h3>
+<p>Use <code>guard-spec-gateway-full</code>: the models are in the image, so every task
+starts with L1 + L2 + L3 and no shared volume. The image sets
+<code>DETECTOR_REQUIRE_ML=true</code>, so a task that cannot load them stops instead of
+running on L1 alone.</p>
+<p>The alternative is the plain <code>guard-spec-gateway</code> image with an EFS volume at
+<code>/models</code>, filled once by a task running
+<code>./models pull -manifest manifest.yaml -dir /models/cache</code>. It adds EFS and a
+fill step for no gain on Fargate unless you need to pin model versions
+independently of the image.</p>
+<h3 id="task-definitions">Task definitions<a class="anchor" href="#task-definitions" aria-hidden="true">#</a></h3>
+<p>Gateway (template; <code>&lt;...-arn&gt;</code> are the full secret ARNs):</p>
+<pre><code class="language-json">{
+  &quot;family&quot;: &quot;guard-spec-gateway&quot;,
+  &quot;requiresCompatibilities&quot;: [&quot;FARGATE&quot;],
+  &quot;networkMode&quot;: &quot;awsvpc&quot;,
+  &quot;cpu&quot;: &quot;1024&quot;,
+  &quot;memory&quot;: &quot;2048&quot;,
+  &quot;runtimePlatform&quot;: {&quot;cpuArchitecture&quot;: &quot;ARM64&quot;, &quot;operatingSystemFamily&quot;: &quot;LINUX&quot;},
+  &quot;executionRoleArn&quot;: &quot;arn:aws:iam::&lt;account-id&gt;:role/guard-spec-execution&quot;,
+  &quot;volumes&quot;: [{&quot;name&quot;: &quot;tmp&quot;}],
+  &quot;containerDefinitions&quot;: [{
+    &quot;name&quot;: &quot;gateway&quot;,
+    &quot;image&quot;: &quot;ghcr.io/guard-spec/guard-spec-gateway-full:0.1.1&quot;,
+    &quot;essential&quot;: true,
+    &quot;readonlyRootFilesystem&quot;: true,
+    &quot;mountPoints&quot;: [{&quot;sourceVolume&quot;: &quot;tmp&quot;, &quot;containerPath&quot;: &quot;/tmp&quot;}],
+    &quot;portMappings&quot;: [
+      {&quot;containerPort&quot;: 8080, &quot;protocol&quot;: &quot;tcp&quot;},
+      {&quot;containerPort&quot;: 9090, &quot;protocol&quot;: &quot;tcp&quot;}
+    ],
+    &quot;environment&quot;: [
+      {&quot;name&quot;: &quot;DATABASE_URL&quot;, &quot;value&quot;: &quot;postgres://guardspec_app@&lt;your-db-host&gt;:5432/guardspec?sslmode=require&quot;},
+      {&quot;name&quot;: &quot;UPSTREAM_LLM_URL&quot;, &quot;value&quot;: &quot;&lt;your-upstream-url&gt;&quot;},
+      {&quot;name&quot;: &quot;UPSTREAM_ALLOW_PRIVATE&quot;, &quot;value&quot;: &quot;false&quot;},
+      {&quot;name&quot;: &quot;AUDIT_STORE_CONTENT&quot;, &quot;value&quot;: &quot;false&quot;}
+    ],
+    &quot;secrets&quot;: [
+      {&quot;name&quot;: &quot;PGPASSWORD&quot;, &quot;valueFrom&quot;: &quot;&lt;app-password-secret-arn&gt;&quot;},
+      {&quot;name&quot;: &quot;UPSTREAM_LLM_KEY&quot;, &quot;valueFrom&quot;: &quot;&lt;upstream-llm-key-secret-arn&gt;&quot;}
+    ],
+    &quot;healthCheck&quot;: {
+      &quot;command&quot;: [&quot;CMD-SHELL&quot;, &quot;curl -fsS http://localhost:8080/readyz || exit 1&quot;],
+      &quot;interval&quot;: 10, &quot;timeout&quot;: 3, &quot;retries&quot;: 3, &quot;startPeriod&quot;: 60
+    },
+    &quot;logConfiguration&quot;: {
+      &quot;logDriver&quot;: &quot;awslogs&quot;,
+      &quot;options&quot;: {
+        &quot;awslogs-group&quot;: &quot;/guard-spec/gateway&quot;,
+        &quot;awslogs-region&quot;: &quot;&lt;region&gt;&quot;,
+        &quot;awslogs-stream-prefix&quot;: &quot;gateway&quot;,
+        &quot;awslogs-create-group&quot;: &quot;true&quot;
+      }
+    }
+  }]
+}
+</code></pre>
+<p>Control plane (template). The image is distroless: its health check is the
+binary's own <code>health</code> subcommand, not <code>curl</code>.</p>
+<pre><code class="language-json">{
+  &quot;family&quot;: &quot;guard-spec-control-plane&quot;,
+  &quot;requiresCompatibilities&quot;: [&quot;FARGATE&quot;],
+  &quot;networkMode&quot;: &quot;awsvpc&quot;,
+  &quot;cpu&quot;: &quot;256&quot;,
+  &quot;memory&quot;: &quot;512&quot;,
+  &quot;runtimePlatform&quot;: {&quot;cpuArchitecture&quot;: &quot;ARM64&quot;, &quot;operatingSystemFamily&quot;: &quot;LINUX&quot;},
+  &quot;executionRoleArn&quot;: &quot;arn:aws:iam::&lt;account-id&gt;:role/guard-spec-execution&quot;,
+  &quot;containerDefinitions&quot;: [{
+    &quot;name&quot;: &quot;control-plane&quot;,
+    &quot;image&quot;: &quot;ghcr.io/guard-spec/guard-spec-control-plane:0.1.1&quot;,
+    &quot;essential&quot;: true,
+    &quot;readonlyRootFilesystem&quot;: true,
+    &quot;portMappings&quot;: [
+      {&quot;containerPort&quot;: 8081, &quot;protocol&quot;: &quot;tcp&quot;},
+      {&quot;containerPort&quot;: 9091, &quot;protocol&quot;: &quot;tcp&quot;}
+    ],
+    &quot;environment&quot;: [
+      {&quot;name&quot;: &quot;DATABASE_URL&quot;, &quot;value&quot;: &quot;postgres://guardspec_app@&lt;your-db-host&gt;:5432/guardspec?sslmode=require&quot;},
+      {&quot;name&quot;: &quot;ADMIN_EMAIL&quot;, &quot;value&quot;: &quot;&lt;admin-email&gt;&quot;},
+      {&quot;name&quot;: &quot;PUBLIC_BASE_URL&quot;, &quot;value&quot;: &quot;https://&lt;admin-host&gt;&quot;},
+      {&quot;name&quot;: &quot;TRUSTED_PROXIES&quot;, &quot;value&quot;: &quot;&lt;vpc-cidr&gt;&quot;},
+      {&quot;name&quot;: &quot;AUDIT_RETENTION_DAYS&quot;, &quot;value&quot;: &quot;90&quot;}
+    ],
+    &quot;secrets&quot;: [
+      {&quot;name&quot;: &quot;PGPASSWORD&quot;, &quot;valueFrom&quot;: &quot;&lt;app-password-secret-arn&gt;&quot;},
+      {&quot;name&quot;: &quot;JWT_SECRET&quot;, &quot;valueFrom&quot;: &quot;&lt;jwt-secret-arn&gt;&quot;},
+      {&quot;name&quot;: &quot;MFA_ENC_KEY&quot;, &quot;valueFrom&quot;: &quot;&lt;mfa-enc-key-secret-arn&gt;&quot;},
+      {&quot;name&quot;: &quot;ADMIN_PASSWORD&quot;, &quot;valueFrom&quot;: &quot;&lt;admin-password-secret-arn&gt;&quot;}
+    ],
+    &quot;healthCheck&quot;: {
+      &quot;command&quot;: [&quot;CMD&quot;, &quot;/app/service&quot;, &quot;health&quot;],
+      &quot;interval&quot;: 10, &quot;timeout&quot;: 3, &quot;retries&quot;: 3, &quot;startPeriod&quot;: 30
+    },
+    &quot;logConfiguration&quot;: {
+      &quot;logDriver&quot;: &quot;awslogs&quot;,
+      &quot;options&quot;: {
+        &quot;awslogs-group&quot;: &quot;/guard-spec/control-plane&quot;,
+        &quot;awslogs-region&quot;: &quot;&lt;region&gt;&quot;,
+        &quot;awslogs-stream-prefix&quot;: &quot;control-plane&quot;,
+        &quot;awslogs-create-group&quot;: &quot;true&quot;
+      }
+    }
+  }]
+}
+</code></pre>
+<p>Notes:</p>
+<ul>
+<li>The images are multi-arch (amd64 and arm64). Pick either
+<code>cpuArchitecture</code>.</li>
+<li><code>TRUSTED_PROXIES</code> is the range the internal ALB connects from (its subnets,
+or the VPC CIDR). Without it, the control plane sees only the ALB's
+address.</li>
+<li>The execution role needs <code>logs:CreateLogGroup</code> for <code>awslogs-create-group</code>,
+or create the log groups beforehand.</li>
+<li>For routing to named upstreams, add <code>UPSTREAM_KEY_*</code> secrets to the gateway
+and set <code>UPSTREAM_KEY_ORGS</code> on both services (README, Routing).</li>
+</ul>
+<h3 id="load-balancers">Load balancers<a class="anchor" href="#load-balancers" aria-hidden="true">#</a></h3>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Load balancer</th>
+  <th>Listener</th>
+  <th>Target group</th>
+  <th>Health check</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Public ALB (internet-facing)</td>
+  <td>HTTPS 443, ACM certificate for <code>&lt;gateway-host&gt;</code></td>
+  <td>IP targets, HTTP 8080</td>
+  <td><code>GET /readyz</code>, matcher <code>200</code></td>
+</tr>
+<tr>
+  <td>Internal ALB</td>
+  <td>HTTPS 443, certificate for <code>&lt;admin-host&gt;</code></td>
+  <td>IP targets, HTTP 8081</td>
+  <td><code>GET /health</code>, matcher <code>200</code></td>
+</tr>
+</tbody>
+</table></div>
+<pre><code class="language-bash">aws elbv2 create-target-group --name guard-spec-gateway --protocol HTTP --port 8080 \
+  --vpc-id &lt;vpc-id&gt; --target-type ip --health-check-path /readyz --matcher HttpCode=200
+aws elbv2 create-target-group --name guard-spec-control-plane --protocol HTTP --port 8081 \
+  --vpc-id &lt;vpc-id&gt; --target-type ip --health-check-path /health --matcher HttpCode=200
+
+# Streamed answers: the default idle timeout (60 s) cuts long silences.
+aws elbv2 modify-load-balancer-attributes --load-balancer-arn &lt;public-alb-arn&gt; \
+  --attributes Key=idle_timeout.timeout_seconds,Value=300 \
+               Key=routing.http.drop_invalid_header_fields.enabled,Value=true
+</code></pre>
+<p>No listener or target group for ports 9090 and 9091. Security groups:</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Security group</th>
+  <th>Inbound</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>public ALB</td>
+  <td>443 from your clients (or <code>0.0.0.0/0</code>)</td>
+</tr>
+<tr>
+  <td>internal ALB</td>
+  <td>443 from your VPN or bastion range</td>
+</tr>
+<tr>
+  <td>gateway tasks</td>
+  <td>8080 from the public ALB's group; 9090 from your metrics collector</td>
+</tr>
+<tr>
+  <td>control-plane tasks</td>
+  <td>8081 from the internal ALB's group; 9091 from your metrics collector</td>
+</tr>
+<tr>
+  <td>RDS</td>
+  <td>5432 from the gateway and control-plane groups, and the migration host</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="services">Services<a class="anchor" href="#services" aria-hidden="true">#</a></h3>
+<pre><code class="language-bash">aws ecs create-service --cluster &lt;cluster&gt; --service-name guard-spec-gateway \
+  --task-definition guard-spec-gateway --desired-count 2 --launch-type FARGATE \
+  --network-configuration 'awsvpcConfiguration={subnets=[&lt;private-subnet-1&gt;,&lt;private-subnet-2&gt;],securityGroups=[&lt;gateway-sg&gt;],assignPublicIp=DISABLED}' \
+  --load-balancers 'targetGroupArn=&lt;gateway-tg-arn&gt;,containerName=gateway,containerPort=8080' \
+  --health-check-grace-period-seconds 60 \
+  --deployment-configuration 'minimumHealthyPercent=100,maximumPercent=200,deploymentCircuitBreaker={enable=true,rollback=true}'
+
+aws ecs create-service --cluster &lt;cluster&gt; --service-name guard-spec-control-plane \
+  --task-definition guard-spec-control-plane --desired-count 1 --launch-type FARGATE \
+  --network-configuration 'awsvpcConfiguration={subnets=[&lt;private-subnet-1&gt;,&lt;private-subnet-2&gt;],securityGroups=[&lt;control-plane-sg&gt;],assignPublicIp=DISABLED}' \
+  --load-balancers 'targetGroupArn=&lt;control-plane-tg-arn&gt;,containerName=control-plane,containerPort=8081'
+</code></pre>
+<p>More than one control-plane task is fine: audit retention takes an advisory
+lock, and session revocations reach other replicas within 15 seconds.</p>
+<h3 id="check">Check<a class="anchor" href="#check" aria-hidden="true">#</a></h3>
+<pre><code class="language-bash">curl -s https://&lt;gateway-host&gt;/readyz | jq .detector
+# {&quot;layers&quot;:[&quot;l1&quot;,&quot;l2&quot;,&quot;l3&quot;],&quot;degraded&quot;:false,&quot;onnx&quot;:true,...}
+</code></pre>
+<p>Reach the admin UI through your VPN, or forward a port through the SSM host:</p>
+<pre><code class="language-bash">aws ssm start-session --target &lt;instance-id&gt; \
+  --document-name AWS-StartPortForwardingSessionToRemoteHost \
+  --parameters 'host=&lt;internal-alb-dns-name&gt;,portNumber=443,localPortNumber=8443'
+# then https://&lt;admin-host&gt;:8443/ui/ with &lt;admin-host&gt; pointing at 127.0.0.1 in /etc/hosts
+</code></pre>
+<p>Log in as <code>&lt;admin-email&gt;</code> with the <code>guard-spec/admin-password</code> secret, turn
+on 2FA, and create the first API key as in the README's
+<a href="/docs/quickstart/">Quick start</a>.</p>
+<h2 id="option-b-eks">Option B: EKS<a class="anchor" href="#option-b-eks" aria-hidden="true">#</a></h2>
+<p>Follow <a href="/docs/deploy/on-premise/#2-kubernetes">Kubernetes</a> in the on-premise guide. The
+AWS-specific parts:</p>
+<ul>
+<li><p><strong>Secrets.</strong> Sync the Secrets Manager values into the Kubernetes Secrets the
+chart expects (<code>guard-spec-secrets</code> with <code>POSTGRES_PASSWORD</code>,
+<code>GUARDSPEC_APP_PASSWORD</code>, <code>JWT_SECRET</code>, <code>ADMIN_PASSWORD</code>, <code>MFA_ENC_KEY</code>)
+with the External
+Secrets Operator or the Secrets Store CSI driver, or create them with
+<code>kubectl create secret</code> from a trusted machine.</p>
+</li>
+<li><p><strong>Models.</strong> The chart's PVC is ReadWriteOnce. For two gateway replicas on
+different nodes, use the EFS CSI driver and a ReadWriteMany claim
+(<code>models.existingClaim</code>), filled by the
+<a href="/docs/deploy/on-premise/#step-3-models">models Job</a>. With EBS (gp3, ReadWriteOnce),
+keep <code>gateway.replicaCount=1</code>. Or use <code>gateway-full</code> with no models volume
+(<a href="/docs/deploy/on-premise/#gateway-full-with-the-helm-chart">gateway-full with the Helm chart</a>).</p>
+</li>
+<li><p><strong>Migrations.</strong> The <a href="/docs/deploy/on-premise/#step-2-migrations-no-chart-job-yet">migration Job</a>
+works as is; the host is the RDS endpoint and the owner is <code>gsowner</code>.
+<code>dbRoles.enabled=true</code> sets the app password.</p>
+</li>
+<li><p><strong>Ingress.</strong> With the AWS Load Balancer Controller, a template:</p>
+<pre><code class="language-yaml">apiVersion: networking.k8s.io/v1
+kind: Ingress
+metadata:
+  name: guard-spec-gateway
+  annotations:
+    alb.ingress.kubernetes.io/scheme: internet-facing
+    alb.ingress.kubernetes.io/target-type: ip
+    alb.ingress.kubernetes.io/listen-ports: '[{&quot;HTTPS&quot;:443}]'
+    alb.ingress.kubernetes.io/certificate-arn: &lt;acm-certificate-arn&gt;
+    alb.ingress.kubernetes.io/healthcheck-path: /readyz
+    alb.ingress.kubernetes.io/load-balancer-attributes: idle_timeout.timeout_seconds=300,routing.http.drop_invalid_header_fields.enabled=true
+spec:
+  ingressClassName: alb
+  rules:
+    - host: &lt;gateway-host&gt;
+      http:
+        paths:
+          - path: /
+            pathType: Prefix
+            backend:
+              service: {name: gs-guard-spec-gateway, port: {number: 8080}}
+</code></pre>
+<p>A second Ingress with <code>alb.ingress.kubernetes.io/scheme: internal</code> and
+<code>healthcheck-path: /health</code> serves the control plane on <code>&lt;admin-host&gt;</code>.</p>
+</li>
+<li><p><strong>Resources.</strong> The chart defaults fit L1 + L2 + L3; adjust
+<code>gateway.resources</code> after measuring (see <a href="#sizing">Sizing</a>).</p>
+</li>
+<li><p><strong>Metrics.</strong> <code>serviceMonitor.enabled=true</code> with the Prometheus Operator, or
+scrape the <code>*-metrics</code> Services with the CloudWatch agent.</p>
+</li>
+</ul>
+<h2 id="observability">Observability<a class="anchor" href="#observability" aria-hidden="true">#</a></h2>
+<ul>
+<li><strong>Logs.</strong> Both services log JSON lines to stdout. Search them in CloudWatch
+Logs Insights, for example <code>fields @timestamp, level, msg | filter level = &quot;ERROR&quot;</code>.</li>
+<li><strong>Metrics.</strong> Prometheus format at <code>/metrics</code> on 9090 (gateway) and 9091
+(control plane); names in the README's <a href="/docs/operations/#metrics">Metrics</a>.
+On ECS, run the CloudWatch agent or an ADOT collector as a sidecar or
+service that scrapes the task IPs.</li>
+<li><strong>Traces.</strong> OTLP over HTTP only (no gRPC). With an ADOT collector sidecar:
+<code>OTEL_EXPORTER_OTLP_ENDPOINT=http://localhost:4318</code> on the gateway.</li>
+<li><strong>Alarms worth having.</strong> Target group unhealthy hosts; the gateway's
+<code>requests_total{decision=&quot;error&quot;}</code> and <code>upstream_errors_total</code>;
+<code>policy_eval_errors_total</code> (requests fail closed with 503); RDS free
+storage.</li>
+</ul>
+<h2 id="hardening-checklist">Hardening checklist<a class="anchor" href="#hardening-checklist" aria-hidden="true">#</a></h2>
+<p>No extra cost:</p>
+<ul>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>RDS: not publicly accessible, encrypted, deletion protection on,
+<code>rds.force_ssl=1</code>, automated backups on.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Tasks and nodes in private subnets, <code>assignPublicIp=DISABLED</code>.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Control plane only behind the internal ALB; no listener for 9090/9091.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Security groups as in the table above, nothing wider.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>Execution role limited to the Guard Spec secrets and log groups.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>MFA_ENC_KEY</code> copied to an offline vault; no automatic rotation.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>readonlyRootFilesystem</code> on both containers; images pinned to a version
+(or digest), signatures verified before mirroring.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>ALB: <code>drop_invalid_header_fields</code> on; HTTP listener only redirects to
+HTTPS, if you add one.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/><code>UPSTREAM_ALLOW_PRIVATE=false</code> (keeps org upstreams off VPC addresses;
+cloud metadata addresses are always refused) and <code>UPSTREAM_KEY_ORGS</code>
+without <code>*</code> if untrusted users can create organizations.</li>
+<li class="task-list-item"><input class="task-list-item-checkbox" type="checkbox" disabled/>ECR basic scanning on push, if you mirror.</li>
+</ul>
+<p>Costs money but worth considering: AWS WAF in front of the public ALB (the
+gateway's rate limits are per task and in memory), ALB access logs, a
+Multi-AZ RDS instance.</p>
+<h2 id="upgrade-and-rollback">Upgrade and rollback<a class="anchor" href="#upgrade-and-rollback" aria-hidden="true">#</a></h2>
+<ol>
+<li>Read the <a href="/docs/upgrade/">CHANGELOG</a>. Before 1.0, minor versions can
+change the schema.</li>
+<li>Take an RDS snapshot.</li>
+<li>On the migration host, check out the new tag and run the
+<a href="#migrations-and-the-application-password">migrations and the app password</a>
+again.</li>
+<li>Register new task definition revisions with the new image tag and update
+the services (<code>aws ecs update-service --task-definition &lt;family&gt;:&lt;revision&gt;</code>).
+With the circuit breaker on, a failing deployment rolls back by itself.</li>
+<li>Check <code>/readyz</code> and the logs.</li>
+</ol>
+<p>Rolling back the images means updating the services to the previous task
+definition revision. That does not undo migrations: if the new version
+changed the schema, restore the snapshot (with the <code>MFA_ENC_KEY</code> that matches
+it). Model versions travel with the <code>gateway-full</code> tag.</p>
+<h2 id="troubleshooting">Troubleshooting<a class="anchor" href="#troubleshooting" aria-hidden="true">#</a></h2>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Symptom</th>
+  <th>Likely cause</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Task stops with <code>ResourceInitializationError</code> about secrets</td>
+  <td>Execution role lacks <code>secretsmanager:GetSecretValue</code> (or <code>kms:Decrypt</code>), or a wrong ARN</td>
+</tr>
+<tr>
+  <td>Task stops, log names a variable</td>
+  <td>A secret is missing, a default or too short</td>
+</tr>
+<tr>
+  <td><code>db connect</code> and exit</td>
+  <td>Security group, wrong host, <code>sslmode</code> missing (<code>rds.force_ssl</code>), or <code>guardspec_app</code> has no password yet</td>
+</tr>
+<tr>
+  <td>Migration fails on <code>CREATE ROLE guardspec_app</code></td>
+  <td>The role exists on this RDS instance from another database; use a separate instance</td>
+</tr>
+<tr>
+  <td>Targets unhealthy</td>
+  <td>Health check path or port wrong (<code>/readyz</code> on 8080, <code>/health</code> on 8081), or the task security group does not allow the ALB</td>
+</tr>
+<tr>
+  <td>Gateway task stops at start with a model error</td>
+  <td><code>gateway-full</code> with a volume mounted at <code>/models</code>, or not enough memory</td>
+</tr>
+<tr>
+  <td><code>/readyz</code> shows <code>&quot;layers&quot;:[&quot;l1&quot;]</code></td>
+  <td>Plain gateway image without models; use <code>gateway-full</code> or mount the models</td>
+</tr>
+<tr>
+  <td>Image pull fails</td>
+  <td>No NAT route to <code>ghcr.io</code>, or the ECR repository name or permissions are wrong</td>
+</tr>
+<tr>
+  <td>Streams stop after 60 seconds</td>
+  <td>ALB idle timeout</td>
+</tr>
+<tr>
+  <td>Logins all come from one address in the activity log</td>
+  <td><code>TRUSTED_PROXIES</code> not set to the ALB's range</td>
+</tr>
+</tbody>
+</table></div>
+
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/4448f51a3ca3507e15275506abddbb7f4ecd4e64/docs/deploy/aws.md">docs/deploy/aws.md</a> @ <code>4448f51a3ca3</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Security</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Created by <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.17.2/dist/mermaid.min.js" integrity="sha384-EOXBFmc3gx5mb+vn0vPvvGqACToJD24hhacX5Yx+8NUUQrHIle/Qi5Bg9o3zKwW2" crossorigin="anonymous"></script>
+<script>mermaid.initialize({startOnLoad: true, securityLevel: "strict", theme: matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "neutral"});</script>
+</body>
+</html>

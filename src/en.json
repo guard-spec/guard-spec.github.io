@@ -5,6 +5,7 @@
   "nav_how": "How it works",
   "nav_benchmarks": "Benchmarks",
   "nav_quickstart": "Quick start",
+  "nav_docs": "Docs",
   "hero_kicker": "Open source · Self-hosted",
   "hero_title": "Stop prompt injection <em>before</em> it reaches your LLM",
   "hero_lead": "Guard Spec is a gateway between your apps and any OpenAI-compatible API. It checks prompts, retrieved documents, tool results and MCP tools on the way in, and the model's answer on the way out. Prompts never leave your network.",
