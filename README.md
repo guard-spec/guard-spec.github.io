@@ -12,9 +12,11 @@ The Guard Spec website, served by GitHub Pages. The project itself lives in
 | `src/docs.json` | The documentation: the pinned ref of the main repository, every page and its Markdown source, the docs UI text |
 | `src/docs.html` | The documentation page template |
 | `src/icons/` | Lucide icons 0.468.0 (ISC), inlined at build time |
+| `src/playground.html`, `src/playground-live.html`, `src/playground-soon.html` | The playground page (`/playground/`, `/vi/playground/`); its text is the `pg_*` keys of `src/<lang>.json` |
+| `src/playground.json` | Playground settings: `api_url` of the proxy (empty: "coming soon", no script), `turnstile_sitekey`, `max_input_bytes`, the samples |
 | `src/og.html` | Source of the link preview image `assets/og.png` |
 | `assets/` | Stylesheet, logo, diagrams and admin UI screenshots |
-| `index.html`, `vi/index.html`, `docs/`, `vi/docs/` | Generated; commit them, Pages serves them as they are |
+| `index.html`, `vi/index.html`, `docs/`, `vi/docs/`, `playground/`, `vi/playground/` | Generated; commit them, Pages serves them as they are |
 | `build.py` | Builds all of the above |
 | `check_site.py` | Checks every link and asset in the built pages |
 
@@ -32,6 +34,25 @@ python3 -m http.server 8000    # preview at http://localhost:8000
 
 The diagrams and screenshots in `assets/` are copies of `docs/images/` in the
 main repository; copy them again when those change.
+
+## Playground (guardspec.io/playground)
+
+Visitors type a prompt, a RAG document or an MCP tool description and see
+what Guard Spec decides. The page calls `POST {api_url}/v1/scan` on the
+playground proxy (`deploy/playground` in the main repository), never a
+gateway directly and never with a key. `api_url` in `src/playground.json`
+is a build-time setting: while it is empty the page says the playground is
+coming soon and loads no script, so the page can be merged before the proxy
+is hosted. To go live: host the proxy, add the site's origin to its
+`ALLOWED_ORIGINS`, set `api_url` (https only), run `build.py`, commit.
+`assets/playground.js` writes the server's answers with `textContent` only.
+
+Preview against a local proxy (do not commit that output):
+
+```bash
+.venv/bin/python build.py --landing-only --playground-api http://localhost:8090
+python3 -m http.server 8765    # the proxy needs ALLOWED_ORIGINS=http://localhost:8765
+```
 
 ## Documentation (guardspec.io/docs)
 

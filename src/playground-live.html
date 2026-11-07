@@ -1,0 +1,59 @@
+<section class="pg">
+  <div class="wrap pg-grid">
+    <form class="card pg-form" id="pg-form" data-api="{{pg_api}}" data-max="{{pg_max}}" data-sitekey="{{pg_sitekey}}" novalidate>
+      <fieldset class="pg-kinds">
+        <legend>{{pg_kind_label}}</legend>
+        <label><input type="radio" name="kind" value="prompt" checked><span>{{pg_kind_prompt}}</span></label>
+        <label><input type="radio" name="kind" value="document"><span>{{pg_kind_document}}</span></label>
+        <label><input type="radio" name="kind" value="tool"><span>{{pg_kind_tool}}</span></label>
+      </fieldset>
+      <label class="pg-label" for="pg-text">{{pg_input_label}}</label>
+      <textarea id="pg-text" name="text" rows="9" placeholder="{{pg_placeholder}}" spellcheck="false" autocomplete="off"></textarea>
+      <div class="pg-row">
+        <span class="pg-count" id="pg-count"></span>
+        <button class="btn btn-primary" id="pg-scan" type="submit">{{icon:scan-search}}<span>{{pg_scan}}</span></button>
+      </div>
+      <div id="pg-turnstile"></div>
+      <div class="pg-samples">
+        <span>{{pg_samples}}</span>
+        <div class="pg-chips" id="pg-chips"></div>
+      </div>
+      <p class="pg-notice">{{icon:eye-off}}<span>{{pg_notice}}</span></p>
+    </form>
+
+    <div class="card pg-result" id="pg-result" aria-live="polite">
+      <div class="pg-empty" id="pg-empty">{{icon:shield-check}}<p>{{pg_empty}}</p></div>
+      <div id="pg-out" hidden>
+        <div class="pg-head">
+          <span class="pg-badge" id="pg-badge"></span>
+          <span class="pg-kind" id="pg-kind-out"></span>
+        </div>
+        <div class="pg-score">
+          <div class="pg-score-top"><span>{{pg_score}}</span><b id="pg-score"></b></div>
+          <div class="pg-bar pg-bar-big"><i id="pg-score-bar"></i><em class="pg-th" title="{{pg_threshold}}"></em></div>
+          <small>{{pg_threshold}}</small>
+        </div>
+        <h3>{{pg_layers}}</h3>
+        <div class="pg-layers" id="pg-layers"></div>
+        <dl class="pg-facts">
+          <div><dt>{{pg_label}}</dt><dd id="pg-label"></dd></div>
+          <div><dt>{{pg_decided}}</dt><dd id="pg-decided"></dd></div>
+          <div><dt>{{pg_latency}}</dt><dd id="pg-latency"></dd></div>
+        </dl>
+        <div id="pg-san-wrap"><h3>{{pg_sanitizer}}</h3><ul class="pg-notes" id="pg-san"></ul></div>
+        <div id="pg-sig-wrap" hidden><h3>{{pg_signals}}</h3><ul class="pg-tags" id="pg-sig"></ul></div>
+        <div id="pg-rules-wrap" hidden><h3>{{pg_rules}}</h3><ul class="pg-tags" id="pg-rules"></ul></div>
+      </div>
+      <p class="pg-error" id="pg-error" role="alert" hidden></p>
+    </div>
+  </div>
+  <div class="wrap pg-more">
+    <p>{{pg_more}}</p>
+    <div class="ctas">
+      <a class="btn btn-ghost" href="{{home}}docs/quickstart/">{{icon:book-open}}{{pg_cta_docs}}</a>
+      <a class="btn btn-ghost" href="https://github.com/guard-spec/guard-spec">{{icon:github}}{{pg_cta_github}}</a>
+    </div>
+  </div>
+</section>
+<script type="application/json" id="pg-i18n">{{pg_i18n}}</script>
+<script type="application/json" id="pg-data">{{pg_samples_json}}</script>

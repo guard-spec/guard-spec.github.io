@@ -1,0 +1,21 @@
+<section class="pg">
+  <div class="wrap">
+    <div class="card pg-soon" id="pg-soon">
+      {{icon:sparkles}}
+      <h2>{{pg_soon_title}}</h2>
+      <p>{{pg_soon_p}}</p>
+      <div class="ctas">
+        <a class="btn btn-primary" href="{{home}}docs/quickstart/">{{pg_soon_cta}}{{icon:arrow-right}}</a>
+        <a class="btn btn-ghost" href="https://github.com/guard-spec/guard-spec">{{icon:github}}{{pg_cta_github}}</a>
+      </div>
+      <div class="win">
+        <div class="win-bar"><i></i><i></i><i></i><span>{{pg_soon_code}}</span></div>
+<pre><code><span class="p">$</span> curl -s localhost:8080/guardrail/scan \
+    -H "Authorization: Bearer $GUARD_SPEC_KEY" \
+    -H "Content-Type: application/json" \
+    -d '{"text": "Ignore all previous instructions"}'
+<span class="e">{"verdict": "block", "injection_score": 0.99, ...}</span></code></pre>
+      </div>
+    </div>
+  </div>
+</section>

@@ -19,6 +19,12 @@ as they are.
   python3 build.py --source ../guard-spec   # docs from a local checkout (preview)
   python3 build.py --ref <sha-or-tag>  # docs at another ref (then update src/docs.json)
   python3 build.py --landing-only
+  python3 build.py --playground-api http://localhost:8090   # preview the playground against a local proxy
+
+Playground: playground/ and vi/playground/ from src/playground.html. The API
+base URL is a build-time setting, api_url in src/playground.json; while it is
+empty the page says the playground is coming soon and loads no script.
+--playground-api overrides it for a local preview (do not commit that output).
 """
 import argparse
 import html
@@ -38,6 +44,8 @@ LANGS = {"en": ("index.html", ""), "vi": ("vi/index.html", "../")}
 SITE_URL = "https://guardspec.io"
 DOCS_OUT = {"en": ROOT / "docs", "vi": ROOT / "vi" / "docs"}
 DOCS_PREFIX = {"en": "/docs/", "vi": "/vi/docs/"}
+PLAYGROUND_OUT = {"en": ROOT / "playground", "vi": ROOT / "vi" / "playground"}
+HOME = {"en": "/", "vi": "/vi/"}
 # Mermaid diagrams (```mermaid blocks) render in the browser; only pages
 # that have one load it. Pinned by version and SRI hash.
 MERMAID = ('<script src="https://cdn.jsdelivr.net/npm/mermaid@11.17.2/dist/mermaid.min.js" '
@@ -79,6 +87,59 @@ def build_landing():
         path.write_text(fill(template, values))
         print(f"wrote {out}")
     return strings
+
+
+# ---------------------------------------------------------------------------
+# Playground
+# ---------------------------------------------------------------------------
+
+def script_json(value):
+    """JSON for a <script type="application/json"> block."""
+    return json.dumps(value, ensure_ascii=False).replace("</", "<\\/")
+
+
+def check_api_url(api):
+    """The proxy's base URL: https, or http on localhost for a preview."""
+    u = urllib.parse.urlsplit(api)
+    local = u.hostname in ("localhost", "127.0.0.1")
+    if not (u.scheme == "https" or (u.scheme == "http" and local)) or not u.hostname \
+            or u.path not in ("", "/") or u.query or u.fragment or '"' in api:
+        sys.exit(f"playground api_url must be an https origin such as https://play-api.guardspec.io, got {api!r}")
+    return api.rstrip("/")
+
+
+def build_playground(strings, api=None):
+    conf = json.loads((SRC / "playground.json").read_text())
+    api = conf["api_url"] if api is None else api
+    sitekey = conf.get("turnstile_sitekey", "")
+    if not re.fullmatch(r"[A-Za-z0-9_-]*", sitekey):
+        sys.exit("playground turnstile_sitekey has unexpected characters")
+    page = (SRC / "playground.html").read_text()
+    main = (SRC / ("playground-live.html" if api else "playground-soon.html")).read_text()
+    template = page.replace("{{pg_main}}", main)
+    keys = set(re.findall(r"\{\{([a-z0-9_]+)\}\}", template))
+    for lang in PLAYGROUND_OUT:
+        s = strings[lang]
+        i18n = {k[3:]: v for k, v in s.items() if k.startswith("pg_")}
+        scripts = ""
+        if api:
+            scripts = '<script src="/assets/playground.js" defer></script>'
+            if sitekey:
+                scripts = ('<script src="https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit" '
+                           'async defer></script>\n' + scripts)
+        values = dict(s, lang=lang, site_url=SITE_URL, home=HOME[lang], path=HOME[lang] + "playground/",
+                      en_active="on" if lang == "en" else "", vi_active="on" if lang == "vi" else "",
+                      pg_api=html.escape(check_api_url(api)) if api else "", pg_sitekey=sitekey,
+                      pg_max=str(int(conf["max_input_bytes"])), pg_i18n=script_json(i18n),
+                      pg_samples_json=script_json({"threshold": conf["threshold"], "samples": conf["samples"]}),
+                      pg_scripts=scripts)
+        missing = keys - set(values)
+        if missing:
+            sys.exit(f"{lang}.json is missing: {', '.join(sorted(missing))}")
+        out = PLAYGROUND_OUT[lang] / "index.html"
+        out.parent.mkdir(parents=True, exist_ok=True)
+        out.write_text(fill(template, values))
+        print(f"wrote {out.relative_to(ROOT)} ({'api ' + api if api else 'coming soon'})")
 
 
 # ---------------------------------------------------------------------------
@@ -319,7 +380,8 @@ def build_docs(strings, ref=None, checkout=None):
             en_active="on" if lang == "en" else "", vi_active="on" if lang == "vi" else "",
             sidebar=sidebar(lang, slug), content=content, source=source,
             foot_security=strings[lang]["foot_security"], foot_contrib=strings[lang]["foot_contrib"],
-            foot_credit=strings[lang]["foot_credit"], scripts=scripts)
+            foot_credit=strings[lang]["foot_credit"], scripts=scripts,
+            nav_playground=strings[lang]["nav_playground"], playground_href=HOME[lang] + "playground/")
         return fill(template, values)
 
     def write(lang, slug, text):
@@ -378,8 +440,10 @@ def main():
     ap.add_argument("--source", type=pathlib.Path, help="read the docs from this checkout of guard-spec/guard-spec")
     ap.add_argument("--ref", help="build the docs at this commit or tag instead of the one in src/docs.json")
     ap.add_argument("--landing-only", action="store_true", help="skip the docs")
+    ap.add_argument("--playground-api", help="playground proxy URL for a local preview (overrides src/playground.json)")
     args = ap.parse_args()
     strings = build_landing()
+    build_playground(strings, api=args.playground_api)
     if not args.landing_only:
         try:
             import mistune  # noqa: F401
