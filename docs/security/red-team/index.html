@@ -1,0 +1,294 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Red-team reports · Guard Spec</title>
+<meta name="description" content="Guard Spec improves from texts it gets wrong. This page describes how to report one, what maintainers do with a report, how a reported text becomes trainin">
+<meta property="og:title" content="Red-team reports · Guard Spec">
+<meta property="og:description" content="Guard Spec improves from texts it gets wrong. This page describes how to report one, what maintainers do with a report, how a reported text becomes trainin">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/docs/security/red-team/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/security/red-team/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/docs/" class="on">Docs</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/security/red-team/" class="on">EN</a><a href="/vi/docs/" class="">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Documentation</span></summary>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class="child"><a href="/docs/quickstart/integrations/">Integrations</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/production-compose/">Production compose</a></li><li class="child"><a href="/docs/deploy/managed-postgres/">Managed PostgreSQL</a></li><li class="child"><a href="/docs/deploy/airgapped/">Air-gapped</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class="child"><a href="/docs/operations/sizing/">Sizing and layers</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class="child"><a href="/docs/models/benchmark/">Benchmark</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li><li class="child on"><a href="/docs/security/red-team/">Red-team reports</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class="child"><a href="/docs/quickstart/integrations/">Integrations</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/production-compose/">Production compose</a></li><li class="child"><a href="/docs/deploy/managed-postgres/">Managed PostgreSQL</a></li><li class="child"><a href="/docs/deploy/airgapped/">Air-gapped</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class="child"><a href="/docs/operations/sizing/">Sizing and layers</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class="child"><a href="/docs/models/benchmark/">Benchmark</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li><li class="child on"><a href="/docs/security/red-team/">Red-team reports</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Red-team reports</h1>
+
+<p>Guard Spec improves from texts it gets wrong. This page describes how to
+report one, what maintainers do with a report, how a reported text becomes
+training or hold-out data, and how the fix reaches a release.</p>
+<p>There are two kinds of report:</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Kind</th>
+  <th>Meaning</th>
+  <th>Issue form</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Bypass</strong></td>
+  <td>an attack text that was allowed (or only logged)</td>
+  <td><a href="https://github.com/guard-spec/guard-spec/issues/new?template=bypass_report.yml">Bypass (prompt got through)</a></td>
+</tr>
+<tr>
+  <td><strong>False positive</strong></td>
+  <td>a legitimate text that was blocked, routed or flagged</td>
+  <td><a href="https://github.com/guard-spec/guard-spec/issues/new?template=false_positive_report.yml">False positive (benign blocked)</a></td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="before-you-report">Before you report<a class="anchor" href="#before-you-report" aria-hidden="true">#</a></h2>
+<ul>
+<li><strong>No personal data, secrets or customer data.</strong> Issues are public. Post a
+synthetic or anonymised text: replace names, e-mail addresses, phone
+numbers, account and ID numbers, API keys, internal host names and customer
+content with placeholders (<code>user@example.com</code>, <code>[NAME]</code>, <code>sk-REDACTED</code>).
+Keep the wording that makes the detector fail.</li>
+<li><strong>Severe bypasses are vulnerabilities.</strong> If the text would let an attacker
+exfiltrate data, call tools or reach another tenant in a real deployment,
+or it is a general technique (an encoding, a sanitizer gap, a policy-engine
+flaw) that defeats every layer for a whole class of texts, report it
+privately as described in
+<a href="/docs/security/policy/#guardrail-bypasses-public-issue-or-private-report">SECURITY.md</a>.
+It is triaged there, and its text joins the data only after the fix and the
+advisory are public.</li>
+<li><strong>Consent.</strong> Both forms ask you to agree that the text may be added to the
+project's training or hold-out data and published under Apache-2.0. Without
+that line a report is still useful for a fix, but its text is not imported.</li>
+</ul>
+<h2 id="how-to-report">How to report<a class="anchor" href="#how-to-report" aria-hidden="true">#</a></h2>
+<p><strong>From the admin UI.</strong> On the <strong>Request log</strong> page, use <strong>Report</strong> on a row,
+or in the row's details. The dialog picks the kind from the decision (an
+allowed or logged row is a bypass, a blocked or routed one a false positive;
+you can change it), asks where the text appeared (user prompt, RAG document,
+tool result, MCP tool description) and shows the fields it will send:</p>
+<ul>
+<li>decision, <code>injection_score</code> (fused over the layers that ran), label, the
+rule that decided, <code>anomaly_score</code> (L3), <code>toxicity_score</code>, the sanitizer
+flags and the model of the request;</li>
+<li>the gateway version and the detector layers, classifier and fusion from the
+Models page (<code>GET /v1/gateway/models</code>), when the control plane can reach
+the gateway.</li>
+</ul>
+<p>The request log keeps no per-layer scores; <code>POST /guardrail/scan</code> returns
+<code>scores.l1</code>, <code>l2</code> and <code>l3</code> if you want to add them. The request ID, hash,
+route target and API key are never included.</p>
+<p>The text of the request is included only when the organization stores
+content (<a href="/docs/operations/#audit-privacy">Audit privacy</a>) <strong>and</strong> you tick
+<strong>Include the text</strong> after the warning. The dialog then shows the last user
+message (or the last tool result, for a RAG document or tool result) in an
+editable box: anonymise it there. <strong>Open GitHub issue</strong> opens the form in a
+new tab with these fields filled in; you review it, fill in the language,
+attack type and expected outcome, and post it yourself. The control plane
+sends nothing anywhere. If the prefilled link would be longer than GitHub
+accepts (about 8,000 characters), the report is copied to the clipboard and
+the empty form opens instead. Every role that can read the request log,
+viewers included, can report.</p>
+<p><strong>Without the admin UI.</strong> Open the form directly and fill in the same
+fields, from the audit row or a <code>POST /guardrail/scan</code> response.</p>
+<p><strong>Minimal pairs.</strong> A bypass and a benign text that differ in a few words are
+the most useful reports. Put the other issue's number in <strong>Related report</strong>
+so that both land in the same data split.</p>
+<h2 id="what-happens-next">What happens next<a class="anchor" href="#what-happens-next" aria-hidden="true">#</a></h2>
+<h3 id="triage-labels">Triage labels<a class="anchor" href="#triage-labels" aria-hidden="true">#</a></h3>
+<p>The forms add <code>detection</code>, <code>bypass</code> or <code>false-positive</code>, and <code>needs-triage</code>.
+A maintainer then removes <code>needs-triage</code> and adds one outcome:</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Label</th>
+  <th>Meaning</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>triage:train</code></td>
+  <td>accepted; the text goes to the training data (train or validation split)</td>
+</tr>
+<tr>
+  <td><code>triage:holdout</code></td>
+  <td>accepted; the text goes to the community hold-out, never trained on</td>
+</tr>
+<tr>
+  <td><code>triage:duplicate</code></td>
+  <td>the same text or the same technique is already reported; the issue is closed with a link to the first one</td>
+</tr>
+<tr>
+  <td><code>triage:rejected</code></td>
+  <td>not a detector error (expected behaviour, a configuration problem, an upstream model issue) or no usable text</td>
+</tr>
+<tr>
+  <td><code>triage:security</code></td>
+  <td>severe: moved to a private security advisory; the public issue is closed without details</td>
+</tr>
+</tbody>
+</table></div>
+<p>Optional labels during triage:</p>
+<ul>
+<li><code>attack:&lt;label&gt;</code> sets the attack label of a bypass when the reporter's
+attack type is wrong or missing (<code>attack:direct_injection</code>,
+<code>attack:indirect_injection</code>, <code>attack:jailbreak</code>, <code>attack:prompt_extraction</code>,
+<code>attack:data_exfiltration</code>, <code>attack:tool_poisoning</code>, <code>attack:obfuscation</code>,
+the labels of <a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/train/LABELING.md">train/LABELING.md</a>).</li>
+<li>A maintainer may edit the issue to anonymise the text further; the
+importer reads the issue as it is at import time.</li>
+</ul>
+<h3 id="training-or-hold-out">Training or hold-out<a class="anchor" href="#training-or-hold-out" aria-hidden="true">#</a></h3>
+<p>A maintainer decides per report, before anyone trains on it:</p>
+<ul>
+<li><strong>Hold-out</strong> when the report shows a new technique, a regression, or a
+pair at the decision boundary that a fix should be measured on. The
+community hold-out is scored once per candidate model, like
+<code>val_v3_holdout</code>, and is never used for training, model selection,
+thresholds or calibration.</li>
+<li><strong>Training</strong> for the rest: variants of known techniques and ordinary false
+positives. The group hash sends about 12% of them to the validation split.</li>
+<li>When in doubt, hold-out. A text can move from hold-out to training in a
+later data version (and is then no longer used to measure); never the
+other way.</li>
+</ul>
+<h3 id="import-and-deduplication">Import and deduplication<a class="anchor" href="#import-and-deduplication" aria-hidden="true">#</a></h3>
+<p><code>train/import_issues.py</code> turns triaged issues into staging files in the
+schema of <code>train/data</code> (<code>train/DATA_CARD.md</code>). It needs no training
+environment:</p>
+<pre><code class="language-bash"># From GitHub (token optional, read from GITHUB_TOKEN or GH_TOKEN, never stored)
+uv run --no-project python train/import_issues.py --repo guard-spec/guard-spec
+
+# From a local export, e.g. gh issue list --label triage:train --state all \
+#   --json number,title,body,labels,author,url &gt; issues.json
+uv run --no-project python train/import_issues.py --from-json issues.json
+
+# Tests (fixtures only, no network)
+uv run --no-project python -m unittest discover -s train/tests -v
+</code></pre>
+<p>It writes <code>community_train.jsonl</code>, <code>community_val.jsonl</code>,
+<code>community_holdout.jsonl</code> and <code>import_report.json</code> to <code>train/runs/community/</code>
+(gitignored, <code>--out</code> to change). Each row is</p>
+<pre><code class="language-json">{&quot;id&quot;: &quot;en-bfb33ffec3af&quot;, &quot;text&quot;: &quot;…&quot;, &quot;labels&quot;: [&quot;prompt_extraction&quot;], &quot;lang&quot;: &quot;en&quot;, &quot;variant&quot;: &quot;orig&quot;,
+ &quot;source&quot;: &quot;community:issue#101&quot;, &quot;license&quot;: &quot;Apache-2.0&quot;, &quot;group&quot;: &quot;community.101&quot;}
+</code></pre>
+<p>An issue is refused, with the reason in <code>import_report.json</code>, when it:</p>
+<ul>
+<li>is not triaged (<code>needs-triage</code>, or no <code>triage:train</code> / <code>triage:holdout</code>),
+or is labelled <code>triage:duplicate</code>, <code>triage:rejected</code> or <code>triage:security</code>;</li>
+<li>lacks the consent or the &quot;synthetic or anonymised&quot; confirmation;</li>
+<li>is in a language the classifier data does not cover (English and
+Vietnamese: with diacritics, without diacritics, teencode);</li>
+<li>looks like it contains personal data or a secret: e-mail addresses (except
+<code>example.com</code>, <code>.example</code>, <code>.test</code> and other reserved domains), phone
+numbers, national ID and social security numbers, payment card numbers
+(Luhn-checked), IBANs, API keys and tokens, private keys. These are simple
+regular expressions: they catch mistakes, not every case, so triage still
+reads the text;</li>
+<li>duplicates a text in <code>train/data</code> (exact, or after the normalisation of
+<code>eval/fingerprints.txt</code>: Unicode NFC, diacritics stripped, lower case,
+whitespace collapsed) or in <code>eval/</code> (fingerprint, normalised text, or a
+character 5-gram Jaccard similarity above 0.8, the leakage guard of
+<code>train/data/build_data.py</code>);</li>
+<li>repeats a text of another report in the same import (with the opposite
+label, both are refused until triage decides).</li>
+</ul>
+<h3 id="the-pair-aware-split">The pair-aware split<a class="anchor" href="#the-pair-aware-split" aria-hidden="true">#</a></h3>
+<p>Reports linked through <strong>Related report</strong> (directly or in a chain) form one
+group, <code>community.&lt;lowest issue number&gt;</code>. A whole group goes to the same
+split, so the benign and the attack text of a minimal pair never end up on
+both sides of training and measurement. A group with any <code>triage:holdout</code>
+report goes to the hold-out; the others are split by the same hash as the
+rest of the training data (<code>sha256(&quot;split:&quot; + group)</code>, 12% to validation).</p>
+<h3 id="eval-is-never-touched"><code>eval/</code> is never touched<a class="anchor" href="#eval-is-never-touched" aria-hidden="true">#</a></h3>
+<p>Reported texts are never added to <code>eval/</code>, and nothing is tuned on it
+(<a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/CONTRIBUTING.md#the-one-rule-about-eval">CONTRIBUTING.md</a>). The importer
+reads <code>eval/</code> only to drop texts that are already there or nearly so. A
+change to <code>eval/</code> needs a new eval release with its own provenance, never a
+community report.</p>
+<h3 id="into-the-training-data">Into the training data<a class="anchor" href="#into-the-training-data" aria-hidden="true">#</a></h3>
+<p>A maintainer reviews the staging files and the report, then commits the
+accepted rows in a pull request under <code>train/data/community/</code>
+(<code>community_train.jsonl</code>, <code>community_val.jsonl</code>, <code>community_holdout.jsonl</code>),
+which makes them part of the dedupe set of later imports. <code>train/DATA_CARD.md</code>
+lists their counts and the reporters. The first such pull request also
+teaches <code>train/data/build_data.py</code> to read that directory (training and
+validation rows into the pool with their groups, the hold-out as its own
+split), with the same leakage guard as every other row; until then no
+community row reaches a model.</p>
+<h2 id="how-fixes-ship">How fixes ship<a class="anchor" href="#how-fixes-ship" aria-hidden="true">#</a></h2>
+<ol>
+<li><strong>A rule or a model.</strong> A narrow, high-precision pattern becomes an L1
+rule; anything broader waits for a classifier trained with the new rows.
+Rules are developed on the reports and on <code>train/data</code> validation splits,
+never on <code>eval/</code>, and the pull request says which data it used.</li>
+<li><strong>Measured on the hold-out.</strong> A candidate is scored once on the community
+hold-out and the other hold-out splits, then on <code>eval/</code> at the end, with
+the numbers in the pull request.</li>
+<li><strong>Shadow mode.</strong> A new classifier runs next to the active one
+(<code>SHADOW_L2_MODEL</code>, README
+<a href="/docs/operations/#shadow-mode-and-model-reload">Shadow mode and model reload</a>):
+operators see on the <strong>Models</strong> page where it would block or allow
+differently on their own traffic, without changing a decision.</li>
+<li><strong>Default.</strong> After a release with the candidate in shadow mode and no
+regressions reported, the model manifest recommends it and a later
+release makes it the default. The CHANGELOG names the reports it fixes.</li>
+</ol>
+<p>A reporter can check a fix with the release that names their issue, or
+earlier with <code>POST /guardrail/scan</code> on a gateway running the candidate.</p>
+<h2 id="credit">Credit<a class="anchor" href="#credit" aria-hidden="true">#</a></h2>
+<ul>
+<li>The CHANGELOG entry of the release with the fix thanks the reporters by
+their GitHub name and issue number.</li>
+<li><code>train/DATA_CARD.md</code> lists the reporters whose texts are in the data
+(<code>import_report.json</code> has the list for each import).</li>
+<li>Private reports are credited in the security advisory, as SECURITY.md
+describes.</li>
+</ul>
+<p>Say in the issue if you prefer not to be named.</p>
+
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/docs/red-team.md">docs/red-team.md</a> @ <code>82361eff5c2a</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Security</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Created by <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

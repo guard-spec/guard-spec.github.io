@@ -1,0 +1,1149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Benchmark · Guard Spec</title>
+<meta name="description" content="This page compares Guard Spec&#x27;s detector with other open prompt-injection detectors on Guard Spec&#x27;s own eval set and on public datasets. Everything on it c">
+<meta property="og:title" content="Benchmark · Guard Spec">
+<meta property="og:description" content="This page compares Guard Spec&#x27;s detector with other open prompt-injection detectors on Guard Spec&#x27;s own eval set and on public datasets. Everything on it c">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/docs/models/benchmark/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/models/benchmark/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/docs/" class="on">Docs</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/models/benchmark/" class="on">EN</a><a href="/vi/docs/" class="">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Documentation</span></summary>
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class="child"><a href="/docs/quickstart/integrations/">Integrations</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/production-compose/">Production compose</a></li><li class="child"><a href="/docs/deploy/managed-postgres/">Managed PostgreSQL</a></li><li class="child"><a href="/docs/deploy/airgapped/">Air-gapped</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class="child"><a href="/docs/operations/sizing/">Sizing and layers</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class="child on"><a href="/docs/models/benchmark/">Benchmark</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li><li class="child"><a href="/docs/security/red-team/">Red-team reports</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Documentation"><ul><li class=""><a href="/docs/quickstart/">Quick start</a></li><li class="child"><a href="/docs/quickstart/integrations/">Integrations</a></li><li class=""><a href="/docs/deploy/">Deploy</a></li><li class="child"><a href="/docs/deploy/production-compose/">Production compose</a></li><li class="child"><a href="/docs/deploy/managed-postgres/">Managed PostgreSQL</a></li><li class="child"><a href="/docs/deploy/airgapped/">Air-gapped</a></li><li class="child"><a href="/docs/deploy/aws/">AWS</a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform for AWS</a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud</a></li><li class="child"><a href="/docs/deploy/on-premise/">On-premise</a></li><li class=""><a href="/docs/configuration/">Configuration</a></li><li class="child"><a href="/docs/configuration/routing/">Routing</a></li><li class="child"><a href="/docs/configuration/apis/">APIs</a></li><li class=""><a href="/docs/operations/">Operations</a></li><li class="child"><a href="/docs/operations/alerts/">Alerts and notifications</a></li><li class="child"><a href="/docs/operations/admin-ui/">Admin UI</a></li><li class="child"><a href="/docs/operations/sizing/">Sizing and layers</a></li><li class=""><a href="/docs/upgrade/">Upgrade</a></li><li class=""><a href="/docs/models/">Models</a></li><li class="child"><a href="/docs/models/versions/">Versions, pinning and rollback</a></li><li class="child on"><a href="/docs/models/benchmark/">Benchmark</a></li><li class=""><a href="/docs/security/">Security</a></li><li class="child"><a href="/docs/security/verifying-releases/">Verifying a release</a></li><li class="child"><a href="/docs/security/risks/">Risks and hardening</a></li><li class="child"><a href="/docs/security/policy/">Reporting a vulnerability</a></li><li class="child"><a href="/docs/security/red-team/">Red-team reports</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Benchmark</h1>
+
+<p>This page compares Guard Spec's detector with other open prompt-injection
+detectors on Guard Spec's own eval set and on public datasets. Everything on it
+comes from one command, with every dataset and model pinned, so anyone can
+rerun it and check the numbers.</p>
+<p>It is a measurement and nothing else. No threshold, weight or rule of Guard
+Spec was tuned on these datasets or on <code>eval/</code> for this page, and the other
+detectors run with their published defaults.</p>
+<ul>
+<li><a href="#summary">Summary</a></li>
+<li><a href="#reproduce">Reproduce</a></li>
+<li><a href="#what-is-measured">What is measured</a></li>
+<li><a href="#datasets-and-licenses">Datasets</a></li>
+<li><a href="#detectors">Detectors</a></li>
+<li><a href="#results">Results</a></li>
+<li><a href="#discussion">Discussion</a></li>
+</ul>
+<h2 id="summary">Summary<a class="anchor" href="#summary" aria-hidden="true">#</a></h2>
+<p>Run on 2026-11-07 (19:30 UTC on 2026-11-06) at commit <code>2e182a0</code> (v0.2.1)
+with this benchmark's harness, on an Apple M3 Max laptop (macOS 15.4.1); the
+full tables are under <a href="#results">Results</a>. Default decisions, all languages:</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Dataset</th>
+  <th>Guard Spec L1+L2+L3: AUC / TPR / FPR</th>
+  <th>ProtectAI v2: AUC / TPR / FPR</th>
+  <th>LLM Guard default: TPR / FPR</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>eval/</code> (EN + VI, 2,176 rows)</td>
+  <td>0.987 / 95.0% / 1.4%</td>
+  <td>0.784 / 88.6% / 50.6%</td>
+  <td>83.0% / 45.6%</td>
+</tr>
+<tr>
+  <td><code>deepset</code> test (116, half German/Spanish)</td>
+  <td>0.963 / 33.3% / 0.0%</td>
+  <td>0.901 / 36.7% / 0.0%</td>
+  <td>31.7% / 0.0%</td>
+</tr>
+<tr>
+  <td><code>jailbreak-classification</code> test (262)</td>
+  <td>0.994 / 92.1% / 0.0%</td>
+  <td>0.979 / 84.2% / 1.6%</td>
+  <td>84.2% / 1.6%</td>
+</tr>
+<tr>
+  <td><code>Gandalf</code> test (112, attacks only)</td>
+  <td>- / 100% / -</td>
+  <td>- / 100% / -</td>
+  <td>100% / -</td>
+</tr>
+<tr>
+  <td><code>SPML</code> sample (2,000)</td>
+  <td>0.974 / 36.4% / 0.0%</td>
+  <td><strong>0.997 / 99.2% / 8.4%</strong></td>
+  <td>99.1% / 6.6%</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>On our own set Guard Spec is far ahead, which is expected and <strong>not a fair
+test of ProtectAI</strong>: half of <code>eval/</code> is Vietnamese (ProtectAI is
+English-only) and its benign rows are hard negatives written to look like
+attacks. On the English half ProtectAI reaches AUC 0.897 and flags 23% of
+benign rows.</li>
+<li>On <strong>SPML</strong>, the one public set no detector here was trained on, <strong>ProtectAI
+is clearly better</strong>: AUC 0.997 against 0.974 and, at the same 1% FPR, 97.6%
+of attacks against 84.5% (89.2% with L1+L2). At its default threshold
+Guard Spec blocks only 36% of SPML attacks, with no false positive;
+ProtectAI blocks 99% with 8% false positives.</li>
+<li>On <code>deepset</code> and <code>jailbreak-classification</code> Guard Spec ranks better (AUC),
+but Guard Spec's classifier was trained on their <code>train</code> splits, so those
+two rows favour it. On <code>deepset</code> both detectors block only about a third of
+attacks at their defaults.</li>
+<li>Guard Spec is smaller (237 MB int8 against 739 MB fp32) and faster per row
+(p50 5–8 ms against 32–67 ms on short inputs, one thread). The comparison
+is not like for like: our models are int8, ProtectAI's published ONNX file
+is fp32.</li>
+<li>Meta Prompt Guard 2 is gated and not in these tables; anyone with access
+can add it with one variable (<a href="#including-meta-prompt-guard-2">below</a>).</li>
+</ul>
+<h2 id="reproduce">Reproduce<a class="anchor" href="#reproduce" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash">make benchmark
+</code></pre>
+<p>That target fetches ONNX Runtime and libtokenizers (<code>make onnx-deps</code>, pinned by
+SHA-256), runs <code>bench/run.py</code> with the Python packages locked in
+<code>bench/uv.lock</code> (needs <a href="https://docs.astral.sh/uv/">uv</a>), and writes:</p>
+<ul>
+<li><code>bench/results/results.json</code>: every metric, the machine and the versions;</li>
+<li><code>bench/results/results.md</code>: the tables;</li>
+<li>the generated block of this page (between the <code>bench:begin</code> and
+<code>bench:end</code> markers).</li>
+</ul>
+<p>What it does:</p>
+<ol>
+<li>Downloads the public datasets at the pinned Hugging Face commits and
+converts them to the <code>eval/</code> row schema.</li>
+<li>Pulls the models with <code>go run ./cmd/models pull</code>, which checks every file
+against the SHA-256 values in <code>models/manifest.yaml</code>:
+<code>guardspec-classifier@v3b</code>, <code>multilingual-e5-small@614241f</code> and
+<code>protectai-deberta-v3-base-pi-v2@90c9989</code>.</li>
+<li>Runs Guard Spec through <code>cmd/eval -scores</code> (built with <code>-tags onnx</code>), which
+is the gateway's input path: sanitizer, detector layers, fusion and the
+<code>/v1/scan</code> block rule.</li>
+<li>Runs the ProtectAI model in ONNX Runtime from Python.</li>
+<li>Computes the metrics below for every detector, dataset and language.</li>
+</ol>
+<p>Options:</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Variable</th>
+  <th>Default</th>
+  <th>Effect</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>BENCH_CACHE</code></td>
+  <td><code>bench/.cache</code></td>
+  <td>Downloads, converted datasets, per-row scores. About 1.2 GB (ProtectAI's ONNX file is 739 MB). The run stops when less than 6 GB is free there.</td>
+</tr>
+<tr>
+  <td><code>MODEL_DIR</code></td>
+  <td><code>$BENCH_CACHE/models</code></td>
+  <td>Use already pulled Guard Spec models (<code>&lt;dir&gt;/cache/&lt;name&gt;/&lt;version&gt;</code>) instead of pulling them.</td>
+</tr>
+<tr>
+  <td><code>ONNX_DIR</code></td>
+  <td><code>.onnx</code></td>
+  <td>Where <code>make onnx-deps</code> puts the native libraries.</td>
+</tr>
+<tr>
+  <td><code>PROMPTGUARD=1</code></td>
+  <td>off</td>
+  <td>Also run Meta Prompt Guard 2, see below.</td>
+</tr>
+</tbody>
+</table></div>
+<p>GitHub Actions: the <strong>Benchmark</strong> workflow (<code>.github/workflows/benchmark.yml</code>)
+runs <code>make benchmark</code> on <code>ubuntu-24.04</code> when started by hand (Actions &gt;
+Benchmark &gt; Run workflow); it never runs on its own. It writes the tables to
+the job summary and uploads <code>bench/results/</code> and this page as the
+<code>benchmark-results</code> artifact.</p>
+<h3 id="including-meta-prompt-guard-2">Including Meta Prompt Guard 2<a class="anchor" href="#including-meta-prompt-guard-2" aria-hidden="true">#</a></h3>
+<p><code>meta-llama/Llama-Prompt-Guard-2-86M</code> and <code>-22M</code> are gated on Hugging Face
+under the Llama 4 Community License: they cannot be downloaded without an
+account that accepted the terms, so they are not in the published tables. With
+access:</p>
+<ol>
+<li>Accept the license on both model pages.</li>
+<li>Export a read-only token of that account as <code>HF_TOKEN</code> in your shell
+(<code>huggingface_hub</code> reads it; <code>bench/run.py</code> never reads, prints or stores
+it).</li>
+<li>Run <code>make benchmark PROMPTGUARD=1</code>. This installs the <code>promptguard</code> extra
+(PyTorch and Transformers, CPU) and adds two detector rows, at the pinned
+revisions <code>a8ded8e</code> (86M) and <code>11614a1</code> (22M), with the model's argmax
+decision (malicious probability ≥ 0.5), the first 512 tokens, one thread.</li>
+</ol>
+<p>In the workflow, add the token as the repository secret <code>HF_READ_TOKEN</code> and
+check &quot;promptguard&quot; when starting the run.</p>
+<h2 id="what-is-measured">What is measured<a class="anchor" href="#what-is-measured" aria-hidden="true">#</a></h2>
+<p>For every detector × dataset × language:</p>
+<ul>
+<li><strong>ROC AUC</strong> of the detector's score, with a 95% bootstrap interval (1,000
+resamples, fixed seed). It does not depend on any threshold.</li>
+<li><strong>TPR and FPR at the default decision</strong>: the share of attack rows and of
+benign rows the detector flags with its own published default. For Guard
+Spec that is the gateway's <code>/v1/scan</code> rule (detector score ≥ 0.85, or
+sanitizer anomaly ≥ 0.6, or an input the sanitizer rejects), the decision a
+deployment makes.</li>
+<li><strong>TPR at FPR ≤ 1%</strong>: the share of attacks caught at the lowest threshold
+that flags at most 1% of that group's benign rows. The threshold is picked
+after the fact on the same rows, for every detector alike, so it is an
+upper bound on what a tuned threshold would give; it compares the score
+rankings, not the defaults. With fewer than 100 benign rows it means &quot;no
+false positive at all&quot;.</li>
+<li><strong>Latency p50 / p95</strong> per row, in milliseconds: one row at a time on one
+machine, with ONNX Runtime (or PyTorch) set to one intra-op thread. For
+Guard Spec it is the sanitizer plus the detector as the gateway runs them;
+with L2 and L3 both on, the gateway scores the two models concurrently, so
+that configuration can use two cores for one row. For the Python detectors
+it is tokenization plus the model call. Five warm-up rows are not timed for
+the Python detectors; <code>cmd/eval</code> times every row, model loading excluded.</li>
+<li><strong>Model size</strong>: the size on disk of the model weights the detector loads.</li>
+</ul>
+<p>Datasets without benign rows (Gandalf) only have a TPR.</p>
+<h2 id="datasets-and-licenses">Datasets and licenses<a class="anchor" href="#datasets-and-licenses" aria-hidden="true">#</a></h2>
+<p>Every dataset was checked on its Hugging Face card at the pinned commit. The
+benchmark downloads them at run time; no row from them is stored in this
+repository beyond what <code>eval/</code> already contains (see
+<a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/eval/LICENSES.md">eval/LICENSES.md</a>).</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Dataset</th>
+  <th>License</th>
+  <th>Used</th>
+  <th>Why</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>eval/</code> (Guard Spec)</td>
+  <td>Apache-2.0 (project rows), Apache-2.0 / MIT (sourced rows)</td>
+  <td>yes</td>
+  <td>Our published EN/VI set.</td>
+</tr>
+<tr>
+  <td><a href="https://huggingface.co/datasets/deepset/prompt-injections"><code>deepset/prompt-injections</code></a></td>
+  <td>Apache-2.0</td>
+  <td>yes, <code>test</code></td>
+  <td>Standard small benchmark; mixed English and German/Spanish.</td>
+</tr>
+<tr>
+  <td><a href="https://huggingface.co/datasets/jackhhao/jailbreak-classification"><code>jackhhao/jailbreak-classification</code></a></td>
+  <td>Apache-2.0</td>
+  <td>yes, balanced <code>test</code></td>
+  <td>Jailbreak prompts versus benign prompts.</td>
+</tr>
+<tr>
+  <td><a href="https://huggingface.co/datasets/Lakera/gandalf_ignore_instructions"><code>Lakera/gandalf_ignore_instructions</code></a></td>
+  <td>MIT</td>
+  <td>yes, <code>test</code></td>
+  <td>Real attacks from the Gandalf game (attacks only).</td>
+</tr>
+<tr>
+  <td><a href="https://huggingface.co/datasets/reshabhs/SPML_Chatbot_Prompt_Injection"><code>reshabhs/SPML_Chatbot_Prompt_Injection</code></a></td>
+  <td>MIT</td>
+  <td>yes, 1,000 rows per label, seeded sample</td>
+  <td>Chatbot-specific injections; no detector here trained on it.</td>
+</tr>
+<tr>
+  <td><code>xTRam1/safe-guard-prompt-injection</code></td>
+  <td>none on the card (revision <code>a3a877d608f3</code>)</td>
+  <td>no</td>
+  <td>No license.</td>
+</tr>
+<tr>
+  <td><code>Lakera/mosscap_prompt_injection</code></td>
+  <td>MIT</td>
+  <td>no</td>
+  <td>Unlabelled: every prompt sent to the game, attack or not.</td>
+</tr>
+<tr>
+  <td><code>jayavibhav/prompt-injection</code></td>
+  <td>none on the card</td>
+  <td>no</td>
+  <td>No license.</td>
+</tr>
+</tbody>
+</table></div>
+<p>Row counts and languages per run are in the generated tables below.</p>
+<p><strong>Vietnamese.</strong> We found no public, licensed Vietnamese prompt-injection
+dataset. The only Vietnamese rows here are those of <code>eval/</code>, which are
+synthetic and labelled by AI agents (see <a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/eval/README.md">eval/README.md</a>).</p>
+<p><strong>Language column.</strong> <code>eval/</code> carries a language per row (<code>en</code>, <code>vi</code>). For the
+public sets, rows with German, Spanish or Cyrillic markers (the rule of
+<code>eval/build/build.py</code>) are <code>other</code>, the rest <code>en</code>. Only <code>deepset</code> has a
+sizeable <code>other</code> share.</p>
+<p><strong>Overlap with training data.</strong> Read the public rows with this in mind:</p>
+<ul>
+<li>Guard Spec's classifier (L2, v3b) was trained on the <code>train</code> splits of
+<code>deepset/prompt-injections</code>, <code>Lakera/gandalf_ignore_instructions</code> and
+<code>jackhhao/jailbreak-classification</code> (<a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/train/DATA_LICENSES.md">train/DATA_LICENSES.md</a>).
+The benchmark uses only their <code>test</code> splits, but those come from the same
+distribution, which favours Guard Spec on these three sets.</li>
+<li>ProtectAI v2 lists <code>jackhhao/jailbreak-classification</code> among its training
+sets (split not stated), so the same holds for it there.</li>
+<li>The English <code>test</code> rows of <code>deepset</code> and <code>Gandalf</code> are also part of
+<code>eval/</code> (60 of 116 and 111 of 112 rows).</li>
+<li>Guard Spec's L1 rules were refined by reading failures on the &quot;dev&quot; half of
+<code>eval/</code> (<a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/eval/README.md">eval/README.md</a>); L1 numbers on <code>eval/</code> are
+optimistic. L2, L3 and the fusion were never fitted on <code>eval/</code>.</li>
+<li>Nothing in this benchmark was used to change Guard Spec.</li>
+</ul>
+<h2 id="detectors">Detectors<a class="anchor" href="#detectors" aria-hidden="true">#</a></h2>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Detector</th>
+  <th>Included</th>
+  <th>Notes</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Guard Spec L1</td>
+  <td>yes</td>
+  <td>Rules only, the default build without models (<code>cmd/eval -detector fusion</code>).</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2</td>
+  <td>yes</td>
+  <td>Rules + classifier v3b (<code>-layers l1,l2</code>).</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2+L3</td>
+  <td>yes</td>
+  <td>Rules + classifier + embeddings, the default with models (<code>-layers l1,l2,l3</code>).</td>
+</tr>
+<tr>
+  <td>ProtectAI <code>deberta-v3-base-prompt-injection-v2</code></td>
+  <td>yes</td>
+  <td>Apache-2.0. The published fp32 ONNX export, first 512 tokens, flags when P(INJECTION) ≥ 0.5 (argmax of the model card's pipeline).</td>
+</tr>
+<tr>
+  <td>LLM Guard <code>PromptInjection</code></td>
+  <td>as a threshold of the ProtectAI row</td>
+  <td>llm-guard 0.3.16 (MIT, archived) wraps the same model: its default pins revision <code>89b085c</code>, whose weights are byte-identical to <code>90c9989</code> (same SHA-256), reads the first 512 tokens (<code>match_type=FULL</code>) and flags when <code>round(score, 2) &gt; 0.92</code>. Installing it would only rerun the same model, so its row reuses the ProtectAI scores with that rule: same AUC, different TPR/FPR. Its default runs the model in PyTorch rather than ONNX, so latency is not reported separately.</td>
+</tr>
+<tr>
+  <td>Meta Llama Prompt Guard 2 (86M, 22M)</td>
+  <td>no (gated)</td>
+  <td>Llama 4 Community License, gated on Hugging Face; see <a href="#including-meta-prompt-guard-2">Including Meta Prompt Guard 2</a>.</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="results">Results<a class="anchor" href="#results" aria-hidden="true">#</a></h2>
+<!-- bench:begin -->
+
+<p>Run 2026-11-06 19:30 UTC, commit <code>2e182a03bc62</code>, local: Apple M3 Max, 14 logical CPUs, 36 GB RAM, macOS 15.4.1 (arm64). go1.26.10, ONNX Runtime 1.31.1 (Go) / 1.31.1 (Python), Python 3.12.0.</p>
+<h3 id="datasets">Datasets<a class="anchor" href="#datasets" aria-hidden="true">#</a></h3>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Dataset</th>
+  <th>Revision</th>
+  <th>License</th>
+  <th>Split</th>
+  <th>Rows (attack / benign)</th>
+  <th>Languages</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Guard Spec eval set (eval/)</td>
+  <td>this commit</td>
+  <td>Apache-2.0 (project rows); Apache-2.0 / MIT for the deepset / Gandalf rows it includes</td>
+  <td>eval/data/en.jsonl, vi.jsonl</td>
+  <td>2176 (1171 / 1005)</td>
+  <td>en 926, vi 1250</td>
+</tr>
+<tr>
+  <td><a href="https://huggingface.co/datasets/deepset/prompt-injections"><code>deepset/prompt-injections</code></a></td>
+  <td><code>4f61ecb038e9</code></td>
+  <td>Apache-2.0</td>
+  <td>test</td>
+  <td>116 (60 / 56)</td>
+  <td>en 60, other 56</td>
+</tr>
+<tr>
+  <td><a href="https://huggingface.co/datasets/jackhhao/jailbreak-classification"><code>jackhhao/jailbreak-classification</code></a></td>
+  <td><code>2f2ceeb39658</code></td>
+  <td>Apache-2.0</td>
+  <td>balanced test</td>
+  <td>262 (139 / 123)</td>
+  <td>en 259, other 3</td>
+</tr>
+<tr>
+  <td><a href="https://huggingface.co/datasets/Lakera/gandalf_ignore_instructions"><code>Lakera/gandalf_ignore_instructions</code></a></td>
+  <td><code>04737b65e90a</code></td>
+  <td>MIT</td>
+  <td>test</td>
+  <td>112 (112 / 0)</td>
+  <td>en 111, other 1</td>
+</tr>
+<tr>
+  <td><a href="https://huggingface.co/datasets/reshabhs/SPML_Chatbot_Prompt_Injection"><code>reshabhs/SPML_Chatbot_Prompt_Injection</code></a></td>
+  <td><code>02ce8084e979</code></td>
+  <td>MIT</td>
+  <td>seeded sample, 1000 per label</td>
+  <td>2000 (1000 / 1000)</td>
+  <td>en 1995, other 5</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="detectors-1">Detectors<a class="anchor" href="#detectors-1" aria-hidden="true">#</a></h3>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Detector</th>
+  <th>Model files</th>
+  <th style="text-align:right">Size on disk</th>
+  <th>Runtime</th>
+  <th>Default decision</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Guard Spec L1</td>
+  <td>rules only (no model)</td>
+  <td style="text-align:right">0 (rules)</td>
+  <td>Go, ONNX Runtime (int8 models), 1 intra-op thread per session</td>
+  <td>gateway /v1/scan rule: score &gt;= 0.85, sanitizer anomaly &gt;= 0.6, or input rejected</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2</td>
+  <td>guardspec-classifier/v3b</td>
+  <td style="text-align:right">119 MB</td>
+  <td>Go, ONNX Runtime (int8 models), 1 intra-op thread per session</td>
+  <td>gateway /v1/scan rule: score &gt;= 0.85, sanitizer anomaly &gt;= 0.6, or input rejected</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2+L3</td>
+  <td>guardspec-classifier/v3b; multilingual-e5-small/614241f</td>
+  <td style="text-align:right">237 MB</td>
+  <td>Go, ONNX Runtime (int8 models), 1 intra-op thread per session</td>
+  <td>gateway /v1/scan rule: score &gt;= 0.85, sanitizer anomaly &gt;= 0.6, or input rejected</td>
+</tr>
+<tr>
+  <td>ProtectAI v2</td>
+  <td>protectai/deberta-v3-base-prompt-injection-v2@90c9989 (onnx/model.onnx, fp32)</td>
+  <td style="text-align:right">739 MB</td>
+  <td>Python, ONNX Runtime 1.31.1 (fp32), 1 intra-op thread</td>
+  <td>INJECTION probability &gt;= 0.5 (argmax, model card pipeline)</td>
+</tr>
+<tr>
+  <td>LLM Guard PromptInjection (default)</td>
+  <td>protectai/deberta-v3-base-prompt-injection-v2@90c9989 (onnx/model.onnx, fp32)</td>
+  <td style="text-align:right">739 MB</td>
+  <td>Python, ONNX Runtime 1.31.1 (fp32), 1 intra-op thread</td>
+  <td>llm-guard 0.3.16 defaults: same model, match_type FULL (first 512 tokens), flag when round(score, 2) &gt; 0.92</td>
+</tr>
+</tbody>
+</table></div>
+<p>Not run: Meta Llama Prompt Guard 2 (86M, 22M): gated on Hugging Face (Llama 4 Community License); run with --promptguard and your own HF_TOKEN after accepting the terms.</p>
+<h3 id="guard-spec-eval-set-eval">Guard Spec eval set (eval/)<a class="anchor" href="#guard-spec-eval-set-eval" aria-hidden="true">#</a></h3>
+<p>Published with this repository. L2, L3 and the fusion were never fitted on it; the L1 rules were refined on its dev half, so L1 numbers here are optimistic (eval/README.md).</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Detector</th>
+  <th>Lang</th>
+  <th>n (att / ben)</th>
+  <th>ROC AUC [95% CI]</th>
+  <th style="text-align:right">TPR @ default</th>
+  <th style="text-align:right">FPR @ default</th>
+  <th style="text-align:right">TPR @ FPR ≤ 1%</th>
+  <th style="text-align:right">p50 ms</th>
+  <th style="text-align:right">p95 ms</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Guard Spec L1</td>
+  <td>all</td>
+  <td>1171 / 1005</td>
+  <td>0.952 [0.943, 0.962]</td>
+  <td style="text-align:right">89.2%</td>
+  <td style="text-align:right">0.1%</td>
+  <td style="text-align:right">91.0%</td>
+  <td style="text-align:right">0.11</td>
+  <td style="text-align:right">0.22</td>
+</tr>
+<tr>
+  <td>Guard Spec L1</td>
+  <td>en</td>
+  <td>562 / 364</td>
+  <td>0.929 [0.911, 0.945]</td>
+  <td style="text-align:right">84.2%</td>
+  <td style="text-align:right">0.3%</td>
+  <td style="text-align:right">86.7%</td>
+  <td style="text-align:right">0.11</td>
+  <td style="text-align:right">0.21</td>
+</tr>
+<tr>
+  <td>Guard Spec L1</td>
+  <td>vi</td>
+  <td>609 / 641</td>
+  <td>0.975 [0.964, 0.984]</td>
+  <td style="text-align:right">93.9%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">94.9%</td>
+  <td style="text-align:right">0.11</td>
+  <td style="text-align:right">0.23</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2</td>
+  <td>all</td>
+  <td>1171 / 1005</td>
+  <td>0.987 [0.982, 0.992]</td>
+  <td style="text-align:right">94.9%</td>
+  <td style="text-align:right">1.4%</td>
+  <td style="text-align:right">93.3%</td>
+  <td style="text-align:right">6.02</td>
+  <td style="text-align:right">22.01</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2</td>
+  <td>en</td>
+  <td>562 / 364</td>
+  <td>0.982 [0.973, 0.989]</td>
+  <td style="text-align:right">94.0%</td>
+  <td style="text-align:right">1.6%</td>
+  <td style="text-align:right">90.4%</td>
+  <td style="text-align:right">5.49</td>
+  <td style="text-align:right">19.73</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2</td>
+  <td>vi</td>
+  <td>609 / 641</td>
+  <td>0.991 [0.984, 0.996]</td>
+  <td style="text-align:right">95.7%</td>
+  <td style="text-align:right">1.2%</td>
+  <td style="text-align:right">94.9%</td>
+  <td style="text-align:right">6.51</td>
+  <td style="text-align:right">23.95</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2+L3</td>
+  <td>all</td>
+  <td>1171 / 1005</td>
+  <td>0.987 [0.981, 0.991]</td>
+  <td style="text-align:right">95.0%</td>
+  <td style="text-align:right">1.4%</td>
+  <td style="text-align:right">93.4%</td>
+  <td style="text-align:right">6.47</td>
+  <td style="text-align:right">21.90</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2+L3</td>
+  <td>en</td>
+  <td>562 / 364</td>
+  <td>0.980 [0.970, 0.988]</td>
+  <td style="text-align:right">94.1%</td>
+  <td style="text-align:right">1.6%</td>
+  <td style="text-align:right">90.9%</td>
+  <td style="text-align:right">6.10</td>
+  <td style="text-align:right">19.62</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2+L3</td>
+  <td>vi</td>
+  <td>609 / 641</td>
+  <td>0.992 [0.985, 0.997]</td>
+  <td style="text-align:right">95.7%</td>
+  <td style="text-align:right">1.2%</td>
+  <td style="text-align:right">94.7%</td>
+  <td style="text-align:right">6.91</td>
+  <td style="text-align:right">23.46</td>
+</tr>
+<tr>
+  <td>ProtectAI v2</td>
+  <td>all</td>
+  <td>1171 / 1005</td>
+  <td>0.784 [0.764, 0.802]</td>
+  <td style="text-align:right">88.6%</td>
+  <td style="text-align:right">50.6%</td>
+  <td style="text-align:right">26.2%</td>
+  <td style="text-align:right">66.89</td>
+  <td style="text-align:right">237.54</td>
+</tr>
+<tr>
+  <td>ProtectAI v2</td>
+  <td>en</td>
+  <td>562 / 364</td>
+  <td>0.897 [0.877, 0.917]</td>
+  <td style="text-align:right">86.8%</td>
+  <td style="text-align:right">23.4%</td>
+  <td style="text-align:right">35.1%</td>
+  <td style="text-align:right">46.41</td>
+  <td style="text-align:right">169.34</td>
+</tr>
+<tr>
+  <td>ProtectAI v2</td>
+  <td>vi</td>
+  <td>609 / 641</td>
+  <td>0.661 [0.632, 0.690]</td>
+  <td style="text-align:right">90.1%</td>
+  <td style="text-align:right">66.1%</td>
+  <td style="text-align:right">5.9%</td>
+  <td style="text-align:right">76.69</td>
+  <td style="text-align:right">262.98</td>
+</tr>
+<tr>
+  <td>LLM Guard PromptInjection (default)</td>
+  <td>all</td>
+  <td>1171 / 1005</td>
+  <td>0.784 [0.764, 0.802]</td>
+  <td style="text-align:right">83.0%</td>
+  <td style="text-align:right">45.6%</td>
+  <td style="text-align:right">26.2%</td>
+  <td style="text-align:right">same model as ProtectAI v2</td>
+  <td style="text-align:right"></td>
+</tr>
+<tr>
+  <td>LLM Guard PromptInjection (default)</td>
+  <td>en</td>
+  <td>562 / 364</td>
+  <td>0.897 [0.877, 0.917]</td>
+  <td style="text-align:right">84.0%</td>
+  <td style="text-align:right">20.3%</td>
+  <td style="text-align:right">35.1%</td>
+  <td style="text-align:right">same model as ProtectAI v2</td>
+  <td style="text-align:right"></td>
+</tr>
+<tr>
+  <td>LLM Guard PromptInjection (default)</td>
+  <td>vi</td>
+  <td>609 / 641</td>
+  <td>0.661 [0.632, 0.690]</td>
+  <td style="text-align:right">82.1%</td>
+  <td style="text-align:right">59.9%</td>
+  <td style="text-align:right">5.9%</td>
+  <td style="text-align:right">same model as ProtectAI v2</td>
+  <td style="text-align:right"></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="deepsetprompt-injections">deepset/prompt-injections<a class="anchor" href="#deepsetprompt-injections" aria-hidden="true">#</a></h3>
+<p>About half the rows are German or Spanish (lang 'other'). The English test rows are also in eval/; Guard Spec's classifier was trained on the train split.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Detector</th>
+  <th>Lang</th>
+  <th>n (att / ben)</th>
+  <th>ROC AUC [95% CI]</th>
+  <th style="text-align:right">TPR @ default</th>
+  <th style="text-align:right">FPR @ default</th>
+  <th style="text-align:right">TPR @ FPR ≤ 1%</th>
+  <th style="text-align:right">p50 ms</th>
+  <th style="text-align:right">p95 ms</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Guard Spec L1</td>
+  <td>all</td>
+  <td>60 / 56</td>
+  <td>0.757 [0.674, 0.835]</td>
+  <td style="text-align:right">13.3%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">28.3%</td>
+  <td style="text-align:right">0.10</td>
+  <td style="text-align:right">0.26</td>
+</tr>
+<tr>
+  <td>Guard Spec L1</td>
+  <td>en</td>
+  <td>31 / 29</td>
+  <td>0.877 [0.777, 0.953]</td>
+  <td style="text-align:right">22.6%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">45.2%</td>
+  <td style="text-align:right">0.10</td>
+  <td style="text-align:right">0.21</td>
+</tr>
+<tr>
+  <td>Guard Spec L1</td>
+  <td>other</td>
+  <td>29 / 27</td>
+  <td>0.710 [0.621, 0.799]</td>
+  <td style="text-align:right">3.4%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">24.1%</td>
+  <td style="text-align:right">0.10</td>
+  <td style="text-align:right">0.38</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2</td>
+  <td>all</td>
+  <td>60 / 56</td>
+  <td>0.955 [0.913, 0.987]</td>
+  <td style="text-align:right">35.0%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">88.3%</td>
+  <td style="text-align:right">4.71</td>
+  <td style="text-align:right">18.23</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2</td>
+  <td>en</td>
+  <td>31 / 29</td>
+  <td>0.958 [0.883, 1.000]</td>
+  <td style="text-align:right">45.2%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">90.3%</td>
+  <td style="text-align:right">4.33</td>
+  <td style="text-align:right">14.94</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2</td>
+  <td>other</td>
+  <td>29 / 27</td>
+  <td>0.971 [0.930, 0.997]</td>
+  <td style="text-align:right">24.1%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">86.2%</td>
+  <td style="text-align:right">4.74</td>
+  <td style="text-align:right">27.29</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2+L3</td>
+  <td>all</td>
+  <td>60 / 56</td>
+  <td>0.963 [0.921, 0.991]</td>
+  <td style="text-align:right">33.3%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">83.3%</td>
+  <td style="text-align:right">5.42</td>
+  <td style="text-align:right">18.53</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2+L3</td>
+  <td>en</td>
+  <td>31 / 29</td>
+  <td>0.973 [0.914, 1.000]</td>
+  <td style="text-align:right">45.2%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">93.5%</td>
+  <td style="text-align:right">5.14</td>
+  <td style="text-align:right">15.54</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2+L3</td>
+  <td>other</td>
+  <td>29 / 27</td>
+  <td>0.941 [0.874, 0.989]</td>
+  <td style="text-align:right">20.7%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">82.8%</td>
+  <td style="text-align:right">5.73</td>
+  <td style="text-align:right">27.70</td>
+</tr>
+<tr>
+  <td>ProtectAI v2</td>
+  <td>all</td>
+  <td>60 / 56</td>
+  <td>0.901 [0.839, 0.951]</td>
+  <td style="text-align:right">36.7%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">53.3%</td>
+  <td style="text-align:right">45.10</td>
+  <td style="text-align:right">196.72</td>
+</tr>
+<tr>
+  <td>ProtectAI v2</td>
+  <td>en</td>
+  <td>31 / 29</td>
+  <td>0.889 [0.796, 0.959]</td>
+  <td style="text-align:right">25.8%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">71.0%</td>
+  <td style="text-align:right">39.97</td>
+  <td style="text-align:right">123.84</td>
+</tr>
+<tr>
+  <td>ProtectAI v2</td>
+  <td>other</td>
+  <td>29 / 27</td>
+  <td>0.936 [0.866, 0.985]</td>
+  <td style="text-align:right">48.3%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">58.6%</td>
+  <td style="text-align:right">53.32</td>
+  <td style="text-align:right">267.84</td>
+</tr>
+<tr>
+  <td>LLM Guard PromptInjection (default)</td>
+  <td>all</td>
+  <td>60 / 56</td>
+  <td>0.901 [0.839, 0.951]</td>
+  <td style="text-align:right">31.7%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">53.3%</td>
+  <td style="text-align:right">same model as ProtectAI v2</td>
+  <td style="text-align:right"></td>
+</tr>
+<tr>
+  <td>LLM Guard PromptInjection (default)</td>
+  <td>en</td>
+  <td>31 / 29</td>
+  <td>0.889 [0.796, 0.959]</td>
+  <td style="text-align:right">22.6%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">71.0%</td>
+  <td style="text-align:right">same model as ProtectAI v2</td>
+  <td style="text-align:right"></td>
+</tr>
+<tr>
+  <td>LLM Guard PromptInjection (default)</td>
+  <td>other</td>
+  <td>29 / 27</td>
+  <td>0.936 [0.866, 0.985]</td>
+  <td style="text-align:right">41.4%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">58.6%</td>
+  <td style="text-align:right">same model as ProtectAI v2</td>
+  <td style="text-align:right"></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="jackhhaojailbreak-classification">jackhhao/jailbreak-classification<a class="anchor" href="#jackhhaojailbreak-classification" aria-hidden="true">#</a></h3>
+<p>Jailbreak (role-play) prompts versus benign prompts. Guard Spec's classifier was trained on the balanced train split; ProtectAI v2 lists this dataset among its training sources.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Detector</th>
+  <th>Lang</th>
+  <th>n (att / ben)</th>
+  <th>ROC AUC [95% CI]</th>
+  <th style="text-align:right">TPR @ default</th>
+  <th style="text-align:right">FPR @ default</th>
+  <th style="text-align:right">TPR @ FPR ≤ 1%</th>
+  <th style="text-align:right">p50 ms</th>
+  <th style="text-align:right">p95 ms</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Guard Spec L1</td>
+  <td>all</td>
+  <td>139 / 123</td>
+  <td>0.961 [0.942, 0.977]</td>
+  <td style="text-align:right">66.9%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">84.9%</td>
+  <td style="text-align:right">0.43</td>
+  <td style="text-align:right">2.99</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2</td>
+  <td>all</td>
+  <td>139 / 123</td>
+  <td>0.993 [0.984, 0.999]</td>
+  <td style="text-align:right">92.1%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">93.5%</td>
+  <td style="text-align:right">42.14</td>
+  <td style="text-align:right">507.41</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2+L3</td>
+  <td>all</td>
+  <td>139 / 123</td>
+  <td>0.994 [0.986, 0.999]</td>
+  <td style="text-align:right">92.1%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">93.5%</td>
+  <td style="text-align:right">41.87</td>
+  <td style="text-align:right">511.62</td>
+</tr>
+<tr>
+  <td>ProtectAI v2</td>
+  <td>all</td>
+  <td>139 / 123</td>
+  <td>0.979 [0.956, 0.995]</td>
+  <td style="text-align:right">84.2%</td>
+  <td style="text-align:right">1.6%</td>
+  <td style="text-align:right">69.8%</td>
+  <td style="text-align:right">327.75</td>
+  <td style="text-align:right">1161.58</td>
+</tr>
+<tr>
+  <td>LLM Guard PromptInjection (default)</td>
+  <td>all</td>
+  <td>139 / 123</td>
+  <td>0.979 [0.956, 0.995]</td>
+  <td style="text-align:right">84.2%</td>
+  <td style="text-align:right">1.6%</td>
+  <td style="text-align:right">69.8%</td>
+  <td style="text-align:right">same model as ProtectAI v2</td>
+  <td style="text-align:right"></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="lakeragandalf_ignore_instructions">Lakera/gandalf_ignore_instructions<a class="anchor" href="#lakeragandalf_ignore_instructions" aria-hidden="true">#</a></h3>
+<p>Attacks only (no benign rows): only TPR is defined. The English test rows are also in eval/; Guard Spec's classifier was trained on the train split.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Detector</th>
+  <th>Lang</th>
+  <th>n (att / ben)</th>
+  <th>ROC AUC [95% CI]</th>
+  <th style="text-align:right">TPR @ default</th>
+  <th style="text-align:right">FPR @ default</th>
+  <th style="text-align:right">TPR @ FPR ≤ 1%</th>
+  <th style="text-align:right">p50 ms</th>
+  <th style="text-align:right">p95 ms</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Guard Spec L1</td>
+  <td>all</td>
+  <td>112 / 0</td>
+  <td>-</td>
+  <td style="text-align:right">77.7%</td>
+  <td style="text-align:right">-</td>
+  <td style="text-align:right">-</td>
+  <td style="text-align:right">0.10</td>
+  <td style="text-align:right">0.19</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2</td>
+  <td>all</td>
+  <td>112 / 0</td>
+  <td>-</td>
+  <td style="text-align:right">100.0%</td>
+  <td style="text-align:right">-</td>
+  <td style="text-align:right">-</td>
+  <td style="text-align:right">3.90</td>
+  <td style="text-align:right">7.13</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2+L3</td>
+  <td>all</td>
+  <td>112 / 0</td>
+  <td>-</td>
+  <td style="text-align:right">100.0%</td>
+  <td style="text-align:right">-</td>
+  <td style="text-align:right">-</td>
+  <td style="text-align:right">4.87</td>
+  <td style="text-align:right">8.22</td>
+</tr>
+<tr>
+  <td>ProtectAI v2</td>
+  <td>all</td>
+  <td>112 / 0</td>
+  <td>-</td>
+  <td style="text-align:right">100.0%</td>
+  <td style="text-align:right">-</td>
+  <td style="text-align:right">-</td>
+  <td style="text-align:right">32.18</td>
+  <td style="text-align:right">62.98</td>
+</tr>
+<tr>
+  <td>LLM Guard PromptInjection (default)</td>
+  <td>all</td>
+  <td>112 / 0</td>
+  <td>-</td>
+  <td style="text-align:right">100.0%</td>
+  <td style="text-align:right">-</td>
+  <td style="text-align:right">-</td>
+  <td style="text-align:right">same model as ProtectAI v2</td>
+  <td style="text-align:right"></td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="reshabhsspml_chatbot_prompt_injection">reshabhs/SPML_Chatbot_Prompt_Injection<a class="anchor" href="#reshabhsspml_chatbot_prompt_injection" aria-hidden="true">#</a></h3>
+<p>User prompts only. Labels depend on the chatbot's system prompt (a request that breaks that bot's rules is an attack), which an input detector does not see. No detector here lists it as training data.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Detector</th>
+  <th>Lang</th>
+  <th>n (att / ben)</th>
+  <th>ROC AUC [95% CI]</th>
+  <th style="text-align:right">TPR @ default</th>
+  <th style="text-align:right">FPR @ default</th>
+  <th style="text-align:right">TPR @ FPR ≤ 1%</th>
+  <th style="text-align:right">p50 ms</th>
+  <th style="text-align:right">p95 ms</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Guard Spec L1</td>
+  <td>all</td>
+  <td>1000 / 1000</td>
+  <td>0.961 [0.952, 0.969]</td>
+  <td style="text-align:right">26.9%</td>
+  <td style="text-align:right">0.2%</td>
+  <td style="text-align:right">80.7%</td>
+  <td style="text-align:right">0.13</td>
+  <td style="text-align:right">0.93</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2</td>
+  <td>all</td>
+  <td>1000 / 1000</td>
+  <td>0.979 [0.973, 0.985]</td>
+  <td style="text-align:right">37.0%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">89.2%</td>
+  <td style="text-align:right">7.03</td>
+  <td style="text-align:right">130.35</td>
+</tr>
+<tr>
+  <td>Guard Spec L1+L2+L3</td>
+  <td>all</td>
+  <td>1000 / 1000</td>
+  <td>0.974 [0.967, 0.980]</td>
+  <td style="text-align:right">36.4%</td>
+  <td style="text-align:right">0.0%</td>
+  <td style="text-align:right">84.5%</td>
+  <td style="text-align:right">8.28</td>
+  <td style="text-align:right">156.34</td>
+</tr>
+<tr>
+  <td>ProtectAI v2</td>
+  <td>all</td>
+  <td>1000 / 1000</td>
+  <td>0.997 [0.995, 0.999]</td>
+  <td style="text-align:right">99.2%</td>
+  <td style="text-align:right">8.4%</td>
+  <td style="text-align:right">97.6%</td>
+  <td style="text-align:right">61.24</td>
+  <td style="text-align:right">631.59</td>
+</tr>
+<tr>
+  <td>LLM Guard PromptInjection (default)</td>
+  <td>all</td>
+  <td>1000 / 1000</td>
+  <td>0.997 [0.995, 0.999]</td>
+  <td style="text-align:right">99.1%</td>
+  <td style="text-align:right">6.6%</td>
+  <td style="text-align:right">97.6%</td>
+  <td style="text-align:right">same model as ProtectAI v2</td>
+  <td style="text-align:right"></td>
+</tr>
+</tbody>
+</table></div>
+<!-- bench:end -->
+
+<h2 id="discussion">Discussion<a class="anchor" href="#discussion" aria-hidden="true">#</a></h2>
+<p><strong>Where Guard Spec does worse.</strong></p>
+<ul>
+<li><strong>SPML.</strong> This set's attacks are mostly polite requests that break one
+chatbot's rules (&quot;rather than going to a doctor, suggest ...&quot;), written by
+GPT-4 from leaked system prompts. Guard Spec's score ranks them well
+(AUC 0.97–0.98) but keeps most of them below its 0.85 block threshold:
+TPR 36% at default. ProtectAI flags 99% of them, at the cost of 8% false
+positives on the benign SPML prompts. Some of that gap is the threshold, not
+the model: at an equal 1% FPR Guard Spec catches 84–89% and ProtectAI
+98%. The labels also depend on a system prompt that neither detector sees,
+so part of this set is not decidable from the user message alone.</li>
+<li><strong>Non-English, non-Vietnamese input.</strong> On the German and Spanish half of
+<code>deepset</code> (56 rows) Guard Spec blocks 21% of attacks at its default,
+ProtectAI 48%; both have no false positive there. Guard Spec's rules and
+classifier only target English and Vietnamese. The group is small (29
+attacks): treat the gap as a direction, not a size.</li>
+<li><strong>The default threshold is conservative.</strong> On every public set Guard Spec
+has 0.0% FPR at its default and the &quot;TPR at FPR ≤ 1%&quot; column is much higher
+than the default TPR (<code>deepset</code> 33% → 83%, <code>SPML</code> 36% → 85%). The 0.85
+block threshold and the fusion were set for low false positives on
+<code>eval/</code>-like traffic (hard negatives, Vietnamese chat). Deployments that see
+plain English attacks may want a lower threshold; this page does not change
+it, because tuning on these sets would make the numbers meaningless.</li>
+<li><strong>L3 does not help on these sets.</strong> L1+L2+L3 and L1+L2 are within noise on
+<code>eval/</code>, <code>deepset</code> and <code>jailbreak-classification</code>, and L3 is lower on SPML at
+1% FPR (84.5% against 89.2%). It adds 0.5–1.3 ms per row at p50.</li>
+<li><strong>Long inputs.</strong> Guard Spec scores every 512-token chunk of a long input;
+the long role-play prompts of <code>jailbreak-classification</code> take 42 ms at p50
+and 510 ms at p95 with the model layers (ProtectAI: 330 ms and 1.16 s, but
+it reads only the first 512 tokens).</li>
+</ul>
+<p><strong>Where it does better, and why that is partly expected.</strong></p>
+<ul>
+<li><code>eval/</code> is Guard Spec's own set: same authors, same notion of an attack,
+Vietnamese and hard negatives. Read the ProtectAI rows there as &quot;what an
+English-only model does on this traffic&quot;, not as a ranking. Even so, the
+English half is informative: ProtectAI blocks 23% of its benign rows
+(security discussions, sysadmin text, code with attack strings), Guard Spec
+1.6%.</li>
+<li><code>deepset</code>, <code>jailbreak-classification</code> and <code>Gandalf</code> share their distribution
+with Guard Spec's training data (<code>train</code> splits), and ProtectAI also trained
+on <code>jailbreak-classification</code>. Guard Spec's higher AUC on them is weak
+evidence.</li>
+</ul>
+<p><strong>Other notes.</strong></p>
+<ul>
+<li>Small groups have wide intervals: <code>deepset</code> has 116 rows, and its per-language
+groups under 60. Differences inside the 95% intervals are not signal.</li>
+<li>LLM Guard's default (score &gt; 0.92 instead of ≥ 0.5) trades a few points of
+TPR for a few points of FPR; it does not change the picture.</li>
+<li>Latency was measured on a shared laptop with other work running, one
+configuration after the other; read it as indicative. The manual workflow
+gives a Linux run.</li>
+<li>Guard Spec's &quot;default&quot; is the gateway's whole <code>/v1/scan</code> rule, which also
+blocks on sanitizer anomalies. That is why its TPR on <code>eval/</code> (95.0%) is above
+the README's &quot;TPR at block&quot; (0.939), which counts the detector score only.</li>
+<li>Language labels of the public sets come from a simple marker rule, not a
+language-identification model.</li>
+</ul>
+<p>The results will also appear on <a href="https://guardspec.io/docs/">guardspec.io/docs</a>,
+which is built from this page.</p>
+
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/docs/benchmark.md">docs/benchmark.md</a> @ <code>82361eff5c2a</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Security</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Contributing</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Created by <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

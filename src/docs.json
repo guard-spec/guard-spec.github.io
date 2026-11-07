@@ -1,153 +1,384 @@
 {
   "_comment": "Pages of guardspec.io/docs, built by build.py from the Markdown of the main repository at the pinned ref. Each language lists candidate sources: the first one that exists at the ref is used; a page with none is skipped (build.py prints it). A page without a Vietnamese source links to the English page in the Vietnamese navigation, labelled (tiếng Anh). To update the docs: set ref to a newer commit or tag of guard-spec/guard-spec, run build.py, commit.",
   "repo": "guard-spec/guard-spec",
-  "ref": "ca69dad29f022ada74388240df332069500d65ff",
+  "ref": "82361eff5c2a8520be2c3e8d32567770e4e9b73f",
   "pages": [
     {
       "slug": "quickstart",
-      "title": {"en": "Quick start", "vi": "Bắt đầu nhanh"},
-      "en": [{"file": "README.md", "section": "Quick start"}],
-      "vi": [{"file": "README.vi.md", "section": "Bắt đầu nhanh"}]
+      "title": {
+        "en": "Quick start",
+        "vi": "Bắt đầu nhanh"
+      },
+      "en": [
+        {
+          "file": "README.md",
+          "section": "Quick start"
+        }
+      ],
+      "vi": [
+        {
+          "file": "README.vi.md",
+          "section": "Bắt đầu nhanh"
+        }
+      ]
     },
     {
       "slug": "quickstart/integrations",
       "parent": "quickstart",
-      "title": {"en": "Integrations", "vi": "Tích hợp"},
-      "en": [{"file": "docs/integrations.md"}]
+      "title": {
+        "en": "Integrations",
+        "vi": "Tích hợp"
+      },
+      "en": [
+        {
+          "file": "docs/integrations.md"
+        }
+      ]
     },
     {
       "slug": "deploy",
-      "title": {"en": "Deploy", "vi": "Triển khai"},
-      "en": [{"file": "docs/deploy/README.md"}]
+      "title": {
+        "en": "Deploy",
+        "vi": "Triển khai"
+      },
+      "en": [
+        {
+          "file": "docs/deploy/README.md"
+        }
+      ]
     },
     {
       "slug": "deploy/production-compose",
       "parent": "deploy",
-      "title": {"en": "Production compose", "vi": "Compose cho production"},
-      "en": [{"file": "deploy/compose/production/README.md"}]
+      "title": {
+        "en": "Production compose",
+        "vi": "Compose cho production"
+      },
+      "en": [
+        {
+          "file": "deploy/compose/production/README.md"
+        }
+      ]
     },
     {
       "slug": "deploy/managed-postgres",
       "parent": "deploy",
-      "title": {"en": "Managed PostgreSQL", "vi": "PostgreSQL được quản lý"},
-      "en": [{"file": "docs/managed-postgres.md"}]
+      "title": {
+        "en": "Managed PostgreSQL",
+        "vi": "PostgreSQL được quản lý"
+      },
+      "en": [
+        {
+          "file": "docs/managed-postgres.md"
+        }
+      ]
     },
     {
       "slug": "deploy/airgapped",
       "parent": "deploy",
-      "title": {"en": "Air-gapped", "vi": "Mạng cô lập"},
-      "en": [{"file": "docs/airgapped.md"}]
+      "title": {
+        "en": "Air-gapped",
+        "vi": "Mạng cô lập"
+      },
+      "en": [
+        {
+          "file": "docs/airgapped.md"
+        }
+      ]
     },
     {
       "slug": "deploy/aws",
       "parent": "deploy",
-      "title": {"en": "AWS", "vi": "AWS"},
-      "en": [{"file": "docs/deploy/aws.md"}]
+      "title": {
+        "en": "AWS",
+        "vi": "AWS"
+      },
+      "en": [
+        {
+          "file": "docs/deploy/aws.md"
+        }
+      ]
     },
     {
       "slug": "deploy/terraform-aws",
       "parent": "deploy",
-      "title": {"en": "Terraform for AWS", "vi": "Terraform cho AWS"},
-      "en": [{"file": "deploy/terraform/aws/README.md"}]
+      "title": {
+        "en": "Terraform for AWS",
+        "vi": "Terraform cho AWS"
+      },
+      "en": [
+        {
+          "file": "deploy/terraform/aws/README.md"
+        }
+      ]
     },
     {
       "slug": "deploy/gcp",
       "parent": "deploy",
-      "title": {"en": "Google Cloud", "vi": "Google Cloud"},
-      "en": [{"file": "docs/deploy/gcp.md"}]
+      "title": {
+        "en": "Google Cloud",
+        "vi": "Google Cloud"
+      },
+      "en": [
+        {
+          "file": "docs/deploy/gcp.md"
+        }
+      ]
     },
     {
       "slug": "deploy/on-premise",
       "parent": "deploy",
-      "title": {"en": "On-premise", "vi": "Hạ tầng riêng"},
-      "en": [{"file": "docs/deploy/on-premise.md"}]
+      "title": {
+        "en": "On-premise",
+        "vi": "Hạ tầng riêng"
+      },
+      "en": [
+        {
+          "file": "docs/deploy/on-premise.md"
+        }
+      ]
     },
     {
       "slug": "configuration",
-      "title": {"en": "Configuration", "vi": "Cấu hình"},
-      "en": [{"file": "README.md", "section": "Configuration"}],
-      "vi": [{"file": "README.vi.md", "section": "Cấu hình"}]
+      "title": {
+        "en": "Configuration",
+        "vi": "Cấu hình"
+      },
+      "en": [
+        {
+          "file": "README.md",
+          "section": "Configuration"
+        }
+      ],
+      "vi": [
+        {
+          "file": "README.vi.md",
+          "section": "Cấu hình"
+        }
+      ]
     },
     {
       "slug": "configuration/routing",
       "parent": "configuration",
-      "title": {"en": "Routing", "vi": "Định tuyến"},
-      "en": [{"file": "README.md", "section": "Routing"}]
+      "title": {
+        "en": "Routing",
+        "vi": "Định tuyến"
+      },
+      "en": [
+        {
+          "file": "README.md",
+          "section": "Routing"
+        }
+      ]
     },
     {
       "slug": "configuration/apis",
       "parent": "configuration",
-      "title": {"en": "APIs", "vi": "API"},
-      "en": [{"file": "README.md", "section": "APIs"}],
-      "vi": [{"file": "README.vi.md", "section": "API"}]
+      "title": {
+        "en": "APIs",
+        "vi": "API"
+      },
+      "en": [
+        {
+          "file": "README.md",
+          "section": "APIs"
+        }
+      ],
+      "vi": [
+        {
+          "file": "README.vi.md",
+          "section": "API"
+        }
+      ]
     },
     {
       "slug": "operations",
-      "title": {"en": "Operations", "vi": "Vận hành"},
-      "en": [{"file": "README.md", "section": "Operations"}]
+      "title": {
+        "en": "Operations",
+        "vi": "Vận hành"
+      },
+      "en": [
+        {
+          "file": "README.md",
+          "section": "Operations"
+        }
+      ]
     },
     {
       "slug": "operations/alerts",
       "parent": "operations",
-      "title": {"en": "Alerts and notifications", "vi": "Cảnh báo và thông báo"},
-      "en": [{"file": "README.md", "section": "Alerts and notifications"}],
-      "vi": [{"file": "README.vi.md", "section": "Cảnh báo và thông báo"}]
+      "title": {
+        "en": "Alerts and notifications",
+        "vi": "Cảnh báo và thông báo"
+      },
+      "en": [
+        {
+          "file": "README.md",
+          "section": "Alerts and notifications"
+        }
+      ],
+      "vi": [
+        {
+          "file": "README.vi.md",
+          "section": "Cảnh báo và thông báo"
+        }
+      ]
     },
     {
       "slug": "operations/admin-ui",
       "parent": "operations",
-      "title": {"en": "Admin UI", "vi": "Giao diện quản trị"},
-      "en": [{"file": "README.md", "section": "Admin UI"}]
+      "title": {
+        "en": "Admin UI",
+        "vi": "Giao diện quản trị"
+      },
+      "en": [
+        {
+          "file": "README.md",
+          "section": "Admin UI"
+        }
+      ]
     },
     {
       "slug": "operations/sizing",
       "parent": "operations",
-      "title": {"en": "Sizing and layers", "vi": "Định cỡ và chọn lớp"},
-      "en": [{"file": "docs/sizing.md"}]
+      "title": {
+        "en": "Sizing and layers",
+        "vi": "Định cỡ và chọn lớp"
+      },
+      "en": [
+        {
+          "file": "docs/sizing.md"
+        }
+      ]
     },
     {
       "slug": "upgrade",
-      "title": {"en": "Upgrade", "vi": "Nâng cấp"},
-      "en": [{"file": "docs/upgrade.md"}]
+      "title": {
+        "en": "Upgrade",
+        "vi": "Nâng cấp"
+      },
+      "en": [
+        {
+          "file": "docs/upgrade.md"
+        }
+      ]
     },
     {
       "slug": "models",
-      "title": {"en": "Models", "vi": "Model"},
-      "en": [{"file": "README.md", "section": "Models"}],
-      "vi": [{"file": "README.vi.md", "section": "Model"}]
+      "title": {
+        "en": "Models",
+        "vi": "Model"
+      },
+      "en": [
+        {
+          "file": "README.md",
+          "section": "Models"
+        }
+      ],
+      "vi": [
+        {
+          "file": "README.vi.md",
+          "section": "Model"
+        }
+      ]
     },
     {
       "slug": "models/versions",
       "parent": "models",
-      "title": {"en": "Versions, pinning and rollback", "vi": "Phiên bản, ghim và quay lui"},
-      "en": [{"file": "docs/models.md"}]
+      "title": {
+        "en": "Versions, pinning and rollback",
+        "vi": "Phiên bản, ghim và quay lui"
+      },
+      "en": [
+        {
+          "file": "docs/models.md"
+        }
+      ]
+    },
+    {
+      "slug": "models/benchmark",
+      "parent": "models",
+      "title": {
+        "en": "Benchmark",
+        "vi": "Benchmark"
+      },
+      "en": [
+        {
+          "file": "docs/benchmark.md"
+        }
+      ]
     },
     {
       "slug": "security",
-      "title": {"en": "Security", "vi": "Bảo mật"},
+      "title": {
+        "en": "Security",
+        "vi": "Bảo mật"
+      },
       "en": [
-        {"file": "docs/security/README.md"},
-        {"file": "SECURITY.md"}
+        {
+          "file": "docs/security/README.md"
+        },
+        {
+          "file": "SECURITY.md"
+        }
       ]
     },
     {
       "slug": "security/verifying-releases",
       "parent": "security",
-      "title": {"en": "Verifying a release", "vi": "Kiểm tra bản phát hành"},
-      "en": [{"file": "docs/security/verifying-releases.md"}]
+      "title": {
+        "en": "Verifying a release",
+        "vi": "Kiểm tra bản phát hành"
+      },
+      "en": [
+        {
+          "file": "docs/security/verifying-releases.md"
+        }
+      ]
     },
     {
       "slug": "security/risks",
       "parent": "security",
-      "title": {"en": "Risks and hardening", "vi": "Rủi ro và gia cố"},
-      "en": [{"file": "docs/security-risks.md"}],
-      "vi": [{"file": "docs/security-risks.vi.md"}]
+      "title": {
+        "en": "Risks and hardening",
+        "vi": "Rủi ro và gia cố"
+      },
+      "en": [
+        {
+          "file": "docs/security-risks.md"
+        }
+      ],
+      "vi": [
+        {
+          "file": "docs/security-risks.vi.md"
+        }
+      ]
     },
     {
       "slug": "security/policy",
       "parent": "security",
-      "title": {"en": "Reporting a vulnerability", "vi": "Báo lỗ hổng"},
-      "en": [{"file": "SECURITY.md"}]
+      "title": {
+        "en": "Reporting a vulnerability",
+        "vi": "Báo lỗ hổng"
+      },
+      "en": [
+        {
+          "file": "SECURITY.md"
+        }
+      ]
+    },
+    {
+      "slug": "security/red-team",
+      "parent": "security",
+      "title": {
+        "en": "Red-team reports",
+        "vi": "Báo cáo red-team"
+      },
+      "en": [
+        {
+          "file": "docs/red-team.md"
+        }
+      ]
     }
   ],
   "ui": {
