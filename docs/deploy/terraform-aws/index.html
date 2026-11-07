@@ -50,7 +50,7 @@ CI runs <code>terraform fmt -check</code>, <code>terraform validate</code> and <
 with it against a real AWS account yet. If you do, please open an
 <a href="https://github.com/guard-spec/guard-spec/issues/new/choose">issue</a> or a
 pull request with what worked and what did not. See
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
 </blockquote>
 <p>This is the <a href="/docs/deploy/aws/">AWS guide</a>, option A, as
 Terraform: the same architecture, security groups, task definitions and
@@ -63,7 +63,7 @@ upgrades to keep up with; a security team reviews task definitions, two
 ALBs and RDS.</li>
 <li><strong>No model volume.</strong> The <code>guard-spec-gateway-full</code> image carries the L2 and
 L3 models, so every task starts with L1 + L2 + L3 and there is no EFS.</li>
-<li><strong>EKS users already have a path.</strong> The <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/helm/guard-spec">Helm chart</a>
+<li><strong>EKS users already have a path.</strong> The <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/deploy/helm/guard-spec">Helm chart</a>
 covers Kubernetes, including EKS (guide, option B). A Terraform module for
 EKS would mostly wrap that chart.</li>
 </ul>
@@ -109,8 +109,8 @@ EKS would mostly wrap that chart.</li>
 <p>It does <strong>not</strong> create the VPC, subnets, NAT gateway, ACM certificates, DNS
 records, a WAF or a state backend. Bring your own and pass their IDs.</p>
 <h2 id="variables-you-will-set">Variables you will set<a class="anchor" href="#variables-you-will-set" aria-hidden="true">#</a></h2>
-<p>The full list with descriptions is in <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/terraform/aws/variables.tf">variables.tf</a>; a filled
-example is <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/terraform/aws/terraform.tfvars.example">terraform.tfvars.example</a>.</p>
+<p>The full list with descriptions is in <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/deploy/terraform/aws/variables.tf">variables.tf</a>; a filled
+example is <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/deploy/terraform/aws/terraform.tfvars.example">terraform.tfvars.example</a>.</p>
 <div class="table"><table>
 <thead>
 <tr>
@@ -122,7 +122,7 @@ example is <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c9
 <tbody>
 <tr>
   <td><code>image_tag</code></td>
-  <td><code>0.3.0</code></td>
+  <td><code>0.3.1</code></td>
   <td>Release of both images</td>
 </tr>
 <tr>
@@ -219,8 +219,8 @@ guide's <a href="/docs/deploy/aws/#observability">Observability</a> and
 what to add.</li>
 <li>No SSO (<code>OIDC_SECRET_*</code>), named upstream (<code>UPSTREAM_KEY_*</code>) or alert
 channel secrets. Add a secret per value and extend <code>gateway_secrets</code> /
-<code>control_plane_secrets</code> in <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/terraform/aws/ecs.tf">ecs.tf</a> and the execution role
-policies in <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/terraform/aws/iam.tf">iam.tf</a>.</li>
+<code>control_plane_secrets</code> in <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/deploy/terraform/aws/ecs.tf">ecs.tf</a> and the execution role
+policies in <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/deploy/terraform/aws/iam.tf">iam.tf</a>.</li>
 </ul>
 <h2 id="checks">Checks<a class="anchor" href="#checks" aria-hidden="true">#</a></h2>
 <pre><code class="language-bash">terraform fmt -check -recursive
@@ -229,7 +229,7 @@ terraform validate
 terraform test     # plans against a mocked AWS provider; no credentials needed
 </code></pre>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/terraform/aws/README.md">deploy/terraform/aws/README.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/deploy/terraform/aws/README.md">deploy/terraform/aws/README.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

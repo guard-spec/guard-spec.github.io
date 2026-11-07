@@ -48,7 +48,7 @@
 Community-tested: not yet. If you deploy this, please open an
 <a href="https://github.com/guard-spec/guard-spec/issues/new/choose">issue</a> or a pull
 request with what worked and what did not. See
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CONTRIBUTING.md">CONTRIBUTING.md</a> and the <a href="/docs/deploy/">index</a>.</p>
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/CONTRIBUTING.md">CONTRIBUTING.md</a> and the <a href="/docs/deploy/">index</a>.</p>
 </blockquote>
 <p>Two ways to run the services, same database and secrets:</p>
 <ul>
@@ -125,7 +125,7 @@ and Cloud NAT for the upstream LLM and image pulls.</li>
 <li>A VM inside the VPC with Docker for one-off tasks (migrations, app
 password), reached with IAP TCP forwarding, or a CI runner in the VPC.</li>
 <li>A checkout of the release tag on that VM:
-<code>git clone --branch v0.3.0 https://github.com/guard-spec/guard-spec.git</code>.</li>
+<code>git clone --branch v0.3.1 https://github.com/guard-spec/guard-spec.git</code>.</li>
 </ul>
 <h2 id="sizing">Sizing<a class="anchor" href="#sizing" aria-hidden="true">#</a></h2>
 <p>The README has no server benchmarks. Measure under your traffic. Starting
@@ -304,10 +304,10 @@ Services with a <code>PodMonitoring</code> resource on port <code>metrics</code>
 Registry remote repository that proxies <code>ghcr.io</code>:</p>
 <pre><code class="language-bash">gcloud artifacts repositories create guard-spec --repository-format=docker --location=&lt;region&gt;
 gcloud auth configure-docker &lt;region&gt;-docker.pkg.dev
-crane copy ghcr.io/guard-spec/guard-spec-gateway-full:0.3.0 \
-  &lt;region&gt;-docker.pkg.dev/&lt;project-id&gt;/guard-spec/guard-spec-gateway-full:0.3.0
-crane copy ghcr.io/guard-spec/guard-spec-control-plane:0.3.0 \
-  &lt;region&gt;-docker.pkg.dev/&lt;project-id&gt;/guard-spec/guard-spec-control-plane:0.3.0
+crane copy ghcr.io/guard-spec/guard-spec-gateway-full:0.3.1 \
+  &lt;region&gt;-docker.pkg.dev/&lt;project-id&gt;/guard-spec/guard-spec-gateway-full:0.3.1
+crane copy ghcr.io/guard-spec/guard-spec-control-plane:0.3.1 \
+  &lt;region&gt;-docker.pkg.dev/&lt;project-id&gt;/guard-spec/guard-spec-control-plane:0.3.1
 </code></pre>
 <h3 id="models">Models<a class="anchor" href="#models" aria-hidden="true">#</a></h3>
 <p>Use <code>guard-spec-gateway-full</code>: the models are in the image, every instance
@@ -352,7 +352,7 @@ spec:
       serviceAccountName: guard-spec-gateway@&lt;project-id&gt;.iam.gserviceaccount.com
       timeoutSeconds: 300
       containers:
-        - image: &lt;region&gt;-docker.pkg.dev/&lt;project-id&gt;/guard-spec/guard-spec-gateway-full:0.3.0
+        - image: &lt;region&gt;-docker.pkg.dev/&lt;project-id&gt;/guard-spec/guard-spec-gateway-full:0.3.1
           ports:
             - containerPort: 8080
           resources:
@@ -405,7 +405,7 @@ spec:
     spec:
       serviceAccountName: guard-spec-control-plane@&lt;project-id&gt;.iam.gserviceaccount.com
       containers:
-        - image: &lt;region&gt;-docker.pkg.dev/&lt;project-id&gt;/guard-spec/guard-spec-control-plane:0.3.0
+        - image: &lt;region&gt;-docker.pkg.dev/&lt;project-id&gt;/guard-spec/guard-spec-control-plane:0.3.1
           ports:
             - containerPort: 8081
           resources:
@@ -496,7 +496,7 @@ rate limits are per instance and in memory), a regional (HA) Cloud SQL
 instance.</p>
 <h2 id="upgrade-and-rollback">Upgrade and rollback<a class="anchor" href="#upgrade-and-rollback" aria-hidden="true">#</a></h2>
 <ol>
-<li>Read the <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CHANGELOG.md">CHANGELOG</a>. Before 1.0, minor versions can
+<li>Read the <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/CHANGELOG.md">CHANGELOG</a>. Before 1.0, minor versions can
 change the schema.</li>
 <li>Take an on-demand Cloud SQL backup.</li>
 <li>On the VM, check out the new tag and run the
@@ -563,7 +563,7 @@ the schema, restore the backup (with the <code>MFA_ENC_KEY</code> that matches i
 </tbody>
 </table></div>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/deploy/gcp.md">docs/deploy/gcp.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/docs/deploy/gcp.md">docs/deploy/gcp.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

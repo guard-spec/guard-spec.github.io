@@ -119,7 +119,7 @@ mang theo SBOM dạng SPDX cùng SLSA provenance dưới dạng attestation củ
 BuildKit bên trong image index (<a href="/docs/security/policy/">SECURITY.md</a>). Hai image bên
 thứ ba không phải của chúng tôi: hãy ghim chúng theo digest như ở trên.</p>
 <h2 id="2-ở-phía-có-mạng">2. Ở phía có mạng<a class="anchor" href="#2-ở-phía-có-mạng" aria-hidden="true">#</a></h2>
-<pre><code class="language-bash">V=0.3.0
+<pre><code class="language-bash">V=0.3.1
 ID='^https://github.com/guard-spec/guard-spec/'
 ISSUER=https://token.actions.githubusercontent.com
 
@@ -193,11 +193,11 @@ imagePullSecrets:
 gateway:
   image:
     repository: registry.internal/guard-spec/guard-spec-gateway
-    tag: &quot;0.3.0&quot;          # or &quot;0.3.0@sha256:&lt;index digest&gt;&quot; to pin the digest
+    tag: &quot;0.3.1&quot;          # or &quot;0.3.1@sha256:&lt;index digest&gt;&quot; to pin the digest
 controlPlane:
   image:
     repository: registry.internal/guard-spec/guard-spec-control-plane
-    tag: &quot;0.3.0&quot;
+    tag: &quot;0.3.1&quot;
 migrations:
   enabled: true
   image:
@@ -228,7 +228,7 @@ networkPolicy:
 <p>Nếu dùng gateway-full: <code>gateway.image.repository=.../guard-spec-gateway-full</code>,
 <code>models.persistence.enabled=false</code> và không có <code>models.pull</code>.</p>
 <p>Sau đó, như trong README (phần &quot;Kubernetes&quot;):</p>
-<pre><code class="language-bash">helm install gs ./guard-spec-0.3.0.tgz -n guard-spec -f values-airgapped.yaml
+<pre><code class="language-bash">helm install gs ./guard-spec-0.3.1.tgz -n guard-spec -f values-airgapped.yaml
 kubectl -n guard-spec exec deploy/gs-guard-spec-gateway -c gateway -- ./doctor
 </code></pre>
 <p><code>doctor</code> (có trong image từ 0.2.0) kiểm tra database và phiên bản migration,
@@ -307,7 +307,7 @@ Secret Manager hoặc Azure Key Vault với Workload Identity); <code>ExternalSe
 giữ nguyên.</li>
 </ul>
 
-    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/airgapped.vi.md">docs/airgapped.vi.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/docs/airgapped.vi.md">docs/airgapped.vi.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

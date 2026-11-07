@@ -52,7 +52,7 @@ binary. L2 (our classifier, <code>guardspec-classifier</code>) and L3 (the
 <code>multilingual-e5-small</code> embedder) are ONNX models that are never baked into
 an image or committed to git: they are downloaded, verified and mounted at
 <code>/models</code>.</p>
-<p><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/models/manifest.yaml"><code>models/manifest.yaml</code></a> lists every model version
+<p><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/models/manifest.yaml"><code>models/manifest.yaml</code></a> lists every model version
 that can be pulled. The same file is built into the gateway and the <code>models</code>
 tool, so the binary always knows its recommended models.</p>
 <div class="table"><table>
@@ -215,7 +215,7 @@ shadow mode. v4 is v3b's architecture and recipe trained on more Vietnamese
 data (owner-written teencode, no-diacritics and banking rows, and new hard
 negatives); it blocks fewer benign Vietnamese messages. The comparison with
 v3b is below (<a href="#v3b-vs-v4">v3b vs v4</a>) and in
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/train/MODEL_CARD.md">train/MODEL_CARD.md</a> (&quot;v4&quot;).</p>
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/train/MODEL_CARD.md">train/MODEL_CARD.md</a> (&quot;v4&quot;).</p>
 <pre><code class="language-bash"># 1. Install it next to v3b (files checked against the manifest's SHA-256).
 #    It comes from the Hugging Face branch v4 at the pinned commit, with the
 #    GitHub release model-guardspec-classifier-v4 as the mirror.
@@ -293,7 +293,7 @@ trained on.</p>
 attacks (eval: 7 fewer of 1,171; lower on Vietnamese data exfiltration and
 tool poisoning and on English leet). It did not pass the pre-registered
 decision rule, which is why it is a candidate for shadow mode and not the
-default. <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/train/MODEL_CARD.md">train/MODEL_CARD.md</a> (&quot;v4&quot;) has every
+default. <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/train/MODEL_CARD.md">train/MODEL_CARD.md</a> (&quot;v4&quot;) has every
 table.</p>
 <h2 id="reloading-without-a-restart">Reloading without a restart<a class="anchor" href="#reloading-without-a-restart" aria-hidden="true">#</a></h2>
 <p><code>kill -HUP</code> the gateway, or <code>POST /admin/models/reload</code> with
@@ -337,7 +337,7 @@ no restart.</li>
 <h2 id="releasing-a-new-model-version">Releasing a new model version<a class="anchor" href="#releasing-a-new-model-version" aria-hidden="true">#</a></h2>
 <p>For maintainers. The example releases <code>guardspec-classifier</code> <code>v4</code>.</p>
 <ol>
-<li><strong>Train</strong> with <code>train/</code> (see <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/train/MODEL_CARD.md">train/MODEL_CARD.md</a>).
+<li><strong>Train</strong> with <code>train/</code> (see <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/train/MODEL_CARD.md">train/MODEL_CARD.md</a>).
 Choose epochs, thresholds and calibration on the validation splits only.
 <code>eval/</code> is never used for tuning.</li>
 <li><strong>Calibrate</strong>: <code>go run -tags onnx ./cmd/calibrate fit -write</code> writes
@@ -363,10 +363,15 @@ to prove both sources serve the pinned files.</li>
 <li><strong>CHANGELOG</strong>: add a &quot;Model&quot; section under Unreleased with the version,
 what changed in the data, and the eval numbers against the previous
 version.</li>
+<li><strong>Sign</strong> the GitHub Release once the manifest bump is on <code>main</code>: run the
+<em>Sign model release</em> workflow (<code>gh workflow run sign-model-release.yml -f version=v4</code>).
+It checks every file against the new pins and attaches <code>SHA256SUMS</code> and
+its cosign bundle
+(<a href="/docs/security/verifying-releases/#5-models">verifying</a>).</li>
 </ol>
 <p>The next software release then ships the manifest that recommends v4.</p>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/models.md">docs/models.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/docs/models.md">docs/models.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

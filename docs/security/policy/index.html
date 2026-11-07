@@ -173,8 +173,15 @@ bundle next to it:</p>
   --certificate-oidc-issuer https://token.actions.githubusercontent.com
 sha256sum --ignore-missing -c checksums-onnx.txt
 </code></pre>
+<p>From the release after v0.3.0, every file those checksums list also has SLSA
+build provenance (a GitHub artifact attestation), attached to the release as
+<code>guard-spec_&lt;version&gt;.intoto.jsonl</code>:</p>
+<pre><code class="language-bash">gh attestation verify guard-spec_&lt;version&gt;_linux_amd64.tar.gz -R guard-spec/guard-spec \
+  --bundle guard-spec_&lt;version&gt;.intoto.jsonl \
+  --signer-workflow guard-spec/guard-spec/.github/workflows/release.yml
+</code></pre>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/SECURITY.md">SECURITY.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/SECURITY.md">SECURITY.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

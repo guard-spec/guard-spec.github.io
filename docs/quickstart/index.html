@@ -56,7 +56,7 @@ export UPSTREAM_LLM_URL=http://host.docker.internal:11434/v1
 
 scripts/quickstart.sh
 </code></pre>
-<p><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/scripts/quickstart.sh"><code>scripts/quickstart.sh</code></a>:</p>
+<p><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/scripts/quickstart.sh"><code>scripts/quickstart.sh</code></a>:</p>
 <ol>
 <li>writes <code>.env</code> from <code>.env.example</code> with strong random secrets
 (<code>POSTGRES_PASSWORD</code>, <code>GUARDSPEC_APP_PASSWORD</code>, <code>JWT_SECRET</code>,
@@ -64,7 +64,7 @@ scripts/quickstart.sh
 existing <code>.env</code> is never overwritten;</li>
 <li>runs <code>docker compose -f docker-compose.yml up -d</code> with
 <code>ghcr.io/guard-spec/guard-spec-gateway</code> and <code>-control-plane</code> at
-<code>GUARDSPEC_VERSION</code> (default <code>0.3.0</code>). Before the gateway starts, the
+<code>GUARDSPEC_VERSION</code> (default <code>0.3.1</code>). Before the gateway starts, the
 <code>models-init</code> service pulls the recommended models (about 270 MB, SHA-256
 verified) into <code>./models/cache</code>; on later starts it finds them and does
 nothing;</li>
@@ -150,8 +150,8 @@ docker compose up -d --wait
 L1 + L2 + L3, and host sizes;</li>
 <li><a href="/docs/upgrade/">docs/upgrade.md</a>: upgrades and rollback of images,
 migrations and models; backups with
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/scripts/backup.sh"><code>scripts/backup.sh</code></a> and
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/scripts/restore.sh"><code>scripts/restore.sh</code></a> (the database, <code>.env</code> with
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/scripts/backup.sh"><code>scripts/backup.sh</code></a> and
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/scripts/restore.sh"><code>scripts/restore.sh</code></a> (the database, <code>.env</code> with
 <code>MFA_ENC_KEY</code>, Caddy's certificates);</li>
 <li><a href="/docs/deploy/managed-postgres/">docs/managed-postgres.md</a>: RDS, Cloud SQL, Neon
 or Supabase instead of the <code>postgres</code> service (reference, not yet verified
@@ -273,7 +273,7 @@ with <code>&quot;status&quot;:&quot;degraded&quot;</code> and the same body. The
 BuildKit SPDX SBOM and SLSA provenance and is signed with cosign (keyless);
 see <a href="/docs/security/policy/#verifying-releases">SECURITY.md</a>.</p>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/README.md#quick-start">README.md#quick-start</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/README.md#quick-start">README.md#quick-start</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

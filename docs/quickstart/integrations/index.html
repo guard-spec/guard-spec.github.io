@@ -276,7 +276,7 @@ try {
 <p>Other wrappers around this SDK work the same way when they call chat
 completions. The Vercel AI SDK's OpenAI provider does with
 <code>createOpenAI({ baseURL, apiKey }).chat(model)</code>
-(<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/typescript/vercel-ai-sdk">examples/typescript/vercel-ai-sdk</a>):
+(<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/typescript/vercel-ai-sdk">examples/typescript/vercel-ai-sdk</a>):
 its default model, <code>openai(model)</code>, and <code>openai.responses(...)</code> call the
 Responses API, which the gateway serves only to an upstream that has it
 (OpenAI, Azure OpenAI): with Ollama or vLLM behind the gateway, use <code>.chat</code>.</p>
@@ -342,7 +342,7 @@ RAG pipeline the retrieved chunks reach the model inside the chat request, so
 they are scanned with the user text; to score documents one by one before
 indexing or before they are put in the prompt, call <code>POST /guardrail/scan</code>
 with <code>documents[]</code> (<a href="/docs/operations/#indirect-injection-and-tool-poisoning">README</a>).
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/python/rag">examples/python/rag</a> does both: it sends retrieved
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/python/rag">examples/python/rag</a> does both: it sends retrieved
 documents as tool results, which the gateway scores one by one and blocks or
 redacts (<code>INDIRECT_ACTION</code>), and scans them at ingest time.</p>
 <h2 id="claude-code-checked-through-the-gateway">Claude Code (checked through the gateway)<a class="anchor" href="#claude-code-checked-through-the-gateway" aria-hidden="true">#</a></h2>
@@ -684,14 +684,14 @@ with the results.</li>
 MCP tool definitions through <code>POST /guardrail/scan/tools</code>, tool results and
 documents through <code>POST /guardrail/scan</code>.</p>
 <h2 id="n8n-checked">n8n (checked)<a class="anchor" href="#n8n-checked" aria-hidden="true">#</a></h2>
-<p>Import <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/n8n/guardspec-workflow.json">examples/n8n/guardspec-workflow.json</a>
+<p>Import <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/n8n/guardspec-workflow.json">examples/n8n/guardspec-workflow.json</a>
 (checked with n8n 2.46.6). It calls the gateway with the HTTP Request node
 (a Header Auth credential <code>Authorization: Bearer gs_...</code>, <em>Never Error</em> on so
 a block reaches the next node) and with the OpenAI Chat Model node (an OpenAI
 credential whose Base URL is the gateway plus <code>/v1</code>, <em>Use Responses API</em>
 off, which works with any upstream). n8n's OpenAI node reports a block as &quot;Bad request - please check your
 parameters&quot; without the gateway's reason; the HTTP Request node keeps it.
-Steps: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/n8n/README.md">examples/n8n</a>.</p>
+Steps: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/n8n/README.md">examples/n8n</a>.</p>
 <h2 id="other-tools">Other tools<a class="anchor" href="#other-tools" aria-hidden="true">#</a></h2>
 <p>Any client works when it (1) lets you set the base URL, (2) sends the key as
 <code>Authorization: Bearer</code> or <code>x-api-key</code>, and (3) uses
@@ -703,7 +703,7 @@ server-side state), <code>/v1/embeddings</code>, <code>/v1/messages</code> (Anth
 requests it sends through a logging proxy such as mitmproxy, before you rely
 on it.</p>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/integrations.md">docs/integrations.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/docs/integrations.md">docs/integrations.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

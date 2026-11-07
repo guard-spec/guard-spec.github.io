@@ -78,7 +78,7 @@ nhận định phụ thuộc vào một thiết lập, thiết lập đó đư�
   <td>Báo lỗ hổng, các phiên bản được hỗ trợ, mục tiêu thời gian phản hồi</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/README.vi.md#m%C3%B4-h%C3%ACnh-b%E1%BA%A3o-m%E1%BA%ADt-v%C3%A0-gi%E1%BB%9Bi-h%E1%BA%A1n">Mô hình bảo mật và giới hạn</a></td>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/README.vi.md#m%C3%B4-h%C3%ACnh-b%E1%BA%A3o-m%E1%BA%ADt-v%C3%A0-gi%E1%BB%9Bi-h%E1%BA%A1n">Mô hình bảo mật và giới hạn</a></td>
   <td>Phát hiện bảo vệ được gì và không bảo vệ được gì</td>
 </tr>
 </tbody>
@@ -441,11 +441,13 @@ kèm cách giảm, nằm trong
 đường ngắn nhất tới một bản triển khai đã qua đánh giá.</p>
 <h2 id="xác-minh-một-bản-phát-hành">Xác minh một bản phát hành<a class="anchor" href="#xác-minh-một-bản-phát-hành" aria-hidden="true">#</a></h2>
 <p>Image được ký bằng cosign (keyless, OIDC của GitHub Actions) và kèm SBOM SPDX
-và SLSA provenance; archive được bảo đảm bằng các file checksum có chữ ký.
+và SLSA provenance; archive được bảo đảm bằng các file checksum có chữ ký
+và, từ bản phát hành sau v0.3.0, bằng SLSA build provenance
+(<code>guard-spec_&lt;version&gt;.intoto.jsonl</code>).
 Các lệnh, mỗi bước kiểm tra chứng minh điều gì và kết quả của chúng cho v0.2.0
 nằm trong <a href="/docs/security/verifying-releases/">Xác minh một bản phát hành</a>.</p>
 
-    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/security/README.vi.md">docs/security/README.vi.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/docs/security/README.vi.md">docs/security/README.vi.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

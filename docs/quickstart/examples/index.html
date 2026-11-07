@@ -60,31 +60,31 @@ example expects.</p>
 </thead>
 <tbody>
 <tr>
-  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/python/openai-sdk">python/openai-sdk</a></td>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/python/openai-sdk">python/openai-sdk</a></td>
   <td>OpenAI Python SDK: chat, streaming, catching the HTTP 400 <code>content_filter</code> block</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/python/langchain">python/langchain</a></td>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/python/langchain">python/langchain</a></td>
   <td>LangChain <code>ChatOpenAI</code> (<code>langchain-openai</code>) pointed at the gateway</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/python/llamaindex">python/llamaindex</a></td>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/python/llamaindex">python/llamaindex</a></td>
   <td>LlamaIndex <code>OpenAILike</code> pointed at the gateway</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/python/rag">python/rag</a></td>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/python/rag">python/rag</a></td>
   <td>A RAG pipeline with a poisoned document: blocked (<code>INDIRECT_ACTION=block</code>), redacted (<code>redact</code>), or dropped at ingest with <code>POST /guardrail/scan</code></td>
 </tr>
 <tr>
-  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/typescript/openai-sdk">typescript/openai-sdk</a></td>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/typescript/openai-sdk">typescript/openai-sdk</a></td>
   <td>OpenAI TypeScript SDK: chat, streaming, error handling</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/typescript/vercel-ai-sdk">typescript/vercel-ai-sdk</a></td>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/typescript/vercel-ai-sdk">typescript/vercel-ai-sdk</a></td>
   <td>Vercel AI SDK (<code>@ai-sdk/openai</code> with <code>baseURL</code>): <code>generateText</code>, <code>streamText</code>, error handling</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/n8n">n8n</a></td>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/n8n">n8n</a></td>
   <td>An importable n8n workflow: HTTP Request node and OpenAI Chat Model node pointed at the gateway</td>
 </tr>
 </tbody>
@@ -136,12 +136,12 @@ message (<code>[guardrail passed — configure UPSTREAM_LLM_URL ...]</code>) as 
 also when the client asked for a stream; the streaming examples need an
 upstream, real or the fake one below.</p>
 <h2 id="throwaway-gateway-for-trying-them-and-for-ci">Throwaway gateway for trying them (and for CI)<a class="anchor" href="#throwaway-gateway-for-trying-them-and-for-ci" aria-hidden="true">#</a></h2>
-<p><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/dev/start.sh"><code>dev/start.sh</code></a> starts everything the examples need from this
+<p><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/dev/start.sh"><code>dev/start.sh</code></a> starts everything the examples need from this
 checkout, without the admin UI and without downloading models:</p>
 <ul>
 <li>Postgres with the migrations (<code>docker compose</code>, project <code>gs-examples</code>,
 development credentials, port 55432);</li>
-<li><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/dev/fake_upstream.py"><code>dev/fake_upstream.py</code></a>, an OpenAI-compatible fake
+<li><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/dev/fake_upstream.py"><code>dev/fake_upstream.py</code></a>, an OpenAI-compatible fake
 model (standard library only) whose answer repeats what it received, so you
 can see what reached the model through the gateway;</li>
 <li>the gateway built with <code>go build ./cmd/gateway</code>, rule layer only
@@ -157,11 +157,11 @@ examples/dev/stop.sh             # stops it and deletes the database volume
 <code>set -a; . examples/dev/.state/env; set +a</code>. Setting <code>UPSTREAM_LLM_URL</code> before
 <code>start.sh</code> uses a real model instead of the fake one. Development only: the
 database password is the well-known one of <code>docker-compose.override.yml</code>.</p>
-<p>The <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/.github/workflows/examples.yml">Examples workflow</a> runs <code>start.sh</code>
+<p>The <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/.github/workflows/examples.yml">Examples workflow</a> runs <code>start.sh</code>
 and <code>run-all.sh</code> on pull requests that touch the examples or the gateway. It
 is not a required check.</p>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/README.md">examples/README.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/README.md">examples/README.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

@@ -52,7 +52,7 @@ L2 (classifier của chúng tôi, <code>guardspec-classifier</code>) và L3 (emb
 <code>multilingual-e5-small</code>) là các model ONNX, không bao giờ được đóng sẵn vào
 image hay commit vào git: chúng được tải về, kiểm tra rồi mount vào
 <code>/models</code>.</p>
-<p><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/models/manifest.yaml"><code>models/manifest.yaml</code></a> liệt kê mọi phiên bản model
+<p><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/models/manifest.yaml"><code>models/manifest.yaml</code></a> liệt kê mọi phiên bản model
 có thể tải về. Cùng file này được build vào gateway và công cụ <code>models</code>, nên
 binary luôn biết các model nó khuyến nghị.</p>
 <div class="table"><table>
@@ -215,7 +215,7 @@ v4 dùng cùng kiến trúc và công thức train của v3b nhưng train trên 
 liệu tiếng Việt hơn (các dòng teencode, không dấu và ngân hàng do chủ dự án
 viết, cùng các hard negative mới); nó chặn ít tin nhắn tiếng Việt vô hại hơn.
 Phần so sánh với v3b ở bên dưới (<a href="#v3b-so-với-v4">v3b so với v4</a>) và trong
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/train/MODEL_CARD.md">train/MODEL_CARD.md</a> (mục &quot;v4&quot;).</p>
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/train/MODEL_CARD.md">train/MODEL_CARD.md</a> (mục &quot;v4&quot;).</p>
 <pre><code class="language-bash"># 1. Install it next to v3b (files checked against the manifest's SHA-256).
 #    It comes from the Hugging Face branch v4 at the pinned commit, with the
 #    GitHub release model-guardspec-classifier-v4 as the mirror.
@@ -293,7 +293,7 @@ lần cho v4; owner hold-out là dữ liệu do chủ dự án viết mà không
 chút (eval: ít hơn 7 trên 1,171; thấp hơn ở rò rỉ dữ liệu và tool poisoning
 tiếng Việt, và ở leet tiếng Anh). Nó không vượt qua quy tắc quyết định đã đăng
 ký trước, nên nó là bản ứng viên cho shadow mode chứ không phải mặc định.
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/train/MODEL_CARD.md">train/MODEL_CARD.md</a> (mục &quot;v4&quot;) có đầy đủ các bảng.</p>
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/train/MODEL_CARD.md">train/MODEL_CARD.md</a> (mục &quot;v4&quot;) có đầy đủ các bảng.</p>
 <h2 id="nạp-lại-không-cần-khởi-động-lại">Nạp lại không cần khởi động lại<a class="anchor" href="#nạp-lại-không-cần-khởi-động-lại" aria-hidden="true">#</a></h2>
 <p><code>kill -HUP</code> gateway, hoặc <code>POST /admin/models/reload</code> với
 <code>GATEWAY_ADMIN_TOKEN</code>, sẽ nạp lại classifier (hoặc một phiên bản khác), kiểm
@@ -335,7 +335,7 @@ hợp một phần. Hãy báo những văn bản như vậy (không kèm dữ li
 <h2 id="phát-hành-phiên-bản-model-mới">Phát hành phiên bản model mới<a class="anchor" href="#phát-hành-phiên-bản-model-mới" aria-hidden="true">#</a></h2>
 <p>Dành cho maintainer. Ví dụ dưới đây phát hành <code>guardspec-classifier</code> <code>v4</code>.</p>
 <ol>
-<li><strong>Train</strong> bằng <code>train/</code> (xem <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/train/MODEL_CARD.md">train/MODEL_CARD.md</a>).
+<li><strong>Train</strong> bằng <code>train/</code> (xem <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/train/MODEL_CARD.md">train/MODEL_CARD.md</a>).
 Chọn số epoch, threshold và calibration chỉ dựa trên các validation split.
 <code>eval/</code> không bao giờ được dùng để tinh chỉnh.</li>
 <li><strong>Calibrate</strong>: <code>go run -tags onnx ./cmd/calibrate fit -write</code> ghi
@@ -360,10 +360,15 @@ pull vào một thư mục trống (<code>go run ./cmd/models pull -dir /tmp/m g
 để chứng minh cả hai nguồn đều phục vụ đúng các file đã ghim.</li>
 <li><strong>CHANGELOG</strong>: thêm mục &quot;Model&quot; dưới Unreleased với phiên bản, những thay
 đổi về dữ liệu, và số liệu eval so với phiên bản trước.</li>
+<li><strong>Ký</strong> GitHub Release khi thay đổi manifest đã vào <code>main</code>: chạy workflow
+<em>Sign model release</em> (<code>gh workflow run sign-model-release.yml -f version=v4</code>).
+Workflow kiểm tra mọi file với các giá trị ghim mới rồi đính kèm
+<code>SHA256SUMS</code> cùng bundle cosign của nó
+(<a href="/docs/security/verifying-releases/#5-models">cách xác minh</a>, tiếng Anh).</li>
 </ol>
 <p>Release phần mềm kế tiếp sau đó sẽ mang manifest khuyến nghị v4.</p>
 
-    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/models.vi.md">docs/models.vi.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/docs/models.vi.md">docs/models.vi.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

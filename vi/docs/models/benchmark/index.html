@@ -242,7 +242,7 @@ nạp.</li>
 <h2 id="dataset-và-giấy-phép">Dataset và giấy phép<a class="anchor" href="#dataset-và-giấy-phép" aria-hidden="true">#</a></h2>
 <p>Mọi dataset đều được kiểm tra trên trang (card) Hugging Face ở commit đã ghim.
 Benchmark tải chúng khi chạy; repository này không lưu dòng nào của chúng ngoài
-những gì <code>eval/</code> vốn đã có (xem <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/eval/LICENSES.md">eval/LICENSES.md</a>).</p>
+những gì <code>eval/</code> vốn đã có (xem <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/eval/LICENSES.md">eval/LICENSES.md</a>).</p>
 <div class="table"><table>
 <thead>
 <tr>
@@ -307,7 +307,7 @@ những gì <code>eval/</code> vốn đã có (xem <a href="https://github.com/g
 <p><strong>Tiếng Việt.</strong> Chúng tôi không tìm được dataset prompt injection tiếng Việt
 nào vừa công khai vừa có giấy phép. Các dòng tiếng Việt duy nhất ở đây là của
 <code>eval/</code>, vốn là dữ liệu tổng hợp và được gán nhãn bởi AI agent (xem
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/eval/README.md">eval/README.md</a>).</p>
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/eval/README.md">eval/README.md</a>).</p>
 <p><strong>Cột ngôn ngữ.</strong> <code>eval/</code> gắn ngôn ngữ cho từng dòng (<code>en</code>, <code>vi</code>). Với các bộ
 công khai, dòng nào có dấu hiệu tiếng Đức, tiếng Tây Ban Nha hoặc chữ Cyrillic
 (theo rule của <code>eval/build/build.py</code>) được xếp vào <code>other</code>, còn lại là <code>en</code>.
@@ -316,7 +316,7 @@ Chỉ <code>deepset</code> có tỉ lệ <code>other</code> đáng kể.</p>
 <ul>
 <li>Classifier của Guard Spec (L2, v3b) được train trên split <code>train</code> của
 <code>deepset/prompt-injections</code>, <code>Lakera/gandalf_ignore_instructions</code> và
-<code>jackhhao/jailbreak-classification</code> (<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/train/DATA_LICENSES.md">train/DATA_LICENSES.md</a>).
+<code>jackhhao/jailbreak-classification</code> (<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/train/DATA_LICENSES.md">train/DATA_LICENSES.md</a>).
 Benchmark chỉ dùng split <code>test</code> của chúng, nhưng các split này có cùng phân
 phối, nên có lợi cho Guard Spec trên ba bộ này.</li>
 <li>ProtectAI v2 liệt kê <code>jackhhao/jailbreak-classification</code> trong các bộ dữ
@@ -325,7 +325,7 @@ nó ở bộ đó.</li>
 <li>Các dòng <code>test</code> tiếng Anh của <code>deepset</code> và <code>Gandalf</code> cũng nằm trong <code>eval/</code>
 (60 trên 116 và 111 trên 112 dòng).</li>
 <li>Các rule L1 của Guard Spec được tinh chỉnh bằng cách xem các lỗi trên nửa
-&quot;dev&quot; của <code>eval/</code> (<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/eval/README.md">eval/README.md</a>); số liệu L1 trên
+&quot;dev&quot; của <code>eval/</code> (<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/eval/README.md">eval/README.md</a>); số liệu L1 trên
 <code>eval/</code> vì vậy là lạc quan. L2, L3 và fusion chưa bao giờ được fit trên
 <code>eval/</code>.</li>
 <li>Không có gì trong benchmark này được dùng để thay đổi Guard Spec.</li>
@@ -1140,7 +1140,7 @@ phải từ model nhận dạng ngôn ngữ.</li>
 <p>Kết quả cũng sẽ xuất hiện trên <a href="https://guardspec.io/docs/">guardspec.io/docs</a>,
 được build từ trang này.</p>
 
-    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/benchmark.vi.md">docs/benchmark.vi.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/docs/benchmark.vi.md">docs/benchmark.vi.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

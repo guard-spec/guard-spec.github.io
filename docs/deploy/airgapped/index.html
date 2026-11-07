@@ -117,7 +117,7 @@ and carry an SPDX SBOM and SLSA provenance as BuildKit attestations inside
 the image index (<a href="/docs/security/policy/">SECURITY.md</a>). The two third-party images
 are not ours: pin them by digest, as above.</p>
 <h2 id="2-on-the-connected-side">2. On the connected side<a class="anchor" href="#2-on-the-connected-side" aria-hidden="true">#</a></h2>
-<pre><code class="language-bash">V=0.3.0
+<pre><code class="language-bash">V=0.3.1
 ID='^https://github.com/guard-spec/guard-spec/'
 ISSUER=https://token.actions.githubusercontent.com
 
@@ -191,11 +191,11 @@ imagePullSecrets:
 gateway:
   image:
     repository: registry.internal/guard-spec/guard-spec-gateway
-    tag: &quot;0.3.0&quot;          # or &quot;0.3.0@sha256:&lt;index digest&gt;&quot; to pin the digest
+    tag: &quot;0.3.1&quot;          # or &quot;0.3.1@sha256:&lt;index digest&gt;&quot; to pin the digest
 controlPlane:
   image:
     repository: registry.internal/guard-spec/guard-spec-control-plane
-    tag: &quot;0.3.0&quot;
+    tag: &quot;0.3.1&quot;
 migrations:
   enabled: true
   image:
@@ -226,7 +226,7 @@ networkPolicy:
 <p>With gateway-full instead: <code>gateway.image.repository=.../guard-spec-gateway-full</code>,
 <code>models.persistence.enabled=false</code> and no <code>models.pull</code>.</p>
 <p>Then, as in the README (&quot;Kubernetes&quot;):</p>
-<pre><code class="language-bash">helm install gs ./guard-spec-0.3.0.tgz -n guard-spec -f values-airgapped.yaml
+<pre><code class="language-bash">helm install gs ./guard-spec-0.3.1.tgz -n guard-spec -f values-airgapped.yaml
 kubectl -n guard-spec exec deploy/gs-guard-spec-gateway -c gateway -- ./doctor
 </code></pre>
 <p><code>doctor</code> (in the images from 0.2.0) checks the database and migration version, the model files against
@@ -303,7 +303,7 @@ Manager or Azure Key Vault with Workload Identity); the <code>ExternalSecret</co
 stays the same.</li>
 </ul>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/airgapped.md">docs/airgapped.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/docs/airgapped.md">docs/airgapped.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

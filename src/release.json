@@ -1,76 +1,85 @@
 {
   "_comment": "The current release, shown on the landing page (hero badge, 'New in' link, What's new section). On each release: update this file, bump ref in src/docs.json, run build.py, run check_site.py --external. Text may hold inline HTML (<code>). 'previous' lists the newest first; keep about four.",
-  "version": "v0.3.0",
+  "version": "v0.3.1",
   "date": "2026-11-07",
-  "url": "https://github.com/guard-spec/guard-spec/releases/tag/v0.3.0",
-  "changelog_url": "https://github.com/guard-spec/guard-spec/blob/v0.3.0/CHANGELOG.md#030---2026-11-07",
+  "url": "https://github.com/guard-spec/guard-spec/releases/tag/v0.3.1",
+  "changelog_url": "https://github.com/guard-spec/guard-spec/blob/v0.3.1/CHANGELOG.md#031---2026-11-07",
   "status": {
     "en": "pre-1.0",
     "vi": "trước 1.0"
   },
   "tagline": {
-    "en": "Responses API, split multi-turn attacks, shared scan cache",
-    "vi": "Responses API, tấn công chia nhỏ nhiều lượt, cache dùng chung"
+    "en": "Output guard security fixes and faster streams",
+    "vi": "Vá bảo mật output guard và stream nhanh hơn"
   },
   "upgrade": {
-    "en": "Upgrading: run the migrations first (migration 020 adds the scan cache table). The conversation window is on by default; set <code>CONVERSATION_WINDOW_TURNS=0</code> to keep the old behaviour.",
-    "vi": "Khi nâng cấp: chạy migration trước (migration 020 thêm bảng scan cache). Cửa sổ hội thoại bật sẵn; đặt <code>CONVERSATION_WINDOW_TURNS=0</code> để giữ hành vi cũ."
+    "en": "Upgrading: no migrations. The output guard now removes more: HTML tags that link to or load a URL off the allowlist, and markup that a removal joined into a new link or image. Hosts on your allowlist are unaffected.",
+    "vi": "Khi nâng cấp: không có migration. Output guard giờ xoá nhiều hơn: thẻ HTML trỏ tới hoặc tải URL ngoài allowlist, và markup bị ghép thành link hay ảnh mới sau khi xoá. Host trong allowlist không bị ảnh hưởng."
   },
   "highlights": {
     "en": [
       {
-        "title": "OpenAI Responses API and embeddings",
-        "text": "<code>/v1/responses</code>, streaming included, gets the same input scanning, tool-output redaction and output guard as chat; <code>/v1/embeddings</code> gets keys, rate limits, policies and audit."
+        "title": "HTML tags checked like links",
+        "text": "<code>&lt;a href&gt;</code>, <code>&lt;iframe src&gt;</code>, <code>style</code> with <code>url()</code> and other tags that reach a host off the allowlist are removed, read the way a browser reads them. <code>javascript:</code> and <code>data:</code> URLs go too."
       },
       {
-        "title": "Attacks split across turns",
-        "text": "The most recent user turns are also scored together, on by default. Rules alone now block 24 of 24 split attacks on a new test set, with 12 of 12 benign conversations allowed."
+        "title": "No links rebuilt by a removal",
+        "text": "When removing markup joined the text around it into a new image or link, that new markup was never checked. The guard now checks its own output again, in whole answers and streams."
       },
       {
-        "title": "Shared scan cache",
-        "text": "Several gateway replicas reuse scan results through Redis or PostgreSQL, so long agent sessions keep working across replicas and restarts. Only scores are stored."
+        "title": "Canary and personal data split by markup",
+        "text": "A canary or an e-mail, phone or card number split by a link the guard removes is now caught after the removal joins it."
       },
       {
-        "title": "Red-team reports",
-        "text": "Bypass and false-positive issue forms, a Report button in the request log, and a documented path from a report to training or hold-out data."
+        "title": "Streams 7.5× → 1.3–1.6× of a whole answer",
+        "text": "The output guard holds back only what could still change, so a guarded stream costs about 0.01 ms on a clean 2 KB answer instead of 3.8 ms. Two stream leaks found on the way are fixed."
       },
       {
-        "title": "Public benchmark and examples",
-        "text": "A reproducible comparison with other detectors on public datasets, including where Guard Spec does worse, and runnable OpenAI SDK, LangChain, LlamaIndex, Vercel AI SDK, RAG and n8n examples."
+        "title": "Supply chain",
+        "text": "SLSA build provenance for the release archives, signed model releases, hash-pinned publish dependencies, and an OpenSSF Best Practices passing badge."
       },
       {
-        "title": "Classifier v4, shadow mode only",
-        "text": "Published as a candidate to compare in shadow mode: fewer benign Vietnamese teencode blocks, but fewer attacks caught overall. v3b stays the default."
+        "title": "Docs in Vietnamese",
+        "text": "Integrations, examples, deployment, models, benchmark and security pages now have Vietnamese translations."
       }
     ],
     "vi": [
       {
-        "title": "OpenAI Responses API và embeddings",
-        "text": "<code>/v1/responses</code>, kể cả streaming, được quét đầu vào, che kết quả tool và kiểm tra đầu ra như chat; <code>/v1/embeddings</code> có key, giới hạn tần suất, chính sách và audit."
+        "title": "Thẻ HTML được kiểm như link",
+        "text": "<code>&lt;a href&gt;</code>, <code>&lt;iframe src&gt;</code>, <code>style</code> có <code>url()</code> và các thẻ khác trỏ tới host ngoài allowlist bị xoá, đọc theo cách trình duyệt đọc. URL <code>javascript:</code> và <code>data:</code> cũng bị xoá."
       },
       {
-        "title": "Tấn công chia nhỏ qua nhiều lượt",
-        "text": "Các lượt gần nhất của người dùng được chấm điểm cả khi ghép lại, bật sẵn. Trên bộ kiểm tra mới, chỉ riêng lớp luật đã chặn 24/24 tấn công chia nhỏ và cho qua 12/12 hội thoại bình thường."
+        "title": "Không còn link bị ghép lại sau khi xoá",
+        "text": "Khi xoá markup làm phần chữ hai bên ghép thành ảnh hay link mới, phần mới đó trước đây không được kiểm. Giờ guard kiểm lại chính đầu ra của nó, cả câu trả lời lẫn stream."
       },
       {
-        "title": "Cache kết quả quét dùng chung",
-        "text": "Nhiều bản sao gateway dùng chung kết quả quét qua Redis hoặc PostgreSQL, nên phiên agent dài vẫn chạy đúng qua các bản sao và khi khởi động lại. Chỉ lưu điểm số."
+        "title": "Canary và dữ liệu cá nhân bị chia bởi markup",
+        "text": "Canary, email, số điện thoại hay số thẻ bị chia đôi bởi một link mà guard xoá giờ được phát hiện sau khi ghép lại."
       },
       {
-        "title": "Báo cáo red-team",
-        "text": "Mẫu issue cho lọt lưới và chặn nhầm, nút Báo cáo trong nhật ký request, và quy trình đưa một báo cáo thành dữ liệu huấn luyện hoặc dữ liệu giữ lại để đánh giá."
+        "title": "Stream từ 7,5× xuống 1,3–1,6× so với kiểm cả câu",
+        "text": "Output guard chỉ giữ lại phần còn có thể thay đổi, nên một stream sạch 2 KB chỉ tốn khoảng 0,01 ms thay vì 3,8 ms. Hai lỗ rò trong stream phát hiện trong lúc làm đã được vá."
       },
       {
-        "title": "Benchmark công khai và ví dụ",
-        "text": "So sánh tái lập được với các bộ phát hiện khác trên dữ liệu công khai, kể cả chỗ Guard Spec kém hơn, cùng ví dụ chạy được cho OpenAI SDK, LangChain, LlamaIndex, Vercel AI SDK, RAG và n8n."
+        "title": "Chuỗi cung ứng",
+        "text": "Provenance SLSA cho file phát hành, ký model release, khoá hash thư viện khi publish, và huy hiệu OpenSSF Best Practices mức passing."
       },
       {
-        "title": "Bộ phân loại v4, chỉ chạy shadow",
-        "text": "Công bố làm ứng viên để so sánh ở chế độ shadow: ít chặn nhầm teencode tiếng Việt hơn nhưng bắt được ít tấn công hơn. v3b vẫn là mặc định."
+        "title": "Tài liệu tiếng Việt",
+        "text": "Các trang tích hợp, ví dụ, triển khai, model, benchmark và bảo mật đã có bản tiếng Việt."
       }
     ]
   },
   "previous": [
+    {
+      "version": "v0.3.0",
+      "date": "2026-11-07",
+      "url": "https://github.com/guard-spec/guard-spec/releases/tag/v0.3.0",
+      "summary": {
+        "en": "OpenAI Responses API and embeddings, split multi-turn attacks scored together, a shared scan cache for several replicas, red-team report forms, a public benchmark and runnable examples.",
+        "vi": "OpenAI Responses API và embeddings, chấm điểm tấn công chia nhỏ qua nhiều lượt, cache kết quả quét dùng chung cho nhiều bản sao, mẫu báo cáo red-team, benchmark công khai và ví dụ chạy được."
+      }
+    },
     {
       "version": "v0.2.1",
       "date": "2026-11-07",
@@ -96,15 +105,6 @@
       "summary": {
         "en": "Fixes and hardening: a dashboard API, clearer health and readiness reports, Helm chart fixes, Go benchmarks and dependency updates.",
         "vi": "Sửa lỗi và gia cố: API cho dashboard, báo cáo health và readiness rõ hơn, sửa Helm chart, Go benchmark và cập nhật thư viện phụ thuộc."
-      }
-    },
-    {
-      "version": "v0.1.0",
-      "date": "2026-11-06",
-      "url": "https://github.com/guard-spec/guard-spec/releases/tag/v0.1.0",
-      "summary": {
-        "en": "The first public release.",
-        "vi": "Bản phát hành công khai đầu tiên."
       }
     }
   ]

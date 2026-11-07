@@ -42,7 +42,7 @@
 <section class="hero">
   <div class="wrap hero-in">
     <div class="hero-copy">
-      <a class="new-pill" href="#whats-new"><b>Có gì mới trong v0.3.0</b><span>Responses API, tấn công chia nhỏ nhiều lượt, cache dùng chung</span><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M5 12h14" /> <path d="m12 5 7 7-7 7" /> </svg></a>
+      <a class="new-pill" href="#whats-new"><b>Có gì mới trong v0.3.1</b><span>Vá bảo mật output guard và stream nhanh hơn</span><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M5 12h14" /> <path d="m12 5 7 7-7 7" /> </svg></a>
       <div class="kicker">Mã nguồn mở · Tự host</div>
       <h1>Chặn prompt injection <em>trước khi</em> nó tới LLM của bạn</h1>
       <p class="lead">Guard Spec là gateway đặt giữa ứng dụng của bạn và mọi API tương thích OpenAI. Nó kiểm tra prompt, tài liệu truy xuất, kết quả tool và MCP tool ở chiều vào, và câu trả lời của model ở chiều ra. Prompt không bao giờ rời khỏi hạ tầng của bạn.</p>
@@ -51,7 +51,7 @@
         <a class="btn btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg>Xem trên GitHub</a>
       </div>
       <ul class="badges">
-        <li>Apache-2.0</li><li>Go</li><li>English · Tiếng Việt</li><li><a href="https://github.com/guard-spec/guard-spec/releases/tag/v0.3.0">v0.3.0 · trước 1.0</a></li><li><a href="https://www.bestpractices.dev/projects/16421">OpenSSF Best Practices · passing</a></li>
+        <li>Apache-2.0</li><li>Go</li><li>English · Tiếng Việt</li><li><a href="https://github.com/guard-spec/guard-spec/releases/tag/v0.3.1">v0.3.1 · trước 1.0</a></li><li><a href="https://www.bestpractices.dev/projects/16421">OpenSSF Best Practices · passing</a></li>
       </ul>
     </div>
     <div class="hero-code">
@@ -205,26 +205,26 @@ client = OpenAI(
 <section class="section alt" id="whats-new">
   <div class="wrap">
     <div class="eyebrow">Có gì mới</div>
-    <h2>Có gì mới trong v0.3.0</h2>
-    <p class="sub">Phát hành ngày <time datetime="2026-11-07">2026-11-07</time>. Khi nâng cấp: chạy migration trước (migration 020 thêm bảng scan cache). Cửa sổ hội thoại bật sẵn; đặt <code>CONVERSATION_WINDOW_TURNS=0</code> để giữ hành vi cũ.</p>
+    <h2>Có gì mới trong v0.3.1</h2>
+    <p class="sub">Phát hành ngày <time datetime="2026-11-07">2026-11-07</time>. Khi nâng cấp: không có migration. Output guard giờ xoá nhiều hơn: thẻ HTML trỏ tới hoặc tải URL ngoài allowlist, và markup bị ghép thành link hay ảnh mới sau khi xoá. Host trong allowlist không bị ảnh hưởng.</p>
     <ul class="grid3 wn-list">
-      <li class="card"><h3>OpenAI Responses API và embeddings</h3><p><code>/v1/responses</code>, kể cả streaming, được quét đầu vào, che kết quả tool và kiểm tra đầu ra như chat; <code>/v1/embeddings</code> có key, giới hạn tần suất, chính sách và audit.</p></li>
-      <li class="card"><h3>Tấn công chia nhỏ qua nhiều lượt</h3><p>Các lượt gần nhất của người dùng được chấm điểm cả khi ghép lại, bật sẵn. Trên bộ kiểm tra mới, chỉ riêng lớp luật đã chặn 24/24 tấn công chia nhỏ và cho qua 12/12 hội thoại bình thường.</p></li>
-      <li class="card"><h3>Cache kết quả quét dùng chung</h3><p>Nhiều bản sao gateway dùng chung kết quả quét qua Redis hoặc PostgreSQL, nên phiên agent dài vẫn chạy đúng qua các bản sao và khi khởi động lại. Chỉ lưu điểm số.</p></li>
-      <li class="card"><h3>Báo cáo red-team</h3><p>Mẫu issue cho lọt lưới và chặn nhầm, nút Báo cáo trong nhật ký request, và quy trình đưa một báo cáo thành dữ liệu huấn luyện hoặc dữ liệu giữ lại để đánh giá.</p></li>
-      <li class="card"><h3>Benchmark công khai và ví dụ</h3><p>So sánh tái lập được với các bộ phát hiện khác trên dữ liệu công khai, kể cả chỗ Guard Spec kém hơn, cùng ví dụ chạy được cho OpenAI SDK, LangChain, LlamaIndex, Vercel AI SDK, RAG và n8n.</p></li>
-      <li class="card"><h3>Bộ phân loại v4, chỉ chạy shadow</h3><p>Công bố làm ứng viên để so sánh ở chế độ shadow: ít chặn nhầm teencode tiếng Việt hơn nhưng bắt được ít tấn công hơn. v3b vẫn là mặc định.</p></li>
+      <li class="card"><h3>Thẻ HTML được kiểm như link</h3><p><code>&lt;a href&gt;</code>, <code>&lt;iframe src&gt;</code>, <code>style</code> có <code>url()</code> và các thẻ khác trỏ tới host ngoài allowlist bị xoá, đọc theo cách trình duyệt đọc. URL <code>javascript:</code> và <code>data:</code> cũng bị xoá.</p></li>
+      <li class="card"><h3>Không còn link bị ghép lại sau khi xoá</h3><p>Khi xoá markup làm phần chữ hai bên ghép thành ảnh hay link mới, phần mới đó trước đây không được kiểm. Giờ guard kiểm lại chính đầu ra của nó, cả câu trả lời lẫn stream.</p></li>
+      <li class="card"><h3>Canary và dữ liệu cá nhân bị chia bởi markup</h3><p>Canary, email, số điện thoại hay số thẻ bị chia đôi bởi một link mà guard xoá giờ được phát hiện sau khi ghép lại.</p></li>
+      <li class="card"><h3>Stream từ 7,5× xuống 1,3–1,6× so với kiểm cả câu</h3><p>Output guard chỉ giữ lại phần còn có thể thay đổi, nên một stream sạch 2 KB chỉ tốn khoảng 0,01 ms thay vì 3,8 ms. Hai lỗ rò trong stream phát hiện trong lúc làm đã được vá.</p></li>
+      <li class="card"><h3>Chuỗi cung ứng</h3><p>Provenance SLSA cho file phát hành, ký model release, khoá hash thư viện khi publish, và huy hiệu OpenSSF Best Practices mức passing.</p></li>
+      <li class="card"><h3>Tài liệu tiếng Việt</h3><p>Các trang tích hợp, ví dụ, triển khai, model, benchmark và bảo mật đã có bản tiếng Việt.</p></li>
     </ul>
     <div class="ctas wn-links">
-      <a class="btn btn-primary" href="https://github.com/guard-spec/guard-spec/releases/tag/v0.3.0">Ghi chú phát hành<svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M5 12h14" /> <path d="m12 5 7 7-7 7" /> </svg></a>
-      <a class="btn wn-btn" href="https://github.com/guard-spec/guard-spec/blob/v0.3.0/CHANGELOG.md#030---2026-11-07"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 12h-5" /> <path d="M15 8h-5" /> <path d="M19 17V5a2 2 0 0 0-2-2H4" /> <path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3" /> </svg>Nhật ký thay đổi</a>
+      <a class="btn btn-primary" href="https://github.com/guard-spec/guard-spec/releases/tag/v0.3.1">Ghi chú phát hành<svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M5 12h14" /> <path d="m12 5 7 7-7 7" /> </svg></a>
+      <a class="btn wn-btn" href="https://github.com/guard-spec/guard-spec/blob/v0.3.1/CHANGELOG.md#031---2026-11-07"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 12h-5" /> <path d="M15 8h-5" /> <path d="M19 17V5a2 2 0 0 0-2-2H4" /> <path d="M8 21h12a2 2 0 0 0 2-2v-1a1 1 0 0 0-1-1H11a1 1 0 0 0-1 1v1a2 2 0 1 1-4 0V5a2 2 0 1 0-4 0v2a1 1 0 0 0 1 1h3" /> </svg>Nhật ký thay đổi</a>
     </div>
     <h3 class="wn-earlier">Các bản trước</h3>
     <ul class="wn-prev">
+      <li><a href="https://github.com/guard-spec/guard-spec/releases/tag/v0.3.0">v0.3.0</a><time datetime="2026-11-07">2026-11-07</time><span>OpenAI Responses API và embeddings, chấm điểm tấn công chia nhỏ qua nhiều lượt, cache kết quả quét dùng chung cho nhiều bản sao, mẫu báo cáo red-team, benchmark công khai và ví dụ chạy được.</span></li>
       <li><a href="https://github.com/guard-spec/guard-spec/releases/tag/v0.2.1">v0.2.1</a><time datetime="2026-11-07">2026-11-07</time><span>Luật tiếng Việt cho câu lệnh "bỏ qua quy tắc" và ngưỡng sàn L1 khi gộp điểm, web search của Claude Code, lưu giữ nhật ký hoạt động và phiên, Policy flow sửa được kèm trợ giúp ngay chỗ, provenance SLSA đầy đủ cho image control plane.</span></li>
       <li><a href="https://github.com/guard-spec/guard-spec/releases/tag/v0.2.0">v0.2.0</a><time datetime="2026-11-06">2026-11-06</time><span>Anthropic Messages API cho Claude Code, chế độ shadow và nạp lại model khi đang chạy, Helm chart cho production, lệnh doctor, compose cho production và trang tài liệu này.</span></li>
       <li><a href="https://github.com/guard-spec/guard-spec/releases/tag/v0.1.1">v0.1.1</a><time datetime="2026-11-06">2026-11-06</time><span>Sửa lỗi và gia cố: API cho dashboard, báo cáo health và readiness rõ hơn, sửa Helm chart, Go benchmark và cập nhật thư viện phụ thuộc.</span></li>
-      <li><a href="https://github.com/guard-spec/guard-spec/releases/tag/v0.1.0">v0.1.0</a><time datetime="2026-11-06">2026-11-06</time><span>Bản phát hành công khai đầu tiên.</span></li>
     </ul>
   </div>
 </section>
