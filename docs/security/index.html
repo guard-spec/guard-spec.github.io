@@ -78,7 +78,7 @@ statement depends on a setting, the setting is named.</p>
   <td>Reporting a vulnerability, supported versions, response targets</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/README.md#security-model-and-limitations">Security model and limitations</a></td>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/README.md#security-model-and-limitations">Security model and limitations</a></td>
   <td>What detection does and does not protect against</td>
 </tr>
 </tbody>
@@ -440,11 +440,13 @@ each with what reduces it, are in
 shortest path to a reviewed deployment.</p>
 <h2 id="verifying-a-release">Verifying a release<a class="anchor" href="#verifying-a-release" aria-hidden="true">#</a></h2>
 <p>Images are signed with cosign (keyless, GitHub Actions OIDC) and carry SPDX
-SBOMs and SLSA provenance; archives are covered by signed checksum files.
+SBOMs and SLSA provenance; archives are covered by signed checksum files
+and, from the release after v0.3.0, by SLSA build provenance
+(<code>guard-spec_&lt;version&gt;.intoto.jsonl</code>).
 The commands, what each check proves and their output for v0.2.0 are in
 <a href="/docs/security/verifying-releases/">Verifying a release</a>.</p>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/security/README.md">docs/security/README.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/docs/security/README.md">docs/security/README.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

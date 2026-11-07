@@ -49,7 +49,7 @@
 </blockquote>
 <p>Một host, Docker Compose, HTTPS. Dành cho startup hoặc một nhóm muốn chạy Guard
 Spec trên một VM duy nhất mà không cần Kubernetes. Bản bắt đầu nhanh
-(<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docker-compose.yml"><code>docker-compose.yml</code></a> ở thư mục gốc của
+(<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/docker-compose.yml"><code>docker-compose.yml</code></a> ở thư mục gốc của
 repository) mở mọi port qua HTTP thường; stack này thì không.</p>
 <div class="table"><table>
 <thead>
@@ -154,7 +154,7 @@ volume <code>caddy_data</code> và được <code>scripts/backup.sh</code> sao l
 443, lệnh chuyển hướng HTTP sang HTTPS của Caddy vẫn trỏ về port 443; hãy gọi
 thẳng vào port HTTPS.</p>
 <h2 id="cấu-hình">Cấu hình<a class="anchor" href="#cấu-hình" aria-hidden="true">#</a></h2>
-<p>Mọi thứ nằm trong <code>.env</code> (<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/compose/production/.env.example"><code>.env.example</code></a> liệt kê đầy đủ):</p>
+<p>Mọi thứ nằm trong <code>.env</code> (<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/deploy/compose/production/.env.example"><code>.env.example</code></a> liệt kê đầy đủ):</p>
 <div class="table"><table>
 <thead>
 <tr>
@@ -221,7 +221,7 @@ thẳng vào port HTTPS.</p>
 </tr>
 <tr>
   <td><code>GUARDSPEC_VERSION</code></td>
-  <td><code>0.3.0</code></td>
+  <td><code>0.3.1</code></td>
   <td>Tag của image (<a href="/vi/docs/upgrade/">docs/upgrade.vi.md</a>)</td>
 </tr>
 </tbody>
@@ -256,7 +256,7 @@ và CA của Caddy. HTTPS tự động với một ACME CA công khai chưa đư
 (vì cần DNS công khai); Caddyfile được <code>caddy adapt</code> chuyển thành một ACME
 policy cho cả hai tên.</p>
 
-    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/compose/production/README.vi.md">deploy/compose/production/README.vi.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/deploy/compose/production/README.vi.md">deploy/compose/production/README.vi.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

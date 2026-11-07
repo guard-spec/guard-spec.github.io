@@ -164,7 +164,7 @@ A maintainer then removes <code>needs-triage</code> and adds one outcome:</p>
 attack type is wrong or missing (<code>attack:direct_injection</code>,
 <code>attack:indirect_injection</code>, <code>attack:jailbreak</code>, <code>attack:prompt_extraction</code>,
 <code>attack:data_exfiltration</code>, <code>attack:tool_poisoning</code>, <code>attack:obfuscation</code>,
-the labels of <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/train/LABELING.md">train/LABELING.md</a>).</li>
+the labels of <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/train/LABELING.md">train/LABELING.md</a>).</li>
 <li>A maintainer may edit the issue to anonymise the text further; the
 importer reads the issue as it is at import time.</li>
 </ul>
@@ -232,7 +232,7 @@ report goes to the hold-out; the others are split by the same hash as the
 rest of the training data (<code>sha256(&quot;split:&quot; + group)</code>, 12% to validation).</p>
 <h3 id="eval-is-never-touched"><code>eval/</code> is never touched<a class="anchor" href="#eval-is-never-touched" aria-hidden="true">#</a></h3>
 <p>Reported texts are never added to <code>eval/</code>, and nothing is tuned on it
-(<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CONTRIBUTING.md#the-one-rule-about-eval">CONTRIBUTING.md</a>). The importer
+(<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/CONTRIBUTING.md#the-one-rule-about-eval">CONTRIBUTING.md</a>). The importer
 reads <code>eval/</code> only to drop texts that are already there or nearly so. A
 change to <code>eval/</code> needs a new eval release with its own provenance, never a
 community report.</p>
@@ -277,7 +277,7 @@ describes.</li>
 </ul>
 <p>Say in the issue if you prefer not to be named.</p>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/red-team.md">docs/red-team.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/docs/red-team.md">docs/red-team.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

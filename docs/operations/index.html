@@ -147,19 +147,48 @@ then cancels only on a connection reset and otherwise relies on the timeout.</p>
 <h2 id="output-guard">Output guard<a class="anchor" href="#output-guard" aria-hidden="true">#</a></h2>
 <p>The gateway checks the model's answer before the client sees it. It rewrites
 <code>choices[].message.content</code> (and <code>choices[].text</code> for legacy completions) in
-whole responses. In streams it keeps a 256-character window per choice, so a
-pattern split across chunks is still caught, and rebuilds each chunk with its
-id, model and other fields unchanged. A stream therefore runs about 256
-characters behind the upstream. Held text is flushed at <code>finish_reason</code> and at
-<code>[DONE]</code>. An upstream body that is not JSON cannot be checked and gives 502.</p>
+whole responses. In streams it holds back, per choice, the end of the text that
+could still turn into something to redact: an unfinished word, number, URL or
+reference definition, the start of the canary, an image, link or HTML tag
+that has not closed. So a pattern split across chunks is still caught, and nothing of it is
+sent before the guard has decided on it. It scans again every 64 new
+characters and rebuilds each chunk with its id, model and other fields
+unchanged. A stream therefore runs a little behind the upstream: usually under
+64 characters plus the word being written, longer while an image, link or run
+of digits is still open (a word is held for at most 256 characters, an open
+construct or a run of digits for at most 8,192). Held text is flushed at
+<code>finish_reason</code> and at <code>[DONE]</code>. An upstream body that is not JSON cannot be
+checked and gives 502.</p>
 <ul>
 <li><strong>Images and links.</strong> Markdown images, HTML <code>&lt;img&gt;</code> tags and reference
 definitions whose host is not on the allowlist are removed
 (<code>[REDACTED:image]</code>). Links to other hosts keep their text and lose the URL.
 Bare image URLs that carry a query string are replaced with
-<code>[REDACTED:url]</code>. With the default empty allowlist every image and link is
+<code>[REDACTED:url]</code>; a bare URL runs, as GitHub's markdown reads it, to the
+next blank or <code>&lt;</code>, brackets, parentheses and quotes included, and is
+checked from every place one starts.
+With the default empty allowlist every image and link is
 removed. An <code>&lt;img&gt;</code> tag is kept only if every <code>src</code> and <code>srcset</code> URL is on
 the allowlist.</li>
+<li><strong>HTML.</strong> For chat interfaces that render raw HTML, start tags that carry a
+URL a browser follows or loads are checked against the same allowlist
+(only <code>http</code> and <code>https</code> URLs can match, so <code>javascript:</code> and <code>data:</code> never
+do). A tag that needs a click (<code>&lt;a href&gt;</code> and <code>ping</code>, <code>&lt;area href&gt;</code>,
+<code>&lt;form action&gt;</code>, <code>formaction</code>) is removed alone, as a markdown link is: the
+text up to <code>&lt;/a&gt;</code> stays and is checked like the rest. A tag that loads by
+itself is replaced with <code>[REDACTED:image]</code>: <code>src</code> or <code>srcset</code> of <code>&lt;img&gt;</code>,
+<code>&lt;source&gt;</code>, <code>&lt;video&gt;</code> (also <code>poster</code>), <code>&lt;audio&gt;</code>, <code>&lt;track&gt;</code>, <code>&lt;iframe&gt;</code>
+(any <code>srcdoc</code>), <code>&lt;embed&gt;</code>, <code>&lt;script&gt;</code>, <code>&lt;input&gt;</code>; <code>&lt;object data&gt;</code>, <code>&lt;link href&gt;</code>, <code>&lt;base href&gt;</code>, SVG <code>&lt;image&gt;</code>/<code>&lt;use&gt;</code> <code>href</code>, <code>background</code>, a
+<code>style</code> attribute with <code>url()</code> off the allowlist (or <code>image-set()</code>,
+<code>@import</code>, a backslash escape), any <code>&lt;style&gt;</code> element, a meta refresh, an
+SVG animation of <code>href</code>, and an event handler (<code>onerror=</code>). Tags are read
+as a browser reads them: attribute names in any case, quoted or not, line
+breaks inside the tag, <code>&gt;</code> inside a quoted value, character references in
+URLs (<code>&amp;#x68;ttps:</code>), and a tag inside another tag's attribute (which a
+browser reads as a tag when the other one is in a comment). A stream holds
+an open tag until its <code>&gt;</code>, and removes one still open after 8,192
+characters; a tag left open at the end of the answer is checked as it
+stands.</li>
 <li><strong>Personal data.</strong> Each match is replaced with <code>[REDACTED:&lt;type&gt;]</code>:
 <code>email</code>, <code>phone</code> (Vietnamese numbers in the +84, 84 and 0 forms, mobile and
 landline), <code>cccd</code> (12 digits starting with 0), <code>card</code> (13 to 19 digits that
@@ -170,6 +199,22 @@ one; legacy completions get none). If the model repeats it, the response is
 refused with 400 <code>content_filter</code> (in a stream, an error event that ends
 it), or the token is redacted. Either way the row's action is
 <code>output_leak</code>.</li>
+<li><strong>Values split by markup.</strong> Removing a link can join the text on either side
+of it: <code>PS-CANARY-0123[]()4567…</code> comes out as the whole token. The guard
+therefore looks for the canary and personal data again where a removal
+joined text, after rewriting, and in a stream holds back the text before a
+link that may be removed until it knows what follows. The joined value is
+redacted, or blocks the response, as if the markup had not been there.</li>
+<li><strong>Markup rebuilt by a removal.</strong> What is left around removed markup, or a
+marker next to <code>(…)</code>, can form a new image, link, reference definition or
+URL: <code>![x][]()(https://evil.com/a.png)</code> would become
+<code>![x](https://evil.com/a.png)</code>. The guard checks what it produced again
+with the same rules, up to three times, and removes what it finds as if it
+had been in the answer: here <code>[REDACTED:image]</code>, and
+<code>[REDACTED:email](https://…)</code> keeps only its text, <code>REDACTED:email</code>.
+Markup nested deeper than that ends the answer with a marker. Streams hold
+back what a removal may still join and send what the whole answer would
+be.</li>
 <li><strong>Reasoning.</strong> The <code>reasoning</code> and <code>reasoning_content</code> fields that Ollama
 and vLLM send are guarded like the answer, or dropped.</li>
 <li><strong>Refusals and tool calls.</strong> <code>refusal</code> is guarded like the answer. Tool-call
@@ -408,7 +453,7 @@ is single-turn, so the window does not change its numbers (L1: FPR 0.1 %,
 L1+L2+L3: FPR 1.4 % at the gateway decision, as before).</p>
 <p><strong>Latency.</strong> One more detector run per request that has a new window, and a
 cache lookup otherwise (<code>BenchmarkConversationWindow</code>, see
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/README.md#go-benchmarks-sanitizer-output-guard-policy-and-http-path">Go benchmarks</a>).</p>
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/README.md#go-benchmarks-sanitizer-output-guard-policy-and-http-path">Go benchmarks</a>).</p>
 <h2 id="per-organization-exemplars">Per-organization exemplars<a class="anchor" href="#per-organization-exemplars" aria-hidden="true">#</a></h2>
 <p><code>/v1/organizations/:orgId/exemplars</code> stores <code>{&quot;label&quot;: &quot;block&quot;|&quot;allow&quot;, &quot;text&quot;: &quot;...&quot;, &quot;source&quot;: &quot;...&quot;}</code> (at most 1,000 per org, 4,000 characters
 each). A <code>block</code> text counts as an attack for that org's requests
@@ -754,7 +799,7 @@ and <code>dbRoles</code> hooks, network policies, and EN / VI injections blocked
 L1 only.</li>
 </ul>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/README.md#operations">README.md#operations</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/README.md#operations">README.md#operations</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

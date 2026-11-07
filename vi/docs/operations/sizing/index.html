@@ -91,7 +91,7 @@ docker compose -f docker-compose.yml up -d
 <p><code>models-init</code> chỉ tải những model mà các lớp đã chọn cần, và <code>/readyz</code> cho
 biết các lớp đang chạy (<code>&quot;layers&quot;:[&quot;l1&quot;,&quot;l2&quot;]</code>). Mỗi lớp phát hiện gì và được
 kết hợp ra sao: xem README, phần <a href="/vi/docs/models/">Model</a> và
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/README.vi.md#benchmark">Benchmark</a>.</p>
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/README.vi.md#benchmark">Benchmark</a>.</p>
 <h2 id="mức-dùng-tài-nguyên-đo-được">Mức dùng tài nguyên đo được<a class="anchor" href="#mức-dùng-tài-nguyên-đo-được" aria-hidden="true">#</a></h2>
 <p><strong>Nguồn số liệu.</strong> Các maintainer đo ngày 2026-11-06 trên một máy: MacBook
 Pro Apple M3 Max (arm64), Docker Desktop 28.4 với Linux VM 14 vCPU và
@@ -282,9 +282,9 @@ biến không dồn hàng sau các lớp model.</li>
 giới hạn bộ nhớ 2Gi) đủ cho mức đỉnh đo được của detector đầy đủ; đặt
 <code>INFERENCE_MAX_CONCURRENCY</code> và <code>INFERENCE_INTRA_OP_THREADS</code> theo giới hạn
 CPU như trên (<code>gateway.env</code>), và scale bằng <code>gateway.autoscaling</code> (HPA). Xem
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/helm/guard-spec/values.yaml"><code>values.yaml</code></a>, các ví dụ cho từng
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/deploy/helm/guard-spec/values.yaml"><code>values.yaml</code></a>, các ví dụ cho từng
 cloud trong
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/helm/guard-spec/examples"><code>deploy/helm/guard-spec/examples/</code></a>
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/deploy/helm/guard-spec/examples"><code>deploy/helm/guard-spec/examples/</code></a>
 và <a href="/docs/operations/#kubernetes">README, Kubernetes</a>.</li>
 </ul>
 <h2 id="ổ-đĩa">Ổ đĩa<a class="anchor" href="#ổ-đĩa" aria-hidden="true">#</a></h2>
@@ -318,7 +318,7 @@ docker compose exec postgres psql -U ps -d guardspec -c \
 lớp bảo vệ, và chạy một lần cho mỗi giá trị <code>DETECTOR_LAYERS</code> bạn đang cân
 nhắc. Rất hoan nghênh bạn gửi kết quả đo trên phần cứng khác qua một issue.</p>
 
-    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/sizing.vi.md">docs/sizing.vi.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/docs/sizing.vi.md">docs/sizing.vi.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

@@ -49,7 +49,7 @@
 </blockquote>
 <p>One host, Docker Compose, HTTPS. For a startup or a team that wants Guard Spec
 on a single VM without Kubernetes. The quick start
-(<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docker-compose.yml"><code>docker-compose.yml</code></a> at the repository root)
+(<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/docker-compose.yml"><code>docker-compose.yml</code></a> at the repository root)
 publishes every port over plain HTTP; this stack does not.</p>
 <div class="table"><table>
 <thead>
@@ -154,7 +154,7 @@ curl -s --cacert caddy-root.crt --resolve gw.localhost:8443:127.0.0.1 https://gw
 than 443, Caddy's HTTP-to-HTTPS redirect points at port 443; use the HTTPS
 port directly.</p>
 <h2 id="settings">Settings<a class="anchor" href="#settings" aria-hidden="true">#</a></h2>
-<p>Everything is in <code>.env</code> (<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/compose/production/.env.example"><code>.env.example</code></a> lists it):</p>
+<p>Everything is in <code>.env</code> (<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/deploy/compose/production/.env.example"><code>.env.example</code></a> lists it):</p>
 <div class="table"><table>
 <thead>
 <tr>
@@ -221,7 +221,7 @@ port directly.</p>
 </tr>
 <tr>
   <td><code>GUARDSPEC_VERSION</code></td>
-  <td><code>0.3.0</code></td>
+  <td><code>0.3.1</code></td>
   <td>Image tag (<a href="/docs/upgrade/">docs/upgrade.md</a>)</td>
 </tr>
 </tbody>
@@ -255,7 +255,7 @@ policies, audit rows and Caddy's CA. Automatic HTTPS with a public ACME CA
 was not exercised (it needs public DNS); the Caddyfile adapts to an ACME
 policy for both names (<code>caddy adapt</code>).</p>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/compose/production/README.md">deploy/compose/production/README.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/deploy/compose/production/README.md">deploy/compose/production/README.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

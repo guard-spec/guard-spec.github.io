@@ -80,25 +80,27 @@ exists. What you can check:</p>
   <td>Release archives (<code>guard-spec_&lt;version&gt;_&lt;os&gt;_&lt;arch&gt;.tar.gz</code>)</td>
   <td><code>checksums.txt</code> + <code>checksums.txt.sigstore.json</code></td>
   <td><code>&lt;archive&gt;.sbom.json</code> (SPDX, syft)</td>
-  <td>—</td>
+  <td>SLSA v1, <code>guard-spec_&lt;version&gt;.intoto.jsonl</code> (GitHub artifact attestation), from the release after v0.3.0</td>
 </tr>
 <tr>
   <td>Linux <code>_onnx</code> archives</td>
   <td><code>checksums-onnx.txt</code> + <code>checksums-onnx.txt.sigstore.json</code></td>
   <td><code>&lt;archive&gt;.sbom.json</code></td>
-  <td>—</td>
+  <td>the same attestation</td>
 </tr>
 <tr>
   <td>Models</td>
-  <td>SHA-256 pinned in <code>models/manifest.yaml</code> (and <code>build/gateway-full.l2.sha256</code> for the image)</td>
+  <td>SHA-256 pinned in <code>models/manifest.yaml</code> (and <code>build/gateway-full.l2.sha256</code> for the image); a model release signed by the Sign model release workflow carries <code>SHA256SUMS</code> + <code>SHA256SUMS.sigstore.json</code></td>
   <td>—</td>
-  <td>—</td>
+  <td>— (trained outside CI)</td>
 </tr>
 </tbody>
 </table></div>
 <p>You need <a href="https://docs.sigstore.dev/cosign/system_config/installation/">cosign</a>
 2.4 or newer (the outputs below are from cosign v3.1.4), <code>docker buildx</code>
-for the attestations, <code>jq</code>, and <code>sha256sum</code> (<code>shasum -a 256</code> on macOS).</p>
+for the attestations, <code>jq</code>, <code>sha256sum</code> (<code>shasum -a 256</code> on macOS) and, for
+the archive provenance, the <a href="https://cli.github.com/">GitHub CLI</a> 2.49 or
+newer (<code>gh attestation</code>).</p>
 <h2 id="1-image-signatures">1. Image signatures<a class="anchor" href="#1-image-signatures" aria-hidden="true">#</a></h2>
 <p>Pin the identity to the release workflow <strong>at the tag you deploy</strong>. That
 proves the image was signed by this repository's release workflow running
@@ -209,12 +211,49 @@ guard-spec_0.2.0_linux_amd64_onnx.tar.gz.sbom.json: OK
 <p><code>checksums.txt</code> covers the GoReleaser archives, their SBOMs and the source
 archive; <code>checksums-onnx.txt</code> covers the linux <code>_onnx</code> archives and their
 SBOMs.</p>
+<h3 id="archive-provenance">Archive provenance<a class="anchor" href="#archive-provenance" aria-hidden="true">#</a></h3>
+<p>From the release after v0.3.0, the <code>provenance</code> job of the release workflow
+makes one SLSA v1 build provenance attestation whose subjects are every file
+of <code>checksums.txt</code> and <code>checksums-onnx.txt</code> (it verifies their signatures
+first). The attestation is signed through Sigstore, stored in the
+repository's <a href="https://github.com/guard-spec/guard-spec/attestations">attestations</a>
+and attached to the release as <code>guard-spec_&lt;version&gt;.intoto.jsonl</code>, a
+Sigstore bundle on one JSON line. v0.3.0 and earlier have none.</p>
+<pre><code class="language-bash">VERSION=0.4.0
+gh release download &quot;v$VERSION&quot; -R guard-spec/guard-spec \
+  -p &quot;guard-spec_${VERSION}.intoto.jsonl&quot; -p &quot;guard-spec_${VERSION}_linux_amd64.tar.gz&quot;
+gh attestation verify &quot;guard-spec_${VERSION}_linux_amd64.tar.gz&quot; -R guard-spec/guard-spec \
+  --bundle &quot;guard-spec_${VERSION}.intoto.jsonl&quot; \
+  --signer-workflow guard-spec/guard-spec/.github/workflows/release.yml \
+  --source-ref &quot;refs/tags/v$VERSION&quot;
+</code></pre>
+<p>Without <code>--bundle</code>, <code>gh attestation verify</code> fetches the same attestation from
+the repository. <code>--signer-workflow</code> and <code>--source-ref</code> pin it to the release
+workflow at the tag, as the cosign identity does above; the predicate
+(<code>--format json</code>) names the commit (<code>resolvedDependencies</code>) and the workflow
+run (<code>runDetails.metadata.invocationId</code>). An archive that is not one of the
+subjects, or a bundle from another workflow or ref, fails.</p>
 <h2 id="5-models">5. Models<a class="anchor" href="#5-models" aria-hidden="true">#</a></h2>
 <p><code>models pull</code> checks every file against the SHA-256 in
 <code>models/manifest.yaml</code> of the release you run and refuses a mismatch; see
 <a href="/docs/models/versions/">docs/models.md</a>. The <code>gateway-full</code> image checks the L2 files
 against <code>build/gateway-full.l2.sha256</code> while it is built, and its signature
 covers the result.</p>
+<p>A model release (<code>model-guardspec-classifier-&lt;version&gt;</code>) that the
+maintainers have run through <code>.github/workflows/sign-model-release.yml</code>
+also carries <code>SHA256SUMS</code> and its cosign bundle. That workflow, run from
+<code>main</code>, signs only files that match the manifest's pins:</p>
+<pre><code class="language-bash">TAG=model-guardspec-classifier-v4
+gh release download &quot;$TAG&quot; -R guard-spec/guard-spec -D &quot;$TAG&quot;
+cd &quot;$TAG&quot;
+cosign verify-blob SHA256SUMS --bundle SHA256SUMS.sigstore.json \
+  --certificate-identity https://github.com/guard-spec/guard-spec/.github/workflows/sign-model-release.yml@refs/heads/main \
+  --certificate-oidc-issuer https://token.actions.githubusercontent.com
+sha256sum -c SHA256SUMS
+</code></pre>
+<p>The models are trained outside GitHub Actions, so they have no build
+provenance; the signature says only that the files are the ones the
+manifest pins.</p>
 <h2 id="what-this-does-not-prove">What this does not prove<a class="anchor" href="#what-this-does-not-prove" aria-hidden="true">#</a></h2>
 <ul>
 <li>That the source is free of vulnerabilities. Scan the SBOMs; CI runs
@@ -226,7 +265,7 @@ independent rebuild yet.</li>
 deploy the digest you verified.</li>
 </ul>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/security/verifying-releases.md">docs/security/verifying-releases.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/docs/security/verifying-releases.md">docs/security/verifying-releases.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

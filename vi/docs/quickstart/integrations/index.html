@@ -279,7 +279,7 @@ try {
 <p>Các wrapper khác bọc quanh SDK này cũng chạy giống vậy khi chúng gọi chat
 completions. Provider OpenAI của Vercel AI SDK chạy được với
 <code>createOpenAI({ baseURL, apiKey }).chat(model)</code>
-(<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/typescript/vercel-ai-sdk">examples/typescript/vercel-ai-sdk</a>):
+(<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/typescript/vercel-ai-sdk">examples/typescript/vercel-ai-sdk</a>):
 model mặc định của nó, <code>openai(model)</code>, và <code>openai.responses(...)</code> gọi
 Responses API, mà gateway chỉ phục vụ khi upstream có API này (OpenAI, Azure
 OpenAI): nếu sau gateway là Ollama hoặc vLLM, hãy dùng <code>.chat</code>.</p>
@@ -347,7 +347,7 @@ trong chat request, nên chúng được quét cùng với text của người d
 điểm từng tài liệu một trước khi index hoặc trước khi đưa vào prompt, hãy gọi
 <code>POST /guardrail/scan</code> với <code>documents[]</code>
 (<a href="/docs/operations/#indirect-injection-and-tool-poisoning">README</a>).
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/python/rag">examples/python/rag</a> làm cả hai: nó gửi các tài
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/python/rag">examples/python/rag</a> làm cả hai: nó gửi các tài
 liệu truy xuất được dưới dạng kết quả tool, gateway chấm điểm từng cái rồi
 chặn hoặc che (<code>INDIRECT_ACTION</code>), và nó cũng quét chúng lúc ingest.</p>
 <h2 id="claude-code-đã-kiểm-tra-qua-gateway">Claude Code (đã kiểm tra qua gateway)<a class="anchor" href="#claude-code-đã-kiểm-tra-qua-gateway" aria-hidden="true">#</a></h2>
@@ -691,7 +691,7 @@ kết quả.</li>
 tin cậy hơn: định nghĩa tool MCP qua <code>POST /guardrail/scan/tools</code>, kết quả
 tool và tài liệu qua <code>POST /guardrail/scan</code>.</p>
 <h2 id="n8n-đã-kiểm-tra">n8n (đã kiểm tra)<a class="anchor" href="#n8n-đã-kiểm-tra" aria-hidden="true">#</a></h2>
-<p>Import <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/n8n/guardspec-workflow.json">examples/n8n/guardspec-workflow.json</a>
+<p>Import <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/n8n/guardspec-workflow.json">examples/n8n/guardspec-workflow.json</a>
 (đã kiểm tra với n8n 2.46.6). Workflow này gọi gateway bằng node HTTP Request
 (một credential Header Auth <code>Authorization: Bearer gs_...</code>, bật <em>Never Error</em>
 để một lần chặn vẫn tới được node kế tiếp) và bằng node OpenAI Chat Model (một
@@ -699,7 +699,7 @@ credential OpenAI có Base URL là gateway cộng thêm <code>/v1</code>, tắt 
 API</em>, cách này chạy với mọi upstream). Node OpenAI của n8n báo một lần chặn là
 &quot;Bad request - please check your parameters&quot; mà không kèm lý do của gateway;
 node HTTP Request thì giữ lại lý do đó.
-Các bước: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/n8n/README.md">examples/n8n</a>.</p>
+Các bước: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/n8n/README.md">examples/n8n</a>.</p>
 <h2 id="công-cụ-khác">Công cụ khác<a class="anchor" href="#công-cụ-khác" aria-hidden="true">#</a></h2>
 <p>Mọi client đều chạy được khi nó (1) cho phép bạn đặt base URL, (2) gửi key
 dưới dạng <code>Authorization: Bearer</code> hoặc <code>x-api-key</code>, và (3) chỉ dùng
@@ -710,7 +710,7 @@ state phía server), <code>/v1/embeddings</code>, <code>/v1/messages</code> (ups
 tài liệu của client, hoặc xem các request nó gửi qua một proxy ghi log như
 mitmproxy, trước khi bạn dựa vào nó.</p>
 
-    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/integrations.vi.md">docs/integrations.vi.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/docs/integrations.vi.md">docs/integrations.vi.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

@@ -53,7 +53,7 @@ nhà cung cấp này.</strong> Cộng đồng đã thử: chưa. Nếu bạn ch�
 trong số đó, hãy mở một
 <a href="https://github.com/guard-spec/guard-spec/issues/new/choose">issue</a> hoặc một
 pull request ghi lại điều gì chạy được và điều gì không; rất hoan nghênh
-đóng góp của bạn. Xem <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+đóng góp của bạn. Xem <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
 </blockquote>
 <p>Các file compose và CI dùng PostgreSQL 17; các phiên bản cũ hơn chưa được thử.
 Nhà cung cấp nào cũng sẽ dùng được nếu cho bạn các role và extension liệt kê
@@ -221,7 +221,7 @@ khẩu của owner trong <code>PGPASSWORD</code>). Chạy lại cả hai bước
 trước khi các image mới khởi động (<a href="/vi/docs/upgrade/">docs/upgrade.vi.md</a>); công
 cụ migrate chỉ áp dụng những gì mới.</p>
 <h2 id="compose-production-không-kèm-database">Compose production không kèm database<a class="anchor" href="#compose-production-không-kèm-database" aria-hidden="true">#</a></h2>
-<p><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/compose/production/managed-postgres.yml"><code>deploy/compose/production/managed-postgres.yml</code></a>
+<p><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/deploy/compose/production/managed-postgres.yml"><code>deploy/compose/production/managed-postgres.yml</code></a>
 đưa các dịch vụ <code>postgres</code>, <code>migrate</code> và <code>db-roles</code> vào sau một profile và trỏ
 gateway cùng control plane tới <code>DATABASE_URL</code>:</p>
 <pre><code class="language-bash">cd deploy/compose/production
@@ -244,7 +244,7 @@ database được mã hoá bằng nó). Nên có thêm một bản dump logic:</
 bản dump thì không (tạo <code>guardspec_app</code> trước, như ở trên, rồi chạy
 <code>set-app-password.sh</code>).</p>
 
-    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/managed-postgres.vi.md">docs/managed-postgres.vi.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/docs/managed-postgres.vi.md">docs/managed-postgres.vi.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

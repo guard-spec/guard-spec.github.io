@@ -53,7 +53,7 @@
 Cộng đồng đã thử: chưa. Nếu bạn triển khai theo các hướng dẫn này, hãy mở
 một <a href="https://github.com/guard-spec/guard-spec/issues/new/choose">issue</a> hoặc
 một pull request kể lại điều gì chạy được và điều gì không. Xem
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
 </blockquote>
 <div class="table"><table>
 <thead>
@@ -102,7 +102,7 @@ và archive.</li>
 <li><a href="/docs/operations/">Vận hành</a>, đặc biệt là
 <a href="/docs/operations/#kubernetes">Kubernetes</a> và
 <a href="/docs/operations/#identity-sso-and-two-factor-authentication">Danh tính, SSO và xác thực hai lớp</a>.</li>
-<li><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/README.vi.md#m%C3%B4-h%C3%ACnh-b%E1%BA%A3o-m%E1%BA%ADt-v%C3%A0-gi%E1%BB%9Bi-h%E1%BA%A1n">Mô hình bảo mật và giới hạn</a>.</li>
+<li><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/README.vi.md#m%C3%B4-h%C3%ACnh-b%E1%BA%A3o-m%E1%BA%ADt-v%C3%A0-gi%E1%BB%9Bi-h%E1%BA%A1n">Mô hình bảo mật và giới hạn</a>.</li>
 </ul>
 <h2 id="mọi-bản-triển-khai-đều-cần">Mọi bản triển khai đều cần<a class="anchor" href="#mọi-bản-triển-khai-đều-cần" aria-hidden="true">#</a></h2>
 <div class="table"><table>
@@ -127,11 +127,11 @@ và archive.</li>
 </tr>
 <tr>
   <td>Gateway</td>
-  <td><code>ghcr.io/guard-spec/guard-spec-gateway:0.3.0</code> (model được mount ở <code>/models</code>) hoặc <code>-gateway-full:0.3.0</code> (model nằm sẵn trong image). Port 8080 cho client, 9090 cho metrics</td>
+  <td><code>ghcr.io/guard-spec/guard-spec-gateway:0.3.1</code> (model được mount ở <code>/models</code>) hoặc <code>-gateway-full:0.3.1</code> (model nằm sẵn trong image). Port 8080 cho client, 9090 cho metrics</td>
 </tr>
 <tr>
   <td>Control plane</td>
-  <td><code>ghcr.io/guard-spec/guard-spec-control-plane:0.3.0</code>. Port 8081 cho API và giao diện quản trị ở <code>/ui/</code>, 9091 cho metrics</td>
+  <td><code>ghcr.io/guard-spec/guard-spec-control-plane:0.3.1</code>. Port 8081 cho API và giao diện quản trị ở <code>/ui/</code>, 9091 cho metrics</td>
 </tr>
 <tr>
   <td>Secret</td>
@@ -164,11 +164,11 @@ lạm dụng, hãy đặt một rate limiter hoặc WAF đứng trước.</li>
 <li><strong>Streaming.</strong> <code>UPSTREAM_LLM_TIMEOUT</code> mặc định là <code>5m</code> không có dữ liệu.
 Timeout idle hoặc timeout response của load balancer ngắn hơn câu trả lời
 dài nhất của model sẽ cắt ngang stream; hãy tăng chúng lên.</li>
-<li><strong>Schema còn thay đổi trước bản 1.0.</strong> Đọc <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CHANGELOG.md">CHANGELOG</a>
+<li><strong>Schema còn thay đổi trước bản 1.0.</strong> Đọc <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/CHANGELOG.md">CHANGELOG</a>
 và snapshot database trước mỗi lần nâng cấp.</li>
 </ul>
 <h2 id="helm-chart-trên-main">Helm chart trên <code>main</code><a class="anchor" href="#helm-chart-trên-main" aria-hidden="true">#</a></h2>
-<p>Chart 0.3.0 (xem mục Unreleased trong <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CHANGELOG.md">CHANGELOG</a>) bổ
+<p>Chart 0.3.1 (xem mục Unreleased trong <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/CHANGELOG.md">CHANGELOG</a>) bổ
 sung các tính năng sau, tất cả đều tắt theo mặc định: một <strong>migration hook</strong>
 (<code>migrations.enabled</code>), một <strong>init container kéo model</strong> (<code>models.pull</code>, kéo
 vào claim hoặc vào một <code>emptyDir</code> riêng cho từng pod, nên nhiều replica không
@@ -176,7 +176,7 @@ còn cần volume ReadWriteMany), <strong>Ingress</strong> và <strong>Routes</s
 <strong>HPA</strong>, <strong>PodDisruptionBudget</strong>, <strong>topologySpreadConstraints</strong>,
 <strong>NetworkPolicies</strong> và một <strong>ServiceAccount</strong> có annotation cho IRSA và
 Workload Identity. Values tham khảo cho từng nền tảng nằm trong
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/helm/guard-spec/examples"><code>deploy/helm/guard-spec/examples/</code></a>
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/deploy/helm/guard-spec/examples"><code>deploy/helm/guard-spec/examples/</code></a>
 (EKS, AKS, GKE, OpenShift): được render và kiểm tra schema trong CI, được job
 <code>kind-e2e</code> cài lên kind với values riêng của job, chưa kiểm chứng trên cloud.
 Chỗ nào hướng dẫn bên dưới dùng manifest thuần cho một trong các tính năng
@@ -187,7 +187,7 @@ của chart, External Secrets). Sau khi cài,
 <code>kubectl exec deploy/&lt;release&gt;-guard-spec-gateway -c gateway -- ./doctor</code>
 (image từ 0.2.0) sẽ kiểm tra database, migration, model, các lớp phát hiện,
 upstream và các thiết lập bảo mật.</p>
-<p>Từ chart 0.1.1 (xem <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CHANGELOG.md">CHANGELOG</a>): <code>/models</code> chỉ được
+<p>Từ chart 0.1.1 (xem <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/CHANGELOG.md">CHANGELOG</a>): <code>/models</code> chỉ được
 mount khi có models claim (hoặc <code>models.pull</code>), nên
 <code>guard-spec-gateway-full</code> chạy được với
 <code>models.persistence.enabled=false</code>; gateway mặc định giới hạn bộ nhớ 2Gi;
@@ -205,11 +205,11 @@ rồi chạy <code>kubectl kustomize &lt;dir&gt; | kubectl apply -f -</code>. Kh
 hữu ích hơn một hướng dẫn trau chuốt: nền tảng và phiên bản, những gì bạn đã
 thay đổi so với hướng dẫn, và những gì bị lỗi. Hãy mở một
 <a href="https://github.com/guard-spec/guard-spec/issues/new/choose">issue</a> hoặc một
-pull request vào <code>docs/deploy/</code> (xem <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CONTRIBUTING.md">CONTRIBUTING.md</a>;
+pull request vào <code>docs/deploy/</code> (xem <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/CONTRIBUTING.md">CONTRIBUTING.md</a>;
 commit cần có DCO sign-off). Vấn đề bảo mật phải đi qua
 <a href="/docs/security/policy/">SECURITY.md</a>, không bao giờ qua issue công khai.</p>
 
-    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/deploy/README.vi.md">docs/deploy/README.vi.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/docs/deploy/README.vi.md">docs/deploy/README.vi.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

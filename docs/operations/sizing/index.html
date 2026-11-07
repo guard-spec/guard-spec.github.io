@@ -91,7 +91,7 @@ docker compose -f docker-compose.yml up -d
 <p><code>models-init</code> pulls only what the layers need, and <code>/readyz</code> shows the active
 layers (<code>&quot;layers&quot;:[&quot;l1&quot;,&quot;l2&quot;]</code>). What each layer detects and how they are
 fused: README, <a href="/docs/models/">Models</a> and
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/README.md#benchmarks">Benchmarks</a>.</p>
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/README.md#benchmarks">Benchmarks</a>.</p>
 <h2 id="measured-resource-use">Measured resource use<a class="anchor" href="#measured-resource-use" aria-hidden="true">#</a></h2>
 <p><strong>Source.</strong> Measured on 2026-11-06 by the maintainers on one machine: an
 Apple M3 Max (arm64) MacBook Pro, Docker Desktop 28.4 with a Linux VM of
@@ -279,9 +279,9 @@ queueing up behind the model layers.</li>
 memory limit) fit the full detector's measured peak; set
 <code>INFERENCE_MAX_CONCURRENCY</code> and <code>INFERENCE_INTRA_OP_THREADS</code> to the CPU
 limit as above (<code>gateway.env</code>), and scale with <code>gateway.autoscaling</code> (HPA). See
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/helm/guard-spec/values.yaml"><code>values.yaml</code></a>, the per-cloud
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/deploy/helm/guard-spec/values.yaml"><code>values.yaml</code></a>, the per-cloud
 examples in
-<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/helm/guard-spec/examples"><code>deploy/helm/guard-spec/examples/</code></a>
+<a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/deploy/helm/guard-spec/examples"><code>deploy/helm/guard-spec/examples/</code></a>
 and <a href="/docs/operations/#kubernetes">README, Kubernetes</a>.</li>
 </ul>
 <h2 id="disk">Disk<a class="anchor" href="#disk" aria-hidden="true">#</a></h2>
@@ -315,7 +315,7 @@ docker compose exec postgres psql -U ps -d guardspec -c \
 once per <code>DETECTOR_LAYERS</code> value you consider. Reports with other hardware
 are welcome in an issue.</p>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/sizing.md">docs/sizing.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/docs/sizing.md">docs/sizing.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

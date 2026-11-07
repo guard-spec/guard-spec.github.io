@@ -155,7 +155,7 @@ in a second table.</p>
 <tr>
   <td><code>RESPONSES_SERVER_STATE</code></td>
   <td><code>refuse</code></td>
-  <td><code>/v1/responses</code> requests that refer to conversation state the upstream keeps (<code>previous_response_id</code>, <code>conversation</code>, <code>item_reference</code> input items) carry turns the gateway never sees in the request and cannot scan again: <code>refuse</code> answers them with 400 (<code>server_state_refused</code>); <code>allow</code> passes them and tags the audit row <code>input:server_state=1</code>. See <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/README.md#security-model-and-limitations">Security model</a></td>
+  <td><code>/v1/responses</code> requests that refer to conversation state the upstream keeps (<code>previous_response_id</code>, <code>conversation</code>, <code>item_reference</code> input items) carry turns the gateway never sees in the request and cannot scan again: <code>refuse</code> answers them with 400 (<code>server_state_refused</code>); <code>allow</code> passes them and tags the audit row <code>input:server_state=1</code>. See <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/README.md#security-model-and-limitations">Security model</a></td>
 </tr>
 <tr>
   <td><code>EMBEDDINGS_SCAN</code></td>
@@ -517,7 +517,7 @@ URL tried before Hugging Face: <code>&lt;mirror&gt;/&lt;name&gt;/&lt;version&gt;
 </tr>
 <tr>
   <td><code>GUARDSPEC_VERSION</code></td>
-  <td><code>0.3.0</code></td>
+  <td><code>0.3.1</code></td>
   <td>Tag of the <code>ghcr.io/guard-spec/guard-spec-*</code> images in <code>docker-compose.yml</code> (the dev override builds from source instead)</td>
 </tr>
 <tr>
@@ -533,7 +533,7 @@ URL tried before Hugging Face: <code>&lt;mirror&gt;/&lt;name&gt;/&lt;version&gt;
 </tbody>
 </table></div>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/README.md#configuration">README.md#configuration</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/README.md#configuration">README.md#configuration</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 

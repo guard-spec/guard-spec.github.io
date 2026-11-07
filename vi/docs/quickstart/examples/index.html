@@ -60,31 +60,31 @@ ví dụ mong đợi.</p>
 </thead>
 <tbody>
 <tr>
-  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/python/openai-sdk">python/openai-sdk</a></td>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/python/openai-sdk">python/openai-sdk</a></td>
   <td>OpenAI Python SDK: chat, streaming, bắt lỗi chặn HTTP 400 <code>content_filter</code></td>
 </tr>
 <tr>
-  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/python/langchain">python/langchain</a></td>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/python/langchain">python/langchain</a></td>
   <td>LangChain <code>ChatOpenAI</code> (<code>langchain-openai</code>) trỏ vào gateway</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/python/llamaindex">python/llamaindex</a></td>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/python/llamaindex">python/llamaindex</a></td>
   <td>LlamaIndex <code>OpenAILike</code> trỏ vào gateway</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/python/rag">python/rag</a></td>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/python/rag">python/rag</a></td>
   <td>Một pipeline RAG có tài liệu bị đầu độc: bị chặn (<code>INDIRECT_ACTION=block</code>), bị che (<code>redact</code>), hoặc bị loại ngay khi nạp bằng <code>POST /guardrail/scan</code></td>
 </tr>
 <tr>
-  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/typescript/openai-sdk">typescript/openai-sdk</a></td>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/typescript/openai-sdk">typescript/openai-sdk</a></td>
   <td>OpenAI TypeScript SDK: chat, streaming, xử lý lỗi</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/typescript/vercel-ai-sdk">typescript/vercel-ai-sdk</a></td>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/typescript/vercel-ai-sdk">typescript/vercel-ai-sdk</a></td>
   <td>Vercel AI SDK (<code>@ai-sdk/openai</code> với <code>baseURL</code>): <code>generateText</code>, <code>streamText</code>, xử lý lỗi</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/n8n">n8n</a></td>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/n8n">n8n</a></td>
   <td>Một workflow n8n có thể import: node HTTP Request và node OpenAI Chat Model trỏ vào gateway</td>
 </tr>
 </tbody>
@@ -137,12 +137,12 @@ thông điệp cố định (<code>[guardrail passed — configure UPSTREAM_LLM_
 dạng JSON thường, kể cả khi client yêu cầu stream; các ví dụ streaming cần một
 upstream, thật hoặc bản giả bên dưới.</p>
 <h2 id="gateway-dùng-tạm-để-thử-và-cho-ci">Gateway dùng tạm để thử (và cho CI)<a class="anchor" href="#gateway-dùng-tạm-để-thử-và-cho-ci" aria-hidden="true">#</a></h2>
-<p><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/dev/start.sh"><code>dev/start.sh</code></a> khởi động mọi thứ các ví dụ cần từ bản checkout
+<p><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/dev/start.sh"><code>dev/start.sh</code></a> khởi động mọi thứ các ví dụ cần từ bản checkout
 này, không có giao diện quản trị và không tải model:</p>
 <ul>
 <li>Postgres kèm các migration (<code>docker compose</code>, project <code>gs-examples</code>,
 thông tin đăng nhập cho môi trường phát triển, port 55432);</li>
-<li><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/dev/fake_upstream.py"><code>dev/fake_upstream.py</code></a>, một model giả tương thích
+<li><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/dev/fake_upstream.py"><code>dev/fake_upstream.py</code></a>, một model giả tương thích
 OpenAI (chỉ dùng thư viện chuẩn), trả lời bằng cách lặp lại những gì nó nhận
 được, để bạn thấy những gì đã đến được model qua gateway;</li>
 <li>gateway build bằng <code>go build ./cmd/gateway</code>, chỉ có lớp luật
@@ -159,11 +159,11 @@ examples/dev/stop.sh             # stops it and deletes the database volume
 chạy <code>start.sh</code> thì sẽ dùng model thật thay cho model giả. Chỉ dành cho môi
 trường phát triển: mật khẩu database là mật khẩu ai cũng biết trong
 <code>docker-compose.override.yml</code>.</p>
-<p><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/.github/workflows/examples.yml">Workflow Examples</a> chạy <code>start.sh</code> và
+<p><a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/.github/workflows/examples.yml">Workflow Examples</a> chạy <code>start.sh</code> và
 <code>run-all.sh</code> trên các pull request có chạm vào ví dụ hoặc gateway. Đây không
 phải check bắt buộc.</p>
 
-    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/README.vi.md">examples/README.vi.md</a> @ <code>f26302340bf1</code></p>
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f29dc3896da4677f1ad328cdcbb0a0bcf4954093/examples/README.vi.md">examples/README.vi.md</a> @ <code>f29dc3896da4</code></p>
   </main>
 </div>
 
