@@ -3,7 +3,8 @@
 
 Landing page: index.html (English) and vi/index.html (Vietnamese) from src/.
 src/template.html holds the page; {{key}} comes from src/<lang>.json and
-{{icon:name}} inlines src/icons/<name>.svg (Lucide, ISC).
+{{icon:name}} inlines src/icons/<name>.svg (Lucide, ISC), and {{release_*}}
+comes from src/release.json (the current release: badge, What's new).
 
 Documentation: docs/ and vi/docs/ from the Markdown of the main repository
 (guard-spec/guard-spec) at the commit or tag pinned in src/docs.json. The
@@ -60,12 +61,37 @@ def fill(template, values):
     return re.sub(r"\{\{([a-z0-9_]+)\}\}", lambda m: values[m.group(1)], out)
 
 
+def release_values(release, lang):
+    """The release_* placeholders of the landing page, from src/release.json."""
+    esc = html.escape
+    highlights = "\n".join(
+        f'      <li class="card"><h3>{esc(h["title"])}</h3><p>{h["text"]}</p></li>'
+        for h in release["highlights"][lang])
+    previous = "\n".join(
+        f'      <li><a href="{esc(r["url"])}">{esc(r["version"])}</a>'
+        f'<time datetime="{esc(r["date"])}">{esc(r["date"])}</time>'
+        f'<span>{r["summary"][lang]}</span></li>'
+        for r in release["previous"])
+    return {
+        "release_version": esc(release["version"]),
+        "release_date": esc(release["date"]),
+        "release_url": esc(release["url"]),
+        "release_changelog": esc(release["changelog_url"]),
+        "release_status": esc(release["status"][lang]),
+        "release_tagline": esc(release["tagline"][lang]),
+        "release_upgrade": release["upgrade"][lang],
+        "release_highlights": highlights,
+        "release_previous": previous,
+    }
+
+
 def build_landing():
     template = (SRC / "template.html").read_text()
     strings = {lang: json.loads((SRC / f"{lang}.json").read_text()) for lang in LANGS}
+    release = json.loads((SRC / "release.json").read_text())
     keys = set(re.findall(r"\{\{([a-z0-9_]+)\}\}", template))
     for lang, s in strings.items():
-        extra = {"lang", "root", "lang_path", "en_active", "vi_active", "site_url"}
+        extra = {"lang", "root", "lang_path", "en_active", "vi_active", "site_url"} | set(release_values(release, lang))
         missing = keys - set(s) - extra
         if missing:
             sys.exit(f"{lang}.json is missing: {', '.join(sorted(missing))}")
@@ -73,7 +99,7 @@ def build_landing():
         values = dict(strings[lang], lang=lang, root=root, site_url=SITE_URL,
                       lang_path="" if lang == "en" else "vi/",
                       en_active="on" if lang == "en" else "",
-                      vi_active="on" if lang == "vi" else "")
+                      vi_active="on" if lang == "vi" else "", **release_values(release, lang))
         path = ROOT / out
         path.parent.mkdir(parents=True, exist_ok=True)
         path.write_text(fill(template, values))

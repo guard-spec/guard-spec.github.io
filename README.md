@@ -9,6 +9,7 @@ The Guard Spec website, served by GitHub Pages. The project itself lives in
 |---|---|
 | `src/template.html` | The landing page. `{{key}}` is replaced from `src/<lang>.json`, `{{icon:name}}` by `src/icons/<name>.svg` |
 | `src/en.json`, `src/vi.json` | English and Vietnamese text; both must have every key |
+| `src/release.json` | The current release: version, date, links, highlights and earlier releases, in English and Vietnamese (hero badge, "New in" link, What's new section) |
 | `src/docs.json` | The documentation: the pinned ref of the main repository, every page and its Markdown source, the docs UI text |
 | `src/docs.html` | The documentation page template |
 | `src/icons/` | Lucide icons 0.468.0 (ISC), inlined at build time |
@@ -66,6 +67,26 @@ repository, not here.
 
 CI (`.github/workflows/check.yml`) rebuilds from the pinned ref, fails if
 the committed pages differ, and runs `check_site.py --external`.
+
+## On each release
+
+When guard-spec/guard-spec publishes a release:
+
+1. **`src/release.json`**: set `version`, `date`, `url` (the GitHub
+   release) and `changelog_url` (its `CHANGELOG.md` section at the tag),
+   write 4 to 6 `highlights` and the `tagline` and `upgrade` lines in both
+   languages from the release notes, and move the old release to the top of
+   `previous` with a one-line summary (keep about four).
+2. **`src/docs.json`**: set `ref` to the release tag's commit
+   (`gh api repos/guard-spec/guard-spec/commits/vX.Y.Z -q .sha`). Add a page
+   for any new document the release brings.
+3. **Stale facts**: compare the landing page with the release, in
+   particular the benchmark numbers and note (`src/template.html`,
+   `bench_*` in `src/<lang>.json`) against "Benchmarks" in the main
+   README at the tag.
+4. **Build and check**: `.venv/bin/python build.py`, then
+   `python3 check_site.py --external` (0 broken), look at the page at desktop
+   and phone width, commit the sources and the output together.
 
 ## Custom domain
 
