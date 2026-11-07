@@ -36,6 +36,19 @@
       ]
     },
     {
+      "slug": "quickstart/examples",
+      "parent": "quickstart",
+      "title": {
+        "en": "Examples",
+        "vi": "Ví dụ"
+      },
+      "en": [
+        {
+          "file": "examples/README.md"
+        }
+      ]
+    },
+    {
       "slug": "deploy",
       "title": {
         "en": "Deploy",
