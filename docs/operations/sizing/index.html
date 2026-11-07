@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Sizing and layers · Guard Spec</title>
-<meta name="description" content="How much CPU, memory and disk Guard Spec needs, by detection layer. The gateway dominates: its memory is set by which models it loads, and its CPU by how m">
+<meta name="description" content="Tiếng Việt: sizing.vi.md. How much CPU, memory and disk Guard Spec needs, by detection layer. The gateway dominates: its memory is set by which models it l">
 <meta property="og:title" content="Sizing and layers · Guard Spec">
-<meta property="og:description" content="How much CPU, memory and disk Guard Spec needs, by detection layer. The gateway dominates: its memory is set by which models it loads, and its CPU by how m">
+<meta property="og:description" content="Tiếng Việt: sizing.vi.md. How much CPU, memory and disk Guard Spec needs, by detection layer. The gateway dominates: its memory is set by which models it l">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://guardspec.io/assets/og.png">
 <link rel="canonical" href="https://guardspec.io/docs/operations/sizing/">
@@ -43,6 +43,9 @@
   <main class="doc">
     <h1>Sizing and layers</h1>
 
+<blockquote>
+<p>Tiếng Việt: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/sizing.vi.md">sizing.vi.md</a>.</p>
+</blockquote>
 <p>How much CPU, memory and disk Guard Spec needs, by detection layer. The
 gateway dominates: its memory is set by which models it loads, and its CPU by
 how many prompts per second the model layers score. The control plane and
@@ -87,7 +90,7 @@ docker compose -f docker-compose.yml up -d
 <p><code>models-init</code> pulls only what the layers need, and <code>/readyz</code> shows the active
 layers (<code>&quot;layers&quot;:[&quot;l1&quot;,&quot;l2&quot;]</code>). What each layer detects and how they are
 fused: README, <a href="/docs/models/">Models</a> and
-<a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/README.md#benchmarks">Benchmarks</a>.</p>
+<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/README.md#benchmarks">Benchmarks</a>.</p>
 <h2 id="measured-resource-use">Measured resource use<a class="anchor" href="#measured-resource-use" aria-hidden="true">#</a></h2>
 <p><strong>Source.</strong> Measured on 2026-11-06 by the maintainers on one machine: an
 Apple M3 Max (arm64) MacBook Pro, Docker Desktop 28.4 with a Linux VM of
@@ -275,9 +278,9 @@ queueing up behind the model layers.</li>
 memory limit) fit the full detector's measured peak; set
 <code>INFERENCE_MAX_CONCURRENCY</code> and <code>INFERENCE_INTRA_OP_THREADS</code> to the CPU
 limit as above (<code>gateway.env</code>), and scale with <code>gateway.autoscaling</code> (HPA). See
-<a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/deploy/helm/guard-spec/values.yaml"><code>values.yaml</code></a>, the per-cloud
+<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/helm/guard-spec/values.yaml"><code>values.yaml</code></a>, the per-cloud
 examples in
-<a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/deploy/helm/guard-spec/examples"><code>deploy/helm/guard-spec/examples/</code></a>
+<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/helm/guard-spec/examples"><code>deploy/helm/guard-spec/examples/</code></a>
 and <a href="/docs/operations/#kubernetes">README, Kubernetes</a>.</li>
 </ul>
 <h2 id="disk">Disk<a class="anchor" href="#disk" aria-hidden="true">#</a></h2>
@@ -311,7 +314,7 @@ docker compose exec postgres psql -U ps -d guardspec -c \
 once per <code>DETECTOR_LAYERS</code> value you consider. Reports with other hardware
 are welcome in an issue.</p>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/docs/sizing.md">docs/sizing.md</a> @ <code>82361eff5c2a</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/sizing.md">docs/sizing.md</a> @ <code>f26302340bf1</code></p>
   </main>
 </div>
 

@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Red-team reports · Guard Spec</title>
-<meta name="description" content="Guard Spec improves from texts it gets wrong. This page describes how to report one, what maintainers do with a report, how a reported text becomes trainin">
+<meta name="description" content="Tiếng Việt: red-team.vi.md. Guard Spec improves from texts it gets wrong. This page describes how to report one, what maintainers do with a report, how a r">
 <meta property="og:title" content="Red-team reports · Guard Spec">
-<meta property="og:description" content="Guard Spec improves from texts it gets wrong. This page describes how to report one, what maintainers do with a report, how a reported text becomes trainin">
+<meta property="og:description" content="Tiếng Việt: red-team.vi.md. Guard Spec improves from texts it gets wrong. This page describes how to report one, what maintainers do with a report, how a r">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://guardspec.io/assets/og.png">
 <link rel="canonical" href="https://guardspec.io/docs/security/red-team/">
@@ -43,6 +43,9 @@
   <main class="doc">
     <h1>Red-team reports</h1>
 
+<blockquote>
+<p>Tiếng Việt: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/red-team.vi.md">red-team.vi.md</a>.</p>
+</blockquote>
 <p>Guard Spec improves from texts it gets wrong. This page describes how to
 report one, what maintainers do with a report, how a reported text becomes
 training or hold-out data, and how the fix reaches a release.</p>
@@ -160,7 +163,7 @@ A maintainer then removes <code>needs-triage</code> and adds one outcome:</p>
 attack type is wrong or missing (<code>attack:direct_injection</code>,
 <code>attack:indirect_injection</code>, <code>attack:jailbreak</code>, <code>attack:prompt_extraction</code>,
 <code>attack:data_exfiltration</code>, <code>attack:tool_poisoning</code>, <code>attack:obfuscation</code>,
-the labels of <a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/train/LABELING.md">train/LABELING.md</a>).</li>
+the labels of <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/train/LABELING.md">train/LABELING.md</a>).</li>
 <li>A maintainer may edit the issue to anonymise the text further; the
 importer reads the issue as it is at import time.</li>
 </ul>
@@ -228,7 +231,7 @@ report goes to the hold-out; the others are split by the same hash as the
 rest of the training data (<code>sha256(&quot;split:&quot; + group)</code>, 12% to validation).</p>
 <h3 id="eval-is-never-touched"><code>eval/</code> is never touched<a class="anchor" href="#eval-is-never-touched" aria-hidden="true">#</a></h3>
 <p>Reported texts are never added to <code>eval/</code>, and nothing is tuned on it
-(<a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/CONTRIBUTING.md#the-one-rule-about-eval">CONTRIBUTING.md</a>). The importer
+(<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CONTRIBUTING.md#the-one-rule-about-eval">CONTRIBUTING.md</a>). The importer
 reads <code>eval/</code> only to drop texts that are already there or nearly so. A
 change to <code>eval/</code> needs a new eval release with its own provenance, never a
 community report.</p>
@@ -273,7 +276,7 @@ describes.</li>
 </ul>
 <p>Say in the issue if you prefer not to be named.</p>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/docs/red-team.md">docs/red-team.md</a> @ <code>82361eff5c2a</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/red-team.md">docs/red-team.md</a> @ <code>f26302340bf1</code></p>
   </main>
 </div>
 

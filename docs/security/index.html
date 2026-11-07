@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Security · Guard Spec</title>
-<meta name="description" content="What a security review of a Guard Spec deployment needs in one place: the components and their trust boundaries, which data goes where, what is stored, for">
+<meta name="description" content="Tiếng Việt: README.vi.md. What a security review of a Guard Spec deployment needs in one place: the components and their trust boundaries, which data goes ">
 <meta property="og:title" content="Security · Guard Spec">
-<meta property="og:description" content="What a security review of a Guard Spec deployment needs in one place: the components and their trust boundaries, which data goes where, what is stored, for">
+<meta property="og:description" content="Tiếng Việt: README.vi.md. What a security review of a Guard Spec deployment needs in one place: the components and their trust boundaries, which data goes ">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://guardspec.io/assets/og.png">
 <link rel="canonical" href="https://guardspec.io/docs/security/">
@@ -43,6 +43,9 @@
   <main class="doc">
     <h1>Security</h1>
 
+<blockquote>
+<p>Tiếng Việt: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/security/README.vi.md">README.vi.md</a>.</p>
+</blockquote>
 <p>What a security review of a Guard Spec deployment needs in one place: the
 components and their trust boundaries, which data goes where, what is
 stored, for how long and how it is protected, and how to check that the
@@ -74,7 +77,7 @@ statement depends on a setting, the setting is named.</p>
   <td>Reporting a vulnerability, supported versions, response targets</td>
 </tr>
 <tr>
-  <td><a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/README.md#security-model-and-limitations">Security model and limitations</a></td>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/README.md#security-model-and-limitations">Security model and limitations</a></td>
   <td>What detection does and does not protect against</td>
 </tr>
 </tbody>
@@ -87,12 +90,15 @@ statement depends on a setting, the setting is named.</p>
 <li><a href="#secrets">Secrets</a></li>
 <li><a href="#encryption">Encryption</a></li>
 <li><a href="#tenant-isolation">Tenant isolation</a></li>
+<li><a href="#shared-scan-cache">Shared scan cache</a></li>
 <li><a href="#what-leaves-your-network">What leaves your network</a></li>
 <li><a href="#threat-model">Threat model</a></li>
 <li><a href="#verifying-a-release">Verifying a release</a></li>
 </ul>
 <h2 id="architecture">Architecture<a class="anchor" href="#architecture" aria-hidden="true">#</a></h2>
-<p>Two Go services and one PostgreSQL database. Nothing else is required.</p>
+<p>Two Go services and one PostgreSQL database. Nothing else is required; a
+Redis (or Valkey) is optional, as the <a href="#shared-scan-cache">shared scan cache</a>
+of several gateway replicas.</p>
 <pre class="mermaid">flowchart LR
   app[Your applications] --&gt;|&quot;HTTPS (your proxy) · API key&quot;| gw
   admin[Admins, browser] --&gt;|&quot;HTTPS (your proxy) · JWT session&quot;| cp
@@ -177,7 +183,9 @@ route, status and upstream path), not to events or notifications (metadata
 only: ids, categories, scores).</p>
 <h2 id="what-is-stored-where-and-for-how-long">What is stored, where and for how long<a class="anchor" href="#what-is-stored-where-and-for-how-long" aria-hidden="true">#</a></h2>
 <p>Everything is in PostgreSQL. The services keep no state on disk; the
-gateway's rate-limit counters and caches are in memory.</p>
+gateway's rate-limit counters and caches are in memory, except the scan cache
+when <code>SCAN_CACHE_BACKEND</code> shares it (below and
+<a href="#shared-scan-cache">Shared scan cache</a>).</p>
 <div class="table"><table>
 <thead>
 <tr>
@@ -247,6 +255,12 @@ gateway's rate-limit counters and caches are in memory.</p>
   <td><code>org_exemplars</code></td>
   <td>Example attack texts an admin adds for that org's similarity layer</td>
   <td>Until deleted</td>
+</tr>
+<tr>
+  <td><strong>Scan cache</strong> (<code>SCAN_CACHE_BACKEND=postgres</code>)</td>
+  <td><code>scan_cache</code></td>
+  <td>Per text the gateway classified (system prompt, tool definition, tool result, document): a SHA-256 key, the org, detector scores and verdict metadata (fused and layer scores, categories, rule ids, PII types and offsets) and the model identity. <strong>No text</strong>, no tool name</td>
+  <td>6 hours: an expired row is never read, and the retention job deletes expired rows whatever the retention periods are. With <code>SCAN_CACHE_BACKEND=redis</code> the same values are in Redis with <code>EXPIRE</code> 6 h</td>
 </tr>
 <tr>
   <td><strong>Alerts</strong></td>
@@ -342,6 +356,41 @@ SQL default encryption, LUKS or similar on-premise) and for backups too.</li>
 cannot bypass it. Tables keyed by user (sessions, identities, 2FA) are not
 org-scoped and are read by user id. A failure to evaluate policies or org
 settings fails the request closed (503).</p>
+<h2 id="shared-scan-cache">Shared scan cache<a class="anchor" href="#shared-scan-cache" aria-hidden="true">#</a></h2>
+<p>With more than one gateway replica, <code>SCAN_CACHE_BACKEND=redis</code> or <code>postgres</code>
+shares the scan cache (README, <a href="/docs/operations/#scan-cache">Scan cache</a>), so a
+long <code>/v1/messages</code> or <code>/v1/responses</code> session does not have to classify its whole history again
+on another replica or after a restart.</p>
+<p><strong>What it stores.</strong> For each text: the detector's scores and verdict metadata,
+and the identity of the models that computed them. The key is a SHA-256 of the
+org, the kind of text, its full content and the model identity. No text, no
+tool name, nothing an attacker who reads the cache could turn back into the
+content, except by guessing a text and hashing it (the key is unsalted, so a
+reader can confirm that a known text was sent by that org within 6 hours).</p>
+<p><strong>Threats.</strong></p>
+<ul>
+<li><em>Cache poisoning.</em> An attacker who can <strong>write</strong> to the backend can store a
+low score under the key of a malicious text and so have it pass as clean,
+for the org the key was made for. Keep Redis on a private network (no
+published port; in Kubernetes, a NetworkPolicy that admits the gateway pods
+only), require authentication (<code>requirepass</code> or an ACL user limited to
+<code>guardspec:scan:*</code>), and use <code>rediss://</code> across hosts. Do not share that
+Redis with other applications. The compose <code>scan-cache</code> service has no
+published port and refuses to start without a password of 16 characters
+or more. With Postgres, the table is written by the gateway's role only and
+row level security binds every row to its org: a replica or a stolen
+connection scoped to one org cannot plant entries for another.</li>
+<li><em>Stale scores.</em> An entry keys on the exact model identity (gateway binary,
+model files, calibration, detector configuration), so a model change can
+never reuse an old score; per-org exemplars added later apply once an entry
+expires (6 h), as with the in-process cache.</li>
+<li><em>Availability.</em> A slow or failing backend is skipped after
+<code>SCAN_CACHE_TIMEOUT</code> (50 ms): the text is scanned. The cache never decides
+that something is not scanned, and its failure never fails a request.</li>
+<li><em>Memory.</em> Bound Redis with <code>maxmemory</code> and a <code>volatile-*</code> eviction policy
+(the compose service uses 256 MB, <code>volatile-lru</code>); an evicted entry only
+costs a rescan.</li>
+</ul>
 <h2 id="what-leaves-your-network">What leaves your network<a class="anchor" href="#what-leaves-your-network" aria-hidden="true">#</a></h2>
 <div class="table"><table>
 <thead>
@@ -394,7 +443,7 @@ SBOMs and SLSA provenance; archives are covered by signed checksum files.
 The commands, what each check proves and their output for v0.2.0 are in
 <a href="/docs/security/verifying-releases/">Verifying a release</a>.</p>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/docs/security/README.md">docs/security/README.md</a> @ <code>82361eff5c2a</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/security/README.md">docs/security/README.md</a> @ <code>f26302340bf1</code></p>
   </main>
 </div>
 

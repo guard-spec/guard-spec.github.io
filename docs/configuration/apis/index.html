@@ -80,6 +80,14 @@ or <code>x-api-key: gs_...</code>.</p>
   <td>Forwarded to the same Anthropic upstream (default route); key and rate limit apply, the body is not scanned (no model runs on it)</td>
 </tr>
 <tr>
+  <td><code>POST /v1/responses</code></td>
+  <td>OpenAI Responses API (<code>client.responses.create</code>), guarded in and out like chat, streaming supported (SSE events; the guard re-numbers <code>sequence_number</code>). Scanned: <code>input</code> as a string or items (user text rewritten and classified; <code>function_call_output</code> and <code>custom_tool_call_output</code> classified as tool results, redacted with <code>INDIRECT_ACTION=redact</code>; other items with text, such as shell or MCP output, classified as tool output; system and developer messages and <code>instructions</code> with <code>SCAN_ROLES</code> <code>system</code>; function-call arguments with <code>tool_calls</code>; images and files passed unscanned), <code>prompt.variables</code>, and <code>tools</code> (function and custom tools, remote MCP server descriptions; <code>SCAN_TOOL_PREFIXES</code> applies). Answers: output text, refusals, function and custom tool arguments, reasoning summaries and text, annotation URLs, titles and file names, guarded whole or as they stream; encrypted reasoning passed as is; annotations with offsets and log probabilities are dropped from a text the guard changed. The canary goes in <code>instructions</code> and is taken out of the <code>instructions</code> the response repeats. <code>previous_response_id</code>, <code>conversation</code> and <code>item_reference</code> follow <code>RESPONSES_SERVER_STATE</code>; <code>background: true</code> is refused (400), since its result would be fetched with <code>GET /v1/responses/{id}</code>, which the gateway does not serve. Sent as is to <code>{base_url}/responses</code> of an upstream with provider <code>openai</code>, <code>azure_openai</code> or <code>openai_compatible</code>; <code>anthropic</code>, <code>gemini</code>, <code>ollama</code> and <code>vllm</code> upstreams: 400 (<code>unsupported_upstream</code>, naming the upstream), no translation. Errors in the OpenAI shape, refusals 400 <code>content_filter</code> as on chat; a stream the gateway stops ends with an <code>error</code> event</td>
+</tr>
+<tr>
+  <td><code>POST /v1/embeddings</code></td>
+  <td>Forwarded to <code>{base_url}/embeddings</code> of the route's upstream (not <code>anthropic</code>: 400), with the key, rate limit, policies, routing and model allowlist; one audit row (content only when the org stores content, the vectors never). Not scanned unless <code>EMBEDDINGS_SCAN=on</code>. Errors in the OpenAI shape</td>
+</tr>
+<tr>
   <td><code>GET /v1/models</code></td>
   <td>Models of the key's default route: the upstream's allowed models, its forced model, or the upstream's own list. OpenAI list shape; Anthropic's when the request has <code>anthropic-version</code></td>
 </tr>
@@ -382,13 +390,14 @@ group keep it a group. Fields: <code>request.model</code>, <code>request.tenant_
 <code>injection.score</code>, <code>injection.label</code>, <code>injection.category</code>, <code>scores.l1</code>,
 <code>scores.l2</code>, <code>scores.l3</code> (calibrated, <code>-1</code> when the layer did not run),
 <code>indirect.score</code>, <code>indirect.source</code>, <code>injection.source_role</code>,
-<code>anomaly.score</code>, <code>anomaly.has_tag_chars</code>, <code>anomaly.has_bidi</code>,
+<code>conversation.score</code> (the <a href="/docs/operations/#conversation-window">conversation window</a>; 0 when
+there was none), <code>anomaly.score</code>, <code>anomaly.has_tag_chars</code>, <code>anomaly.has_bidi</code>,
 <code>mcp.is_tool_response</code>. A policy holds at most 200 rules; each rule has a CEL
 cost limit, the rules of one request share a cost budget and a timeout, and
 any of these limits fails closed with 503. Project policies run before the
 org-wide ones.</p>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/README.md#apis">README.md#apis</a> @ <code>82361eff5c2a</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/README.md#apis">README.md#apis</a> @ <code>f26302340bf1</code></p>
   </main>
 </div>
 

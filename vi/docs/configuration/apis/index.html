@@ -48,7 +48,9 @@
 các lớp phát hiện đang chạy): <code>POST /v1/chat/completions</code>,
 <code>POST /v1/completions</code>, <code>POST /v1/messages</code> (Anthropic Messages API cho
 Claude Code, chỉ tới upstream có provider <code>anthropic</code>),
-<code>POST /v1/messages/count_tokens</code>, <code>GET /v1/models</code>,
+<code>POST /v1/messages/count_tokens</code>, <code>POST /v1/responses</code> (OpenAI Responses API,
+chỉ tới upstream có provider <code>openai</code>, <code>azure_openai</code> hoặc
+<code>openai_compatible</code>), <code>POST /v1/embeddings</code>, <code>GET /v1/models</code>,
 <code>POST /guardrail/scan</code> (chấm <code>text</code> và <code>documents</code>
 không gọi model), <code>POST /guardrail/scan/tools</code> (chấm định nghĩa tool MCP),
 <code>POST /guardrail/sanitize</code>.</p>
@@ -81,9 +83,9 @@ bấm. Ngoài ra
 có các trang Upstream, Cấu hình dạng mã (YAML: kiểm tra, xem khác biệt, áp
 dụng), Thiết lập bảo vệ, Khóa API, Dự án, Mẫu tham chiếu và Nhật ký kiểm tra.
 Chi tiết ở mục <a href="/docs/operations/admin-ui/">Admin UI</a>.</p>
-<p><img src="https://raw.githubusercontent.com/guard-spec/guard-spec/82361eff5c2a8520be2c3e8d32567770e4e9b73f/docs/images/admin-flow-dark-vi.png" alt="Luồng xử lý, giao diện tối" /></p>
+<p><img src="https://raw.githubusercontent.com/guard-spec/guard-spec/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/images/admin-flow-dark-vi.png" alt="Luồng xử lý, giao diện tối" /></p>
 
-    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/README.vi.md#api">README.vi.md#api</a> @ <code>82361eff5c2a</code></p>
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/README.vi.md#api">README.vi.md#api</a> @ <code>f26302340bf1</code></p>
   </main>
 </div>
 

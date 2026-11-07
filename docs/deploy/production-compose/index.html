@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Production compose · Guard Spec</title>
-<meta name="description" content="One host, Docker Compose, HTTPS. For a startup or a team that wants Guard Spec on a single VM without Kubernetes. The quick start (docker-compose.yml at th">
+<meta name="description" content="Tiếng Việt: README.vi.md. One host, Docker Compose, HTTPS. For a startup or a team that wants Guard Spec on a single VM without Kubernetes. The quick start">
 <meta property="og:title" content="Production compose · Guard Spec">
-<meta property="og:description" content="One host, Docker Compose, HTTPS. For a startup or a team that wants Guard Spec on a single VM without Kubernetes. The quick start (docker-compose.yml at th">
+<meta property="og:description" content="Tiếng Việt: README.vi.md. One host, Docker Compose, HTTPS. For a startup or a team that wants Guard Spec on a single VM without Kubernetes. The quick start">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://guardspec.io/assets/og.png">
 <link rel="canonical" href="https://guardspec.io/docs/deploy/production-compose/">
@@ -43,9 +43,12 @@
   <main class="doc">
     <h1>Production compose</h1>
 
+<blockquote>
+<p>Tiếng Việt: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/compose/production/README.vi.md">README.vi.md</a>.</p>
+</blockquote>
 <p>One host, Docker Compose, HTTPS. For a startup or a team that wants Guard Spec
 on a single VM without Kubernetes. The quick start
-(<a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/docker-compose.yml"><code>docker-compose.yml</code></a> at the repository root)
+(<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docker-compose.yml"><code>docker-compose.yml</code></a> at the repository root)
 publishes every port over plain HTTP; this stack does not.</p>
 <div class="table"><table>
 <thead>
@@ -150,7 +153,7 @@ curl -s --cacert caddy-root.crt --resolve gw.localhost:8443:127.0.0.1 https://gw
 than 443, Caddy's HTTP-to-HTTPS redirect points at port 443; use the HTTPS
 port directly.</p>
 <h2 id="settings">Settings<a class="anchor" href="#settings" aria-hidden="true">#</a></h2>
-<p>Everything is in <code>.env</code> (<a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/deploy/compose/production/.env.example"><code>.env.example</code></a> lists it):</p>
+<p>Everything is in <code>.env</code> (<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/compose/production/.env.example"><code>.env.example</code></a> lists it):</p>
 <div class="table"><table>
 <thead>
 <tr>
@@ -217,7 +220,7 @@ port directly.</p>
 </tr>
 <tr>
   <td><code>GUARDSPEC_VERSION</code></td>
-  <td><code>0.2.1</code></td>
+  <td><code>0.3.0</code></td>
   <td>Image tag (<a href="/docs/upgrade/">docs/upgrade.md</a>)</td>
 </tr>
 </tbody>
@@ -251,7 +254,7 @@ policies, audit rows and Caddy's CA. Automatic HTTPS with a public ACME CA
 was not exercised (it needs public DNS); the Caddyfile adapts to an ACME
 policy for both names (<code>caddy adapt</code>).</p>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/deploy/compose/production/README.md">deploy/compose/production/README.md</a> @ <code>82361eff5c2a</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/compose/production/README.md">deploy/compose/production/README.md</a> @ <code>f26302340bf1</code></p>
   </main>
 </div>
 

@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Benchmark · Guard Spec</title>
-<meta name="description" content="This page compares Guard Spec&#x27;s detector with other open prompt-injection detectors on Guard Spec&#x27;s own eval set and on public datasets. Everything on it c">
+<meta name="description" content="Tiếng Việt: benchmark.vi.md. This page compares Guard Spec&#x27;s detector with other open prompt-injection detectors on Guard Spec&#x27;s own eval set and on public">
 <meta property="og:title" content="Benchmark · Guard Spec">
-<meta property="og:description" content="This page compares Guard Spec&#x27;s detector with other open prompt-injection detectors on Guard Spec&#x27;s own eval set and on public datasets. Everything on it c">
+<meta property="og:description" content="Tiếng Việt: benchmark.vi.md. This page compares Guard Spec&#x27;s detector with other open prompt-injection detectors on Guard Spec&#x27;s own eval set and on public">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://guardspec.io/assets/og.png">
 <link rel="canonical" href="https://guardspec.io/docs/models/benchmark/">
@@ -43,6 +43,9 @@
   <main class="doc">
     <h1>Benchmark</h1>
 
+<blockquote>
+<p>Tiếng Việt: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/benchmark.vi.md">benchmark.vi.md</a>.</p>
+</blockquote>
 <p>This page compares Guard Spec's detector with other open prompt-injection
 detectors on Guard Spec's own eval set and on public datasets. Everything on it
 comes from one command, with every dataset and model pinned, so anyone can
@@ -237,7 +240,7 @@ the Python detectors; <code>cmd/eval</code> times every row, model loading exclu
 <p>Every dataset was checked on its Hugging Face card at the pinned commit. The
 benchmark downloads them at run time; no row from them is stored in this
 repository beyond what <code>eval/</code> already contains (see
-<a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/eval/LICENSES.md">eval/LICENSES.md</a>).</p>
+<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/eval/LICENSES.md">eval/LICENSES.md</a>).</p>
 <div class="table"><table>
 <thead>
 <tr>
@@ -301,7 +304,7 @@ repository beyond what <code>eval/</code> already contains (see
 <p>Row counts and languages per run are in the generated tables below.</p>
 <p><strong>Vietnamese.</strong> We found no public, licensed Vietnamese prompt-injection
 dataset. The only Vietnamese rows here are those of <code>eval/</code>, which are
-synthetic and labelled by AI agents (see <a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/eval/README.md">eval/README.md</a>).</p>
+synthetic and labelled by AI agents (see <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/eval/README.md">eval/README.md</a>).</p>
 <p><strong>Language column.</strong> <code>eval/</code> carries a language per row (<code>en</code>, <code>vi</code>). For the
 public sets, rows with German, Spanish or Cyrillic markers (the rule of
 <code>eval/build/build.py</code>) are <code>other</code>, the rest <code>en</code>. Only <code>deepset</code> has a
@@ -310,7 +313,7 @@ sizeable <code>other</code> share.</p>
 <ul>
 <li>Guard Spec's classifier (L2, v3b) was trained on the <code>train</code> splits of
 <code>deepset/prompt-injections</code>, <code>Lakera/gandalf_ignore_instructions</code> and
-<code>jackhhao/jailbreak-classification</code> (<a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/train/DATA_LICENSES.md">train/DATA_LICENSES.md</a>).
+<code>jackhhao/jailbreak-classification</code> (<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/train/DATA_LICENSES.md">train/DATA_LICENSES.md</a>).
 The benchmark uses only their <code>test</code> splits, but those come from the same
 distribution, which favours Guard Spec on these three sets.</li>
 <li>ProtectAI v2 lists <code>jackhhao/jailbreak-classification</code> among its training
@@ -318,7 +321,7 @@ sets (split not stated), so the same holds for it there.</li>
 <li>The English <code>test</code> rows of <code>deepset</code> and <code>Gandalf</code> are also part of
 <code>eval/</code> (60 of 116 and 111 of 112 rows).</li>
 <li>Guard Spec's L1 rules were refined by reading failures on the &quot;dev&quot; half of
-<code>eval/</code> (<a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/eval/README.md">eval/README.md</a>); L1 numbers on <code>eval/</code> are
+<code>eval/</code> (<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/eval/README.md">eval/README.md</a>); L1 numbers on <code>eval/</code> are
 optimistic. L2, L3 and the fusion were never fitted on <code>eval/</code>.</li>
 <li>Nothing in this benchmark was used to change Guard Spec.</li>
 </ul>
@@ -1128,7 +1131,7 @@ language-identification model.</li>
 <p>The results will also appear on <a href="https://guardspec.io/docs/">guardspec.io/docs</a>,
 which is built from this page.</p>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/docs/benchmark.md">docs/benchmark.md</a> @ <code>82361eff5c2a</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/benchmark.md">docs/benchmark.md</a> @ <code>f26302340bf1</code></p>
   </main>
 </div>
 

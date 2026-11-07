@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Versions, pinning and rollback · Guard Spec</title>
-<meta name="description" content="The gateway&#x27;s detector has three layers. L1 (rules) is built into the binary. L2 (our classifier, guardspec-classifier) and L3 (the multilingual-e5-small e">
+<meta name="description" content="Tiếng Việt: models.vi.md. The gateway&#x27;s detector has three layers. L1 (rules) is built into the binary. L2 (our classifier, guardspec-classifier) and L3 (t">
 <meta property="og:title" content="Versions, pinning and rollback · Guard Spec">
-<meta property="og:description" content="The gateway&#x27;s detector has three layers. L1 (rules) is built into the binary. L2 (our classifier, guardspec-classifier) and L3 (the multilingual-e5-small e">
+<meta property="og:description" content="Tiếng Việt: models.vi.md. The gateway&#x27;s detector has three layers. L1 (rules) is built into the binary. L2 (our classifier, guardspec-classifier) and L3 (t">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://guardspec.io/assets/og.png">
 <link rel="canonical" href="https://guardspec.io/docs/models/versions/">
@@ -43,12 +43,15 @@
   <main class="doc">
     <h1>Versions, pinning and rollback</h1>
 
+<blockquote>
+<p>Tiếng Việt: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/models.vi.md">models.vi.md</a>.</p>
+</blockquote>
 <p>The gateway's detector has three layers. L1 (rules) is built into the
 binary. L2 (our classifier, <code>guardspec-classifier</code>) and L3 (the
 <code>multilingual-e5-small</code> embedder) are ONNX models that are never baked into
 an image or committed to git: they are downloaded, verified and mounted at
 <code>/models</code>.</p>
-<p><a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/models/manifest.yaml"><code>models/manifest.yaml</code></a> lists every model version
+<p><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/models/manifest.yaml"><code>models/manifest.yaml</code></a> lists every model version
 that can be pulled. The same file is built into the gateway and the <code>models</code>
 tool, so the binary always knows its recommended models.</p>
 <div class="table"><table>
@@ -68,6 +71,13 @@ tool, so the binary always knows its recommended models.</p>
   <td>L2</td>
   <td>yes</td>
   <td>Hugging Face (not published yet), then the GitHub Release <code>model-guardspec-classifier-v3b</code></td>
+</tr>
+<tr>
+  <td><code>guardspec-classifier</code></td>
+  <td><code>v4</code></td>
+  <td>L2</td>
+  <td>no: candidate, <a href="#guardspec-classifier-v4-candidate">compare in shadow mode</a></td>
+  <td>the GitHub Release <code>model-guardspec-classifier-v4</code> (once the owner publishes it)</td>
 </tr>
 <tr>
   <td><code>multilingual-e5-small</code></td>
@@ -197,6 +207,93 @@ path. The admin UI's <strong>Models</strong> page shows the agreement rate, the 
 where the candidate would block or allow differently, and the score
 distributions. README, <a href="/docs/operations/#shadow-mode-and-model-reload">Shadow mode and model reload</a>,
 has the details.</p>
+<h3 id="guardspec-classifier-v4-candidate">guardspec-classifier v4 (candidate)<a class="anchor" href="#guardspec-classifier-v4-candidate" aria-hidden="true">#</a></h3>
+<p><code>guardspec-classifier@v4</code> is listed in the manifest but is <strong>not</strong> the
+recommended version: v3b stays the default until v4 has been compared in
+shadow mode. v4 is v3b's architecture and recipe trained on more Vietnamese
+data (owner-written teencode, no-diacritics and banking rows, and new hard
+negatives); it blocks fewer benign Vietnamese messages. The comparison with
+v3b is below (<a href="#v3b-vs-v4">v3b vs v4</a>) and in
+<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/train/MODEL_CARD.md">train/MODEL_CARD.md</a> (&quot;v4&quot;).</p>
+<pre><code class="language-bash"># 1. Install it next to v3b (files checked against the manifest's SHA-256).
+#    It comes from the Hugging Face branch v4 at the pinned commit, with the
+#    GitHub release model-guardspec-classifier-v4 as the mirror.
+docker compose --profile models run --rm models-pull guardspec-classifier@v4
+# 2. .env: keep v3b deciding, let v4 score the same traffic.
+L2_MODEL=guardspec-classifier@v3b
+SHADOW_L2_MODEL=guardspec-classifier@v4
+SHADOW_SAMPLE=1
+# 3. Restart the gateway (or POST /admin/models/reload), then watch the
+#    Models page: agreement, requests v4 would block that v3b allows (and the
+#    reverse), score distributions.
+</code></pre>
+<p>With a local copy of the files instead (for example before the release
+exists), set <code>SHADOW_L2_MODEL_DIR=/path/to/guardspec-classifier-v4</code>; the
+directory must hold <code>model_int8.onnx</code>, <code>tokenizer.json</code>, <code>config.json</code>,
+<code>thresholds.json</code> and <code>calibration.json</code> (v4's fusion calibration travels in
+that file). Once the comparison is satisfactory, switching is
+<code>L2_MODEL=guardspec-classifier@v4</code> and a reload; rolling back is the reverse.</p>
+<h4 id="v3b-vs-v4">v3b vs v4<a class="anchor" href="#v3b-vs-v4" aria-hidden="true">#</a></h4>
+<p>Gateway scores (fused L1+L2+L3, block at 0.85). The eval set was measured
+once for v4; the owner hold-out is owner-written data that neither model
+trained on.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th></th>
+  <th>v3b</th>
+  <th>v4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>eval ROC AUC</td>
+  <td>0.9865</td>
+  <td>0.9853</td>
+</tr>
+<tr>
+  <td>eval TPR / FPR at 0.85</td>
+  <td>0.939 / 1.39% (14 of 1,005)</td>
+  <td>0.932 / 1.19% (12)</td>
+</tr>
+<tr>
+  <td>eval EN FPR / VI FPR</td>
+  <td>1.65% / 1.25%</td>
+  <td>1.10% / 1.25%</td>
+</tr>
+<tr>
+  <td>eval VI teencode / no-diacritics FPR</td>
+  <td>3.5% (5 of 143) / 0.4% (1 of 236)</td>
+  <td>1.4% (2) / 1.7% (4)</td>
+</tr>
+<tr>
+  <td>owner hold-out FPR / TPR</td>
+  <td>1.6% (3 of 184) / 0.714</td>
+  <td>0.5% (1) / 0.688</td>
+</tr>
+<tr>
+  <td>owner teencode/no-diacritics: FPR / TPR / ROC AUC</td>
+  <td>4.2% (2 of 48) / 0.417 / 0.763</td>
+  <td>2.1% (1) / 0.472 / 0.878</td>
+</tr>
+<tr>
+  <td>Vietnamese benign false positives (owner hold-out, <code>val_v4_holdout</code>, the 4 reported sentences)</td>
+  <td>11 of 275</td>
+  <td>4 of 275</td>
+</tr>
+<tr>
+  <td>the 4 reported sentences blocked</td>
+  <td>4</td>
+  <td>1</td>
+</tr>
+</tbody>
+</table></div>
+<p>v4 blocks fewer benign Vietnamese messages but catches slightly fewer
+attacks (eval: 7 fewer of 1,171; lower on Vietnamese data exfiltration and
+tool poisoning and on English leet). It did not pass the pre-registered
+decision rule, which is why it is a candidate for shadow mode and not the
+default. <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/train/MODEL_CARD.md">train/MODEL_CARD.md</a> (&quot;v4&quot;) has every
+table.</p>
 <h2 id="reloading-without-a-restart">Reloading without a restart<a class="anchor" href="#reloading-without-a-restart" aria-hidden="true">#</a></h2>
 <p><code>kill -HUP</code> the gateway, or <code>POST /admin/models/reload</code> with
 <code>GATEWAY_ADMIN_TOKEN</code>, loads the classifier again (or another version), checks
@@ -239,7 +336,7 @@ no restart.</li>
 <h2 id="releasing-a-new-model-version">Releasing a new model version<a class="anchor" href="#releasing-a-new-model-version" aria-hidden="true">#</a></h2>
 <p>For maintainers. The example releases <code>guardspec-classifier</code> <code>v4</code>.</p>
 <ol>
-<li><strong>Train</strong> with <code>train/</code> (see <a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/train/MODEL_CARD.md">train/MODEL_CARD.md</a>).
+<li><strong>Train</strong> with <code>train/</code> (see <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/train/MODEL_CARD.md">train/MODEL_CARD.md</a>).
 Choose epochs, thresholds and calibration on the validation splits only.
 <code>eval/</code> is never used for tuning.</li>
 <li><strong>Calibrate</strong>: <code>go run -tags onnx ./cmd/calibrate fit -write</code> writes
@@ -268,7 +365,7 @@ version.</li>
 </ol>
 <p>The next software release then ships the manifest that recommends v4.</p>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/docs/models.md">docs/models.md</a> @ <code>82361eff5c2a</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/models.md">docs/models.md</a> @ <code>f26302340bf1</code></p>
   </main>
 </div>
 

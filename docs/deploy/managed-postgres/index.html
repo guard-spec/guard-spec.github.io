@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Managed PostgreSQL · Guard Spec</title>
-<meta name="description" content="Status: reference, not yet verified by the maintainers on these providers. Community-tested: not yet. If you run Guard Spec on one of them, please open an ">
+<meta name="description" content="Tiếng Việt: managed-postgres.vi.md. Status: reference, not yet verified by the maintainers on these providers. Community-tested: not yet. If you run Guard ">
 <meta property="og:title" content="Managed PostgreSQL · Guard Spec">
-<meta property="og:description" content="Status: reference, not yet verified by the maintainers on these providers. Community-tested: not yet. If you run Guard Spec on one of them, please open an ">
+<meta property="og:description" content="Tiếng Việt: managed-postgres.vi.md. Status: reference, not yet verified by the maintainers on these providers. Community-tested: not yet. If you run Guard ">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://guardspec.io/assets/og.png">
 <link rel="canonical" href="https://guardspec.io/docs/deploy/managed-postgres/">
@@ -44,12 +44,15 @@
     <h1>Managed PostgreSQL</h1>
 
 <blockquote>
+<p>Tiếng Việt: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/managed-postgres.vi.md">managed-postgres.vi.md</a>.</p>
+</blockquote>
+<blockquote>
 <p><strong>Status: reference, not yet verified by the maintainers on these
 providers.</strong> Community-tested: not yet. If you run Guard Spec on one of
 them, please open an
 <a href="https://github.com/guard-spec/guard-spec/issues/new/choose">issue</a> or a pull
 request with what worked and what did not; contributions are welcome. See
-<a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
 </blockquote>
 <p>The compose files and CI use PostgreSQL 17; older versions have not been
 tested. Any provider should work if it gives you the roles and extensions
@@ -215,7 +218,7 @@ in <code>PGPASSWORD</code>). Run both steps again on every upgrade, before the n
 images start (<a href="/docs/upgrade/">docs/upgrade.md</a>); the migrate tool applies only
 what is new.</p>
 <h2 id="the-production-compose-without-its-database">The production compose without its database<a class="anchor" href="#the-production-compose-without-its-database" aria-hidden="true">#</a></h2>
-<p><a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/deploy/compose/production/managed-postgres.yml"><code>deploy/compose/production/managed-postgres.yml</code></a>
+<p><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/compose/production/managed-postgres.yml"><code>deploy/compose/production/managed-postgres.yml</code></a>
 moves the <code>postgres</code>, <code>migrate</code> and <code>db-roles</code> services behind a profile and
 points the gateway and control plane at <code>DATABASE_URL</code>:</p>
 <pre><code class="language-bash">cd deploy/compose/production
@@ -238,7 +241,7 @@ encrypted with it) with the same care. A logical dump as well:</p>
 a dump does not (create <code>guardspec_app</code> first, as above, then run
 <code>set-app-password.sh</code>).</p>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/docs/managed-postgres.md">docs/managed-postgres.md</a> @ <code>82361eff5c2a</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/managed-postgres.md">docs/managed-postgres.md</a> @ <code>f26302340bf1</code></p>
   </main>
 </div>
 

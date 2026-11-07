@@ -4,9 +4,9 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Air-gapped · Guard Spec</title>
-<meta name="description" content="How to run the Helm chart (deploy/helm/guard-spec) on a cluster that cannot reach ghcr.io, Docker Hub or Hugging Face: mirror the images with their signatu">
+<meta name="description" content="Tiếng Việt: airgapped.vi.md. How to run the Helm chart (deploy/helm/guard-spec) on a cluster that cannot reach ghcr.io, Docker Hub or Hugging Face: mirror ">
 <meta property="og:title" content="Air-gapped · Guard Spec">
-<meta property="og:description" content="How to run the Helm chart (deploy/helm/guard-spec) on a cluster that cannot reach ghcr.io, Docker Hub or Hugging Face: mirror the images with their signatu">
+<meta property="og:description" content="Tiếng Việt: airgapped.vi.md. How to run the Helm chart (deploy/helm/guard-spec) on a cluster that cannot reach ghcr.io, Docker Hub or Hugging Face: mirror ">
 <meta property="og:type" content="article">
 <meta property="og:image" content="https://guardspec.io/assets/og.png">
 <link rel="canonical" href="https://guardspec.io/docs/deploy/airgapped/">
@@ -43,6 +43,9 @@
   <main class="doc">
     <h1>Air-gapped</h1>
 
+<blockquote>
+<p>Tiếng Việt: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/airgapped.vi.md">airgapped.vi.md</a>.</p>
+</blockquote>
 <p>How to run the Helm chart (<code>deploy/helm/guard-spec</code>) on a cluster that cannot
 reach ghcr.io, Docker Hub or Hugging Face: mirror the images with their
 signatures and attestations, mirror the models, verify everything offline,
@@ -113,7 +116,7 @@ and carry an SPDX SBOM and SLSA provenance as BuildKit attestations inside
 the image index (<a href="/docs/security/policy/">SECURITY.md</a>). The two third-party images
 are not ours: pin them by digest, as above.</p>
 <h2 id="2-on-the-connected-side">2. On the connected side<a class="anchor" href="#2-on-the-connected-side" aria-hidden="true">#</a></h2>
-<pre><code class="language-bash">V=0.2.1
+<pre><code class="language-bash">V=0.3.0
 ID='^https://github.com/guard-spec/guard-spec/'
 ISSUER=https://token.actions.githubusercontent.com
 
@@ -187,11 +190,11 @@ imagePullSecrets:
 gateway:
   image:
     repository: registry.internal/guard-spec/guard-spec-gateway
-    tag: &quot;0.2.1&quot;          # or &quot;0.2.1@sha256:&lt;index digest&gt;&quot; to pin the digest
+    tag: &quot;0.3.0&quot;          # or &quot;0.3.0@sha256:&lt;index digest&gt;&quot; to pin the digest
 controlPlane:
   image:
     repository: registry.internal/guard-spec/guard-spec-control-plane
-    tag: &quot;0.2.1&quot;
+    tag: &quot;0.3.0&quot;
 migrations:
   enabled: true
   image:
@@ -222,7 +225,7 @@ networkPolicy:
 <p>With gateway-full instead: <code>gateway.image.repository=.../guard-spec-gateway-full</code>,
 <code>models.persistence.enabled=false</code> and no <code>models.pull</code>.</p>
 <p>Then, as in the README (&quot;Kubernetes&quot;):</p>
-<pre><code class="language-bash">helm install gs ./guard-spec-0.2.1.tgz -n guard-spec -f values-airgapped.yaml
+<pre><code class="language-bash">helm install gs ./guard-spec-0.3.0.tgz -n guard-spec -f values-airgapped.yaml
 kubectl -n guard-spec exec deploy/gs-guard-spec-gateway -c gateway -- ./doctor
 </code></pre>
 <p><code>doctor</code> (in the images from 0.2.0) checks the database and migration version, the model files against
@@ -299,7 +302,7 @@ Manager or Azure Key Vault with Workload Identity); the <code>ExternalSecret</co
 stays the same.</li>
 </ul>
 
-    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/docs/airgapped.md">docs/airgapped.md</a> @ <code>82361eff5c2a</code></p>
+    <p class="doc-source">Source: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/airgapped.md">docs/airgapped.md</a> @ <code>f26302340bf1</code></p>
   </main>
 </div>
 

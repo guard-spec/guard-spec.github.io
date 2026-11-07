@@ -82,6 +82,11 @@ dùng nhất:</p>
   <td>Đánh dấu kết quả tool: <code>delimit</code>, <code>datamark</code></td>
 </tr>
 <tr>
+  <td><code>CONVERSATION_WINDOW_TURNS</code> / <code>CONVERSATION_WINDOW_BYTES</code></td>
+  <td><code>4</code> / <code>8192</code></td>
+  <td>Cửa sổ hội thoại: ghép các lượt người dùng gần nhất (tối đa bấy nhiêu lượt và byte) rồi chấm điểm chung, để bắt chỉ dẫn bị chia nhỏ qua nhiều tin nhắn; <code>0</code> là tắt</td>
+</tr>
+<tr>
   <td><code>OUTPUT_LINK_ALLOWLIST</code></td>
   <td>rỗng</td>
   <td>Host được giữ ảnh/link trong câu trả lời</td>
@@ -94,7 +99,17 @@ dùng nhất:</p>
 <tr>
   <td><code>OUTPUT_UNKNOWN_BLOCKS</code></td>
   <td><code>refuse</code></td>
-  <td><code>/v1/messages</code>: block nội dung có kiểu output guard không biết bị từ chối; <code>pass</code> cho qua không kiểm tra</td>
+  <td><code>/v1/messages</code> và <code>/v1/responses</code>: block, output item hoặc sự kiện stream có kiểu output guard không biết bị từ chối; <code>pass</code> cho qua không kiểm tra</td>
+</tr>
+<tr>
+  <td><code>RESPONSES_SERVER_STATE</code></td>
+  <td><code>refuse</code></td>
+  <td><code>/v1/responses</code>: request dùng trạng thái hội thoại lưu ở upstream (<code>previous_response_id</code>, <code>conversation</code>, <code>item_reference</code>) bị từ chối (400) vì gateway không quét được các lượt trước; <code>allow</code> cho qua và gắn <code>input:server_state=1</code> vào audit</td>
+</tr>
+<tr>
+  <td><code>EMBEDDINGS_SCAN</code></td>
+  <td><code>off</code></td>
+  <td><code>on</code>: chấm từng input của <code>/v1/embeddings</code> như tài liệu không tin cậy</td>
 </tr>
 <tr>
   <td><code>AUDIT_STORE_CONTENT</code></td>
@@ -114,7 +129,7 @@ dùng nhất:</p>
 </tbody>
 </table></div>
 
-    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/82361eff5c2a8520be2c3e8d32567770e4e9b73f/README.vi.md#cấu-hình">README.vi.md#cấu-hình</a> @ <code>82361eff5c2a</code></p>
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/README.vi.md#cấu-hình">README.vi.md#cấu-hình</a> @ <code>f26302340bf1</code></p>
   </main>
 </div>
 
