@@ -1,0 +1,111 @@
+{
+  "_comment": "The current release, shown on the landing page (hero badge, 'New in' link, What's new section). On each release: update this file, bump ref in src/docs.json, run build.py, run check_site.py --external. Text may hold inline HTML (<code>). 'previous' lists the newest first; keep about four.",
+  "version": "v0.3.0",
+  "date": "2026-11-07",
+  "url": "https://github.com/guard-spec/guard-spec/releases/tag/v0.3.0",
+  "changelog_url": "https://github.com/guard-spec/guard-spec/blob/v0.3.0/CHANGELOG.md#030---2026-11-07",
+  "status": {
+    "en": "pre-1.0",
+    "vi": "trước 1.0"
+  },
+  "tagline": {
+    "en": "Responses API, split multi-turn attacks, shared scan cache",
+    "vi": "Responses API, tấn công chia nhỏ nhiều lượt, cache dùng chung"
+  },
+  "upgrade": {
+    "en": "Upgrading: run the migrations first (migration 020 adds the scan cache table). The conversation window is on by default; set <code>CONVERSATION_WINDOW_TURNS=0</code> to keep the old behaviour.",
+    "vi": "Khi nâng cấp: chạy migration trước (migration 020 thêm bảng scan cache). Cửa sổ hội thoại bật sẵn; đặt <code>CONVERSATION_WINDOW_TURNS=0</code> để giữ hành vi cũ."
+  },
+  "highlights": {
+    "en": [
+      {
+        "title": "OpenAI Responses API and embeddings",
+        "text": "<code>/v1/responses</code>, streaming included, gets the same input scanning, tool-output redaction and output guard as chat; <code>/v1/embeddings</code> gets keys, rate limits, policies and audit."
+      },
+      {
+        "title": "Attacks split across turns",
+        "text": "The most recent user turns are also scored together, on by default. Rules alone now block 24 of 24 split attacks on a new test set, with 12 of 12 benign conversations allowed."
+      },
+      {
+        "title": "Shared scan cache",
+        "text": "Several gateway replicas reuse scan results through Redis or PostgreSQL, so long agent sessions keep working across replicas and restarts. Only scores are stored."
+      },
+      {
+        "title": "Red-team reports",
+        "text": "Bypass and false-positive issue forms, a Report button in the request log, and a documented path from a report to training or hold-out data."
+      },
+      {
+        "title": "Public benchmark and examples",
+        "text": "A reproducible comparison with other detectors on public datasets, including where Guard Spec does worse, and runnable OpenAI SDK, LangChain, LlamaIndex, Vercel AI SDK, RAG and n8n examples."
+      },
+      {
+        "title": "Classifier v4, shadow mode only",
+        "text": "Published as a candidate to compare in shadow mode: fewer benign Vietnamese teencode blocks, but fewer attacks caught overall. v3b stays the default."
+      }
+    ],
+    "vi": [
+      {
+        "title": "OpenAI Responses API và embeddings",
+        "text": "<code>/v1/responses</code>, kể cả streaming, được quét đầu vào, che kết quả tool và kiểm tra đầu ra như chat; <code>/v1/embeddings</code> có key, giới hạn tần suất, chính sách và audit."
+      },
+      {
+        "title": "Tấn công chia nhỏ qua nhiều lượt",
+        "text": "Các lượt gần nhất của người dùng được chấm điểm cả khi ghép lại, bật sẵn. Trên bộ kiểm tra mới, chỉ riêng lớp luật đã chặn 24/24 tấn công chia nhỏ và cho qua 12/12 hội thoại bình thường."
+      },
+      {
+        "title": "Cache kết quả quét dùng chung",
+        "text": "Nhiều bản sao gateway dùng chung kết quả quét qua Redis hoặc PostgreSQL, nên phiên agent dài vẫn chạy đúng qua các bản sao và khi khởi động lại. Chỉ lưu điểm số."
+      },
+      {
+        "title": "Báo cáo red-team",
+        "text": "Mẫu issue cho lọt lưới và chặn nhầm, nút Báo cáo trong nhật ký request, và quy trình đưa một báo cáo thành dữ liệu huấn luyện hoặc dữ liệu giữ lại để đánh giá."
+      },
+      {
+        "title": "Benchmark công khai và ví dụ",
+        "text": "So sánh tái lập được với các bộ phát hiện khác trên dữ liệu công khai, kể cả chỗ Guard Spec kém hơn, cùng ví dụ chạy được cho OpenAI SDK, LangChain, LlamaIndex, Vercel AI SDK, RAG và n8n."
+      },
+      {
+        "title": "Bộ phân loại v4, chỉ chạy shadow",
+        "text": "Công bố làm ứng viên để so sánh ở chế độ shadow: ít chặn nhầm teencode tiếng Việt hơn nhưng bắt được ít tấn công hơn. v3b vẫn là mặc định."
+      }
+    ]
+  },
+  "previous": [
+    {
+      "version": "v0.2.1",
+      "date": "2026-11-07",
+      "url": "https://github.com/guard-spec/guard-spec/releases/tag/v0.2.1",
+      "summary": {
+        "en": "Vietnamese override rules and an L1 floor in the fusion, Claude Code web search, retention of activity and sessions, an editable Policy flow with contextual help, full SLSA provenance for the control-plane image.",
+        "vi": "Luật tiếng Việt cho câu lệnh \"bỏ qua quy tắc\" và ngưỡng sàn L1 khi gộp điểm, web search của Claude Code, lưu giữ nhật ký hoạt động và phiên, Policy flow sửa được kèm trợ giúp ngay chỗ, provenance SLSA đầy đủ cho image control plane."
+      }
+    },
+    {
+      "version": "v0.2.0",
+      "date": "2026-11-06",
+      "url": "https://github.com/guard-spec/guard-spec/releases/tag/v0.2.0",
+      "summary": {
+        "en": "Anthropic Messages API for Claude Code, shadow mode and model hot reload, a production Helm chart, the doctor command, a production compose and this docs site.",
+        "vi": "Anthropic Messages API cho Claude Code, chế độ shadow và nạp lại model khi đang chạy, Helm chart cho production, lệnh doctor, compose cho production và trang tài liệu này."
+      }
+    },
+    {
+      "version": "v0.1.1",
+      "date": "2026-11-06",
+      "url": "https://github.com/guard-spec/guard-spec/releases/tag/v0.1.1",
+      "summary": {
+        "en": "Fixes and hardening: a dashboard API, clearer health and readiness reports, Helm chart fixes, Go benchmarks and dependency updates.",
+        "vi": "Sửa lỗi và gia cố: API cho dashboard, báo cáo health và readiness rõ hơn, sửa Helm chart, Go benchmark và cập nhật thư viện phụ thuộc."
+      }
+    },
+    {
+      "version": "v0.1.0",
+      "date": "2026-11-06",
+      "url": "https://github.com/guard-spec/guard-spec/releases/tag/v0.1.0",
+      "summary": {
+        "en": "The first public release.",
+        "vi": "Bản phát hành công khai đầu tiên."
+      }
+    }
+  ]
+}
