@@ -1,0 +1,339 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Định cỡ và chọn lớp · Guard Spec</title>
+<meta name="description" content="English: sizing.md. Nếu hai bản khác nhau, bản tiếng Anh là bản chính. Guard Spec cần bao nhiêu CPU, bộ nhớ và ổ đĩa, tuỳ theo các lớp phát hiện bạn bật. G">
+<meta property="og:title" content="Định cỡ và chọn lớp · Guard Spec">
+<meta property="og:description" content="English: sizing.md. Nếu hai bản khác nhau, bản tiếng Anh là bản chính. Guard Spec cần bao nhiêu CPU, bộ nhớ và ổ đĩa, tuỳ theo các lớp phát hiện bạn bật. G">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/vi/docs/operations/sizing/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/operations/sizing/">
+<link rel="alternate" hreflang="vi" href="https://guardspec.io/vi/docs/operations/sizing/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/vi/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/vi/docs/" class="on">Tài liệu</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/operations/sizing/" class="">EN</a><a href="/vi/docs/operations/sizing/" class="on">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Tài liệu</span></summary>
+    <nav class="docs-nav" aria-label="Tài liệu"><ul><li class=""><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a></li><li class="child"><a href="/vi/docs/quickstart/integrations/">Tích hợp</a></li><li class="child"><a href="/vi/docs/quickstart/examples/">Ví dụ</a></li><li class=""><a href="/vi/docs/deploy/">Triển khai</a></li><li class="child"><a href="/vi/docs/deploy/production-compose/">Compose cho production</a></li><li class="child"><a href="/vi/docs/deploy/managed-postgres/">PostgreSQL được quản lý</a></li><li class="child"><a href="/vi/docs/deploy/airgapped/">Mạng cô lập</a></li><li class="child"><a href="/docs/deploy/aws/">AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform cho AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/on-premise/">Hạ tầng riêng <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/configuration/">Cấu hình</a></li><li class="child"><a href="/docs/configuration/routing/">Định tuyến <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/configuration/apis/">API</a></li><li class=""><a href="/docs/operations/">Vận hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/alerts/">Cảnh báo và thông báo</a></li><li class="child"><a href="/docs/operations/admin-ui/">Giao diện quản trị <span class="en">(tiếng Anh)</span></a></li><li class="child on"><a href="/vi/docs/operations/sizing/">Định cỡ và chọn lớp</a></li><li class=""><a href="/vi/docs/upgrade/">Nâng cấp</a></li><li class=""><a href="/vi/docs/models/">Model</a></li><li class="child"><a href="/vi/docs/models/versions/">Phiên bản, ghim và quay lui</a></li><li class="child"><a href="/vi/docs/models/benchmark/">Benchmark</a></li><li class=""><a href="/vi/docs/security/">Bảo mật</a></li><li class="child"><a href="/docs/security/verifying-releases/">Kiểm tra bản phát hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/risks/">Rủi ro và gia cố</a></li><li class="child"><a href="/docs/security/policy/">Báo lỗ hổng <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/red-team/">Báo cáo red-team</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Tài liệu"><ul><li class=""><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a></li><li class="child"><a href="/vi/docs/quickstart/integrations/">Tích hợp</a></li><li class="child"><a href="/vi/docs/quickstart/examples/">Ví dụ</a></li><li class=""><a href="/vi/docs/deploy/">Triển khai</a></li><li class="child"><a href="/vi/docs/deploy/production-compose/">Compose cho production</a></li><li class="child"><a href="/vi/docs/deploy/managed-postgres/">PostgreSQL được quản lý</a></li><li class="child"><a href="/vi/docs/deploy/airgapped/">Mạng cô lập</a></li><li class="child"><a href="/docs/deploy/aws/">AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform cho AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/on-premise/">Hạ tầng riêng <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/configuration/">Cấu hình</a></li><li class="child"><a href="/docs/configuration/routing/">Định tuyến <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/configuration/apis/">API</a></li><li class=""><a href="/docs/operations/">Vận hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/alerts/">Cảnh báo và thông báo</a></li><li class="child"><a href="/docs/operations/admin-ui/">Giao diện quản trị <span class="en">(tiếng Anh)</span></a></li><li class="child on"><a href="/vi/docs/operations/sizing/">Định cỡ và chọn lớp</a></li><li class=""><a href="/vi/docs/upgrade/">Nâng cấp</a></li><li class=""><a href="/vi/docs/models/">Model</a></li><li class="child"><a href="/vi/docs/models/versions/">Phiên bản, ghim và quay lui</a></li><li class="child"><a href="/vi/docs/models/benchmark/">Benchmark</a></li><li class=""><a href="/vi/docs/security/">Bảo mật</a></li><li class="child"><a href="/docs/security/verifying-releases/">Kiểm tra bản phát hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/risks/">Rủi ro và gia cố</a></li><li class="child"><a href="/docs/security/policy/">Báo lỗ hổng <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/red-team/">Báo cáo red-team</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Định cỡ và chọn lớp</h1>
+
+<blockquote>
+<p>English: <a href="/docs/operations/sizing/">sizing.md</a>. Nếu hai bản khác nhau, bản tiếng Anh là bản chính.</p>
+</blockquote>
+<p>Guard Spec cần bao nhiêu CPU, bộ nhớ và ổ đĩa, tuỳ theo các lớp phát hiện bạn
+bật. Gateway chiếm phần lớn: bộ nhớ của nó phụ thuộc vào các model được nạp,
+còn CPU phụ thuộc vào số prompt mỗi giây mà các lớp model phải chấm điểm.
+Control plane và Postgres nhỏ hơn nhiều.</p>
+<h2 id="chọn-lớp-phát-hiện">Chọn lớp phát hiện<a class="anchor" href="#chọn-lớp-phát-hiện" aria-hidden="true">#</a></h2>
+<p><code>DETECTOR_LAYERS</code> chọn các lớp (một biến duy nhất, trong <code>.env</code>):</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Chế độ</th>
+  <th><code>DETECTOR_LAYERS</code></th>
+  <th>Model được tải về</th>
+  <th>Dùng khi</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Đầy đủ (mặc định)</td>
+  <td><code>l1,l2,l3</code></td>
+  <td>classifier + embedder e5, khoảng 270 MB</td>
+  <td>Production còn dư RAM; L3 so khớp với các exemplar riêng của tổ chức và bắt thêm được các tấn công đã được diễn đạt lại</td>
+</tr>
+<tr>
+  <td>Nhẹ</td>
+  <td><code>l1,l2</code></td>
+  <td>chỉ classifier, khoảng 135 MB</td>
+  <td>Laptop, VM nhỏ, dùng cá nhân; tốn khoảng một nửa bộ nhớ và throughput cao gấp 2 đến 3 lần chế độ đầy đủ</td>
+</tr>
+<tr>
+  <td>Chỉ luật</td>
+  <td><code>l1</code></td>
+  <td>không có</td>
+  <td>Máy rất nhỏ, hoặc khi false positive (chặn nhầm) gây thiệt hại nhiều hơn tấn công bị bỏ sót; yếu hơn nhiều với các câu diễn đạt lại</td>
+</tr>
+</tbody>
+</table></div>
+<pre><code class="language-bash"># quick start in light mode (writes DETECTOR_LAYERS=l1,l2 into the new .env)
+DETECTOR_LAYERS=l1,l2 scripts/quickstart.sh
+# an existing stack: set DETECTOR_LAYERS=l1,l2 in .env, then
+docker compose -f docker-compose.yml up -d
+</code></pre>
+<p><code>models-init</code> chỉ tải những model mà các lớp đã chọn cần, và <code>/readyz</code> cho
+biết các lớp đang chạy (<code>&quot;layers&quot;:[&quot;l1&quot;,&quot;l2&quot;]</code>). Mỗi lớp phát hiện gì và được
+kết hợp ra sao: xem README, phần <a href="/vi/docs/models/">Model</a> và
+<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/README.vi.md#benchmark">Benchmark</a>.</p>
+<h2 id="mức-dùng-tài-nguyên-đo-được">Mức dùng tài nguyên đo được<a class="anchor" href="#mức-dùng-tài-nguyên-đo-được" aria-hidden="true">#</a></h2>
+<p><strong>Nguồn số liệu.</strong> Các maintainer đo ngày 2026-11-06 trên một máy: MacBook
+Pro Apple M3 Max (arm64), Docker Desktop 28.4 với Linux VM 14 vCPU và
+15.4 GiB, image <code>ghcr.io/guard-spec/guard-spec-gateway:0.1.0</code> (linux/arm64)
+và <code>-control-plane:0.1.0</code>, model <code>guardspec-classifier@v3b</code> và
+<code>multilingual-e5-small@614241f</code>. Bộ nhớ và CPU lấy từ <code>docker stats</code> (lấy mẫu
+khoảng mỗi giây trong lúc chạy; CPU 100% = một core). Tải được tạo bằng
+ApacheBench, 8 client đồng thời, gửi <code>POST /v1/chat/completions</code> gồm một
+system message và một user prompt dài 350 ký tự, tới upstream giả (không đặt
+<code>UPSTREAM_LLM_URL</code>), nên các con số là chi phí riêng của lớp bảo vệ; mỗi
+request cũng ghi một dòng audit. Phần cứng khác, nhất là CPU x86-64, sẽ cho
+kết quả khác: hãy tự đo trên máy của bạn (xem bên dưới) trước khi định cỡ cho
+cả hệ thống.</p>
+<h3 id="không-giới-hạn-quick-start-không-đặt-limit">Không giới hạn (quick start, không đặt limit)<a class="anchor" href="#không-giới-hạn-quick-start-không-đặt-limit" aria-hidden="true">#</a></h3>
+<p>Gateway được dùng cả 14 vCPU; <code>INFERENCE_MAX_CONCURRENCY</code> mặc định bằng số CPU
+(14) và ORT dùng 4 thread cho mỗi lần chạy.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Lớp</th>
+  <th>RAM gateway khi rảnh</th>
+  <th>RAM gateway đỉnh</th>
+  <th>CPU gateway khi có tải (trung bình / đỉnh)</th>
+  <th>Request/s</th>
+  <th>Latency p50 / p95 / p99</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>L1</td>
+  <td>10 MiB</td>
+  <td>28 MiB</td>
+  <td>2.9 / 4.0 cores</td>
+  <td>1,784</td>
+  <td>3 / 6 / 13 ms</td>
+</tr>
+<tr>
+  <td>L1 + L2</td>
+  <td>483 MiB</td>
+  <td>511 MiB</td>
+  <td>9.3 / 10.1 cores</td>
+  <td>387</td>
+  <td>19 / 31 / 43 ms</td>
+</tr>
+<tr>
+  <td>L1 + L2 + L3</td>
+  <td>909 MiB</td>
+  <td>942 MiB</td>
+  <td>12.9 / 15.6 cores</td>
+  <td>137</td>
+  <td>53 / 103 / 152 ms</td>
+</tr>
+</tbody>
+</table></div>
+<h3 id="với-giới-hạn-của-compose-production">Với giới hạn của compose production<a class="anchor" href="#với-giới-hạn-của-compose-production" aria-hidden="true">#</a></h3>
+<p>Mặc định của
+<a href="/vi/docs/deploy/production-compose/"><code>deploy/compose/production</code></a>:
+gateway bị giới hạn 2 CPU và 2 GiB, <code>INFERENCE_MAX_CONCURRENCY=2</code>,
+<code>INFERENCE_INTRA_OP_THREADS=1</code>; tải được gửi từ bên trong mạng compose thẳng
+tới gateway.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Lớp</th>
+  <th>RAM gateway khi rảnh</th>
+  <th>RAM gateway đỉnh</th>
+  <th>CPU gateway khi có tải</th>
+  <th>Request/s</th>
+  <th>Latency p50 / p95 / p99</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>L1</td>
+  <td>11 MiB</td>
+  <td>22 MiB</td>
+  <td>1.5 cores</td>
+  <td>2,168</td>
+  <td>2 / 9 / 23 ms</td>
+</tr>
+<tr>
+  <td>L1 + L2</td>
+  <td>481 MiB</td>
+  <td>503 MiB</td>
+  <td>1.9 cores</td>
+  <td>118</td>
+  <td>68 / 74 / 79 ms</td>
+</tr>
+<tr>
+  <td>L1 + L2 + L3</td>
+  <td>904 MiB</td>
+  <td>909 MiB</td>
+  <td>1.9 cores</td>
+  <td>55</td>
+  <td>138 / 166 / 288 ms</td>
+</tr>
+</tbody>
+</table></div>
+<p>Với 8 client và 2 lần chạy model cùng lúc, phần lớn latency đó là thời gian
+xếp hàng: một lần quét mất khoảng 2 / throughput (17 ms ở chế độ nhẹ, 36 ms ở
+chế độ đầy đủ trên CPU này).</p>
+<h3 id="các-dịch-vụ-khác">Các dịch vụ khác<a class="anchor" href="#các-dịch-vụ-khác" aria-hidden="true">#</a></h3>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Dịch vụ</th>
+  <th>RAM</th>
+  <th>CPU</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Control plane</td>
+  <td>khoảng 10 MiB, cả khi rảnh lẫn khi gateway có tải</td>
+  <td>dưới 1%</td>
+</tr>
+<tr>
+  <td>Postgres</td>
+  <td>42 đến 66 MiB khi rảnh, tới 100 MiB với các mức tải ở trên</td>
+  <td>0.3 core ở 137 lượt ghi audit/s, 0.6 ở 387, 1.8 ở 1,784</td>
+</tr>
+<tr>
+  <td>Caddy (compose production)</td>
+  <td>tới 17 MiB</td>
+  <td>nhỏ</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="khuyến-nghị">Khuyến nghị<a class="anchor" href="#khuyến-nghị" aria-hidden="true">#</a></h2>
+<p>Đây là điểm khởi đầu, lấy từ các bảng trên cộng thêm phần dư. Chỉ dòng &quot;nhóm
+nhỏ&quot; khớp với một cấu hình đã đo; các dòng khác được ngoại suy từ đó.
+Request/s chỉ tính riêng lớp bảo vệ; latency của LLM upstream cộng thêm vào,
+và trong lúc chờ upstream, gateway không tốn CPU.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Cách dùng</th>
+  <th>Lớp</th>
+  <th>Máy</th>
+  <th>Giới hạn gateway</th>
+  <th>Xử lý được khoảng</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Cá nhân / laptop</td>
+  <td><code>l1,l2</code></td>
+  <td>2 vCPU, còn trống 2 GB RAM</td>
+  <td>không đặt</td>
+  <td>vài chục request/s</td>
+</tr>
+<tr>
+  <td>Nhóm nhỏ, một VM</td>
+  <td><code>l1,l2</code></td>
+  <td>2 vCPU, 4 GB</td>
+  <td>2 CPU, 1 GiB</td>
+  <td>khoảng 100 request/s</td>
+</tr>
+<tr>
+  <td>Production cho startup, một VM</td>
+  <td><code>l1,l2,l3</code></td>
+  <td>4 vCPU, 8 GB</td>
+  <td>2 đến 3 CPU, 2 GiB</td>
+  <td>khoảng 50 đến 80 request/s</td>
+</tr>
+<tr>
+  <td>Lưu lượng lớn hơn</td>
+  <td><code>l1,l2,l3</code></td>
+  <td>nhiều replica gateway (Kubernetes, Helm chart)</td>
+  <td>mỗi replica 2 CPU, 2 GiB</td>
+  <td>thêm replica; throughput tăng theo số core</td>
+</tr>
+</tbody>
+</table></div>
+<ul>
+<li>Bộ nhớ: cấp cho gateway ít nhất 1.5 lần mức đỉnh đo được (nhẹ 768 MiB,
+đầy đủ 1.5 GiB); trọng số model chỉ nạp một lần cho mỗi process, bất kể mức
+đồng thời.</li>
+<li>CPU: throughput tăng theo số core cho tới <code>INFERENCE_MAX_CONCURRENCY</code> x
+<code>INFERENCE_INTRA_OP_THREADS</code>; đặt tích của hai giá trị này bằng số CPU mà
+gateway được dùng. Đặt cao hơn chỉ làm tăng tranh chấp.</li>
+<li><code>DETECTOR_CASCADE=true</code> bỏ qua L2 và L3 khi riêng L1 đã đủ để quyết định,
+giúp tiết kiệm CPU với lưu lượng rõ ràng; nó làm thay đổi điểm số, nên hãy
+kiểm tra trên lưu lượng của bạn trước.</li>
+<li>Rate limit (<code>RATE_LIMIT_RPM</code>) và timeout cho upstream giúp một đợt tăng đột
+biến không dồn hàng sau các lớp model.</li>
+<li>Kubernetes: mặc định cho gateway trong Helm chart (request 500m CPU / 1Gi,
+giới hạn bộ nhớ 2Gi) đủ cho mức đỉnh đo được của detector đầy đủ; đặt
+<code>INFERENCE_MAX_CONCURRENCY</code> và <code>INFERENCE_INTRA_OP_THREADS</code> theo giới hạn
+CPU như trên (<code>gateway.env</code>), và scale bằng <code>gateway.autoscaling</code> (HPA). Xem
+<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/helm/guard-spec/values.yaml"><code>values.yaml</code></a>, các ví dụ cho từng
+cloud trong
+<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/helm/guard-spec/examples"><code>deploy/helm/guard-spec/examples/</code></a>
+và <a href="/docs/operations/#kubernetes">README, Kubernetes</a>.</li>
+</ul>
+<h2 id="ổ-đĩa">Ổ đĩa<a class="anchor" href="#ổ-đĩa" aria-hidden="true">#</a></h2>
+<ul>
+<li>Model: khoảng 135 MB (nhẹ) hoặc 270 MB (đầy đủ) cho mỗi phiên bản được giữ,
+cộng với các phiên bản cũ bạn đã tải để rollback.</li>
+<li>Image (đã giải nén, arm64): gateway 285 MB, control plane 46 MB, Postgres
+415 MB, Caddy 88 MB.</li>
+<li>Postgres: bảng audit lớn dần theo từng request. Đo trên stack ở trên:
+20,020 dòng chiếm 7.4 MB kể cả index, tức khoảng <strong>380 byte mỗi request</strong>
+với mặc định <code>AUDIT_STORE_CONTENT=false</code> (chỉ lưu hash và độ dài).
+1 triệu request mỗi ngày, giữ theo mặc định 90 ngày
+(<code>AUDIT_RETENTION_DAYS</code>), là khoảng 34 GB. Nếu lưu cả nội dung thì cộng thêm
+kích thước của mọi prompt và response.</li>
+<li>Log: compose production giữ tối đa 50 MB cho mỗi container.</li>
+</ul>
+<h2 id="đo-trên-phần-cứng-của-bạn">Đo trên phần cứng của bạn<a class="anchor" href="#đo-trên-phần-cứng-của-bạn" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash"># 1. a key (see the README quick start), then a body like your traffic
+cat &gt; body.json &lt;&lt;'EOF'
+{&quot;model&quot;:&quot;m&quot;,&quot;messages&quot;:[{&quot;role&quot;:&quot;user&quot;,&quot;content&quot;:&quot;&lt;a prompt of typical length&gt;&quot;}]}
+EOF
+# 2. load, while watching the containers
+ab -n 5000 -c 8 -p body.json -T application/json -H &quot;x-api-key: $KEY&quot; \
+  http://localhost:8080/v1/chat/completions
+docker stats    # in another terminal
+# 3. audit table size per row
+docker compose exec postgres psql -U ps -d guardspec -c \
+  &quot;SELECT count(*), pg_size_pretty(pg_total_relation_size('requests')) FROM requests&quot;
+</code></pre>
+<p>Chạy mà không đặt <code>UPSTREAM_LLM_URL</code> (trả lời giả) để thấy chi phí riêng của
+lớp bảo vệ, và chạy một lần cho mỗi giá trị <code>DETECTOR_LAYERS</code> bạn đang cân
+nhắc. Rất hoan nghênh bạn gửi kết quả đo trên phần cứng khác qua một issue.</p>
+
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/sizing.vi.md">docs/sizing.vi.md</a> @ <code>f26302340bf1</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Bảo mật</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Đóng góp</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Tác giả: <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

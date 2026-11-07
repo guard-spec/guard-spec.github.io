@@ -1,0 +1,277 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Compose cho production · Guard Spec</title>
+<meta name="description" content="English: README.md. Nếu hai bản khác nhau, bản tiếng Anh là bản chính. Một host, Docker Compose, HTTPS. Dành cho startup hoặc một nhóm muốn chạy Guard Spec">
+<meta property="og:title" content="Compose cho production · Guard Spec">
+<meta property="og:description" content="English: README.md. Nếu hai bản khác nhau, bản tiếng Anh là bản chính. Một host, Docker Compose, HTTPS. Dành cho startup hoặc một nhóm muốn chạy Guard Spec">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/vi/docs/deploy/production-compose/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/deploy/production-compose/">
+<link rel="alternate" hreflang="vi" href="https://guardspec.io/vi/docs/deploy/production-compose/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/vi/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/vi/docs/" class="on">Tài liệu</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/deploy/production-compose/" class="">EN</a><a href="/vi/docs/deploy/production-compose/" class="on">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Tài liệu</span></summary>
+    <nav class="docs-nav" aria-label="Tài liệu"><ul><li class=""><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a></li><li class="child"><a href="/vi/docs/quickstart/integrations/">Tích hợp</a></li><li class="child"><a href="/vi/docs/quickstart/examples/">Ví dụ</a></li><li class=""><a href="/vi/docs/deploy/">Triển khai</a></li><li class="child on"><a href="/vi/docs/deploy/production-compose/">Compose cho production</a></li><li class="child"><a href="/vi/docs/deploy/managed-postgres/">PostgreSQL được quản lý</a></li><li class="child"><a href="/vi/docs/deploy/airgapped/">Mạng cô lập</a></li><li class="child"><a href="/docs/deploy/aws/">AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform cho AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/on-premise/">Hạ tầng riêng <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/configuration/">Cấu hình</a></li><li class="child"><a href="/docs/configuration/routing/">Định tuyến <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/configuration/apis/">API</a></li><li class=""><a href="/docs/operations/">Vận hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/alerts/">Cảnh báo và thông báo</a></li><li class="child"><a href="/docs/operations/admin-ui/">Giao diện quản trị <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/sizing/">Định cỡ và chọn lớp</a></li><li class=""><a href="/vi/docs/upgrade/">Nâng cấp</a></li><li class=""><a href="/vi/docs/models/">Model</a></li><li class="child"><a href="/vi/docs/models/versions/">Phiên bản, ghim và quay lui</a></li><li class="child"><a href="/vi/docs/models/benchmark/">Benchmark</a></li><li class=""><a href="/vi/docs/security/">Bảo mật</a></li><li class="child"><a href="/docs/security/verifying-releases/">Kiểm tra bản phát hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/risks/">Rủi ro và gia cố</a></li><li class="child"><a href="/docs/security/policy/">Báo lỗ hổng <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/red-team/">Báo cáo red-team</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Tài liệu"><ul><li class=""><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a></li><li class="child"><a href="/vi/docs/quickstart/integrations/">Tích hợp</a></li><li class="child"><a href="/vi/docs/quickstart/examples/">Ví dụ</a></li><li class=""><a href="/vi/docs/deploy/">Triển khai</a></li><li class="child on"><a href="/vi/docs/deploy/production-compose/">Compose cho production</a></li><li class="child"><a href="/vi/docs/deploy/managed-postgres/">PostgreSQL được quản lý</a></li><li class="child"><a href="/vi/docs/deploy/airgapped/">Mạng cô lập</a></li><li class="child"><a href="/docs/deploy/aws/">AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform cho AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/on-premise/">Hạ tầng riêng <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/configuration/">Cấu hình</a></li><li class="child"><a href="/docs/configuration/routing/">Định tuyến <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/configuration/apis/">API</a></li><li class=""><a href="/docs/operations/">Vận hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/alerts/">Cảnh báo và thông báo</a></li><li class="child"><a href="/docs/operations/admin-ui/">Giao diện quản trị <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/sizing/">Định cỡ và chọn lớp</a></li><li class=""><a href="/vi/docs/upgrade/">Nâng cấp</a></li><li class=""><a href="/vi/docs/models/">Model</a></li><li class="child"><a href="/vi/docs/models/versions/">Phiên bản, ghim và quay lui</a></li><li class="child"><a href="/vi/docs/models/benchmark/">Benchmark</a></li><li class=""><a href="/vi/docs/security/">Bảo mật</a></li><li class="child"><a href="/docs/security/verifying-releases/">Kiểm tra bản phát hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/risks/">Rủi ro và gia cố</a></li><li class="child"><a href="/docs/security/policy/">Báo lỗ hổng <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/red-team/">Báo cáo red-team</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Compose cho production</h1>
+
+<blockquote>
+<p>English: <a href="/docs/deploy/production-compose/">README.md</a>. Nếu hai bản khác nhau, bản tiếng Anh là bản chính.</p>
+</blockquote>
+<p>Một host, Docker Compose, HTTPS. Dành cho startup hoặc một nhóm muốn chạy Guard
+Spec trên một VM duy nhất mà không cần Kubernetes. Bản bắt đầu nhanh
+(<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docker-compose.yml"><code>docker-compose.yml</code></a> ở thư mục gốc của
+repository) mở mọi port qua HTTP thường; stack này thì không.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th></th>
+  <th>Bắt đầu nhanh (thư mục gốc)</th>
+  <th>Stack này</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Port được mở ra ngoài</td>
+  <td>8080, 9090, 18081, 9091 (HTTP thường)</td>
+  <td>Chỉ 80 và 443 (Caddy)</td>
+</tr>
+<tr>
+  <td>TLS</td>
+  <td>không có</td>
+  <td>Caddy: HTTPS tự động (Let's Encrypt, ZeroSSL) hoặc CA nội bộ của Caddy</td>
+</tr>
+<tr>
+  <td>Giới hạn tài nguyên</td>
+  <td>không có</td>
+  <td>CPU và bộ nhớ cho từng service, tính theo <a href="/vi/docs/operations/sizing/">docs/sizing.vi.md</a></td>
+</tr>
+<tr>
+  <td>Log</td>
+  <td>Mặc định của Docker (không giới hạn)</td>
+  <td>json-file, 10 MB x 5 cho mỗi container</td>
+</tr>
+<tr>
+  <td>Tự khởi động lại</td>
+  <td>không có</td>
+  <td><code>unless-stopped</code></td>
+</tr>
+<tr>
+  <td>Health check</td>
+  <td>gateway</td>
+  <td>mọi service chạy lâu dài; Caddy chỉ khởi động sau khi gateway và control plane đã healthy</td>
+</tr>
+<tr>
+  <td>Thiếu model</td>
+  <td>cảnh báo, chạy với L1</td>
+  <td>từ chối khởi động (<code>DETECTOR_REQUIRE_ML=true</code>)</td>
+</tr>
+<tr>
+  <td>Postgres</td>
+  <td>mạng mặc định</td>
+  <td>mạng nội bộ, không có đường ra ngoài</td>
+</tr>
+</tbody>
+</table></div>
+<pre><code class="language-text">internet ──443──&gt; caddy ──&gt; gateway:8080        (GATEWAY_HOST)
+                        └─&gt; control-plane:8081  (ADMIN_HOST: admin UI at /ui/, API at /v1)
+                   edge network                  backend network (internal)
+                   gateway, control-plane ─────&gt; postgres
+</code></pre>
+<h2 id="khởi-động">Khởi động<a class="anchor" href="#khởi-động" aria-hidden="true">#</a></h2>
+<p>Bạn cần một host có Docker và Compose v2, repository này (hoặc source archive
+của một bản phát hành: stack dùng <code>migrations/</code> và
+<code>deploy/postgres/set-app-password.sh</code> trong đó), và hai tên DNS trỏ về host,
+với port 80 và 443 đang mở.</p>
+<pre><code class="language-bash">cd deploy/compose/production
+cp .env.example .env &amp;&amp; chmod 600 .env
+# Fill in .env: GATEWAY_HOST, ADMIN_HOST, CADDY_TLS=&lt;your email&gt;, and every
+# secret (openssl rand -hex 24 for passwords, openssl rand -hex 32 for
+# JWT_SECRET, openssl rand -base64 32 for MFA_ENC_KEY), ADMIN_EMAIL and
+# ADMIN_PASSWORD.
+docker compose up -d --wait
+</code></pre>
+<p>Lần khởi động đầu tiên sẽ kéo các image và model về (khoảng 270 MB; 135 MB nếu
+dùng <code>DETECTOR_LAYERS=l1,l2</code>), chạy migration, và Caddy lấy certificate cho cả
+hai tên. Sau đó:</p>
+<pre><code class="language-bash">curl -s https://$GATEWAY_HOST/readyz      # &quot;layers&quot;:[&quot;l1&quot;,&quot;l2&quot;,&quot;l3&quot;]
+open https://$ADMIN_HOST/ui/              # log in with ADMIN_EMAIL / ADMIN_PASSWORD
+</code></pre>
+<p>Tạo một API key trong giao diện quản trị (hoặc qua API, như trong phần
+<a href="/vi/docs/quickstart/">bắt đầu nhanh của README</a>, dùng
+<code>https://$ADMIN_HOST/v1</code> thay cho <code>http://localhost:18081/v1</code>), rồi trỏ các
+ứng dụng của bạn tới <code>https://$GATEWAY_HOST/v1</code>
+(<a href="/vi/docs/quickstart/integrations/">docs/integrations.vi.md</a>).</p>
+<h2 id="thử-nghiệm-với-ca-nội-bộ-của-caddy">Thử nghiệm với CA nội bộ của Caddy<a class="anchor" href="#thử-nghiệm-với-ca-nội-bộ-của-caddy" aria-hidden="true">#</a></h2>
+<p>Khi không có DNS công khai (laptop, mạng riêng, CI), hãy để Caddy cấp
+certificate từ CA riêng của nó:</p>
+<pre><code class="language-bash"># .env
+GATEWAY_HOST=gw.localhost
+ADMIN_HOST=admin.localhost
+CADDY_TLS=internal
+HTTPS_PORT=8443        # if 443 is taken
+HTTP_PORT=8480
+</code></pre>
+<pre><code class="language-bash">docker compose up -d --wait
+# Either skip verification ...
+curl -sk --resolve gw.localhost:8443:127.0.0.1 https://gw.localhost:8443/readyz
+# ... or trust Caddy's root certificate.
+docker compose cp caddy:/data/caddy/pki/authorities/local/root.crt ./caddy-root.crt
+curl -s --cacert caddy-root.crt --resolve gw.localhost:8443:127.0.0.1 https://gw.localhost:8443/readyz
+</code></pre>
+<p>Khi đó client cần có <code>caddy-root.crt</code> (Python: <code>SSL_CERT_FILE</code> hoặc
+<code>REQUESTS_CA_BUNDLE</code>; Node: <code>NODE_EXTRA_CA_CERTS</code>). Root certificate nằm trong
+volume <code>caddy_data</code> và được <code>scripts/backup.sh</code> sao lưu. Nếu dùng port khác
+443, lệnh chuyển hướng HTTP sang HTTPS của Caddy vẫn trỏ về port 443; hãy gọi
+thẳng vào port HTTPS.</p>
+<h2 id="cấu-hình">Cấu hình<a class="anchor" href="#cấu-hình" aria-hidden="true">#</a></h2>
+<p>Mọi thứ nằm trong <code>.env</code> (<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/compose/production/.env.example"><code>.env.example</code></a> liệt kê đầy đủ):</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Biến</th>
+  <th>Mặc định</th>
+  <th>Ghi chú</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>GATEWAY_HOST</code>, <code>ADMIN_HOST</code></td>
+  <td>bắt buộc</td>
+  <td>Hai tên riêng; control plane không được phục vụ trên tên của gateway</td>
+</tr>
+<tr>
+  <td><code>CADDY_TLS</code></td>
+  <td>bắt buộc</td>
+  <td>Email của bạn (ACME) hoặc <code>internal</code></td>
+</tr>
+<tr>
+  <td><code>ADMIN_ALLOW</code></td>
+  <td><code>0.0.0.0/0 ::/0</code></td>
+  <td>Các dải địa chỉ client được phép vào <code>ADMIN_HOST</code>, ví dụ VPN của bạn. Cần Docker chuyển đúng địa chỉ thật của client (mặc định trên Linux; Docker Desktop thì không)</td>
+</tr>
+<tr>
+  <td><code>DETECTOR_LAYERS</code></td>
+  <td><code>l1,l2,l3</code></td>
+  <td><code>l1,l2</code> là chế độ nhẹ (<a href="/vi/docs/operations/sizing/">docs/sizing.vi.md</a>)</td>
+</tr>
+<tr>
+  <td><code>GATEWAY_CPUS</code>, <code>GATEWAY_MEMORY</code></td>
+  <td><code>2</code>, <code>2g</code></td>
+  <td>Mức đỉnh đo được: detector đầy đủ 0.9 GiB, chế độ nhẹ 0.5 GiB</td>
+</tr>
+<tr>
+  <td><code>INFERENCE_MAX_CONCURRENCY</code>, <code>INFERENCE_INTRA_OP_THREADS</code></td>
+  <td><code>2</code>, <code>1</code></td>
+  <td>Số lượt chạy model cùng lúc x số thread mỗi lượt; giữ tích này không vượt quá <code>GATEWAY_CPUS</code></td>
+</tr>
+<tr>
+  <td><code>CONTROL_PLANE_CPUS</code>, <code>CONTROL_PLANE_MEMORY</code></td>
+  <td><code>1</code>, <code>256m</code></td>
+  <td></td>
+</tr>
+<tr>
+  <td><code>POSTGRES_CPUS</code>, <code>POSTGRES_MEMORY</code></td>
+  <td><code>2</code>, <code>1g</code></td>
+  <td></td>
+</tr>
+<tr>
+  <td><code>CADDY_CPUS</code>, <code>CADDY_MEMORY</code></td>
+  <td><code>1</code>, <code>256m</code></td>
+  <td></td>
+</tr>
+<tr>
+  <td><code>LOG_MAX_SIZE</code>, <code>LOG_MAX_FILE</code></td>
+  <td><code>10m</code>, <code>5</code></td>
+  <td>Cho mỗi container</td>
+</tr>
+<tr>
+  <td><code>EDGE_SUBNET</code></td>
+  <td><code>172.30.89.0/24</code></td>
+  <td>Control plane tin <code>X-Forwarded-For</code> đến từ dải này (Caddy); đổi nếu nó trùng với mạng của bạn</td>
+</tr>
+<tr>
+  <td><code>GUARDSPEC_VERSION</code></td>
+  <td><code>0.3.0</code></td>
+  <td>Tag của image (<a href="/vi/docs/upgrade/">docs/upgrade.vi.md</a>)</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>UPSTREAM_KEY_ORGS</code> không có giá trị mặc định ở đây (bản bắt đầu nhanh cho mọi
+org dùng <code>UPSTREAM_KEY_MAIN</code>), và <code>UPSTREAM_ALLOW_PRIVATE</code> là <code>false</code>: hãy đặt
+chúng một cách có chủ đích, như <a href="/docs/configuration/routing/">phần Routing của README</a>
+giải thích.</p>
+<p>Metrics (gateway <code>:9090</code>, control plane <code>:9091</code>) không được mở ra ngoài. Hãy
+chạy Prometheus trên mạng <code>edge</code> (<code>&lt;project&gt;_edge</code>) và scrape
+<code>gateway:9090</code> và <code>control-plane:9091</code>.</p>
+<h2 id="vận-hành">Vận hành<a class="anchor" href="#vận-hành" aria-hidden="true">#</a></h2>
+<ul>
+<li>Backup: chạy <code>scripts/backup.sh -f deploy/compose/production/docker-compose.yml</code>
+từ thư mục gốc của repository, khôi phục bằng <code>scripts/restore.sh</code>
+(<a href="/docs/upgrade/#backups">docs/upgrade.md</a>).</li>
+<li>Nâng cấp và rollback: <a href="/vi/docs/upgrade/">docs/upgrade.vi.md</a>.</li>
+<li>Định cỡ tài nguyên: <a href="/vi/docs/operations/sizing/">docs/sizing.vi.md</a>.</li>
+<li>Dùng database managed thay cho service <code>postgres</code>:
+<a href="/vi/docs/deploy/managed-postgres/">docs/managed-postgres.vi.md</a>.</li>
+<li>Log: <code>docker compose logs -f gateway</code>; Caddy ghi một dòng JSON cho mỗi
+request (không ghi body).</li>
+</ul>
+<h2 id="những-gì-đã-được-kiểm-tra">Những gì đã được kiểm tra<a class="anchor" href="#những-gì-đã-được-kiểm-tra" aria-hidden="true">#</a></h2>
+<p>Trên một máy Mac Apple Silicon (arm64) với Docker Desktop, dùng
+<code>CADDY_TLS=internal</code>: stack khởi động healthy và chỉ có Caddy mở port ra
+ngoài; <code>/readyz</code> báo <code>l1,l2,l3</code> qua HTTPS, được xác minh bằng root certificate
+đã export từ Caddy; một prompt vô hại đi qua (200), một injection bị chặn
+(400), giao diện quản trị tải được; một bản backup khôi phục vào một compose
+project mới vẫn giữ nguyên organization, user, API key, policy, các dòng audit
+và CA của Caddy. HTTPS tự động với một ACME CA công khai chưa được chạy thử
+(vì cần DNS công khai); Caddyfile được <code>caddy adapt</code> chuyển thành một ACME
+policy cho cả hai tên.</p>
+
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/compose/production/README.vi.md">deploy/compose/production/README.vi.md</a> @ <code>f26302340bf1</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Bảo mật</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Đóng góp</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Tác giả: <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

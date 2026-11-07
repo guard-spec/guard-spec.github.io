@@ -1,0 +1,467 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bảo mật · Guard Spec</title>
+<meta name="description" content="English: README.md. Nếu hai bản khác nhau, bản tiếng Anh là bản chính. Trang này gom vào một chỗ những gì cần cho việc đánh giá bảo mật một bản triển khai ">
+<meta property="og:title" content="Bảo mật · Guard Spec">
+<meta property="og:description" content="English: README.md. Nếu hai bản khác nhau, bản tiếng Anh là bản chính. Trang này gom vào một chỗ những gì cần cho việc đánh giá bảo mật một bản triển khai ">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/vi/docs/security/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/security/">
+<link rel="alternate" hreflang="vi" href="https://guardspec.io/vi/docs/security/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/vi/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/vi/docs/" class="on">Tài liệu</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/security/" class="">EN</a><a href="/vi/docs/security/" class="on">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Tài liệu</span></summary>
+    <nav class="docs-nav" aria-label="Tài liệu"><ul><li class=""><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a></li><li class="child"><a href="/vi/docs/quickstart/integrations/">Tích hợp</a></li><li class="child"><a href="/vi/docs/quickstart/examples/">Ví dụ</a></li><li class=""><a href="/vi/docs/deploy/">Triển khai</a></li><li class="child"><a href="/vi/docs/deploy/production-compose/">Compose cho production</a></li><li class="child"><a href="/vi/docs/deploy/managed-postgres/">PostgreSQL được quản lý</a></li><li class="child"><a href="/vi/docs/deploy/airgapped/">Mạng cô lập</a></li><li class="child"><a href="/docs/deploy/aws/">AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform cho AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/on-premise/">Hạ tầng riêng <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/configuration/">Cấu hình</a></li><li class="child"><a href="/docs/configuration/routing/">Định tuyến <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/configuration/apis/">API</a></li><li class=""><a href="/docs/operations/">Vận hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/alerts/">Cảnh báo và thông báo</a></li><li class="child"><a href="/docs/operations/admin-ui/">Giao diện quản trị <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/sizing/">Định cỡ và chọn lớp</a></li><li class=""><a href="/vi/docs/upgrade/">Nâng cấp</a></li><li class=""><a href="/vi/docs/models/">Model</a></li><li class="child"><a href="/vi/docs/models/versions/">Phiên bản, ghim và quay lui</a></li><li class="child"><a href="/vi/docs/models/benchmark/">Benchmark</a></li><li class="on"><a href="/vi/docs/security/">Bảo mật</a></li><li class="child"><a href="/docs/security/verifying-releases/">Kiểm tra bản phát hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/risks/">Rủi ro và gia cố</a></li><li class="child"><a href="/docs/security/policy/">Báo lỗ hổng <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/red-team/">Báo cáo red-team</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Tài liệu"><ul><li class=""><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a></li><li class="child"><a href="/vi/docs/quickstart/integrations/">Tích hợp</a></li><li class="child"><a href="/vi/docs/quickstart/examples/">Ví dụ</a></li><li class=""><a href="/vi/docs/deploy/">Triển khai</a></li><li class="child"><a href="/vi/docs/deploy/production-compose/">Compose cho production</a></li><li class="child"><a href="/vi/docs/deploy/managed-postgres/">PostgreSQL được quản lý</a></li><li class="child"><a href="/vi/docs/deploy/airgapped/">Mạng cô lập</a></li><li class="child"><a href="/docs/deploy/aws/">AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform cho AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/on-premise/">Hạ tầng riêng <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/configuration/">Cấu hình</a></li><li class="child"><a href="/docs/configuration/routing/">Định tuyến <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/configuration/apis/">API</a></li><li class=""><a href="/docs/operations/">Vận hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/alerts/">Cảnh báo và thông báo</a></li><li class="child"><a href="/docs/operations/admin-ui/">Giao diện quản trị <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/sizing/">Định cỡ và chọn lớp</a></li><li class=""><a href="/vi/docs/upgrade/">Nâng cấp</a></li><li class=""><a href="/vi/docs/models/">Model</a></li><li class="child"><a href="/vi/docs/models/versions/">Phiên bản, ghim và quay lui</a></li><li class="child"><a href="/vi/docs/models/benchmark/">Benchmark</a></li><li class="on"><a href="/vi/docs/security/">Bảo mật</a></li><li class="child"><a href="/docs/security/verifying-releases/">Kiểm tra bản phát hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/risks/">Rủi ro và gia cố</a></li><li class="child"><a href="/docs/security/policy/">Báo lỗ hổng <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/red-team/">Báo cáo red-team</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Bảo mật</h1>
+
+<blockquote>
+<p>English: <a href="/docs/security/">README.md</a>. Nếu hai bản khác nhau, bản tiếng Anh là bản chính.</p>
+</blockquote>
+<p>Trang này gom vào một chỗ những gì cần cho việc đánh giá bảo mật một bản triển
+khai Guard Spec: các thành phần và ranh giới tin cậy của chúng, dữ liệu nào đi
+đâu, những gì được lưu, lưu bao lâu và được bảo vệ ra sao, và cách kiểm tra
+rằng bản phát hành bạn đang chạy đúng là bản do dự án này build. Mọi thông tin
+ở đây đều rút ra từ code và migration của bản phát hành đi kèm (0.1.x); khi một
+nhận định phụ thuộc vào một thiết lập, thiết lập đó được nêu tên.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Tài liệu</th>
+  <th>Nội dung</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Trang này</td>
+  <td>Kiến trúc, luồng dữ liệu, dữ liệu được lưu và thời hạn lưu, secret, mã hoá</td>
+</tr>
+<tr>
+  <td><a href="/docs/security/verifying-releases/">Xác minh một bản phát hành</a></td>
+  <td>Chữ ký cosign của image và archive, SBOM, SLSA provenance, kèm lệnh và kết quả của chúng cho v0.2.0</td>
+</tr>
+<tr>
+  <td><a href="/vi/docs/security/risks/">Rủi ro bảo mật và gia cố</a></td>
+  <td>Mô hình mối đe doạ: các rủi ro còn lại trong một bản triển khai, cách giảm từng rủi ro, và checklist gia cố</td>
+</tr>
+<tr>
+  <td><a href="/docs/security/policy/">SECURITY.md</a></td>
+  <td>Báo lỗ hổng, các phiên bản được hỗ trợ, mục tiêu thời gian phản hồi</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/README.vi.md#m%C3%B4-h%C3%ACnh-b%E1%BA%A3o-m%E1%BA%ADt-v%C3%A0-gi%E1%BB%9Bi-h%E1%BA%A1n">Mô hình bảo mật và giới hạn</a></td>
+  <td>Phát hiện bảo vệ được gì và không bảo vệ được gì</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="mục-lục">Mục lục<a class="anchor" href="#mục-lục" aria-hidden="true">#</a></h2>
+<ul>
+<li><a href="#kiến-trúc">Kiến trúc</a></li>
+<li><a href="#luồng-dữ-liệu-của-một-request">Luồng dữ liệu của một request</a></li>
+<li><a href="#dữ-liệu-nào-được-lưu-ở-đâu-và-trong-bao-lâu">Dữ liệu nào được lưu, ở đâu và trong bao lâu</a></li>
+<li><a href="#secret">Secret</a></li>
+<li><a href="#mã-hoá">Mã hoá</a></li>
+<li><a href="#cách-ly-tenant">Cách ly tenant</a></li>
+<li><a href="#scan-cache-dùng-chung">Scan cache dùng chung</a></li>
+<li><a href="#những-gì-đi-ra-khỏi-mạng-của-bạn">Những gì đi ra khỏi mạng của bạn</a></li>
+<li><a href="#mô-hình-mối-đe-doạ">Mô hình mối đe doạ</a></li>
+<li><a href="#xác-minh-một-bản-phát-hành">Xác minh một bản phát hành</a></li>
+</ul>
+<h2 id="kiến-trúc">Kiến trúc<a class="anchor" href="#kiến-trúc" aria-hidden="true">#</a></h2>
+<p>Hai dịch vụ Go và một database PostgreSQL. Không cần gì khác; Redis (hoặc
+Valkey) là tuỳ chọn, dùng làm <a href="#scan-cache-dùng-chung">scan cache dùng chung</a>
+cho nhiều replica gateway.</p>
+<pre class="mermaid">flowchart LR
+  app[Your applications] --&gt;|&quot;HTTPS (your proxy) · API key&quot;| gw
+  admin[Admins, browser] --&gt;|&quot;HTTPS (your proxy) · JWT session&quot;| cp
+  subgraph yours[Your network]
+    gw[gateway :8080&lt;br/&gt;metrics :9090]
+    cp[control plane :8081&lt;br/&gt;admin UI, API&lt;br/&gt;metrics :9091]
+    db[(PostgreSQL 17)]
+    models[[model files&lt;br/&gt;read-only]]
+    gw --&gt;|guardspec_app, RLS| db
+    cp --&gt;|guardspec_app, RLS| db
+    models -.-&gt; gw
+  end
+  gw --&gt;|prompt, after the checks| llm[Upstream LLM API]
+  cp -.-&gt;|alert metadata| chan[Slack, Teams, Telegram,&lt;br/&gt;e-mail, webhooks, A2A]
+  cp -.-&gt;|OIDC| idp[SSO provider]
+</pre>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Thành phần</th>
+  <th>Ranh giới tin cậy</th>
+  <th>Lắng nghe trên</th>
+  <th>Kết nối tới</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Gateway</strong> (<code>cmd/gateway</code>)</td>
+  <td>Hướng về các ứng dụng của bạn. Xác thực chúng bằng API key (<code>Authorization: Bearer gs_...</code>)</td>
+  <td>8080 API, 9090 metrics</td>
+  <td>PostgreSQL; LLM upstream; OTLP collector nếu có cấu hình</td>
+</tr>
+<tr>
+  <td><strong>Control plane</strong> (<code>cmd/control-plane</code>)</td>
+  <td>Chỉ hướng về admin; đừng để nó ra Internet (<a href="/docs/security/risks/#p2-control-plane-or-metrics-reachable-from-the-internet">P2</a>). Xác thực người dùng bằng mật khẩu, TOTP và OIDC; cấp JWT HS256 gắn với một dòng session</td>
+  <td>8081 API và giao diện quản trị (<code>/ui/</code>), 9091 metrics</td>
+  <td>PostgreSQL; SSO provider; các kênh cảnh báo; upstream chỉ khi owner gọi &quot;test upstream&quot;</td>
+</tr>
+<tr>
+  <td><strong>PostgreSQL</strong></td>
+  <td>Giữ toàn bộ trạng thái. Các dịch vụ kết nối bằng <code>guardspec_app</code> (không phải superuser, không có <code>BYPASSRLS</code>); role owner chỉ dùng để chạy migration</td>
+  <td>5432</td>
+  <td>—</td>
+</tr>
+<tr>
+  <td><strong>File model</strong></td>
+  <td>Classifier L2 và embedder L3, dạng ONNX, nạp trong tiến trình. Được ghim bằng SHA-256 trong <code>models/manifest.yaml</code>, hoặc nằm sẵn trong image <code>gateway-full</code></td>
+  <td>—</td>
+  <td>—</td>
+</tr>
+</tbody>
+</table></div>
+<p>Không dịch vụ nào tự terminate TLS: hãy đặt một reverse proxy hoặc load
+balancer phía trước (<a href="/docs/security/risks/#p1-services-exposed-without-tls">P1</a>),
+và đặt <code>TRUSTED_PROXIES</code> trên control plane để rate limit, session và activity
+log thấy được địa chỉ của client (<a href="/docs/security/risks/#i5-wrong-trusted_proxies">I5</a>).
+Image phát hành chạy bằng user không phải root, với root filesystem chỉ đọc.</p>
+<h2 id="luồng-dữ-liệu-của-một-request">Luồng dữ liệu của một request<a class="anchor" href="#luồng-dữ-liệu-của-một-request" aria-hidden="true">#</a></h2>
+<ol>
+<li>Ứng dụng gửi một request dạng tương thích OpenAI hoặc Anthropic Messages
+tới gateway kèm API key của nó. Gateway băm key (SHA-256) rồi tra cứu;
+key dạng rõ không bao giờ được lưu.</li>
+<li>Sanitizer (L0) loại bỏ ký tự vô hình và ký tự bidi. Các lớp phát hiện
+chấm điểm những phần được liệt kê trong <code>SCAN_ROLES</code> (luật L1, classifier
+L2, độ tương đồng L3, tất cả chạy trong tiến trình). Các policy (CEL) của
+org quyết định: cho qua, chặn, ghi log hoặc định tuyến.</li>
+<li><strong>Bị chặn:</strong> gateway trả về 400 và upstream không bao giờ được gọi.
+<strong>Được cho qua:</strong> request đi tới LLM upstream do routing chọn, với key của
+upstream lấy từ một biến môi trường.</li>
+<li>Output guard kiểm tra câu trả lời (link và ảnh tới host lạ, dữ liệu cá
+nhân, canary bị lộ), kể cả khi đang streaming, rồi câu trả lời được gửi về
+ứng dụng.</li>
+<li>Gateway ghi một dòng audit (<code>requests</code>) và, với các request bị chặn, một
+event (<code>events</code>) mà alert worker của control plane biến thành thông báo.</li>
+</ol>
+<p>Nội dung prompt và câu trả lời chỉ nằm trong bộ nhớ của gateway trong lúc xử
+lý request. Mặc định Guard Spec <strong>không ghi chúng ra đâu cả</strong>: không vào dòng
+audit (chỉ có SHA-256 và độ dài), không vào log (dòng log chỉ chứa điểm số, id
+luật và quyết định), không vào trace (thuộc tính span là HTTP method, route,
+status và đường dẫn upstream), không vào event hay thông báo (chỉ metadata: id,
+nhóm, điểm số).</p>
+<h2 id="dữ-liệu-nào-được-lưu-ở-đâu-và-trong-bao-lâu">Dữ liệu nào được lưu, ở đâu và trong bao lâu<a class="anchor" href="#dữ-liệu-nào-được-lưu-ở-đâu-và-trong-bao-lâu" aria-hidden="true">#</a></h2>
+<p>Mọi thứ nằm trong PostgreSQL. Các dịch vụ không giữ trạng thái trên đĩa; bộ đếm
+rate limit và các cache của gateway nằm trong bộ nhớ, trừ scan cache khi
+<code>SCAN_CACHE_BACKEND</code> chia sẻ nó (xem bên dưới và
+<a href="#scan-cache-dùng-chung">Scan cache dùng chung</a>).</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Dữ liệu</th>
+  <th>Bảng</th>
+  <th>Nội dung</th>
+  <th>Thời hạn lưu</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><strong>Request log (audit)</strong></td>
+  <td><code>requests</code></td>
+  <td>Org, project, SHA-256 của API key, model, quyết định, id luật, điểm của từng lớp, các loại thực thể PII tìm thấy, cờ của sanitizer, số token, latency, đích định tuyến, SHA-256 và độ dài của body request và của response được buffer. <strong>Nội dung prompt và response chỉ có</strong> khi bật lưu nội dung: <code>AUDIT_STORE_CONTENT=true</code> trên gateway (mọi org) hoặc <code>audit_store_content</code> trên một tổ chức (quyền admin, được ghi vào activity log)</td>
+  <td><code>AUDIT_RETENTION_DAYS</code> (mặc định <strong>90</strong>; <code>0</code> là giữ mãi). Control plane xoá các dòng cũ hơn theo lô khi khởi động và mỗi <code>AUDIT_RETENTION_INTERVAL</code> (mặc định 1h); mỗi lúc chỉ một replica làm (advisory lock)</td>
+</tr>
+<tr>
+  <td><strong>Activity log</strong></td>
+  <td><code>activity_log</code></td>
+  <td>Ai đã đổi gì: thành viên, lời mời, API key, policy, upstream, thay đổi bảo mật và cấu hình, reset 2FA, SSO provider, đăng nhập (thành công và thất bại). Người thực hiện, hành động, đối tượng, IP client, chi tiết không chứa secret; với đăng nhập thất bại, e-mail được che (<code>a***@example.com</code>)</td>
+  <td><code>ACTIVITY_LOG_RETENTION_DAYS</code> (mặc định <strong>365</strong>; <code>0</code> là giữ mãi). Được xoá bởi job retention của audit (cùng chu kỳ, cùng cách chia lô và advisory lock), trên mọi org và cả các dòng cấp instance. Hãy export hoặc lưu trữ trước nếu chính sách của bạn cần giữ lâu hơn</td>
+</tr>
+<tr>
+  <td><strong>Người dùng và thành viên</strong></td>
+  <td><code>users</code>, <code>org_memberships</code>, <code>project_memberships</code>, <code>user_identities</code></td>
+  <td>E-mail (chữ thường), tên hiển thị, hash mật khẩu bcrypt (không có với tài khoản chỉ dùng SSO), vai trò, SSO subject đã liên kết theo từng provider</td>
+  <td>Cho đến khi người dùng bị xoá</td>
+</tr>
+<tr>
+  <td><strong>Session</strong></td>
+  <td><code>sessions</code></td>
+  <td>Mỗi lần đăng nhập một dòng: phương thức, user agent, IP client, thời điểm tạo, lần cuối thấy, đã thu hồi hay chưa. Token có hiệu lực 12 giờ (hoặc theo <code>session_lifetime_hours</code> của org)</td>
+  <td>Session còn hiệu lực được giữ. Session đã bị thu hồi hoặc hết hạn quá <code>SESSION_RETENTION_DAYS</code> (mặc định <strong>30</strong>; <code>0</code> là giữ mãi) sẽ bị xoá bởi cùng job retention</td>
+</tr>
+<tr>
+  <td><strong>Xác thực hai lớp</strong></td>
+  <td><code>user_mfa</code>, <code>mfa_recovery_codes</code>, <code>mfa_challenges</code></td>
+  <td>Secret TOTP <strong>được mã hoá</strong> (AES-256-GCM với <code>MFA_ENC_KEY</code>, gắn với id người dùng); 10 mã khôi phục dạng hash bcrypt; các challenge đăng nhập</td>
+  <td>Secret giữ đến khi 2FA bị reset; challenge bị xoá một giờ sau khi hết hạn (5 phút)</td>
+</tr>
+<tr>
+  <td><strong>Trạng thái luồng SSO</strong></td>
+  <td><code>oidc_states</code>, <code>oidc_codes</code></td>
+  <td>State, nonce và PKCE verifier (state lưu dạng hash, gắn với trình duyệt); mã trao đổi dùng một lần lưu dạng hash</td>
+  <td>State 10 phút, xoá khi hết hạn; mã 60 giây, xoá sau đó một giờ</td>
+</tr>
+<tr>
+  <td><strong>Lời mời và mã liên kết</strong></td>
+  <td><code>invites</code>, <code>email_link_codes</code>, <code>telegram_link_codes</code>, <code>channel_link_codes</code>, <code>channel_email_addresses</code></td>
+  <td>Chỉ SHA-256 của từng token hoặc mã, cùng e-mail hoặc chat mà nó dành cho</td>
+  <td>Cho đến khi được dùng hoặc hết hạn, hoặc khi đối tượng cha bị xoá</td>
+</tr>
+<tr>
+  <td><strong>API key</strong></td>
+  <td><code>api_keys</code></td>
+  <td>SHA-256 của key, một prefix ngắn để hiển thị (<code>gs_</code> và 8 ký tự), alias, giới hạn</td>
+  <td>Cho đến khi bị xoá</td>
+</tr>
+<tr>
+  <td><strong>Cấu hình</strong></td>
+  <td><code>organizations</code>, <code>projects</code>, <code>policies</code>, <code>upstreams</code>, <code>org_security</code>, <code>identity_providers</code>, <code>notification_channels</code>, <code>alert_rules</code>, <code>user_groups</code></td>
+  <td>Policy (CEL), URL upstream và <strong>tên</strong> biến chứa key của chúng, client id SSO và <strong>tên</strong> biến chứa secret của chúng, thiết lập kênh và <strong>tên</strong> biến chứa secret của chúng</td>
+  <td>Cho đến khi bị thay đổi hoặc xoá</td>
+</tr>
+<tr>
+  <td><strong>Exemplar của org (L3)</strong></td>
+  <td><code>org_exemplars</code></td>
+  <td>Các văn bản tấn công mẫu mà admin thêm cho lớp tương đồng của org đó</td>
+  <td>Cho đến khi bị xoá</td>
+</tr>
+<tr>
+  <td><strong>Scan cache</strong> (<code>SCAN_CACHE_BACKEND=postgres</code>)</td>
+  <td><code>scan_cache</code></td>
+  <td>Với mỗi văn bản gateway đã phân loại (system prompt, định nghĩa tool, kết quả tool, tài liệu): một key SHA-256, org, điểm của bộ phát hiện và metadata của kết luận (điểm hợp nhất và điểm từng lớp, nhóm, id luật, loại PII và vị trí) cùng định danh model. <strong>Không có văn bản</strong>, không có tên tool</td>
+  <td>6 giờ: dòng đã hết hạn không bao giờ được đọc, và job retention xoá các dòng hết hạn bất kể thời hạn lưu được đặt thế nào. Với <code>SCAN_CACHE_BACKEND=redis</code>, các giá trị tương tự nằm trong Redis với <code>EXPIRE</code> 6 h</td>
+</tr>
+<tr>
+  <td><strong>Cảnh báo</strong></td>
+  <td><code>events</code>, <code>alert_rule_hits</code>, <code>alerts</code>, <code>notification_outbox</code>, <code>notifications</code></td>
+  <td>Loại event, mức độ, id, nhóm, điểm số; trạng thái gửi</td>
+  <td>Event đã xử lý 30 ngày, lượt gửi đã xong 30 ngày, thông báo trong ứng dụng đã đọc 90 ngày, lượt khớp luật 24 giờ; <code>alerts</code> được giữ lại</td>
+</tr>
+</tbody>
+</table></div>
+<p>Ngoài database:</p>
+<ul>
+<li><strong>Log</strong> (stdout, dòng JSON): không có nội dung prompt hay response, không có
+secret. Thời hạn lưu do pipeline log của bạn quyết định.</li>
+<li><strong>Metrics</strong>: tập label cố định; chỉ có series theo từng org khi
+<code>METRICS_TENANT_LABELS=true</code>.</li>
+<li><strong>Bản sao lưu</strong> database chứa mọi thứ ở trên, kể cả nội dung audit nếu có
+lưu. Chúng nhạy cảm ngang với database.</li>
+</ul>
+<h2 id="secret">Secret<a class="anchor" href="#secret" aria-hidden="true">#</a></h2>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Secret</th>
+  <th>Dùng bởi</th>
+  <th>Lưu ở</th>
+  <th>Ghi chú</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>GUARDSPEC_APP_PASSWORD</code> (dưới dạng <code>PGPASSWORD</code>)</td>
+  <td>cả hai dịch vụ</td>
+  <td>Kho secret của bạn; database giữ hash SCRAM của nó</td>
+  <td>Đặt bằng <code>deploy/postgres/set-app-password.sh</code> sau mỗi lần chạy migration</td>
+</tr>
+<tr>
+  <td><code>JWT_SECRET</code></td>
+  <td>control plane</td>
+  <td>Kho secret của bạn</td>
+  <td>Ít nhất 32 byte; ký session token (HS256). Xoay nó sẽ đăng xuất mọi người</td>
+</tr>
+<tr>
+  <td><code>MFA_ENC_KEY</code></td>
+  <td>control plane</td>
+  <td>Kho secret của bạn</td>
+  <td>32 byte, base64. <strong>Không khôi phục được</strong>: thiếu nó thì không ai dùng 2FA đăng nhập được (<a href="/docs/security/risks/#i2-lost-mfa_enc_key">I2</a>). Sao lưu nó cùng database; không có cơ chế mã hoá lại, nên đừng xoay nó tự động</td>
+</tr>
+<tr>
+  <td><code>ADMIN_PASSWORD</code></td>
+  <td>control plane, chỉ lần khởi động đầu</td>
+  <td>Kho secret của bạn; hash bcrypt trong <code>users</code></td>
+  <td>Tạo owner đầu tiên, một lần</td>
+</tr>
+<tr>
+  <td><code>UPSTREAM_LLM_KEY</code>, <code>UPSTREAM_KEY_*</code></td>
+  <td>gateway (và control plane cho việc test upstream, nếu được cấp)</td>
+  <td>Chỉ trong biến môi trường</td>
+  <td>Database chỉ giữ <strong>tên</strong> biến; <code>UPSTREAM_KEY_ORGS</code> quyết định org nào được dùng key nào</td>
+</tr>
+<tr>
+  <td><code>OIDC_SECRET_*</code></td>
+  <td>control plane</td>
+  <td>Chỉ trong biến môi trường</td>
+  <td>Được tham chiếu bằng <code>client_secret_env</code> của từng SSO provider</td>
+</tr>
+<tr>
+  <td>Secret của kênh cảnh báo (<code>SLACK_*</code>, <code>TEAMS_*</code>, <code>TELEGRAM_BOT_TOKEN_*</code>, <code>WEBHOOK_SECRET_*</code>, <code>A2A_*</code>, <code>GUARDSPEC_ALERT_*</code>)</td>
+  <td>control plane</td>
+  <td>Chỉ trong biến môi trường</td>
+  <td>Được tham chiếu bằng <code>secret_env</code> của từng kênh</td>
+</tr>
+</tbody>
+</table></div>
+<p>Ngoài <code>GUARD_ENV=dev</code>, các dịch vụ từ chối khởi động nếu secret bị thiếu, quá
+ngắn hoặc là giá trị mặc định đã biết. API key, token lời mời, mã liên kết và
+mã khôi phục chỉ hiển thị một lần và chỉ được lưu dạng hash.</p>
+<h2 id="mã-hoá">Mã hoá<a class="anchor" href="#mã-hoá" aria-hidden="true">#</a></h2>
+<ul>
+<li><strong>Khi truyền.</strong> Terminate TLS phía trước cả hai dịch vụ. Dùng
+<code>sslmode=require</code> (hoặc <code>verify-full</code>) trong <code>DATABASE_URL</code> khi database nằm
+trên host khác. Các lời gọi tới upstream, SSO và kênh cảnh báo dùng HTTPS
+theo cấu hình.</li>
+<li><strong>Khi lưu, do Guard Spec mã hoá.</strong> Secret TOTP: AES-256-GCM với <code>MFA_ENC_KEY</code>.
+Mật khẩu và mã khôi phục: bcrypt. API key và token dùng một lần: SHA-256.
+Ứng dụng không mã hoá gì khác.</li>
+<li><strong>Khi lưu, do nền tảng của bạn mã hoá.</strong> Các dòng audit (và nội dung của
+chúng, nếu có lưu), activity log, địa chỉ e-mail và địa chỉ IP dựa vào mã hoá
+lưu trữ của database: hãy bật nó (RDS <code>storage_encrypted</code>, mã hoá mặc định
+của Cloud SQL, LUKS hoặc tương tự khi chạy on-premise), và bật cho cả bản
+sao lưu.</li>
+</ul>
+<h2 id="cách-ly-tenant">Cách ly tenant<a class="anchor" href="#cách-ly-tenant" aria-hidden="true">#</a></h2>
+<p>Mọi bảng gắn với org đều có row-level security của PostgreSQL trên
+<code>app.org_id</code>, giá trị mà các dịch vụ đặt theo từng transaction; role của ứng
+dụng không bypass được. Các bảng khoá theo người dùng (session, identity, 2FA)
+không gắn với org và được đọc theo id người dùng. Nếu không đánh giá được
+policy hoặc thiết lập của org, request bị từ chối theo kiểu fail-closed (503).</p>
+<h2 id="scan-cache-dùng-chung">Scan cache dùng chung<a class="anchor" href="#scan-cache-dùng-chung" aria-hidden="true">#</a></h2>
+<p>Khi có nhiều hơn một replica gateway, <code>SCAN_CACHE_BACKEND=redis</code> hoặc
+<code>postgres</code> chia sẻ scan cache (README, <a href="/docs/operations/#scan-cache">Scan cache</a>),
+để một phiên <code>/v1/messages</code> hoặc <code>/v1/responses</code> dài không phải phân loại lại
+toàn bộ lịch sử khi sang replica khác hoặc sau khi khởi động lại.</p>
+<p><strong>Nó lưu gì.</strong> Với mỗi văn bản: điểm số và metadata kết luận của bộ phát hiện,
+và định danh của các model đã tính ra chúng. Key là SHA-256 của org, loại văn
+bản, toàn bộ nội dung và định danh model. Không có văn bản, không có tên tool,
+không có gì mà kẻ tấn công đọc được cache có thể dựng lại thành nội dung, trừ
+khi đoán một văn bản rồi băm nó (key không có salt, nên người đọc được cache
+có thể xác nhận rằng một văn bản đã biết đã được org đó gửi trong vòng 6 giờ).</p>
+<p><strong>Mối đe doạ.</strong></p>
+<ul>
+<li><em>Đầu độc cache.</em> Kẻ tấn công <strong>ghi</strong> được vào backend có thể lưu một điểm
+thấp dưới key của một văn bản độc hại để nó lọt qua như văn bản sạch, đối
+với org mà key đó được tạo ra. Hãy giữ Redis trong mạng riêng (không publish
+port; trong Kubernetes, dùng NetworkPolicy chỉ cho các pod gateway vào), bắt
+buộc xác thực (<code>requirepass</code> hoặc một ACL user chỉ được dùng
+<code>guardspec:scan:*</code>), và dùng <code>rediss://</code> khi đi qua nhiều host. Đừng dùng
+chung Redis đó với ứng dụng khác. Service <code>scan-cache</code> trong compose không
+publish port và từ chối khởi động nếu không có mật khẩu dài từ 16 ký tự trở
+lên. Với Postgres, bảng chỉ được ghi bởi role của gateway và row level
+security gắn mỗi dòng với org của nó: một replica hay một kết nối bị đánh
+cắp đã gắn với một org không thể cài entry cho org khác.</li>
+<li><em>Điểm số cũ.</em> Mỗi entry khoá theo đúng định danh model (binary gateway, file
+model, calibration, cấu hình bộ phát hiện), nên khi model đổi thì không bao
+giờ dùng lại điểm cũ; các exemplar theo org được thêm sau sẽ có tác dụng khi
+entry hết hạn (6 h), giống như cache trong tiến trình.</li>
+<li><em>Tính sẵn sàng.</em> Backend chậm hoặc lỗi sẽ bị bỏ qua sau <code>SCAN_CACHE_TIMEOUT</code>
+(50 ms): văn bản vẫn được quét. Cache không bao giờ quyết định rằng một thứ
+không cần quét, và cache lỗi không bao giờ làm request thất bại.</li>
+<li><em>Bộ nhớ.</em> Giới hạn Redis bằng <code>maxmemory</code> và một eviction policy
+<code>volatile-*</code> (service trong compose dùng 256 MB, <code>volatile-lru</code>); một entry
+bị loại chỉ tốn thêm một lần quét lại.</li>
+</ul>
+<h2 id="những-gì-đi-ra-khỏi-mạng-của-bạn">Những gì đi ra khỏi mạng của bạn<a class="anchor" href="#những-gì-đi-ra-khỏi-mạng-của-bạn" aria-hidden="true">#</a></h2>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Tới</th>
+  <th>Cái gì</th>
+  <th>Khi nào</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>LLM upstream</td>
+  <td>Request đúng như ứng dụng gửi, sau khi sanitize (và spotlighting, nếu bật)</td>
+  <td>Mọi request được cho qua</td>
+</tr>
+<tr>
+  <td>SSO provider</td>
+  <td>Luồng ủy quyền OIDC</td>
+  <td>Khi đăng nhập SSO</td>
+</tr>
+<tr>
+  <td>Kênh cảnh báo</td>
+  <td>Metadata cảnh báo: loại event, mức độ, id, nhóm, điểm số. Không có nội dung prompt</td>
+  <td>Khi khớp luật cảnh báo</td>
+</tr>
+<tr>
+  <td>OTLP collector</td>
+  <td>Span không chứa nội dung prompt; <code>traceparent</code> chỉ gửi tới upstream khi <code>OTEL_PROPAGATE_UPSTREAM=true</code></td>
+  <td>Khi bật tracing</td>
+</tr>
+<tr>
+  <td>Hugging Face (hoặc <code>MODELS_MIRROR</code>)</td>
+  <td>Tải model, kiểm tra theo SHA-256 đã ghim</td>
+  <td>Chỉ khi chạy <code>models pull</code>; <code>gateway-full</code> không cần</td>
+</tr>
+</tbody>
+</table></div>
+<p>Không có telemetry hay gọi về nhà.</p>
+<h2 id="mô-hình-mối-đe-doạ">Mô hình mối đe doạ<a class="anchor" href="#mô-hình-mối-đe-doạ" aria-hidden="true">#</a></h2>
+<p>Các rủi ro còn lại khi bạn chạy Guard Spec, chia thành rủi ro phát hiện, ứng
+dụng, triển khai, danh tính, dữ liệu, chuỗi cung ứng và vận hành, mỗi rủi ro
+kèm cách giảm, nằm trong
+<a href="/vi/docs/security/risks/">Rủi ro bảo mật và gia cố</a> (bản tiếng Anh:
+<a href="/docs/security/risks/">security-risks.md</a>). Phần
+<a href="/docs/security/risks/#hardening-checklist">checklist gia cố</a> của nó là con
+đường ngắn nhất tới một bản triển khai đã qua đánh giá.</p>
+<h2 id="xác-minh-một-bản-phát-hành">Xác minh một bản phát hành<a class="anchor" href="#xác-minh-một-bản-phát-hành" aria-hidden="true">#</a></h2>
+<p>Image được ký bằng cosign (keyless, OIDC của GitHub Actions) và kèm SBOM SPDX
+và SLSA provenance; archive được bảo đảm bằng các file checksum có chữ ký.
+Các lệnh, mỗi bước kiểm tra chứng minh điều gì và kết quả của chúng cho v0.2.0
+nằm trong <a href="/docs/security/verifying-releases/">Xác minh một bản phát hành</a>.</p>
+
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/security/README.vi.md">docs/security/README.vi.md</a> @ <code>f26302340bf1</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Bảo mật</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Đóng góp</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Tác giả: <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+<script src="https://cdn.jsdelivr.net/npm/mermaid@11.17.2/dist/mermaid.min.js" integrity="sha384-EOXBFmc3gx5mb+vn0vPvvGqACToJD24hhacX5Yx+8NUUQrHIle/Qi5Bg9o3zKwW2" crossorigin="anonymous"></script>
+<script>mermaid.initialize({startOnLoad: true, securityLevel: "strict", theme: matchMedia("(prefers-color-scheme: dark)").matches ? "dark" : "neutral"});</script>
+</body>
+</html>

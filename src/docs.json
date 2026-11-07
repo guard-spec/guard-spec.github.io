@@ -33,6 +33,11 @@
         {
           "file": "docs/integrations.md"
         }
+      ],
+      "vi": [
+        {
+          "file": "docs/integrations.vi.md"
+        }
       ]
     },
     {
@@ -46,6 +51,11 @@
         {
           "file": "examples/README.md"
         }
+      ],
+      "vi": [
+        {
+          "file": "examples/README.vi.md"
+        }
       ]
     },
     {
@@ -57,6 +67,11 @@
       "en": [
         {
           "file": "docs/deploy/README.md"
+        }
+      ],
+      "vi": [
+        {
+          "file": "docs/deploy/README.vi.md"
         }
       ]
     },
@@ -71,6 +86,11 @@
         {
           "file": "deploy/compose/production/README.md"
         }
+      ],
+      "vi": [
+        {
+          "file": "deploy/compose/production/README.vi.md"
+        }
       ]
     },
     {
@@ -84,6 +104,11 @@
         {
           "file": "docs/managed-postgres.md"
         }
+      ],
+      "vi": [
+        {
+          "file": "docs/managed-postgres.vi.md"
+        }
       ]
     },
     {
@@ -96,6 +121,11 @@
       "en": [
         {
           "file": "docs/airgapped.md"
+        }
+      ],
+      "vi": [
+        {
+          "file": "docs/airgapped.vi.md"
         }
       ]
     },
@@ -262,6 +292,11 @@
         {
           "file": "docs/sizing.md"
         }
+      ],
+      "vi": [
+        {
+          "file": "docs/sizing.vi.md"
+        }
       ]
     },
     {
@@ -273,6 +308,11 @@
       "en": [
         {
           "file": "docs/upgrade.md"
+        }
+      ],
+      "vi": [
+        {
+          "file": "docs/upgrade.vi.md"
         }
       ]
     },
@@ -306,6 +346,11 @@
         {
           "file": "docs/models.md"
         }
+      ],
+      "vi": [
+        {
+          "file": "docs/models.vi.md"
+        }
       ]
     },
     {
@@ -318,6 +363,11 @@
       "en": [
         {
           "file": "docs/benchmark.md"
+        }
+      ],
+      "vi": [
+        {
+          "file": "docs/benchmark.vi.md"
         }
       ]
     },
@@ -333,6 +383,11 @@
         },
         {
           "file": "SECURITY.md"
+        }
+      ],
+      "vi": [
+        {
+          "file": "docs/security/README.vi.md"
         }
       ]
     },
@@ -390,6 +445,11 @@
       "en": [
         {
           "file": "docs/red-team.md"
+        }
+      ],
+      "vi": [
+        {
+          "file": "docs/red-team.vi.md"
         }
       ]
     }

@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ví dụ · Guard Spec</title>
+<meta name="description" content="English: README.md. Nếu hai bản khác nhau, bản tiếng Anh là bản chính. Các ví dụ chạy được của những ứng dụng gửi lời gọi model qua gateway Guard Spec. Mỗi">
+<meta property="og:title" content="Ví dụ · Guard Spec">
+<meta property="og:description" content="English: README.md. Nếu hai bản khác nhau, bản tiếng Anh là bản chính. Các ví dụ chạy được của những ứng dụng gửi lời gọi model qua gateway Guard Spec. Mỗi">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/vi/docs/quickstart/examples/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/quickstart/examples/">
+<link rel="alternate" hreflang="vi" href="https://guardspec.io/vi/docs/quickstart/examples/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/vi/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/vi/docs/" class="on">Tài liệu</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/quickstart/examples/" class="">EN</a><a href="/vi/docs/quickstart/examples/" class="on">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Tài liệu</span></summary>
+    <nav class="docs-nav" aria-label="Tài liệu"><ul><li class=""><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a></li><li class="child"><a href="/vi/docs/quickstart/integrations/">Tích hợp</a></li><li class="child on"><a href="/vi/docs/quickstart/examples/">Ví dụ</a></li><li class=""><a href="/vi/docs/deploy/">Triển khai</a></li><li class="child"><a href="/vi/docs/deploy/production-compose/">Compose cho production</a></li><li class="child"><a href="/vi/docs/deploy/managed-postgres/">PostgreSQL được quản lý</a></li><li class="child"><a href="/vi/docs/deploy/airgapped/">Mạng cô lập</a></li><li class="child"><a href="/docs/deploy/aws/">AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform cho AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/on-premise/">Hạ tầng riêng <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/configuration/">Cấu hình</a></li><li class="child"><a href="/docs/configuration/routing/">Định tuyến <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/configuration/apis/">API</a></li><li class=""><a href="/docs/operations/">Vận hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/alerts/">Cảnh báo và thông báo</a></li><li class="child"><a href="/docs/operations/admin-ui/">Giao diện quản trị <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/sizing/">Định cỡ và chọn lớp</a></li><li class=""><a href="/vi/docs/upgrade/">Nâng cấp</a></li><li class=""><a href="/vi/docs/models/">Model</a></li><li class="child"><a href="/vi/docs/models/versions/">Phiên bản, ghim và quay lui</a></li><li class="child"><a href="/vi/docs/models/benchmark/">Benchmark</a></li><li class=""><a href="/vi/docs/security/">Bảo mật</a></li><li class="child"><a href="/docs/security/verifying-releases/">Kiểm tra bản phát hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/risks/">Rủi ro và gia cố</a></li><li class="child"><a href="/docs/security/policy/">Báo lỗ hổng <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/red-team/">Báo cáo red-team</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Tài liệu"><ul><li class=""><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a></li><li class="child"><a href="/vi/docs/quickstart/integrations/">Tích hợp</a></li><li class="child on"><a href="/vi/docs/quickstart/examples/">Ví dụ</a></li><li class=""><a href="/vi/docs/deploy/">Triển khai</a></li><li class="child"><a href="/vi/docs/deploy/production-compose/">Compose cho production</a></li><li class="child"><a href="/vi/docs/deploy/managed-postgres/">PostgreSQL được quản lý</a></li><li class="child"><a href="/vi/docs/deploy/airgapped/">Mạng cô lập</a></li><li class="child"><a href="/docs/deploy/aws/">AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform cho AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/on-premise/">Hạ tầng riêng <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/configuration/">Cấu hình</a></li><li class="child"><a href="/docs/configuration/routing/">Định tuyến <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/configuration/apis/">API</a></li><li class=""><a href="/docs/operations/">Vận hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/alerts/">Cảnh báo và thông báo</a></li><li class="child"><a href="/docs/operations/admin-ui/">Giao diện quản trị <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/sizing/">Định cỡ và chọn lớp</a></li><li class=""><a href="/vi/docs/upgrade/">Nâng cấp</a></li><li class=""><a href="/vi/docs/models/">Model</a></li><li class="child"><a href="/vi/docs/models/versions/">Phiên bản, ghim và quay lui</a></li><li class="child"><a href="/vi/docs/models/benchmark/">Benchmark</a></li><li class=""><a href="/vi/docs/security/">Bảo mật</a></li><li class="child"><a href="/docs/security/verifying-releases/">Kiểm tra bản phát hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/risks/">Rủi ro và gia cố</a></li><li class="child"><a href="/docs/security/policy/">Báo lỗ hổng <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/red-team/">Báo cáo red-team</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Ví dụ</h1>
+
+<blockquote>
+<p>English: <a href="/docs/quickstart/examples/">README.md</a>. Nếu hai bản khác nhau, bản tiếng Anh là bản chính.</p>
+</blockquote>
+<p>Các ví dụ chạy được của những ứng dụng gửi lời gọi model qua gateway Guard
+Spec. Mỗi ví dụ minh họa một request được cho qua, một request streaming và
+một request bị gateway chặn, và thoát với mã 1 khi gateway không làm đúng như
+ví dụ mong đợi.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Ví dụ</th>
+  <th>Minh họa</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/python/openai-sdk">python/openai-sdk</a></td>
+  <td>OpenAI Python SDK: chat, streaming, bắt lỗi chặn HTTP 400 <code>content_filter</code></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/python/langchain">python/langchain</a></td>
+  <td>LangChain <code>ChatOpenAI</code> (<code>langchain-openai</code>) trỏ vào gateway</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/python/llamaindex">python/llamaindex</a></td>
+  <td>LlamaIndex <code>OpenAILike</code> trỏ vào gateway</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/python/rag">python/rag</a></td>
+  <td>Một pipeline RAG có tài liệu bị đầu độc: bị chặn (<code>INDIRECT_ACTION=block</code>), bị che (<code>redact</code>), hoặc bị loại ngay khi nạp bằng <code>POST /guardrail/scan</code></td>
+</tr>
+<tr>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/typescript/openai-sdk">typescript/openai-sdk</a></td>
+  <td>OpenAI TypeScript SDK: chat, streaming, xử lý lỗi</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/typescript/vercel-ai-sdk">typescript/vercel-ai-sdk</a></td>
+  <td>Vercel AI SDK (<code>@ai-sdk/openai</code> với <code>baseURL</code>): <code>generateText</code>, <code>streamText</code>, xử lý lỗi</td>
+</tr>
+<tr>
+  <td><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/n8n">n8n</a></td>
+  <td>Một workflow n8n có thể import: node HTTP Request và node OpenAI Chat Model trỏ vào gateway</td>
+</tr>
+</tbody>
+</table></div>
+<p>Các dependency đều được ghim phiên bản: <code>pyproject.toml</code> và <code>uv.lock</code> cho
+Python (chạy bằng <a href="https://docs.astral.sh/uv/">uv</a>), <code>package.json</code> và
+<code>package-lock.json</code> cho TypeScript (Node.js 22 trở lên).</p>
+<h2 id="cấu-hình">Cấu hình<a class="anchor" href="#cấu-hình" aria-hidden="true">#</a></h2>
+<p>Mọi ví dụ đều đọc cùng các biến sau:</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Biến</th>
+  <th>Ví dụ</th>
+  <th></th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>GUARDSPEC_BASE_URL</code></td>
+  <td><code>http://localhost:8080</code></td>
+  <td>Gateway, không kèm <code>/v1</code> (nếu có <code>/v1</code> ở cuối thì vẫn được chấp nhận và bị bỏ đi)</td>
+</tr>
+<tr>
+  <td><code>GUARDSPEC_API_KEY</code></td>
+  <td><code>gs_...</code></td>
+  <td>Một key Guard Spec: lấy từ giao diện quản trị (API keys) hoặc <code>POST /v1/organizations/{id}/api-keys</code>. Không bao giờ dùng key của nhà cung cấp model</td>
+</tr>
+<tr>
+  <td><code>MODEL</code></td>
+  <td><code>llama3.2</code></td>
+  <td>Một model mà upstream của bạn (<code>UPSTREAM_LLM_URL</code>) phục vụ; gateway chuyển nguyên tên này đi</td>
+</tr>
+</tbody>
+</table></div>
+<p>Thư mục này không chứa key nào. Hãy đặt key của bạn trong biến môi trường:</p>
+<pre><code class="language-bash">export GUARDSPEC_BASE_URL=http://localhost:8080
+export GUARDSPEC_API_KEY=gs_...        # your key
+export MODEL=llama3.2
+cd examples/python/openai-sdk &amp;&amp; uv run --frozen main.py
+</code></pre>
+<h2 id="chạy-với-gateway-của-bạn">Chạy với gateway của bạn<a class="anchor" href="#chạy-với-gateway-của-bạn" aria-hidden="true">#</a></h2>
+<p>Khởi động Guard Spec theo <a href="/vi/docs/quickstart/">hướng dẫn bắt đầu nhanh</a>
+và trỏ <code>UPSTREAM_LLM_URL</code> vào một model (Ollama, OpenAI, vLLM...); tạo key
+trong giao diện quản trị. Bước truy vấn của ví dụ RAG phụ thuộc vào
+<code>INDIRECT_ACTION</code> của gateway (mặc định <code>block</code>; <code>redact</code> cho thấy nhánh còn
+lại).</p>
+<p>Khi không có upstream, gateway trả lời các request được cho qua bằng một
+thông điệp cố định (<code>[guardrail passed — configure UPSTREAM_LLM_URL ...]</code>)
+dạng JSON thường, kể cả khi client yêu cầu stream; các ví dụ streaming cần một
+upstream, thật hoặc bản giả bên dưới.</p>
+<h2 id="gateway-dùng-tạm-để-thử-và-cho-ci">Gateway dùng tạm để thử (và cho CI)<a class="anchor" href="#gateway-dùng-tạm-để-thử-và-cho-ci" aria-hidden="true">#</a></h2>
+<p><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/dev/start.sh"><code>dev/start.sh</code></a> khởi động mọi thứ các ví dụ cần từ bản checkout
+này, không có giao diện quản trị và không tải model:</p>
+<ul>
+<li>Postgres kèm các migration (<code>docker compose</code>, project <code>gs-examples</code>,
+thông tin đăng nhập cho môi trường phát triển, port 55432);</li>
+<li><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/dev/fake_upstream.py"><code>dev/fake_upstream.py</code></a>, một model giả tương thích
+OpenAI (chỉ dùng thư viện chuẩn), trả lời bằng cách lặp lại những gì nó nhận
+được, để bạn thấy những gì đã đến được model qua gateway;</li>
+<li>gateway build bằng <code>go build ./cmd/gateway</code>, chỉ có lớp luật
+(<code>DETECTOR_LAYERS=l1</code>), chạy hai bản: <code>INDIRECT_ACTION=block</code> ở port 18180
+và <code>INDIRECT_ACTION=redact</code> ở port 18181;</li>
+<li>một key ngẫu nhiên cho lần chạy này, ghi cùng các URL vào <code>dev/.state/env</code>.</li>
+</ul>
+<pre><code class="language-bash">examples/dev/start.sh            # needs docker compose v2, Go, python3
+examples/dev/run-all.sh          # every example; needs uv and Node.js 22
+examples/dev/stop.sh             # stops it and deletes the database volume
+</code></pre>
+<p>Để chạy tay một ví dụ, nạp các biến trước:
+<code>set -a; . examples/dev/.state/env; set +a</code>. Đặt <code>UPSTREAM_LLM_URL</code> trước khi
+chạy <code>start.sh</code> thì sẽ dùng model thật thay cho model giả. Chỉ dành cho môi
+trường phát triển: mật khẩu database là mật khẩu ai cũng biết trong
+<code>docker-compose.override.yml</code>.</p>
+<p><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/.github/workflows/examples.yml">Workflow Examples</a> chạy <code>start.sh</code> và
+<code>run-all.sh</code> trên các pull request có chạm vào ví dụ hoặc gateway. Đây không
+phải check bắt buộc.</p>
+
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/examples/README.vi.md">examples/README.vi.md</a> @ <code>f26302340bf1</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Bảo mật</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Đóng góp</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Tác giả: <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>
