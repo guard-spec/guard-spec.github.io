@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Triển khai · Guard Spec</title>
+<meta name="description" content="English: README.md. Nếu hai bản khác nhau, bản tiếng Anh là bản chính. Các hướng dẫn tham khảo để chạy Guard Spec ở nơi khác ngoài laptop. Trạng thái: temp">
+<meta property="og:title" content="Triển khai · Guard Spec">
+<meta property="og:description" content="English: README.md. Nếu hai bản khác nhau, bản tiếng Anh là bản chính. Các hướng dẫn tham khảo để chạy Guard Spec ở nơi khác ngoài laptop. Trạng thái: temp">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/vi/docs/deploy/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/deploy/">
+<link rel="alternate" hreflang="vi" href="https://guardspec.io/vi/docs/deploy/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/vi/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/vi/docs/" class="on">Tài liệu</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/deploy/" class="">EN</a><a href="/vi/docs/deploy/" class="on">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Tài liệu</span></summary>
+    <nav class="docs-nav" aria-label="Tài liệu"><ul><li class=""><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a></li><li class="child"><a href="/vi/docs/quickstart/integrations/">Tích hợp</a></li><li class="child"><a href="/vi/docs/quickstart/examples/">Ví dụ</a></li><li class="on"><a href="/vi/docs/deploy/">Triển khai</a></li><li class="child"><a href="/vi/docs/deploy/production-compose/">Compose cho production</a></li><li class="child"><a href="/vi/docs/deploy/managed-postgres/">PostgreSQL được quản lý</a></li><li class="child"><a href="/vi/docs/deploy/airgapped/">Mạng cô lập</a></li><li class="child"><a href="/docs/deploy/aws/">AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform cho AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/on-premise/">Hạ tầng riêng <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/configuration/">Cấu hình</a></li><li class="child"><a href="/docs/configuration/routing/">Định tuyến <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/configuration/apis/">API</a></li><li class=""><a href="/docs/operations/">Vận hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/alerts/">Cảnh báo và thông báo</a></li><li class="child"><a href="/docs/operations/admin-ui/">Giao diện quản trị <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/sizing/">Định cỡ và chọn lớp</a></li><li class=""><a href="/vi/docs/upgrade/">Nâng cấp</a></li><li class=""><a href="/vi/docs/models/">Model</a></li><li class="child"><a href="/vi/docs/models/versions/">Phiên bản, ghim và quay lui</a></li><li class="child"><a href="/vi/docs/models/benchmark/">Benchmark</a></li><li class=""><a href="/vi/docs/security/">Bảo mật</a></li><li class="child"><a href="/docs/security/verifying-releases/">Kiểm tra bản phát hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/risks/">Rủi ro và gia cố</a></li><li class="child"><a href="/docs/security/policy/">Báo lỗ hổng <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/red-team/">Báo cáo red-team</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Tài liệu"><ul><li class=""><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a></li><li class="child"><a href="/vi/docs/quickstart/integrations/">Tích hợp</a></li><li class="child"><a href="/vi/docs/quickstart/examples/">Ví dụ</a></li><li class="on"><a href="/vi/docs/deploy/">Triển khai</a></li><li class="child"><a href="/vi/docs/deploy/production-compose/">Compose cho production</a></li><li class="child"><a href="/vi/docs/deploy/managed-postgres/">PostgreSQL được quản lý</a></li><li class="child"><a href="/vi/docs/deploy/airgapped/">Mạng cô lập</a></li><li class="child"><a href="/docs/deploy/aws/">AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform cho AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/on-premise/">Hạ tầng riêng <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/configuration/">Cấu hình</a></li><li class="child"><a href="/docs/configuration/routing/">Định tuyến <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/configuration/apis/">API</a></li><li class=""><a href="/docs/operations/">Vận hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/alerts/">Cảnh báo và thông báo</a></li><li class="child"><a href="/docs/operations/admin-ui/">Giao diện quản trị <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/sizing/">Định cỡ và chọn lớp</a></li><li class=""><a href="/vi/docs/upgrade/">Nâng cấp</a></li><li class=""><a href="/vi/docs/models/">Model</a></li><li class="child"><a href="/vi/docs/models/versions/">Phiên bản, ghim và quay lui</a></li><li class="child"><a href="/vi/docs/models/benchmark/">Benchmark</a></li><li class=""><a href="/vi/docs/security/">Bảo mật</a></li><li class="child"><a href="/docs/security/verifying-releases/">Kiểm tra bản phát hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/risks/">Rủi ro và gia cố</a></li><li class="child"><a href="/docs/security/policy/">Báo lỗ hổng <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/red-team/">Báo cáo red-team</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Triển khai</h1>
+
+<blockquote>
+<p>English: <a href="/docs/deploy/">README.md</a>. Nếu hai bản khác nhau, bản tiếng Anh là bản chính.</p>
+</blockquote>
+<p>Các hướng dẫn tham khảo để chạy Guard Spec ở nơi khác ngoài laptop.</p>
+<blockquote>
+<p><strong>Trạng thái: template tham khảo, maintainer chưa kiểm chứng.</strong>
+Cộng đồng đã thử: chưa. Nếu bạn triển khai theo các hướng dẫn này, hãy mở
+một <a href="https://github.com/guard-spec/guard-spec/issues/new/choose">issue</a> hoặc
+một pull request kể lại điều gì chạy được và điều gì không. Xem
+<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+</blockquote>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Hướng dẫn</th>
+  <th>Nội dung</th>
+  <th>Trạng thái</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><a href="/docs/deploy/aws/">aws.md</a></td>
+  <td>EKS với Helm chart, hoặc ECS trên Fargate; RDS for PostgreSQL 17, Secrets Manager, ALB + ACM, CloudWatch</td>
+  <td>Template, chưa thử trên AWS</td>
+</tr>
+<tr>
+  <td><a href="/docs/deploy/gcp/">gcp.md</a></td>
+  <td>GKE Autopilot với Helm chart, hoặc Cloud Run; Cloud SQL for PostgreSQL 17, Secret Manager, HTTPS load balancer, Cloud Logging</td>
+  <td>Template, chưa thử trên GCP</td>
+</tr>
+<tr>
+  <td><a href="/docs/deploy/on-premise/">on-premise.md</a></td>
+  <td>Một VM với Docker Compose, Kubernetes thuần và OpenShift, cài đặt air-gapped, reverse proxy cho TLS</td>
+  <td>Template; cách dùng compose là cách README đã mô tả</td>
+</tr>
+</tbody>
+</table></div>
+<p>Những gì maintainer đã kiểm tra khi viết các hướng dẫn này, trên một host
+Docker cục bộ với các image 0.1.0: các migration chạy được trên PostgreSQL 17
+bằng <code>migrate/migrate:v4.20.1</code>, <code>deploy/postgres/set-app-password.sh</code> đặt được
+mật khẩu cho role của ứng dụng, và <code>guard-spec-gateway-full:0.1.0</code> cùng
+<code>guard-spec-control-plane:0.1.0</code> khởi động được với một UID không phải root
+bất kỳ (group 0) và root filesystem chỉ đọc, <code>/readyz</code> báo
+<code>&quot;layers&quot;:[&quot;l1&quot;,&quot;l2&quot;,&quot;l3&quot;]</code>. Chưa chạy thử gì riêng cho cloud.</p>
+<h2 id="đọc-trước">Đọc trước<a class="anchor" href="#đọc-trước" aria-hidden="true">#</a></h2>
+<p>Các hướng dẫn này không lặp lại README. Chúng giả định bạn đã biết:</p>
+<ul>
+<li><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a> và
+<a href="/docs/quickstart/#production">Production</a>: các secret và cách các service
+từ chối secret yếu.</li>
+<li><a href="/vi/docs/models/#cài-từ-bản-phát-hành">Cài từ bản phát hành</a>: các image
+và archive.</li>
+<li><a href="/vi/docs/models/">Model</a> và <a href="/vi/docs/models/versions/">docs/models.vi.md</a>:
+<code>models pull</code>, ghim phiên bản, rollback, cài đặt air-gapped.</li>
+<li><a href="/vi/docs/configuration/">Cấu hình</a>: mọi biến môi trường.</li>
+<li><a href="/docs/operations/">Vận hành</a>, đặc biệt là
+<a href="/docs/operations/#kubernetes">Kubernetes</a> và
+<a href="/docs/operations/#identity-sso-and-two-factor-authentication">Danh tính, SSO và xác thực hai lớp</a>.</li>
+<li><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/README.vi.md#m%C3%B4-h%C3%ACnh-b%E1%BA%A3o-m%E1%BA%ADt-v%C3%A0-gi%E1%BB%9Bi-h%E1%BA%A1n">Mô hình bảo mật và giới hạn</a>.</li>
+</ul>
+<h2 id="mọi-bản-triển-khai-đều-cần">Mọi bản triển khai đều cần<a class="anchor" href="#mọi-bản-triển-khai-đều-cần" aria-hidden="true">#</a></h2>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Thành phần</th>
+  <th>Ghi chú</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>PostgreSQL</td>
+  <td>Compose và CI dùng bản 17. Hai role: một role owner chạy migration (<code>ps</code> trong compose) và <code>guardspec_app</code>, được migration 004 tạo ra không có mật khẩu. Role có phạm vi toàn cluster, nên 004 sẽ lỗi trên server đã có sẵn <code>guardspec_app</code> (của một database hoặc một bản cài khác): hãy cho mỗi bản cài một server riêng</td>
+</tr>
+<tr>
+  <td>Migration</td>
+  <td><code>migrations/</code> của tag bản phát hành, chạy bằng <code>migrate</code> dưới role owner, trước khi các service khởi động. Bản thân các service không bao giờ chạy migration; Helm chart chạy khi <code>migrations.enabled=true</code> (một hook pre-install / pre-upgrade), nếu không thì bạn tự chạy</td>
+</tr>
+<tr>
+  <td>Mật khẩu ứng dụng</td>
+  <td><code>GUARDSPEC_APP_PASSWORD</code> được đặt cho <code>guardspec_app</code> sau mỗi lần chạy migration: bằng <code>deploy/postgres/set-app-password.sh</code> hoặc job <code>dbRoles</code> của chart</td>
+</tr>
+<tr>
+  <td>Gateway</td>
+  <td><code>ghcr.io/guard-spec/guard-spec-gateway:0.3.0</code> (model được mount ở <code>/models</code>) hoặc <code>-gateway-full:0.3.0</code> (model nằm sẵn trong image). Port 8080 cho client, 9090 cho metrics</td>
+</tr>
+<tr>
+  <td>Control plane</td>
+  <td><code>ghcr.io/guard-spec/guard-spec-control-plane:0.3.0</code>. Port 8081 cho API và giao diện quản trị ở <code>/ui/</code>, 9091 cho metrics</td>
+</tr>
+<tr>
+  <td>Secret</td>
+  <td><code>GUARDSPEC_APP_PASSWORD</code> (cả hai service, dưới dạng <code>PGPASSWORD</code>), <code>JWT_SECRET</code>, <code>MFA_ENC_KEY</code> và <code>ADMIN_PASSWORD</code> (control plane), mật khẩu owner (chỉ dùng cho migration), <code>UPSTREAM_LLM_KEY</code> / <code>UPSTREAM_KEY_*</code> (gateway)</td>
+</tr>
+<tr>
+  <td>TLS</td>
+  <td>Các service chỉ nói HTTP thường. Hãy terminate TLS ở load balancer hoặc reverse proxy đứng trước chúng</td>
+</tr>
+</tbody>
+</table></div>
+<h2 id="những-điều-đúng-ở-mọi-nơi">Những điều đúng ở mọi nơi<a class="anchor" href="#những-điều-đúng-ở-mọi-nơi" aria-hidden="true">#</a></h2>
+<ul>
+<li><strong><code>MFA_ENC_KEY</code> phải được sao lưu cùng với database.</strong> Key này mã hoá TOTP
+secret của mọi user. Khôi phục một database mà không có đúng key đi kèm sẽ
+khoá tất cả những ai đã bật 2FA, và control plane từ chối khởi động khi
+thiếu key này một khi đã có user bật 2FA.</li>
+<li><strong>Giữ control plane ở mạng riêng.</strong> Chỉ port 8080 của gateway cần tới được
+các ứng dụng của bạn. Control plane (API và giao diện quản trị) và cả hai
+port metrics nên nằm trong mạng nội bộ, sau VPN hoặc sau một
+identity-aware proxy.</li>
+<li><strong><code>/readyz</code> chỉ trả 503 khi thiếu một lớp bắt buộc.</strong> Với
+<code>DETECTOR_REQUIRE_ML=true</code> (được đặt sẵn trong <code>gateway-full</code>), thiếu một
+lớp model sẽ khiến gateway dừng ngay khi khởi động (hoặc, với
+<code>GUARD_ENV=dev</code>, khiến <code>/readyz</code> trả 503). Không có biến này, một gateway
+thiếu model sẽ chỉ chạy L1 và vẫn báo sẵn sàng kèm <code>&quot;degraded&quot;:true</code>. Hãy
+kiểm tra <code>detector.layers</code> và <code>detector.degraded</code> trong smoke test.</li>
+<li><strong>Rate limit tính theo từng replica gateway</strong> và nằm trong bộ nhớ. Để chống
+lạm dụng, hãy đặt một rate limiter hoặc WAF đứng trước.</li>
+<li><strong>Streaming.</strong> <code>UPSTREAM_LLM_TIMEOUT</code> mặc định là <code>5m</code> không có dữ liệu.
+Timeout idle hoặc timeout response của load balancer ngắn hơn câu trả lời
+dài nhất của model sẽ cắt ngang stream; hãy tăng chúng lên.</li>
+<li><strong>Schema còn thay đổi trước bản 1.0.</strong> Đọc <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CHANGELOG.md">CHANGELOG</a>
+và snapshot database trước mỗi lần nâng cấp.</li>
+</ul>
+<h2 id="helm-chart-trên-main">Helm chart trên <code>main</code><a class="anchor" href="#helm-chart-trên-main" aria-hidden="true">#</a></h2>
+<p>Chart 0.3.0 (xem mục Unreleased trong <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CHANGELOG.md">CHANGELOG</a>) bổ
+sung các tính năng sau, tất cả đều tắt theo mặc định: một <strong>migration hook</strong>
+(<code>migrations.enabled</code>), một <strong>init container kéo model</strong> (<code>models.pull</code>, kéo
+vào claim hoặc vào một <code>emptyDir</code> riêng cho từng pod, nên nhiều replica không
+còn cần volume ReadWriteMany), <strong>Ingress</strong> và <strong>Routes</strong> của OpenShift,
+<strong>HPA</strong>, <strong>PodDisruptionBudget</strong>, <strong>topologySpreadConstraints</strong>,
+<strong>NetworkPolicies</strong> và một <strong>ServiceAccount</strong> có annotation cho IRSA và
+Workload Identity. Values tham khảo cho từng nền tảng nằm trong
+<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/helm/guard-spec/examples"><code>deploy/helm/guard-spec/examples/</code></a>
+(EKS, AKS, GKE, OpenShift): được render và kiểm tra schema trong CI, được job
+<code>kind-e2e</code> cài lên kind với values riêng của job, chưa kiểm chứng trên cloud.
+Chỗ nào hướng dẫn bên dưới dùng manifest thuần cho một trong các tính năng
+này, thì giờ values của chart đã làm được việc tương tự.</p>
+<p>Registry mirror và cluster không kết nối mạng: <a href="/vi/docs/deploy/airgapped/">../airgapped.vi.md</a>
+(image kèm chữ ký và attestation của cosign, model, xác minh offline, values
+của chart, External Secrets). Sau khi cài,
+<code>kubectl exec deploy/&lt;release&gt;-guard-spec-gateway -c gateway -- ./doctor</code>
+(image từ 0.2.0) sẽ kiểm tra database, migration, model, các lớp phát hiện,
+upstream và các thiết lập bảo mật.</p>
+<p>Từ chart 0.1.1 (xem <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CHANGELOG.md">CHANGELOG</a>): <code>/models</code> chỉ được
+mount khi có models claim (hoặc <code>models.pull</code>), nên
+<code>guard-spec-gateway-full</code> chạy được với
+<code>models.persistence.enabled=false</code>; gateway mặc định giới hạn bộ nhớ 2Gi;
+job <code>dbRoles</code> lấy securityContext từ values và để OpenShift tự chọn UID; và
+<code>MFA_ENC_KEY</code> có thể nằm trong <code>existingSecret</code>.</p>
+<p><strong>Patch output của chart.</strong> Helm 4 chỉ chấp nhận plugin post-renderer cho
+<code>--post-renderer</code>; một script thông thường, như Helm 3 từng cho phép, sẽ bị
+từ chối (<code>plugin ... not found</code>). Để thêm patch kustomize, hãy bọc script
+trong một plugin post-renderer, hoặc render rồi apply mà không qua Helm
+release: ghi output của <code>helm template</code> vào resources của một kustomization,
+rồi chạy <code>kubectl kustomize &lt;dir&gt; | kubectl apply -f -</code>. Khi đó các hook như
+<code>dbRoles</code> chạy như Job bình thường, không còn chạy trước các service.</p>
+<h2 id="đóng-góp">Đóng góp<a class="anchor" href="#đóng-góp" aria-hidden="true">#</a></h2>
+<p>Nếu bạn chạy Guard Spec trên một trong các nền tảng này, một báo cáo ngắn
+hữu ích hơn một hướng dẫn trau chuốt: nền tảng và phiên bản, những gì bạn đã
+thay đổi so với hướng dẫn, và những gì bị lỗi. Hãy mở một
+<a href="https://github.com/guard-spec/guard-spec/issues/new/choose">issue</a> hoặc một
+pull request vào <code>docs/deploy/</code> (xem <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CONTRIBUTING.md">CONTRIBUTING.md</a>;
+commit cần có DCO sign-off). Vấn đề bảo mật phải đi qua
+<a href="/docs/security/policy/">SECURITY.md</a>, không bao giờ qua issue công khai.</p>
+
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/deploy/README.vi.md">docs/deploy/README.vi.md</a> @ <code>f26302340bf1</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Bảo mật</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Đóng góp</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Tác giả: <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

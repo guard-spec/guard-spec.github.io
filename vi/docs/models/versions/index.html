@@ -1,0 +1,384 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Phiên bản, ghim và quay lui · Guard Spec</title>
+<meta name="description" content="English: models.md. Nếu hai bản khác nhau, bản tiếng Anh là bản chính. Bộ phát hiện của gateway có ba lớp. L1 (luật) được build sẵn trong binary. L2 (class">
+<meta property="og:title" content="Phiên bản, ghim và quay lui · Guard Spec">
+<meta property="og:description" content="English: models.md. Nếu hai bản khác nhau, bản tiếng Anh là bản chính. Bộ phát hiện của gateway có ba lớp. L1 (luật) được build sẵn trong binary. L2 (class">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/vi/docs/models/versions/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/models/versions/">
+<link rel="alternate" hreflang="vi" href="https://guardspec.io/vi/docs/models/versions/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/vi/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/vi/docs/" class="on">Tài liệu</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/models/versions/" class="">EN</a><a href="/vi/docs/models/versions/" class="on">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Tài liệu</span></summary>
+    <nav class="docs-nav" aria-label="Tài liệu"><ul><li class=""><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a></li><li class="child"><a href="/vi/docs/quickstart/integrations/">Tích hợp</a></li><li class="child"><a href="/vi/docs/quickstart/examples/">Ví dụ</a></li><li class=""><a href="/vi/docs/deploy/">Triển khai</a></li><li class="child"><a href="/vi/docs/deploy/production-compose/">Compose cho production</a></li><li class="child"><a href="/vi/docs/deploy/managed-postgres/">PostgreSQL được quản lý</a></li><li class="child"><a href="/vi/docs/deploy/airgapped/">Mạng cô lập</a></li><li class="child"><a href="/docs/deploy/aws/">AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform cho AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/on-premise/">Hạ tầng riêng <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/configuration/">Cấu hình</a></li><li class="child"><a href="/docs/configuration/routing/">Định tuyến <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/configuration/apis/">API</a></li><li class=""><a href="/docs/operations/">Vận hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/alerts/">Cảnh báo và thông báo</a></li><li class="child"><a href="/docs/operations/admin-ui/">Giao diện quản trị <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/sizing/">Định cỡ và chọn lớp</a></li><li class=""><a href="/vi/docs/upgrade/">Nâng cấp</a></li><li class=""><a href="/vi/docs/models/">Model</a></li><li class="child on"><a href="/vi/docs/models/versions/">Phiên bản, ghim và quay lui</a></li><li class="child"><a href="/vi/docs/models/benchmark/">Benchmark</a></li><li class=""><a href="/vi/docs/security/">Bảo mật</a></li><li class="child"><a href="/docs/security/verifying-releases/">Kiểm tra bản phát hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/risks/">Rủi ro và gia cố</a></li><li class="child"><a href="/docs/security/policy/">Báo lỗ hổng <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/red-team/">Báo cáo red-team</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Tài liệu"><ul><li class=""><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a></li><li class="child"><a href="/vi/docs/quickstart/integrations/">Tích hợp</a></li><li class="child"><a href="/vi/docs/quickstart/examples/">Ví dụ</a></li><li class=""><a href="/vi/docs/deploy/">Triển khai</a></li><li class="child"><a href="/vi/docs/deploy/production-compose/">Compose cho production</a></li><li class="child"><a href="/vi/docs/deploy/managed-postgres/">PostgreSQL được quản lý</a></li><li class="child"><a href="/vi/docs/deploy/airgapped/">Mạng cô lập</a></li><li class="child"><a href="/docs/deploy/aws/">AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform cho AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/on-premise/">Hạ tầng riêng <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/configuration/">Cấu hình</a></li><li class="child"><a href="/docs/configuration/routing/">Định tuyến <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/configuration/apis/">API</a></li><li class=""><a href="/docs/operations/">Vận hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/alerts/">Cảnh báo và thông báo</a></li><li class="child"><a href="/docs/operations/admin-ui/">Giao diện quản trị <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/sizing/">Định cỡ và chọn lớp</a></li><li class=""><a href="/vi/docs/upgrade/">Nâng cấp</a></li><li class=""><a href="/vi/docs/models/">Model</a></li><li class="child on"><a href="/vi/docs/models/versions/">Phiên bản, ghim và quay lui</a></li><li class="child"><a href="/vi/docs/models/benchmark/">Benchmark</a></li><li class=""><a href="/vi/docs/security/">Bảo mật</a></li><li class="child"><a href="/docs/security/verifying-releases/">Kiểm tra bản phát hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/risks/">Rủi ro và gia cố</a></li><li class="child"><a href="/docs/security/policy/">Báo lỗ hổng <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/red-team/">Báo cáo red-team</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Phiên bản, ghim và quay lui</h1>
+
+<blockquote>
+<p>English: <a href="/docs/models/versions/">models.md</a>. Nếu hai bản khác nhau, bản tiếng Anh là bản chính.</p>
+</blockquote>
+<p>Bộ phát hiện của gateway có ba lớp. L1 (luật) được build sẵn trong binary.
+L2 (classifier của chúng tôi, <code>guardspec-classifier</code>) và L3 (embedder
+<code>multilingual-e5-small</code>) là các model ONNX, không bao giờ được đóng sẵn vào
+image hay commit vào git: chúng được tải về, kiểm tra rồi mount vào
+<code>/models</code>.</p>
+<p><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/models/manifest.yaml"><code>models/manifest.yaml</code></a> liệt kê mọi phiên bản model
+có thể tải về. Cùng file này được build vào gateway và công cụ <code>models</code>, nên
+binary luôn biết các model nó khuyến nghị.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Model</th>
+  <th>Phiên bản</th>
+  <th>Lớp</th>
+  <th>Khuyến nghị</th>
+  <th>Nguồn</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>guardspec-classifier</code></td>
+  <td><code>v3b</code></td>
+  <td>L2</td>
+  <td>có</td>
+  <td>Hugging Face (chưa công bố), sau đó là GitHub Release <code>model-guardspec-classifier-v3b</code></td>
+</tr>
+<tr>
+  <td><code>guardspec-classifier</code></td>
+  <td><code>v4</code></td>
+  <td>L2</td>
+  <td>không: bản ứng viên, <a href="#guardspec-classifier-v4-bản-ứng-viên">so sánh ở shadow mode</a></td>
+  <td>GitHub Release <code>model-guardspec-classifier-v4</code> (khi chủ dự án công bố)</td>
+</tr>
+<tr>
+  <td><code>multilingual-e5-small</code></td>
+  <td><code>614241f</code></td>
+  <td>L3</td>
+  <td>có</td>
+  <td>Hugging Face <code>intfloat/multilingual-e5-small</code></td>
+</tr>
+<tr>
+  <td><code>protectai-deberta-v3-small-pi-v2</code></td>
+  <td><code>d7c8842</code></td>
+  <td>baseline</td>
+  <td>tùy chọn, cần xin quyền truy cập</td>
+  <td>Hugging Face</td>
+</tr>
+<tr>
+  <td><code>protectai-deberta-v3-base-pi-v2</code></td>
+  <td><code>90c9989</code></td>
+  <td>baseline</td>
+  <td>tùy chọn</td>
+  <td>Hugging Face</td>
+</tr>
+</tbody>
+</table></div>
+<p><code>models list --available</code> in ra danh sách hiện tại. Với các model không do
+chúng tôi train, tên phiên bản là 7 ký tự đầu của revision Hugging Face đã
+được ghim.</p>
+<h2 id="cấu-trúc-thư-mục">Cấu trúc thư mục<a class="anchor" href="#cấu-trúc-thư-mục" aria-hidden="true">#</a></h2>
+<p>Mỗi phiên bản được cài vào <code>&lt;dir&gt;/&lt;name&gt;/&lt;version&gt;/</code>; với compose, <code>&lt;dir&gt;</code> là
+<code>./models/cache</code>:</p>
+<pre><code>models/cache/
+  guardspec-classifier/v3b/     model_int8.onnx tokenizer.json config.json thresholds.json calibration.json
+  multilingual-e5-small/614241f/  model.onnx tokenizer.json config.json
+</code></pre>
+<p>Nhiều phiên bản của cùng một model có thể nằm cạnh nhau; nhờ vậy rollback chỉ
+cần một lần khởi động lại.</p>
+<h2 id="tải-model">Tải model<a class="anchor" href="#tải-model" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash"># Docker: models-init does this before the gateway starts, on every `up`
+docker compose --profile models run --rm models-pull                           # recommended versions
+docker compose --profile models run --rm models-pull guardspec-classifier@v3b  # one version
+
+# Without Docker
+go run ./cmd/models pull                              # recommended version of every non-optional model
+go run ./cmd/models pull guardspec-classifier@v3b     # one version
+go run ./cmd/models pull -models a,b@v1               # the older flag form still works
+go run ./cmd/models list                              # what is installed
+go run ./cmd/models list --available                  # what the manifest offers
+go run ./cmd/models verify                            # re-check the SHA-256 of installed files
+</code></pre>
+<p>Những gì <code>pull</code> bảo đảm:</p>
+<ul>
+<li><strong>Được kiểm tra.</strong> Mọi file đều được đối chiếu với kích thước và SHA-256 đã
+ghim trong manifest, bất kể tải từ nguồn nào. Không khớp thì bị từ chối.</li>
+<li><strong>Nguyên tử.</strong> Một phiên bản được ráp trong một thư mục tạm ẩn nằm cạnh nó
+và chỉ được đổi tên vào đúng chỗ khi mọi file đã kiểm tra xong. Một lần pull
+lỗi hoặc bị ngắt giữa chừng giữ nguyên trạng thái trước đó.</li>
+<li><strong>Idempotent.</strong> Khi một phiên bản đã có và kiểm tra đạt, không có gì được
+tải. File theo cấu trúc cũ, từ trước khi có phiên bản
+(<code>models/cache/multilingual-e5-small/model.onnx</code>), được dùng lại chứ không
+tải lần nữa.</li>
+<li><strong>Dự phòng.</strong> Các nguồn được thử theo thứ tự: <code>-mirror</code> / <code>MODELS_MIRROR</code>
+nếu có đặt, Hugging Face ở commit đã ghim, rồi đến các <code>mirrors</code> trong
+manifest (asset của GitHub Release của chúng tôi). Khi một model chưa có
+trên Hugging Face, revision của nó là placeholder toàn số 0 và Hugging Face
+bị bỏ qua. <code>HF_TOKEN</code> chỉ bao giờ được gửi tới Hugging Face.</li>
+</ul>
+<p><code>MODELS_MIRROR</code> là một base URL phục vụ <code>&lt;mirror&gt;/&lt;name&gt;/&lt;version&gt;/&lt;file&gt;</code>,
+dùng cho mirror nội bộ hoặc mạng bị giới hạn qua proxy. Bất kỳ server file tĩnh
+nào phục vụ một bản sao của <code>models/cache</code> đều dùng được, ví dụ
+<code>python3 -m http.server -d models/cache 8000</code> và
+<code>MODELS_MIRROR=http://host.docker.internal:8000</code>.</p>
+<h2 id="chọn-phiên-bản-trong-gateway">Chọn phiên bản trong gateway<a class="anchor" href="#chọn-phiên-bản-trong-gateway" aria-hidden="true">#</a></h2>
+<p>Gateway xác định model cho từng lớp theo thứ tự sau:</p>
+<ol>
+<li><code>L2_MODEL_DIR</code> / <code>L3_MODEL_DIR</code>: dùng nguyên thư mục đó (các biến cũ; nếu
+được đặt thì chúng thắng);</li>
+<li><code>L2_MODEL</code> / <code>L3_MODEL</code> = <code>name@version</code>: <code>$MODEL_DIR/cache/&lt;name&gt;/&lt;version&gt;</code>.
+Chỉ ghi tên thì dùng phiên bản khuyến nghị của nó;</li>
+<li>không đặt gì: model khuyến nghị trong manifest, nếu đã cài;</li>
+<li>các thư mục từ trước khi có phiên bản: <code>$MODEL_DIR/local/guardspec-classifier-v3b</code>
+(rồi <code>-v2</code>, <code>-v1</code>, <code>-v0</code>) cho L2 và <code>$MODEL_DIR/cache/multilingual-e5-small</code>
+cho L3.</li>
+</ol>
+<p>Một lựa chọn tường minh (1 hoặc 2) mà chưa được cài sẽ không bị thay bằng
+model khác: lớp đó tắt và <code>/readyz</code> cho biết lý do. <code>MODEL_DIR</code> là <code>/models</code>
+trong image và <code>./models</code> trong các trường hợp khác.</p>
+<p><code>GET /readyz</code> cho biết model nào đã được nạp:</p>
+<pre><code class="language-json">{&quot;detector&quot;:{&quot;layers&quot;:[&quot;l1&quot;,&quot;l2&quot;,&quot;l3&quot;],&quot;degraded&quot;:false,&quot;onnx&quot;:true,&quot;fusion&quot;:&quot;logreg&quot;,&quot;l2_model&quot;:&quot;guardspec-classifier-v3b&quot;},&quot;status&quot;:&quot;ready&quot;,&quot;version&quot;:&quot;0.1.0&quot;}
+</code></pre>
+<h2 id="ghim-phiên-bản">Ghim phiên bản<a class="anchor" href="#ghim-phiên-bản" aria-hidden="true">#</a></h2>
+<ul>
+<li><strong>Image</strong> được ghim bằng <code>GUARDSPEC_VERSION</code> (mặc định <code>0.1.0</code>). Mỗi image
+chứa manifest của release đó, nên các model nó khuyến nghị cũng được ghim
+theo.</li>
+<li><strong>Model</strong> được ghim bằng <code>L2_MODEL=guardspec-classifier@v3b</code> (và
+<code>L3_MODEL</code>). Đặt chúng trong <code>.env</code> để giữ một phiên bản qua các lần nâng
+cấp image có khuyến nghị phiên bản mới hơn; models-init vẫn tải phiên bản
+khuyến nghị mới, nhưng gateway tiếp tục nạp phiên bản đã ghim.</li>
+<li><strong>File</strong> được ghim bằng SHA-256 trong manifest, còn model upstream được ghim
+bằng commit Hugging Face của chúng.</li>
+</ul>
+<h2 id="rollback">Rollback<a class="anchor" href="#rollback" aria-hidden="true">#</a></h2>
+<ol>
+<li>Bảo đảm phiên bản cũ đã được cài:
+<code>docker compose --profile models run --rm models-pull guardspec-classifier@&lt;old&gt;</code>
+(<code>models list</code> cho biết những gì đang có).</li>
+<li>Đặt <code>L2_MODEL=guardspec-classifier@&lt;old&gt;</code> trong <code>.env</code>.</li>
+<li>Khởi động lại gateway: <code>docker compose up -d gateway</code>. Hoặc, không cần
+khởi động lại, gọi <code>POST /admin/models/reload</code> với
+<code>{&quot;l2_model&quot;:&quot;guardspec-classifier@&lt;old&gt;&quot;}</code> (xem bên dưới), và vẫn giữ
+bước 2 cho lần khởi động sau.</li>
+<li>Kiểm tra <code>/readyz</code> (<code>l2_model</code>, <code>models.l2_model</code>) và dòng log
+<code>L2 classifier loaded</code>.</li>
+</ol>
+<p>Muốn hoàn tác thì xóa <code>L2_MODEL</code> và khởi động lại. Calibration đi kèm model
+(<code>calibration.json</code> trong thư mục phiên bản), nên trọng số fusion luôn khớp
+với classifier đang được nạp.</p>
+<h2 id="so-sánh-bản-ứng-viên-trước-shadow-mode">So sánh bản ứng viên trước (shadow mode)<a class="anchor" href="#so-sánh-bản-ứng-viên-trước-shadow-mode" aria-hidden="true">#</a></h2>
+<p>Trước khi chuyển, hãy chạy bản ứng viên song song với classifier đang dùng:</p>
+<pre><code class="language-bash"># .env
+SHADOW_L2_MODEL=guardspec-classifier@&lt;candidate&gt;   # pulled first
+SHADOW_SAMPLE=1                                    # share of requests compared
+</code></pre>
+<p>Nó chấm điểm cùng lưu lượng và ghi lại quyết định nó lẽ ra sẽ đưa ra vào
+<code>shadow_results</code>; nó không bao giờ thay đổi quyết định và chạy ngoài đường
+trả response. Trang <strong>Models</strong> của giao diện quản trị hiển thị tỷ lệ đồng
+thuận, các request mà bản ứng viên sẽ chặn hoặc cho qua khác đi, và phân bố
+điểm. Chi tiết nằm trong README, mục
+<a href="/docs/operations/#shadow-mode-and-model-reload">Shadow mode and model reload</a>.</p>
+<h3 id="guardspec-classifier-v4-bản-ứng-viên">guardspec-classifier v4 (bản ứng viên)<a class="anchor" href="#guardspec-classifier-v4-bản-ứng-viên" aria-hidden="true">#</a></h3>
+<p><code>guardspec-classifier@v4</code> có trong manifest nhưng <strong>không</strong> phải phiên bản
+khuyến nghị: v3b vẫn là mặc định cho đến khi v4 được so sánh ở shadow mode.
+v4 dùng cùng kiến trúc và công thức train của v3b nhưng train trên nhiều dữ
+liệu tiếng Việt hơn (các dòng teencode, không dấu và ngân hàng do chủ dự án
+viết, cùng các hard negative mới); nó chặn ít tin nhắn tiếng Việt vô hại hơn.
+Phần so sánh với v3b ở bên dưới (<a href="#v3b-so-với-v4">v3b so với v4</a>) và trong
+<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/train/MODEL_CARD.md">train/MODEL_CARD.md</a> (mục &quot;v4&quot;).</p>
+<pre><code class="language-bash"># 1. Install it next to v3b (files checked against the manifest's SHA-256).
+#    It comes from the Hugging Face branch v4 at the pinned commit, with the
+#    GitHub release model-guardspec-classifier-v4 as the mirror.
+docker compose --profile models run --rm models-pull guardspec-classifier@v4
+# 2. .env: keep v3b deciding, let v4 score the same traffic.
+L2_MODEL=guardspec-classifier@v3b
+SHADOW_L2_MODEL=guardspec-classifier@v4
+SHADOW_SAMPLE=1
+# 3. Restart the gateway (or POST /admin/models/reload), then watch the
+#    Models page: agreement, requests v4 would block that v3b allows (and the
+#    reverse), score distributions.
+</code></pre>
+<p>Nếu bạn có sẵn bản sao file ở máy (ví dụ trước khi release tồn tại), hãy đặt
+<code>SHADOW_L2_MODEL_DIR=/path/to/guardspec-classifier-v4</code>; thư mục phải chứa
+<code>model_int8.onnx</code>, <code>tokenizer.json</code>, <code>config.json</code>, <code>thresholds.json</code> và
+<code>calibration.json</code> (calibration fusion của v4 nằm trong file đó). Khi kết quả
+so sánh đạt yêu cầu, chuyển sang bằng <code>L2_MODEL=guardspec-classifier@v4</code> và
+một lần reload; rollback thì làm ngược lại.</p>
+<h4 id="v3b-so-với-v4">v3b so với v4<a class="anchor" href="#v3b-so-với-v4" aria-hidden="true">#</a></h4>
+<p>Điểm của gateway (kết hợp L1+L2+L3, chặn ở 0.85). Eval set chỉ được đo một
+lần cho v4; owner hold-out là dữ liệu do chủ dự án viết mà không model nào
+được train trên đó.</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th></th>
+  <th>v3b</th>
+  <th>v4</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>eval ROC AUC</td>
+  <td>0.9865</td>
+  <td>0.9853</td>
+</tr>
+<tr>
+  <td>eval TPR / FPR ở 0.85</td>
+  <td>0.939 / 1.39% (14 trên 1,005)</td>
+  <td>0.932 / 1.19% (12)</td>
+</tr>
+<tr>
+  <td>eval EN FPR / VI FPR</td>
+  <td>1.65% / 1.25%</td>
+  <td>1.10% / 1.25%</td>
+</tr>
+<tr>
+  <td>eval FPR VI teencode / không dấu</td>
+  <td>3.5% (5 trên 143) / 0.4% (1 trên 236)</td>
+  <td>1.4% (2) / 1.7% (4)</td>
+</tr>
+<tr>
+  <td>owner hold-out FPR / TPR</td>
+  <td>1.6% (3 trên 184) / 0.714</td>
+  <td>0.5% (1) / 0.688</td>
+</tr>
+<tr>
+  <td>owner teencode/không dấu: FPR / TPR / ROC AUC</td>
+  <td>4.2% (2 trên 48) / 0.417 / 0.763</td>
+  <td>2.1% (1) / 0.472 / 0.878</td>
+</tr>
+<tr>
+  <td>False positive tiếng Việt vô hại (owner hold-out, <code>val_v4_holdout</code>, 4 câu được báo)</td>
+  <td>11 trên 275</td>
+  <td>4 trên 275</td>
+</tr>
+<tr>
+  <td>số câu bị chặn trong 4 câu được báo</td>
+  <td>4</td>
+  <td>1</td>
+</tr>
+</tbody>
+</table></div>
+<p>v4 chặn ít tin nhắn tiếng Việt vô hại hơn nhưng bắt được ít tấn công hơn một
+chút (eval: ít hơn 7 trên 1,171; thấp hơn ở rò rỉ dữ liệu và tool poisoning
+tiếng Việt, và ở leet tiếng Anh). Nó không vượt qua quy tắc quyết định đã đăng
+ký trước, nên nó là bản ứng viên cho shadow mode chứ không phải mặc định.
+<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/train/MODEL_CARD.md">train/MODEL_CARD.md</a> (mục &quot;v4&quot;) có đầy đủ các bảng.</p>
+<h2 id="nạp-lại-không-cần-khởi-động-lại">Nạp lại không cần khởi động lại<a class="anchor" href="#nạp-lại-không-cần-khởi-động-lại" aria-hidden="true">#</a></h2>
+<p><code>kill -HUP</code> gateway, hoặc <code>POST /admin/models/reload</code> với
+<code>GATEWAY_ADMIN_TOKEN</code>, sẽ nạp lại classifier (hoặc một phiên bản khác), kiểm
+tra mọi file với SHA-256 trong manifest, rồi thay vào mà không làm rơi request
+nào. Nếu lỗi, model đang chạy được giữ nguyên. Các phiên bản không có trong
+manifest dựng sẵn (model của riêng bạn) cần một file manifest liệt kê chúng,
+chỉ ra bằng <code>MODELS_MANIFEST</code>, cùng định dạng với <code>models/manifest.yaml</code>.</p>
+<h2 id="cài-đặt-air-gapped">Cài đặt air-gapped<a class="anchor" href="#cài-đặt-air-gapped" aria-hidden="true">#</a></h2>
+<p>Có hai cách:</p>
+<ul>
+<li><strong>Image <code>gateway-full</code></strong>, chứa sẵn các model khuyến nghị của release đó
+(build từ <code>build/gateway-full.Dockerfile</code>). Chuyển nó bằng
+<code>docker save</code> / <code>docker load</code>. Nó không cần models-init tải về; đặt
+<code>MODEL_DIR</code> theo tài liệu của image.</li>
+<li><strong>Một bản sao của <code>models/cache</code>.</strong> Trên máy có mạng, chạy <code>models pull</code>,
+sao chép thư mục, rồi trên máy đích chạy <code>models verify</code> trước khi khởi
+động. Khi đó models-init thấy file đã có và kiểm tra đạt nên không làm gì.
+Hoặc bạn có thể phục vụ bản sao từ một server file nội bộ và đặt
+<code>MODELS_MIRROR</code>.</li>
+</ul>
+<p>Không có mạng và không có model, models-init sẽ cảnh báo và gateway chỉ chạy
+L1 (<code>/readyz</code> liệt kê các lớp thiếu), trừ khi <code>DETECTOR_REQUIRE_ML=true</code>, khi
+đó cả stack dừng lại.</p>
+<h2 id="false-positive-sửa-ngay-bằng-exemplar">False positive: sửa ngay bằng exemplar<a class="anchor" href="#false-positive-sửa-ngay-bằng-exemplar" aria-hidden="true">#</a></h2>
+<p>Một phiên bản model mới cần một lần train, một lần eval và một release. Cách
+sửa false positive (chặn nhầm) ngay hôm nay là trang <strong>Exemplars</strong> của giao
+diện quản trị (<code>/ui/</code>, hoặc <code>POST /v1/organizations/:orgId/exemplars</code>):</p>
+<ul>
+<li>thêm văn bản bị chặn nhầm thành một exemplar <strong>allow</strong>: nó hạ điểm L3 của
+các request tương tự trong organization đó; exemplar <strong>block</strong> làm điều
+ngược lại và đặt một mức sàn cho điểm tổng hợp;</li>
+<li>xem <code>scores</code> của request trong request log trước: exemplar allow chỉ tác
+động lên L3, nên khi chỉ riêng L2 đẩy điểm lên thì nó chỉ hạ được điểm tổng
+hợp một phần. Hãy báo những văn bản như vậy (không kèm dữ liệu khách hàng)
+để phiên bản model sau học được từ chúng;</li>
+<li>exemplar cần model L3 và có hiệu lực trong khoảng 5 giây, không cần khởi
+động lại.</li>
+</ul>
+<h2 id="phát-hành-phiên-bản-model-mới">Phát hành phiên bản model mới<a class="anchor" href="#phát-hành-phiên-bản-model-mới" aria-hidden="true">#</a></h2>
+<p>Dành cho maintainer. Ví dụ dưới đây phát hành <code>guardspec-classifier</code> <code>v4</code>.</p>
+<ol>
+<li><strong>Train</strong> bằng <code>train/</code> (xem <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/train/MODEL_CARD.md">train/MODEL_CARD.md</a>).
+Chọn số epoch, threshold và calibration chỉ dựa trên các validation split.
+<code>eval/</code> không bao giờ được dùng để tinh chỉnh.</li>
+<li><strong>Calibrate</strong>: <code>go run -tags onnx ./cmd/calibrate fit -write</code> ghi
+<code>calibration.json</code> cạnh model; đồng thời thêm các giá trị vào
+<code>BuiltinCalibrations</code> trong <code>internal/inference/ml/calibration.go</code>.</li>
+<li><strong>Đánh giá một lần</strong> trên <code>eval/</code> với model cuối cùng và ghi số liệu vào
+model card. Không quay lại bước 1 vì những số này; model không đạt eval set
+thì không được phát hành (như với v3).</li>
+<li><strong>Băm</strong> các file: <code>shasum -a 256 model_int8.onnx tokenizer.json config.json thresholds.json calibration.json</code>
+và ghi lại kích thước.</li>
+<li><strong>Upload</strong> đúng các file đó lên Hugging Face (repo ghi trong manifest) và
+ghi lại commit sha; sau đó đính kèm chúng làm asset của một GitHub Release
+có tag <code>model-guardspec-classifier-v4</code> (một release model, không phải
+release phần mềm <code>v*</code>).</li>
+<li><strong>Cập nhật manifest</strong>: thêm một mục với <code>version: v4</code>, <code>revision</code> Hugging
+Face, mirror
+<code>https://github.com/guard-spec/guard-spec/releases/download/model-guardspec-classifier-v4/{file}</code>
+và <code>size</code>, <code>sha256</code> của từng file. Chuyển <code>recommended: true</code> từ mục cũ
+sang mục mới, và giữ mục cũ để rollback vẫn hoạt động.</li>
+<li><strong>Kiểm tra</strong>: <code>go test ./internal/onnx ./internal/inference/ml</code>, sau đó
+pull vào một thư mục trống (<code>go run ./cmd/models pull -dir /tmp/m guardspec-classifier@v4</code>)
+để chứng minh cả hai nguồn đều phục vụ đúng các file đã ghim.</li>
+<li><strong>CHANGELOG</strong>: thêm mục &quot;Model&quot; dưới Unreleased với phiên bản, những thay
+đổi về dữ liệu, và số liệu eval so với phiên bản trước.</li>
+</ol>
+<p>Release phần mềm kế tiếp sau đó sẽ mang manifest khuyến nghị v4.</p>
+
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/models.vi.md">docs/models.vi.md</a> @ <code>f26302340bf1</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Bảo mật</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Đóng góp</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Tác giả: <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

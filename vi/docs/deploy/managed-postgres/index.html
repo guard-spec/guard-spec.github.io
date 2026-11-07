@@ -1,0 +1,265 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>PostgreSQL được quản lý · Guard Spec</title>
+<meta name="description" content="English: managed-postgres.md. Nếu hai bản khác nhau, bản tiếng Anh là bản chính. Trạng thái: tài liệu tham khảo, các maintainer chưa kiểm chứng trên các nh">
+<meta property="og:title" content="PostgreSQL được quản lý · Guard Spec">
+<meta property="og:description" content="English: managed-postgres.md. Nếu hai bản khác nhau, bản tiếng Anh là bản chính. Trạng thái: tài liệu tham khảo, các maintainer chưa kiểm chứng trên các nh">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/vi/docs/deploy/managed-postgres/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/deploy/managed-postgres/">
+<link rel="alternate" hreflang="vi" href="https://guardspec.io/vi/docs/deploy/managed-postgres/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/vi/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/vi/docs/" class="on">Tài liệu</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/deploy/managed-postgres/" class="">EN</a><a href="/vi/docs/deploy/managed-postgres/" class="on">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Tài liệu</span></summary>
+    <nav class="docs-nav" aria-label="Tài liệu"><ul><li class=""><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a></li><li class="child"><a href="/vi/docs/quickstart/integrations/">Tích hợp</a></li><li class="child"><a href="/vi/docs/quickstart/examples/">Ví dụ</a></li><li class=""><a href="/vi/docs/deploy/">Triển khai</a></li><li class="child"><a href="/vi/docs/deploy/production-compose/">Compose cho production</a></li><li class="child on"><a href="/vi/docs/deploy/managed-postgres/">PostgreSQL được quản lý</a></li><li class="child"><a href="/vi/docs/deploy/airgapped/">Mạng cô lập</a></li><li class="child"><a href="/docs/deploy/aws/">AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform cho AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/on-premise/">Hạ tầng riêng <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/configuration/">Cấu hình</a></li><li class="child"><a href="/docs/configuration/routing/">Định tuyến <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/configuration/apis/">API</a></li><li class=""><a href="/docs/operations/">Vận hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/alerts/">Cảnh báo và thông báo</a></li><li class="child"><a href="/docs/operations/admin-ui/">Giao diện quản trị <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/sizing/">Định cỡ và chọn lớp</a></li><li class=""><a href="/vi/docs/upgrade/">Nâng cấp</a></li><li class=""><a href="/vi/docs/models/">Model</a></li><li class="child"><a href="/vi/docs/models/versions/">Phiên bản, ghim và quay lui</a></li><li class="child"><a href="/vi/docs/models/benchmark/">Benchmark</a></li><li class=""><a href="/vi/docs/security/">Bảo mật</a></li><li class="child"><a href="/docs/security/verifying-releases/">Kiểm tra bản phát hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/risks/">Rủi ro và gia cố</a></li><li class="child"><a href="/docs/security/policy/">Báo lỗ hổng <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/red-team/">Báo cáo red-team</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Tài liệu"><ul><li class=""><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a></li><li class="child"><a href="/vi/docs/quickstart/integrations/">Tích hợp</a></li><li class="child"><a href="/vi/docs/quickstart/examples/">Ví dụ</a></li><li class=""><a href="/vi/docs/deploy/">Triển khai</a></li><li class="child"><a href="/vi/docs/deploy/production-compose/">Compose cho production</a></li><li class="child on"><a href="/vi/docs/deploy/managed-postgres/">PostgreSQL được quản lý</a></li><li class="child"><a href="/vi/docs/deploy/airgapped/">Mạng cô lập</a></li><li class="child"><a href="/docs/deploy/aws/">AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform cho AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/on-premise/">Hạ tầng riêng <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/configuration/">Cấu hình</a></li><li class="child"><a href="/docs/configuration/routing/">Định tuyến <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/configuration/apis/">API</a></li><li class=""><a href="/docs/operations/">Vận hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/alerts/">Cảnh báo và thông báo</a></li><li class="child"><a href="/docs/operations/admin-ui/">Giao diện quản trị <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/sizing/">Định cỡ và chọn lớp</a></li><li class=""><a href="/vi/docs/upgrade/">Nâng cấp</a></li><li class=""><a href="/vi/docs/models/">Model</a></li><li class="child"><a href="/vi/docs/models/versions/">Phiên bản, ghim và quay lui</a></li><li class="child"><a href="/vi/docs/models/benchmark/">Benchmark</a></li><li class=""><a href="/vi/docs/security/">Bảo mật</a></li><li class="child"><a href="/docs/security/verifying-releases/">Kiểm tra bản phát hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/risks/">Rủi ro và gia cố</a></li><li class="child"><a href="/docs/security/policy/">Báo lỗ hổng <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/red-team/">Báo cáo red-team</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>PostgreSQL được quản lý</h1>
+
+<blockquote>
+<p>English: <a href="/docs/deploy/managed-postgres/">managed-postgres.md</a>. Nếu hai bản khác nhau, bản tiếng Anh là bản chính.</p>
+</blockquote>
+<blockquote>
+<p><strong>Trạng thái: tài liệu tham khảo, các maintainer chưa kiểm chứng trên các
+nhà cung cấp này.</strong> Cộng đồng đã thử: chưa. Nếu bạn chạy Guard Spec trên một
+trong số đó, hãy mở một
+<a href="https://github.com/guard-spec/guard-spec/issues/new/choose">issue</a> hoặc một
+pull request ghi lại điều gì chạy được và điều gì không; rất hoan nghênh
+đóng góp của bạn. Xem <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CONTRIBUTING.md">CONTRIBUTING.md</a>.</p>
+</blockquote>
+<p>Các file compose và CI dùng PostgreSQL 17; các phiên bản cũ hơn chưa được thử.
+Nhà cung cấp nào cũng sẽ dùng được nếu cho bạn các role và extension liệt kê
+bên dưới. Trang này nói về những gì migration cần, connection string và TLS,
+và cách chạy <a href="/vi/docs/deploy/production-compose/">compose production</a>
+mà không cần dịch vụ <code>postgres</code> riêng của nó. Với Kubernetes, các bước cho
+database cũng giống vậy; xem <a href="/vi/docs/deploy/">docs/deploy/</a>.</p>
+<p><strong>Những gì maintainer đã kiểm tra</strong> (2026-11-06, trên máy local, không phải
+trên nhà cung cấp nào): một container PostgreSQL 17 đóng vai database được
+quản lý, trong đó owner role <code>gsowner</code> <strong>không</strong> phải superuser nhưng có
+<code>CREATEROLE</code> và sở hữu database, giống như trên RDS, Cloud SQL, Neon và
+Supabase. Chạy với role đó, mọi migration đều áp dụng thành công,
+<code>set-app-password.sh</code> chạy được, compose production cùng
+<code>managed-postgres.yml</code> khởi động ở trạng thái healthy, một prompt injection
+bị chặn và một prompt vô hại đi qua được qua HTTPS. Một database thứ hai trên
+cùng server thất bại ở migration 004 với lỗi
+<code>role &quot;guardspec_app&quot; already exists</code> (xem bên dưới). TLS tới database không
+nằm trong bài kiểm tra đó.</p>
+<h2 id="database-cần-những-gì">Database cần những gì<a class="anchor" href="#database-cần-những-gì" aria-hidden="true">#</a></h2>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Yêu cầu</th>
+  <th>Lý do</th>
+  <th>Ghi chú</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Một <strong>owner role</strong> chạy các migration và sở hữu mọi bảng</td>
+  <td>Các dịch vụ chạy dưới role <code>guardspec_app</code>, role này không sở hữu các bảng nên row-level security áp dụng với nó. Một vài hàm <code>SECURITY DEFINER</code> (tra cứu API key, lời mời, cảnh báo) chạy dưới quyền owner và phải bỏ qua được RLS, điều mà chủ sở hữu bảng làm được.</td>
+  <td>User admin của nhà cung cấp, hoặc một role bạn tạo riêng cho Guard Spec. Không phải superuser.</td>
+</tr>
+<tr>
+  <td><code>CREATEROLE</code> cho owner role</td>
+  <td>Migration 004 chạy <code>CREATE ROLE guardspec_app LOGIN</code>; migration 005 và <code>set-app-password.sh</code> chạy <code>ALTER ROLE guardspec_app ...</code></td>
+  <td>Trên PostgreSQL 16 trở lên, role đã tạo <code>guardspec_app</code> vẫn giữ quyền thay đổi nó.</td>
+</tr>
+<tr>
+  <td>Extension <code>pgcrypto</code> và <code>pg_trgm</code></td>
+  <td>Migration 001 (<code>CREATE EXTENSION IF NOT EXISTS</code>)</td>
+  <td>Cả hai đều là extension &quot;trusted&quot;: chủ sở hữu database có thể tạo chúng mà không cần là superuser. Cả bốn nhà cung cấp đều có.</td>
+</tr>
+<tr>
+  <td>Schema <code>public</code>, owner ghi được</td>
+  <td>Các bảng, hàm và <code>schema_migrations</code> nằm ở đó</td>
+  <td>Trên PostgreSQL 15+, chỉ chủ sở hữu database ghi được vào <code>public</code>, đúng như bạn cần.</td>
+</tr>
+</tbody>
+</table></div>
+<p><strong><code>guardspec_app</code> có phạm vi toàn cluster.</strong> Role thuộc về cả server
+(instance, cluster), không thuộc về một database riêng, và migration 004 tạo
+role với một tên cố định. Vì vậy:</p>
+<ul>
+<li>mỗi server chỉ một bản cài Guard Spec: bản cài thứ hai trên cùng instance
+(ví dụ một database staging đặt cạnh production) sẽ thất bại ở migration 004
+với lỗi <code>role &quot;guardspec_app&quot; already exists</code>. Hãy cho staging một instance,
+project Neon hoặc project Supabase riêng;</li>
+<li>khôi phục một bản dump vào instance mới cần tạo role trước (<code>pg_dump</code> của
+một database không mang theo role): chạy <code>CREATE ROLE guardspec_app LOGIN;</code>
+dưới owner role, rồi <code>pg_restore</code>. <code>scripts/restore.sh</code> làm việc này cho
+compose.</li>
+</ul>
+<h2 id="connection-string-và-tls">Connection string và TLS<a class="anchor" href="#connection-string-và-tls" aria-hidden="true">#</a></h2>
+<p>Các dịch vụ đọc <code>DATABASE_URL</code> và lấy mật khẩu từ <code>PGPASSWORD</code> (compose truyền
+<code>GUARDSPEC_APP_PASSWORD</code> vào đó), nên URL không chứa secret nào:</p>
+<pre><code class="language-text">DATABASE_URL=postgres://guardspec_app@&lt;host&gt;:5432/guardspec?sslmode=verify-full
+</code></pre>
+<p>Gateway và control plane dùng pgx, thư viện này nhận các tham số libpq
+<code>sslmode</code> (<code>require</code>, <code>verify-ca</code>, <code>verify-full</code>), <code>sslrootcert</code>, <code>sslcert</code>
+và <code>sslkey</code>. Với <code>verify-full</code> mà không có <code>sslrootcert</code>, bộ CA của hệ thống
+được dùng: cách này chạy được khi certificate của nhà cung cấp nối chuỗi tới
+một CA công khai (Neon, theo tài liệu của họ), và không chạy được khi họ dùng
+CA riêng (RDS, Cloud SQL, Supabase); khi đó bạn mount file CA của họ và chỉ
+định nó:</p>
+<pre><code class="language-yaml"># deploy/compose/production/managed-postgres.yml, under gateway and control-plane:
+    volumes:
+      - ./db-ca.pem:/etc/guardspec/db-ca.pem:ro
+# .env:
+# DATABASE_URL=postgres://guardspec_app@&lt;host&gt;:5432/guardspec?sslmode=verify-full&amp;sslrootcert=/etc/guardspec/db-ca.pem
+</code></pre>
+<p><code>sslmode=require</code> có mã hoá nhưng không kiểm tra danh tính của server; chỉ
+dùng nó lúc mới bắt đầu.</p>
+<h2 id="ghi-chú-theo-nhà-cung-cấp">Ghi chú theo nhà cung cấp<a class="anchor" href="#ghi-chú-theo-nhà-cung-cấp" aria-hidden="true">#</a></h2>
+<h3 id="amazon-rds-for-postgresql">Amazon RDS for PostgreSQL<a class="anchor" href="#amazon-rds-for-postgresql" aria-hidden="true">#</a></h3>
+<ul>
+<li>Owner: master user (thành viên của <code>rds_superuser</code>, có <code>CREATEROLE</code>), hoặc
+một role riêng do master user tạo: <code>CREATE ROLE gsowner LOGIN CREATEROLE PASSWORD '...'; CREATE DATABASE guardspec OWNER gsowner;</code></li>
+<li>TLS: RDS for PostgreSQL 15 trở lên đặt <code>rds.force_ssl=1</code>. Tải CA bundle của
+region (<code>global-bundle.pem</code> trong tài liệu RDS) và dùng
+<code>sslmode=verify-full&amp;sslrootcert=...</code>.</li>
+<li>Host: endpoint của instance, <code>&lt;name&gt;.&lt;id&gt;.&lt;region&gt;.rds.amazonaws.com</code>.
+Nếu đi qua RDS Proxy, xem phần &quot;Pooler&quot; bên dưới.</li>
+<li>Thêm: <a href="/docs/deploy/aws/">docs/deploy/aws.md</a>.</li>
+</ul>
+<h3 id="google-cloud-sql-for-postgresql">Google Cloud SQL for PostgreSQL<a class="anchor" href="#google-cloud-sql-for-postgresql" aria-hidden="true">#</a></h3>
+<ul>
+<li>Owner: user <code>postgres</code> (thành viên của <code>cloudsqlsuperuser</code>, có
+<code>CREATEROLE</code>), hoặc một user bạn tạo trong console hay bằng
+<code>gcloud sql users create</code> rồi đặt làm chủ sở hữu database.</li>
+<li>TLS: hoặc kết nối tới IP của instance với certificate CA của server lấy từ
+console (<code>sslmode=verify-ca</code> với file đó: certificate server của Cloud SQL
+không phải lúc nào cũng chứa tên host), hoặc chạy Cloud SQL Auth Proxy cạnh
+các dịch vụ và kết nối tới nó với <code>sslmode=disable</code> (proxy lo phần mã hoá).</li>
+<li>Thêm: <a href="/docs/deploy/gcp/">docs/deploy/gcp.md</a>.</li>
+</ul>
+<h3 id="neon">Neon<a class="anchor" href="#neon" aria-hidden="true">#</a></h3>
+<ul>
+<li>Owner: role mà Neon tạo cùng project (thành viên của <code>neon_superuser</code>, có
+<code>CREATEROLE</code>).</li>
+<li>TLS: bắt buộc; certificate nối chuỗi tới một CA công khai, nên
+<code>sslmode=verify-full</code> chạy được mà không cần <code>sslrootcert</code>.</li>
+<li>Dùng endpoint <strong>direct</strong> (host không có <code>-pooler</code>) cho migration và cho các
+dịch vụ (xem &quot;Pooler&quot;).</li>
+<li>Scale-to-zero: query đầu tiên sau một khoảng thời gian rảnh phải chờ compute
+khởi động. Với production, hãy tắt auto-suspend hoặc giữ một kích thước
+compute tối thiểu, nếu không các request đầu tiên sau lúc yên ắng sẽ chậm.</li>
+</ul>
+<h3 id="supabase">Supabase<a class="anchor" href="#supabase" aria-hidden="true">#</a></h3>
+<ul>
+<li>Owner: user <code>postgres</code> (có <code>CREATEROLE</code>, không phải superuser).</li>
+<li><code>pgcrypto</code> đã được cài sẵn (trong schema <code>extensions</code>); migration 001 để
+nguyên nó ở đó và tạo <code>pg_trgm</code>.</li>
+<li>Kết nối: kết nối trực tiếp (<code>db.&lt;project&gt;.supabase.co:5432</code>) hoặc pooler ở
+session mode (cổng 5432 trên host pooler); không dùng transaction mode (cổng
+6543), xem &quot;Pooler&quot;. Host trực tiếp có thể chỉ có IPv6, thứ mà mạng Docker
+thường không có; session pooler thì có IPv4.</li>
+<li>TLS: Supabase dùng CA riêng (tải về từ phần cài đặt database của project);
+<code>sslmode=verify-full&amp;sslrootcert=...</code>.</li>
+<li>Guard Spec chỉ cần database: Supabase API, auth và storage không được dùng.
+Đừng để các bảng của Guard Spec lộ ra qua Supabase REST API: chúng thuộc
+owner role và nằm trong <code>public</code>, schema mà API phục vụ theo mặc định, nên
+hãy kiểm tra các schema mà API đang mở ra.</li>
+</ul>
+<h3 id="pooler">Pooler<a class="anchor" href="#pooler" aria-hidden="true">#</a></h3>
+<p>Các dịch vụ tự giữ connection pool riêng và dùng prepared statement cùng các
+transaction có đặt <code>app.org_id</code> cho row-level security. Hãy kết nối chúng
+trực tiếp, hoặc qua một pooler ở <strong>session</strong> mode. Pooling ở transaction mode
+(PgBouncer <code>pool_mode=transaction</code>, Supabase cổng 6543, hành vi pinning của
+RDS Proxy) chưa được thử và nhiều khả năng sẽ làm hỏng prepared statement hoặc
+các thiết lập theo từng transaction.</p>
+<h2 id="chạy-migration">Chạy migration<a class="anchor" href="#chạy-migration" aria-hidden="true">#</a></h2>
+<p>Chạy dưới owner role, từ một bản checkout của đúng release bạn triển khai (thư
+mục <code>migrations/</code> phải khớp với phiên bản của các image):</p>
+<pre><code class="language-bash">export DB_HOST=&lt;host&gt;
+export OWNER=&lt;owner role&gt;
+export PGPASSWORD=&lt;owner password&gt;
+export PARAMS='sslmode=verify-full'   # add &amp;sslrootcert=/ca/&lt;file&gt; with -v &quot;$PWD/&lt;file&gt;:/ca/&lt;file&gt;:ro&quot;
+
+docker run --rm -e PGPASSWORD -v &quot;$PWD/migrations:/migrations:ro&quot; \
+  migrate/migrate:v4.20.1 -path=/migrations \
+  -database &quot;postgres://$OWNER@$DB_HOST:5432/guardspec?$PARAMS&quot; up
+</code></pre>
+<p>Sau đó đặt mật khẩu cho role ứng dụng (sau các migration nó chưa có mật khẩu;
+chạy lại lệnh này để xoay vòng mật khẩu):</p>
+<pre><code class="language-bash">export GUARDSPEC_APP_PASSWORD=&lt;openssl rand -hex 24&gt;
+docker run --rm -e PGHOST=&quot;$DB_HOST&quot; -e PGUSER=&quot;$OWNER&quot; -e PGDATABASE=guardspec \
+  -e PGPASSWORD -e PGSSLMODE=verify-full -e GUARDSPEC_APP_PASSWORD \
+  -v &quot;$PWD/deploy/postgres/set-app-password.sh:/set-app-password.sh:ro&quot; \
+  postgres:17.11-alpine sh /set-app-password.sh
+# guardspec_app password set
+</code></pre>
+<p><code>set-app-password.sh</code> từ chối mật khẩu yếu hoặc mật khẩu mặc định (cả mật
+khẩu của owner trong <code>PGPASSWORD</code>). Chạy lại cả hai bước mỗi lần nâng cấp,
+trước khi các image mới khởi động (<a href="/vi/docs/upgrade/">docs/upgrade.vi.md</a>); công
+cụ migrate chỉ áp dụng những gì mới.</p>
+<h2 id="compose-production-không-kèm-database">Compose production không kèm database<a class="anchor" href="#compose-production-không-kèm-database" aria-hidden="true">#</a></h2>
+<p><a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/deploy/compose/production/managed-postgres.yml"><code>deploy/compose/production/managed-postgres.yml</code></a>
+đưa các dịch vụ <code>postgres</code>, <code>migrate</code> và <code>db-roles</code> vào sau một profile và trỏ
+gateway cùng control plane tới <code>DATABASE_URL</code>:</p>
+<pre><code class="language-bash">cd deploy/compose/production
+# .env: DATABASE_URL=..., GUARDSPEC_APP_PASSWORD (the one set above), and
+# POSTGRES_PASSWORD set to any long value (unused, but required by the file)
+docker compose -f docker-compose.yml -f managed-postgres.yml up -d --wait
+</code></pre>
+<p>Gateway và control plane nằm trên mạng <code>edge</code>, mạng này có đường ra ngoài;
+database phải chấp nhận kết nối từ địa chỉ của máy host (security group,
+authorized networks, IP allow list).</p>
+<h2 id="sao-lưu">Sao lưu<a class="anchor" href="#sao-lưu" aria-hidden="true">#</a></h2>
+<p><code>scripts/backup.sh</code> dump dịch vụ <code>postgres</code> của compose nên không dùng được ở
+đây. Hãy dùng backup tự động và point-in-time recovery của nhà cung cấp, và
+giữ <code>.env</code> cẩn thận như vậy (nhất là <code>MFA_ENC_KEY</code>: các secret 2FA trong
+database được mã hoá bằng nó). Nên có thêm một bản dump logic:</p>
+<pre><code class="language-bash">docker run --rm -e PGPASSWORD postgres:17.11-alpine \
+  pg_dump -Fc &quot;postgres://$OWNER@$DB_HOST:5432/guardspec?$PARAMS&quot; &gt; guardspec.dump
+</code></pre>
+<p>Khôi phục một snapshot vào instance mới sẽ mang theo các role; khôi phục một
+bản dump thì không (tạo <code>guardspec_app</code> trước, như ở trên, rồi chạy
+<code>set-app-password.sh</code>).</p>
+
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/managed-postgres.vi.md">docs/managed-postgres.vi.md</a> @ <code>f26302340bf1</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Bảo mật</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Đóng góp</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Tác giả: <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>

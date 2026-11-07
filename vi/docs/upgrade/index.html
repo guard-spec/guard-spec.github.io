@@ -1,0 +1,263 @@
+<!doctype html>
+<html lang="vi">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Nâng cấp · Guard Spec</title>
+<meta name="description" content="English: upgrade.md. Nếu hai bản khác nhau, bản tiếng Anh là bản chính. Áp dụng cho các stack compose: bản quick start (docker-compose.yml ở thư mục gốc re">
+<meta property="og:title" content="Nâng cấp · Guard Spec">
+<meta property="og:description" content="English: upgrade.md. Nếu hai bản khác nhau, bản tiếng Anh là bản chính. Áp dụng cho các stack compose: bản quick start (docker-compose.yml ở thư mục gốc re">
+<meta property="og:type" content="article">
+<meta property="og:image" content="https://guardspec.io/assets/og.png">
+<link rel="canonical" href="https://guardspec.io/vi/docs/upgrade/">
+<link rel="alternate" hreflang="en" href="https://guardspec.io/docs/upgrade/">
+<link rel="alternate" hreflang="vi" href="https://guardspec.io/vi/docs/upgrade/">
+<link rel="icon" href="/assets/logo.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap">
+<link rel="stylesheet" href="/assets/style.css">
+</head>
+<body class="docs-body">
+
+<header class="nav">
+  <div class="wrap nav-in">
+    <a class="brand" href="/vi/"><img src="/assets/logo.svg" alt="" width="28" height="28"><span>Guard Spec</span></a>
+    <nav class="links">
+      <a href="/vi/docs/" class="on">Tài liệu</a>
+    </nav>
+    <div class="nav-end">
+      <div class="lang"><a href="/docs/upgrade/" class="">EN</a><a href="/vi/docs/upgrade/" class="on">VI</a></div>
+      <a class="btn btn-sm btn-ghost-dark" href="https://github.com/guard-spec/guard-spec"><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <path d="M15 22v-4a4.8 4.8 0 0 0-1-3.5c3 0 6-2 6-5.5.08-1.25-.27-2.48-1-3.5.28-1.15.28-2.35 0-3.5 0 0-1 0-3 1.5-2.64-.5-5.36-.5-8 0C6 2 5 2 5 2c-.3 1.15-.3 2.35 0 3.5A5.403 5.403 0 0 0 4 9c0 3.5 3 5.5 6 5.5-.39.49-.68 1.05-.85 1.65-.17.6-.22 1.23-.15 1.85v4" /> <path d="M9 18c-4.51 2-5-2-7-2" /> </svg><span>GitHub</span></a>
+    </div>
+  </div>
+</header>
+
+<div class="wrap docs">
+  <details class="docs-menu">
+    <summary><svg class="ic" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" > <line x1="4" x2="20" y1="12" y2="12" /> <line x1="4" x2="20" y1="6" y2="6" /> <line x1="4" x2="20" y1="18" y2="18" /> </svg><span>Tài liệu</span></summary>
+    <nav class="docs-nav" aria-label="Tài liệu"><ul><li class=""><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a></li><li class="child"><a href="/vi/docs/quickstart/integrations/">Tích hợp</a></li><li class="child"><a href="/vi/docs/quickstart/examples/">Ví dụ</a></li><li class=""><a href="/vi/docs/deploy/">Triển khai</a></li><li class="child"><a href="/vi/docs/deploy/production-compose/">Compose cho production</a></li><li class="child"><a href="/vi/docs/deploy/managed-postgres/">PostgreSQL được quản lý</a></li><li class="child"><a href="/vi/docs/deploy/airgapped/">Mạng cô lập</a></li><li class="child"><a href="/docs/deploy/aws/">AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform cho AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/on-premise/">Hạ tầng riêng <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/configuration/">Cấu hình</a></li><li class="child"><a href="/docs/configuration/routing/">Định tuyến <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/configuration/apis/">API</a></li><li class=""><a href="/docs/operations/">Vận hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/alerts/">Cảnh báo và thông báo</a></li><li class="child"><a href="/docs/operations/admin-ui/">Giao diện quản trị <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/sizing/">Định cỡ và chọn lớp</a></li><li class="on"><a href="/vi/docs/upgrade/">Nâng cấp</a></li><li class=""><a href="/vi/docs/models/">Model</a></li><li class="child"><a href="/vi/docs/models/versions/">Phiên bản, ghim và quay lui</a></li><li class="child"><a href="/vi/docs/models/benchmark/">Benchmark</a></li><li class=""><a href="/vi/docs/security/">Bảo mật</a></li><li class="child"><a href="/docs/security/verifying-releases/">Kiểm tra bản phát hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/risks/">Rủi ro và gia cố</a></li><li class="child"><a href="/docs/security/policy/">Báo lỗ hổng <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/red-team/">Báo cáo red-team</a></li></ul></nav>
+  </details>
+  <aside class="docs-side">
+    <nav class="docs-nav" aria-label="Tài liệu"><ul><li class=""><a href="/vi/docs/quickstart/">Bắt đầu nhanh</a></li><li class="child"><a href="/vi/docs/quickstart/integrations/">Tích hợp</a></li><li class="child"><a href="/vi/docs/quickstart/examples/">Ví dụ</a></li><li class=""><a href="/vi/docs/deploy/">Triển khai</a></li><li class="child"><a href="/vi/docs/deploy/production-compose/">Compose cho production</a></li><li class="child"><a href="/vi/docs/deploy/managed-postgres/">PostgreSQL được quản lý</a></li><li class="child"><a href="/vi/docs/deploy/airgapped/">Mạng cô lập</a></li><li class="child"><a href="/docs/deploy/aws/">AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/terraform-aws/">Terraform cho AWS <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/gcp/">Google Cloud <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/docs/deploy/on-premise/">Hạ tầng riêng <span class="en">(tiếng Anh)</span></a></li><li class=""><a href="/vi/docs/configuration/">Cấu hình</a></li><li class="child"><a href="/docs/configuration/routing/">Định tuyến <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/configuration/apis/">API</a></li><li class=""><a href="/docs/operations/">Vận hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/alerts/">Cảnh báo và thông báo</a></li><li class="child"><a href="/docs/operations/admin-ui/">Giao diện quản trị <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/operations/sizing/">Định cỡ và chọn lớp</a></li><li class="on"><a href="/vi/docs/upgrade/">Nâng cấp</a></li><li class=""><a href="/vi/docs/models/">Model</a></li><li class="child"><a href="/vi/docs/models/versions/">Phiên bản, ghim và quay lui</a></li><li class="child"><a href="/vi/docs/models/benchmark/">Benchmark</a></li><li class=""><a href="/vi/docs/security/">Bảo mật</a></li><li class="child"><a href="/docs/security/verifying-releases/">Kiểm tra bản phát hành <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/risks/">Rủi ro và gia cố</a></li><li class="child"><a href="/docs/security/policy/">Báo lỗ hổng <span class="en">(tiếng Anh)</span></a></li><li class="child"><a href="/vi/docs/security/red-team/">Báo cáo red-team</a></li></ul></nav>
+  </aside>
+  <main class="doc">
+    <h1>Nâng cấp</h1>
+
+<blockquote>
+<p>English: <a href="/docs/upgrade/">upgrade.md</a>. Nếu hai bản khác nhau, bản tiếng Anh là bản chính.</p>
+</blockquote>
+<p>Áp dụng cho các stack compose: bản quick start (<code>docker-compose.yml</code> ở thư mục
+gốc repository) và
+<a href="/vi/docs/deploy/production-compose/">compose production</a>. Kubernetes:
+<a href="/docs/deploy/on-premise/#upgrade-and-rollback-1">docs/deploy/on-premise.md</a>.</p>
+<p>Có ba thứ có phiên bản, và mỗi thứ rollback độc lập:</p>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>Thành phần</th>
+  <th>Ghim bằng</th>
+  <th>Thay đổi khi nâng cấp</th>
+  <th>Rollback</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td>Image (gateway, control plane)</td>
+  <td><code>GUARDSPEC_VERSION</code> trong <code>.env</code></td>
+  <td>Code</td>
+  <td>Tag trước đó</td>
+</tr>
+<tr>
+  <td>Schema database</td>
+  <td><code>migrations/</code> của bản checkout; được job <code>migrate</code> áp dụng ở mỗi lần <code>up</code></td>
+  <td>Chỉ tiến lên</td>
+  <td>Khôi phục bản backup trước khi nâng cấp</td>
+</tr>
+<tr>
+  <td>Model</td>
+  <td><code>models/manifest.yaml</code> của mỗi image, hoặc <code>L2_MODEL</code> / <code>L3_MODEL</code> trong <code>.env</code></td>
+  <td>Một release có thể khuyến nghị model mới hơn</td>
+  <td><code>L2_MODEL=name@old-version</code></td>
+</tr>
+</tbody>
+</table></div>
+<p>Trước 1.0, một phiên bản minor có thể thay đổi schema và cấu hình: hãy đọc
+<a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/CHANGELOG.md">CHANGELOG</a> của mọi phiên bản bạn bỏ qua.</p>
+<h2 id="sao-lưu">Sao lưu<a class="anchor" href="#sao-lưu" aria-hidden="true">#</a></h2>
+<p><code>scripts/backup.sh</code> lưu những gì cần để khôi phục, trong khi stack vẫn chạy:</p>
+<pre><code class="language-bash">scripts/backup.sh                                                     # quick start
+scripts/backup.sh -f deploy/compose/production/docker-compose.yml    # production
+# backup: done: backups/guardspec-20261106T060839Z
+</code></pre>
+<div class="table"><table>
+<thead>
+<tr>
+  <th>File</th>
+  <th>Nội dung</th>
+  <th>Tại sao quan trọng</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+  <td><code>guardspec.dump</code></td>
+  <td><code>pg_dump -Fc</code> của database: organization, user, API key (dạng hash), policy, upstream, alert rule, các dòng audit, <code>schema_migrations</code></td>
+  <td>Dữ liệu</td>
+</tr>
+<tr>
+  <td><code>guardspec.env</code></td>
+  <td>File <code>.env</code> mà stack đã chạy cùng</td>
+  <td><code>POSTGRES_PASSWORD</code> và <code>GUARDSPEC_APP_PASSWORD</code>; <code>JWT_SECRET</code> (thiếu nó mọi phiên đăng nhập đều mất hiệu lực; người dùng phải đăng nhập lại); <strong><code>MFA_ENC_KEY</code>, khóa duy nhất mã hóa dữ liệu lưu trữ</strong> (secret TOTP 2FA, AES-256-GCM): thiếu nó phải reset 2FA của mọi người dùng; và các secret mà database chỉ ghi tên chứ không giữ giá trị: <code>UPSTREAM_KEY_*</code> / <code>UPSTREAM_LLM_KEY</code> (upstream <code>api_key_env</code>), <code>OIDC_SECRET_*</code> (SSO <code>client_secret_env</code>), secret của kênh cảnh báo (<code>secret_env</code>), SMTP và token bot</td>
+</tr>
+<tr>
+  <td><code>caddy-data.tgz</code></td>
+  <td><code>/data</code> của Caddy (chỉ có ở compose production)</td>
+  <td>Certificate, tài khoản ACME, và với <code>CADDY_TLS=internal</code> là root CA mà các client của bạn tin cậy</td>
+</tr>
+<tr>
+  <td><code>MANIFEST</code></td>
+  <td>Thời điểm, image, phiên bản migration, số dòng, SHA-256 của từng file</td>
+  <td>Cho biết bản backup là gì, và dùng để kiểm tra toàn vẹn khi khôi phục</td>
+</tr>
+</tbody>
+</table></div>
+<p>Cố ý không bao gồm: model (được tải lại và kiểm tra với manifest, hoặc ghim
+bằng <code>L2_MODEL</code>), image (tải theo tag), và các secret giữ ngoài <code>.env</code> (trong
+secret manager: hãy sao lưu chúng ở đó).</p>
+<p>Thư mục được tạo với mode 700 và chứa mọi secret: hãy mã hóa nó (<code>age</code>,
+<code>gpg</code>, tính năng mã hóa của công cụ backup) và giữ nó ngoài host. API key được
+lưu dưới dạng hash SHA-256, nên bản backup không thể làm lộ chúng; hash mật
+khẩu dùng bcrypt.</p>
+<p>Lên lịch bằng cron hoặc systemd timer, ví dụ hằng ngày:</p>
+<pre><code class="language-cron">15 3 * * * cd /opt/guard-spec &amp;&amp; scripts/backup.sh -f deploy/compose/production/docker-compose.yml -o /var/backups/guardspec/$(date +\%F) &amp;&amp; find /var/backups/guardspec -mindepth 1 -maxdepth 1 -mtime +14 -exec rm -rf {} +
+</code></pre>
+<h3 id="khôi-phục">Khôi phục<a class="anchor" href="#khôi-phục" aria-hidden="true">#</a></h3>
+<p>Chỉ khôi phục vào database trống (host mới, compose project mới, hoặc sau
+<code>docker compose down -v</code>); database đã có bảng sẽ bị từ chối:</p>
+<pre><code class="language-bash">scripts/restore.sh -f deploy/compose/production/docker-compose.yml backups/guardspec-20261106T060839Z
+</code></pre>
+<p>Script kiểm tra SHA-256 của bản dump, ghi <code>.env</code> của bản backup nếu chưa có
+(và từ chối nếu <code>.env</code> hiện có mang <code>MFA_ENC_KEY</code> khác), khởi động Postgres,
+tạo role toàn cluster <code>guardspec_app</code> (bản dump database không mang theo
+role), chạy <code>pg_restore</code>, đưa dữ liệu Caddy về chỗ cũ, rồi khởi động stack:
+<code>migrate</code> áp dụng các migration mới hơn bản dump và <code>db-roles</code> đặt mật khẩu
+<code>guardspec_app</code> từ <code>.env</code>. Đăng nhập, 2FA, API key và CA nội bộ vẫn hoạt
+động.</p>
+<p><em>Đã kiểm tra</em> ngày 2026-11-06 (arm64, Docker Desktop): bản backup của một stack
+compose production (1 organization, 1 user, 1 API key, 1 policy, 26,004 dòng
+audit) được khôi phục vào một compose project riêng. Checksum của
+organization, user, API key, policy và các dòng audit đều khớp; mật khẩu
+admin và API key cũ vẫn dùng được; một injection bị chặn và một prompt vô hại
+được cho qua trên HTTPS, xác thực bằng root Caddy ban đầu.</p>
+<p>Database managed: <a href="/docs/deploy/managed-postgres/#backups">docs/managed-postgres.md</a>.</p>
+<h2 id="nâng-cấp">Nâng cấp<a class="anchor" href="#nâng-cấp" aria-hidden="true">#</a></h2>
+<pre><code class="language-bash">scripts/backup.sh [-f ...]                          # 1. a backup to roll back to
+git fetch --tags &amp;&amp; git checkout v&lt;new-version&gt;     # 2. new migrations/ and compose files
+# 3. .env: GUARDSPEC_VERSION=&lt;new-version&gt;; compare .env.example for new settings
+docker compose [-f ...] pull                        # 4. images first, so the switch is short
+docker compose [-f ...] up -d --wait                # 5. migrate and db-roles run before the services
+curl -s localhost:8080/readyz | jq .detector        # 6. or https://&lt;GATEWAY_HOST&gt;/readyz
+</code></pre>
+<ul>
+<li>Bước 2 quan trọng: job <code>migrate</code> áp dụng thư mục <code>migrations/</code> trong bản
+checkout của bạn, nên checkout và <code>GUARDSPEC_VERSION</code> phải cùng một release.
+Một archive mã nguồn của release cũng dùng được như một bản checkout.</li>
+<li>Trong bước 5 gateway khởi động lại; các request đang xử lý sẽ lỗi và client
+thử lại. Với một host thì không tránh được điều này; để không có downtime,
+hãy chạy nhiều replica gateway sau một load balancer (Kubernetes, Helm
+chart).</li>
+<li>Model: nếu image mới khuyến nghị một phiên bản model mới, <code>models-init</code> tải
+nó trước khi gateway khởi động (với <code>DETECTOR_REQUIRE_ML=true</code>, mặc định
+của production, một lần tải lỗi sẽ dừng <code>up</code> trước khi gateway mới khởi
+động). Khi đã ghim <code>L2_MODEL</code> / <code>L3_MODEL</code>, gateway giữ phiên bản đã ghim.</li>
+<li>Phiên bản classifier mới: để thử trước khi chuyển, giữ <code>L2_MODEL</code> đã ghim
+và đặt <code>SHADOW_L2_MODEL=guardspec-classifier@&lt;new&gt;</code>. Nó chấm điểm cùng lưu
+lượng nhưng không ra quyết định; so sánh trong giao diện quản trị
+(<strong>Models</strong>). Sau đó chuyển mà không cần khởi động lại bằng
+<code>POST /admin/models/reload</code> với
+<code>{&quot;l2_model&quot;:&quot;guardspec-classifier@&lt;new&gt;&quot;,&quot;shadow_l2_model&quot;:&quot;off&quot;}</code>
+(<code>GATEWAY_ADMIN_TOKEN</code>), và đặt <code>L2_MODEL</code> trong <code>.env</code> cho lần khởi động
+sau (hoặc đặt nó rồi chạy <code>up -d gateway</code>, lệnh này sẽ khởi động lại). Một
+lần reload kiểm tra SHA-256 của các file và giữ model đang chạy nếu có gì
+lỗi; xem
+<a href="/docs/operations/#shadow-mode-and-model-reload">README, Shadow mode and model reload</a>.</li>
+<li>Kiểm tra sau khi nâng cấp: <code>/readyz</code> liệt kê đúng các lớp bạn mong đợi, giao
+diện quản trị tải được, một injection đã biết bị chặn
+(<a href="/vi/docs/quickstart/">Bắt đầu nhanh trong README</a>).</li>
+<li>Với image từ 0.2.0, chạy thêm <code>doctor</code> bên trong gateway:
+<code>docker compose [-f ...] exec gateway /app/doctor</code>. Nó kiểm tra database,
+phiên bản migration có khớp với <code>migrations/</code> của image hay không, các file
+model so với SHA-256 trong manifest, những lớp nào sẽ được nạp, upstream và
+các thiết lập bảo mật; exit code 1 nghĩa là có một bước kiểm tra lỗi
+(<code>-strict</code> coi cả cảnh báo là lỗi, <code>-json</code> dùng cho script). Xem
+<a href="/docs/operations/#kubernetes">README, Kubernetes</a>.</li>
+</ul>
+<h2 id="rollback">Rollback<a class="anchor" href="#rollback" aria-hidden="true">#</a></h2>
+<h3 id="image-không-đổi-schema">Image, không đổi schema<a class="anchor" href="#image-không-đổi-schema" aria-hidden="true">#</a></h3>
+<p>Khi release bạn rời khỏi không thêm migration nào (so sánh <code>migrations/</code> của
+hai tag, hoặc phiên bản migration trong <code>MANIFEST</code> với phiên bản mới):</p>
+<pre><code class="language-bash">git checkout v&lt;old-version&gt;
+# .env: GUARDSPEC_VERSION=&lt;old-version&gt;
+docker compose [-f ...] up -d --wait
+</code></pre>
+<h3 id="image-và-schema">Image và schema<a class="anchor" href="#image-và-schema" aria-hidden="true">#</a></h3>
+<p>Schema mới hơn với code cũ hơn không được hỗ trợ, và các migration
+<code>*.down.sql</code> xóa những gì phiên bản mới đã thêm, kể cả dữ liệu; đó không phải
+đường đi đã được kiểm thử. Thay vào đó, hãy khôi phục bản backup tạo trước khi
+nâng cấp:</p>
+<pre><code class="language-bash">docker compose [-f ...] down -v      # removes the upgraded database: keep the backup safe first
+git checkout v&lt;old-version&gt;
+# .env: GUARDSPEC_VERSION=&lt;old-version&gt; (restore.sh keeps an existing .env)
+scripts/restore.sh [-f ...] backups/guardspec-&lt;before-upgrade&gt;
+</code></pre>
+<p>Các dòng audit ghi giữa lúc backup và lúc rollback sẽ bị mất. Muốn giữ chúng,
+hãy export trước (<code>GET /v1/organizations/{id}/requests</code>, hoặc
+<code>pg_dump -t requests</code>).</p>
+<p><code>down -v</code> cũng xóa volume model của compose production (sẽ được tải lại) và
+dữ liệu của Caddy (được khôi phục từ bản backup).</p>
+<h3 id="chỉ-model">Chỉ model<a class="anchor" href="#chỉ-model" aria-hidden="true">#</a></h3>
+<p>Không đổi image hay schema: tải phiên bản cũ và ghim nó.</p>
+<pre><code class="language-bash">docker compose [-f ...] --profile models run --rm models-pull guardspec-classifier@&lt;old&gt;
+# .env: L2_MODEL=guardspec-classifier@&lt;old&gt;
+docker compose [-f ...] up -d gateway
+curl -s localhost:8080/readyz | jq .detector.l2_model
+</code></pre>
+<p>Không cần khởi động lại: giữ phần ghim trong <code>.env</code> cho lần khởi động sau, và
+nạp lại gateway đang chạy bằng <code>POST /admin/models/reload</code> với
+<code>{&quot;l2_model&quot;:&quot;guardspec-classifier@&lt;old&gt;&quot;}</code> (cần <code>GATEWAY_ADMIN_TOKEN</code>).
+SIGHUP nạp lại các model mà gateway đang nhắm tới, chứ không đọc <code>.env</code> đã
+thay đổi.</p>
+<p>Chi tiết, embedder L3 và cài đặt air-gapped:
+<a href="/docs/models/versions/#rolling-back">docs/models.md</a>.</p>
+<h3 id="nâng-cấp-thất-bại">Nâng cấp thất bại<a class="anchor" href="#nâng-cấp-thất-bại" aria-hidden="true">#</a></h3>
+<ul>
+<li><code>migrate</code> thoát với mã khác 0: các service không khởi động (chúng chờ nó).
+<code>docker compose logs migrate</code> cho biết migration nào. Một migration lỗi để
+lại <code>schema_migrations.dirty = true</code>; hãy sửa nguyên nhân, rồi khôi phục
+bản backup thay vì ép phiên bản.</li>
+<li><code>models-init</code> lỗi: đang offline, hoặc mirror thiếu phiên bản mới. Đặt
+<code>MODELS_MIRROR</code>, hoặc ghim <code>L2_MODEL</code> / <code>L3_MODEL</code> trước đó, rồi <code>up</code> lại.</li>
+<li>Gateway không healthy: xem <code>docker compose logs gateway</code>; với
+<code>DETECTOR_REQUIRE_ML=true</code>, thiếu model sẽ làm gateway dừng ngay khi khởi
+động, đây là chủ ý thiết kế.</li>
+</ul>
+
+    <p class="doc-source">Nguồn: <a href="https://github.com/guard-spec/guard-spec/blob/f26302340bf1c99b07ce6b38f6a4a4e951421018/docs/upgrade.vi.md">docs/upgrade.vi.md</a> @ <code>f26302340bf1</code></p>
+  </main>
+</div>
+
+<footer class="foot">
+  <div class="wrap foot-in">
+    <div class="brand"><img src="/assets/logo.svg" alt="" width="22" height="22"><span>Guard Spec</span></div>
+    <nav>
+      <a href="https://github.com/guard-spec/guard-spec">GitHub</a>
+      <a href="/docs/security/">Bảo mật</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/CONTRIBUTING.md">Đóng góp</a>
+      <a href="https://github.com/guard-spec/guard-spec/blob/main/LICENSE">Apache-2.0</a>
+    </nav>
+    <p>© The Guard Spec Authors. Tác giả: <a href="https://github.com/giaplee">@giaplee</a>.</p>
+  </div>
+</footer>
+
+</body>
+</html>
