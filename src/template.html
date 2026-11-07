@@ -29,6 +29,7 @@
       <a href="#how">{{nav_how}}</a>
       <a href="#benchmarks">{{nav_benchmarks}}</a>
       <a href="#quickstart">{{nav_quickstart}}</a>
+      <a href="#whats-new">{{nav_new}}</a>
       <a href="{{root}}{{lang_path}}docs/">{{nav_docs}}</a>
     </nav>
     <div class="nav-end">
@@ -41,6 +42,7 @@
 <section class="hero">
   <div class="wrap hero-in">
     <div class="hero-copy">
+      <a class="new-pill" href="#whats-new"><b>{{new_in}} {{release_version}}</b><span>{{release_tagline}}</span>{{icon:arrow-right}}</a>
       <div class="kicker">{{hero_kicker}}</div>
       <h1>{{hero_title}}</h1>
       <p class="lead">{{hero_lead}}</p>
@@ -49,7 +51,7 @@
         <a class="btn btn-ghost-dark" href="https://github.com/guard-spec/guard-spec">{{icon:github}}{{cta_github}}</a>
       </div>
       <ul class="badges">
-        <li>Apache-2.0</li><li>Go</li><li>English · Tiếng Việt</li><li>{{badge_status}}</li>
+        <li>Apache-2.0</li><li>Go</li><li>English · Tiếng Việt</li><li><a href="{{release_url}}">{{release_version}} · {{release_status}}</a></li>
       </ul>
     </div>
     <div class="hero-code">
@@ -152,8 +154,8 @@ client = OpenAI(
     <h2>{{bench_title}}</h2>
     <p class="sub">{{bench_lead}}</p>
     <div class="stats">
-      <div class="stat"><b>0.986</b><span>{{stat_auc}}</span></div>
-      <div class="stat"><b>93.2%</b><span>{{stat_tpr}}</span></div>
+      <div class="stat"><b>0.987</b><span>{{stat_auc}}</span></div>
+      <div class="stat"><b>93.9%</b><span>{{stat_tpr}}</span></div>
       <div class="stat"><b>1.4%</b><span>{{stat_fpr}}</span></div>
       <div class="stat"><b>3.7 ms</b><span>{{stat_lat}}</span></div>
     </div>
@@ -197,6 +199,25 @@ client = OpenAI(
 <span class="c">{{qs_out2}}</span>
 <span class="ok">ready: {"layers":["l1","l2","l3"]}</span></code></pre>
     </div>
+  </div>
+</section>
+
+<section class="section alt" id="whats-new">
+  <div class="wrap">
+    <div class="eyebrow">{{wn_eyebrow}}</div>
+    <h2>{{new_in}} {{release_version}}</h2>
+    <p class="sub">{{wn_released}} <time datetime="{{release_date}}">{{release_date}}</time>. {{release_upgrade}}</p>
+    <ul class="grid3 wn-list">
+{{release_highlights}}
+    </ul>
+    <div class="ctas wn-links">
+      <a class="btn btn-primary" href="{{release_url}}">{{wn_notes}}{{icon:arrow-right}}</a>
+      <a class="btn wn-btn" href="{{release_changelog}}">{{icon:scroll-text}}{{wn_changelog}}</a>
+    </div>
+    <h3 class="wn-earlier">{{wn_earlier}}</h3>
+    <ul class="wn-prev">
+{{release_previous}}
+    </ul>
   </div>
 </section>
 
